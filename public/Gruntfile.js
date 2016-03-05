@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 			cssmin: {
 				files: ['/res/css/styles.css'],
 				tasks: ['cssmin']
-			},*/ 
+			},*/
 			uglify: {
 				files: ['src/js/*.js'],
 				tasks: ['uglify']
@@ -50,7 +50,6 @@ module.exports = function(grunt) {
 		    },
         options: {
         	//proxy: 'localhost:8000',
-					port:8000,
 					baseDir:'res',
           watchTask: true,
         	open: true
