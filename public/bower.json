@@ -1,0 +1,32 @@
+{
+  "name": "red-vepats",
+  "version": "0.0.0",
+  "homepage": "https://github.com/j-alex/red-vepats",
+  "authors": [
+    "J-Alex <jlex.wd@outlook.com>"
+  ],
+  "main": "gruntfile",
+  "moduleType": [
+    "es6",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/res/components",
+    "test",
+    "tests"
+  ],
+  "dependencies":{
+    "angular":"latest",
+    "jquery":"latest",
+    "bootstrap":"latest",
+    "font-awesome":"latest",
+    "angular-ui-router":"latest",
+    "angular-route":"latest",
+    "angular-resource":"latest"
+  }
+}
