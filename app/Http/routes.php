@@ -26,6 +26,8 @@ Route::get('/', function () {
 |
 */
 
+Route::resource('trabajadores','TrabajadoresController');
+
 Route::group(['middleware' => ['web']], function () {
     //
 });
