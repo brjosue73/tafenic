@@ -39,23 +39,36 @@ module.exports = function(grunt) {
 				dest: 'res/js/scripts.min.js'
 			}
 		},
-		/*browserSync: {
+		browserSync: {
 			dev: {
 				bsFiles: {
-	        src: [
-						'css/styles.min.css',
-						'js/scripts.min.js',
+		        	src: [
+						'res/css/styles.css',
+						'res/js/scripts.min.js',
+						'res/js/angular.js',
 						'partials/*.html'
 					]
-		    },
-        options: {
-        	//proxy: 'localhost:8000',
-					baseDir:'res',
-          watchTask: true,
-        	open: true
+			    },
+        	options: {
+        			proxy:'<%= php.dev.options.hostname %>:<%= php.dev.options.port %>',
+					//port:8000,
+					//baseDir:'res',
+          			watchTask: true,
+        			open: true
 				}
 			}
-		},*/
+		},
+		php: {
+			dev: {
+				options: {
+					hostname: '127.0.0.1',
+					port: 5000,
+					base: '.'
+					//open: false,
+					//keepalive: true
+				}
+			}
+		},
 		imagemin: {
 		    dynamic: {
 		      files: [{
@@ -67,6 +80,7 @@ module.exports = function(grunt) {
 		    }
 		}
 	});
+	grunt.loadNpmTasks('grunt-php');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-browser-sync');
 	grunt.loadNpmTasks('grunt-contrib-sass');
@@ -74,6 +88,6 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-imagemin');
 
-	grunt.registerTask('default',[/*'browserSync',*/'watch']);
+	grunt.registerTask('default',['php','browserSync','watch']);
 	grunt.registerTask('build',[ 'imagemin' , 'cssmin']);
 }
