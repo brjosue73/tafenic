@@ -6,9 +6,7 @@ body {
   padding: 0;
   width: 100%;
   display: table;
-  font-weight: 100;
-  font-family: 'Lato';
-  background-color: cyan; }
+  font-weight: 100; }
 
 .container {
   text-align: center;
@@ -17,7 +15,8 @@ body {
 
 .content {
   text-align: center;
-  display: inline-block; }
+  display: inline-block;
+  font-family: 'Lato'; }
 
 .title {
   font-size: 96px; }
