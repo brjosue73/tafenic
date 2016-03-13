@@ -46,7 +46,8 @@ module.exports = function(grunt) {
 						'res/css/styles.css',
 						'res/js/scripts.min.js',
 						'res/js/angular.js',
-						'partials/*.html'
+						'partials/*.html',
+						'../resources/views/*.php'
 					]
 			    },
         	options: {

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Trabajador;
 class TrabajadoresController extends Controller
 {
     /**
@@ -16,7 +16,8 @@ class TrabajadoresController extends Controller
      */
     public function index()
     {
-        //
+      $trabajadores = Trabajador::all();
+      return response()->json($trabajadores);
     }
 
     /**
@@ -37,7 +38,12 @@ class TrabajadoresController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $peticion = $request->all();
+      $arreglo = $peticion["data"];
+
+      $trabajador = new Trabajador($arreglo);
+      $trabajador->save();
+      return "Trabajador Creado!";
     }
 
     /**
@@ -48,7 +54,8 @@ class TrabajadoresController extends Controller
      */
     public function show($id)
     {
-        //
+      $trabajador = Trabajador::find($id);
+      return response()->json($trabajador);
     }
 
     /**
@@ -71,7 +78,18 @@ class TrabajadoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       $peticion = $request->all();
+       $arreglo = $peticion["data"];
+
+       $trabajador = Trabajador::find($id);
+
+       $trabajador->nombre = $arreglo['nombre'];
+       $trabajador->nss = $arreglo['nss'];
+       $trabajador->cedula = $arreglo['cedula'];
+       $trabajador->celular = $arreglo['celular'];
+
+       $trabajador->save();
+       return "Done!";
     }
 
     /**
@@ -82,6 +100,8 @@ class TrabajadoresController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $trabajador = Trabajador::find($id);
+      $trabajador->delete();
+      return "Registro Eliminado";
     }
 }
