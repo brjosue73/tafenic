@@ -14,10 +14,11 @@ class CrearTablaTrabajadores extends Migration
     {
         Schema::create('trabajadores', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nombre');
+            $table->string('nombre',80);
             $table->integer('nss');
-            $table->string('cedula');
-            $table->string('celular');
+            $table->string('cedula', 15);
+            $table->string('celular', 12);
+            
 
             $table->timestamps();
         });

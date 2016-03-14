@@ -87,6 +87,7 @@ class TrabajadoresController extends Controller
        $trabajador->nss = $arreglo['nss'];
        $trabajador->cedula = $arreglo['cedula'];
        $trabajador->celular = $arreglo['celular'];
+       $trabajador->apellidos = $arreglo['apellidos'];
 
        $trabajador->save();
        return "Done!";
