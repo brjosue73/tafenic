@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CrearTablaTrabajadores extends Migration
+class CreateLaboresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,13 @@ class CrearTablaTrabajadores extends Migration
      */
     public function up()
     {
-        Schema::create('trabajadores', function (Blueprint $table) {
+        Schema::create('labores', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('nombre',80);
-            $table->integer('nss');
-            $table->string('cedula', 15);
-            $table->string('celular', 12);
-            
+            $table->string('nombre',40);
+
+            $table->integer('id_actividad')->unsigned();
+            $table->foreign('id_actividad')->references('id')->on('actividades');
 
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class CrearTablaTrabajadores extends Migration
      */
     public function down()
     {
-        Schema::drop('trabajadores');
+        Schema::drop('labores');
     }
 }
