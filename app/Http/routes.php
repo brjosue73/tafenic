@@ -27,6 +27,10 @@ Route::get('/', function () {
 */
 
 Route::resource('trabajadores','TrabajadoresController');
+Route::resource('fincas','FincasController');
+Route::resource('actividad','ActividadesController');
+Route::resource('labor','LaboresController');
+
 
 Route::group(['middleware' => ['web']], function () {
     //
