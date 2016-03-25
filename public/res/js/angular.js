@@ -12,8 +12,29 @@
 	app.factory('Resource', ['$resource', function(r){
 		return r('trabajadores/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
-
-
+	//Service Factory resource
+	app.factory('fincaResource', ['$resource', function(r){
+	  return r('fincas/:id',{id:"@id"},{update:{method:"PUT"}});
+	}]);
+	//Service Factory resource
+	app.factory('actividadResource', ['$resource', function(r){
+	  return r('actividad/:id',{id:"@id"},{update:{method:"PUT"}});
+	}]);
+	//Create and append a new cotroller for your module
+	app.controller("fincaController",['$scope','$http','fincaResource', function(s,h,fr){
+	  s.fincaSaveData = {};
+	  s.fincaSave = function(){
+	    console.log(s.fincaSaveData);
+	    fr.save({data:s.fincaSaveData});
+	  }
+	}]);	//Create and append a new cotroller for your module
+		app.controller("actividadController",['$scope','$http','actividadResource', function(s,h,ar){
+		  s.actividadSaveData = {};
+		  s.actividadSave = function(){
+		    console.log(s.actividadSaveData);
+		    ar.save({data:s.actividadSaveData});
+		  }
+		}]);
 	//angular routes config
 	app.config(function ($routeProvider) {
 	$routeProvider
@@ -36,11 +57,6 @@
 	      redirectTo: '/'
 	    });
 	});
-
-	//Create and append a new cotroller for your module
-	app.controller("controllerName",['$scope',"$http","$resource","$routeParams", function(s,h,r,p,$routeParams){
-	}]);
-
 	//Create one
 	app.controller('postOne', ['$scope','Resource','$location', function(s,r,l){
 		s.boton = "Guardar";
