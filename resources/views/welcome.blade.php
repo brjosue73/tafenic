@@ -24,9 +24,9 @@
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="" data-toggle="modal" data-target="#miModal">Fincas</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#Labores">Labores</a></li>
                     <li><a href="" data-toggle="modal" data-target="#Activiades">Actividades</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#miModal">Otros</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#Labores">Labores</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#miModa">Otros</a></li>
                   </ul>
                 </li>
               </ul>
@@ -99,6 +99,36 @@
                   </div>
                 </div>
             </div>
+            <div class="modal fade" id="Labores">
+                <div class="modal-dialog">
+                  <div class="modal-content"  data-ng-controller="laborController">
+
+                      <div class="modal-header">
+                          <buton class="close" aria-hidden="true" data-dismiss="modal">&times;</buton>
+                          <h4 class="modal-title">Labores</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="labor">Labor</label>
+                                <input type="text" class="form-control" placeholder="Labor" name="labor" data-ng-model="laborSaveData.nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="actividad">Actividad</label>
+                                <input type="text"class="form-control" placeholder="Actividad" name="actividad" data-ng-model="laborSaveData.id_actividad">
+                            </div>
+                        </form>
+
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn btn-primary" data-ng-click="laborSave()">Guardar</button>
+                          <button class="btn btn-default" data-dismiss="modal">cancelar</button>
+                      </div>
+
+                  </div>
+                </div>
+            </div>
+
 
 
       <script src="res/dependencies/jquery/dist/jquery.min.js"></script>
