@@ -20,6 +20,10 @@
 	app.factory('actividadResource', ['$resource', function(r){
 	  return r('actividad/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
+	//Service Factory resource
+	app.factory('laborResource', ['$resource', function(r){
+	  return r('labor/:id',{id:"@id"},{update:{method:"PUT"}});
+	}]);
 	//Create and append a new cotroller for your module
 	app.controller("fincaController",['$scope','$http','fincaResource', function(s,h,fr){
 	  s.fincaSaveData = {};
@@ -27,14 +31,23 @@
 	    console.log(s.fincaSaveData);
 	    fr.save({data:s.fincaSaveData});
 	  }
-	}]);	//Create and append a new cotroller for your module
-		app.controller("actividadController",['$scope','$http','actividadResource', function(s,h,ar){
-		  s.actividadSaveData = {};
-		  s.actividadSave = function(){
-		    console.log(s.actividadSaveData);
-		    ar.save({data:s.actividadSaveData});
-		  }
-		}]);
+	}]);
+	//Create and append a new cotroller for your module
+	app.controller("actividadController",['$scope','$http','actividadResource', function(s,h,ar){
+	  s.actividadSaveData = {};
+	  s.actividadSave = function(){
+	    console.log(s.actividadSaveData);
+	    ar.save({data:s.actividadSaveData});
+	  }
+	}]);
+	//Create and append a new cotroller for your module
+	app.controller("laborController",['$scope','$http','laborResource', function(s,h,lr){
+	  s.laborSaveData = {};
+	  s.laborSave = function(){
+	    console.log(s.laborSaveData);
+	    lr.save({data:s.laborSaveData});
+	  }
+	}]);
 	//angular routes config
 	app.config(function ($routeProvider) {
 	$routeProvider
