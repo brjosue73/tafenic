@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Actividad
+use App\Actividad;
 
 class ActividadesController extends Controller
 {

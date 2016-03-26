@@ -10,8 +10,9 @@
     </head>
 
     <body class="container-fluid" data-ng-app="moduleName">
+
       <div class="row">
-        <nav class="navbar navbar-default navbar-fixed">
+        <nav class="navbar navbar-inverse navbar-fixed">
             <div class="navbar-header">
               <a href="#/" class="navbar-brand">TAFENIC.SA</a>
             </div>
@@ -23,8 +24,8 @@
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li><a href="" data-toggle="modal" data-target="#miModal">Fincas</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#miModal">Labores</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#miModal">Actividades</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#Labores">Labores</a></li>
+                    <li><a href="" data-toggle="modal" data-target="#Activiades">Actividades</a></li>
                     <li><a href="" data-toggle="modal" data-target="#miModal">Otros</a></li>
                   </ul>
                 </li>
@@ -34,39 +35,70 @@
       </div>
 
 
-      <main data-ng-controller="controllerName">
+      <main>
         <section data-ng-view="" class="row"></section>
       </main>
 
 
 
-      <div class="modal fade" id="miModal">
-              <div class="modal-dialog">
-                  <div class="modal-content">
+            <div class="modal fade" id="miModal">
+                <div class="modal-dialog">
+                  <div class="modal-content"  data-ng-controller="fincaController">
+
                       <div class="modal-header">
                           <buton class="close" aria-hidden="true" data-dismiss="modal">&times;</buton>
-                          <h4 class="modal-title">Cabecera</h4>
+                          <h4 class="modal-title">Fincas</h4>
                       </div>
                       <div class="modal-body">
-                          <form>
-                              <div class="form-group">
-                                  <label for="Usuario">Usuario</label>
-                                  <input type="text" class="form-control" placeholder="User">
-                              </div>
-                              <div class="form-group">
-                                  <label for="Contraseña">Contraseña</label>
-                                  <input type="text"class="form-control" placeholder="PWD">
-                              </div>
-                          </form>
+                        <form>
+                            <div class="form-group">
+                                <label for="finca">Finca</label>
+                                <input type="text" class="form-control" placeholder="Finca" name="finca" data-ng-model="fincaSaveData.nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="estado">Estado</label>
+                                <input type="text"class="form-control" placeholder="Estado" name="estado" data-ng-model="fincaSaveData.estado">
+                            </div>
+                        </form>
+
                       </div>
                       <div class="modal-footer">
-                          <button class="btn btn-primary">aceptar</button>
+                          <button class="btn btn-primary" data-ng-click="fincaSave()">aceptar</button>
                           <button class="btn btn-default" data-dismiss="modal">cancelar</button>
                       </div>
-                  </div>
-              </div>
-          </div>
 
+                  </div>
+                </div>
+            </div>
+            <div class="modal fade" id="Activiades">
+                <div class="modal-dialog">
+                  <div class="modal-content"  data-ng-controller="actividadController">
+
+                      <div class="modal-header">
+                          <buton class="close" aria-hidden="true" data-dismiss="modal">&times;</buton>
+                          <h4 class="modal-title">Actividades</h4>
+                      </div>
+                      <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="actividad">Actividad</label>
+                                <input type="text" class="form-control" placeholder="Actividad" name="actividad" data-ng-model="actividadSaveData.nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="finca">Finca</label>
+                                <input type="text"class="form-control" placeholder="finca" name="finca" data-ng-model="actividadSaveData.id_finca">
+                            </div>
+                        </form>
+
+                      </div>
+                      <div class="modal-footer">
+                          <button class="btn btn-primary" data-ng-click="actividadSave()">Guardar</button>
+                          <button class="btn btn-default" data-dismiss="modal">cancelar</button>
+                      </div>
+
+                  </div>
+                </div>
+            </div>
 
 
       <script src="res/dependencies/jquery/dist/jquery.min.js"></script>
