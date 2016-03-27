@@ -18,15 +18,15 @@
       </thead>
       <tbody>
         <tr data-ng-repeat="trabajador in trabajadores">
-          <td> {{trabajador.id}} </td>
-          <td> {{trabajador.nombre}} </td>
-          <td> {{trabajador.apellidos}} </td>
-          <td> {{trabajador.nss}} </td>
-          <td> {{trabajador.cedula}} </td>
-          <td> {{trabajador.celular}} </td>
-          <td> {{trabajador.created_at}} </td>
-          <td> {{trabajador.updated_at}} </td>
-          <td><a data-ng-href="#/trabajador/editar/{{trabajador.id}}">Actualizar</a></td>
+          <td> <% trabajador.id %> </td>
+          <td> <% trabajador.nombre %> </td>
+          <td> <% trabajador.apellidos %> </td>
+          <td> <% trabajador.nss %> </td>
+          <td> <% trabajador.cedula %> </td>
+          <td> <% trabajador.celular %> </td>
+          <td> <% trabajador.created_at %> </td>
+          <td> <% trabajador.updated_at %> </td>
+          <td><a data-ng-href="#/trabajador/editar/<% trabajador.id %>">Actualizar</a></td>
     			<td><a data-ng-click='del(trabajador.id)' data-ng-href="#/">Eliminar</a></td>
         </tr>
       </tbody>

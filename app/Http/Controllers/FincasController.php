@@ -18,7 +18,7 @@ class FincasController extends Controller
      */
     public function index()
     {
-        $finca = Fincas::all();
+        $finca = Finca::all();
         return response()->json($finca);
     }
 

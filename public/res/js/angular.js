@@ -3,7 +3,10 @@
 	'use strict';
 
 	//Create a new Angular module
-	angular.module('moduleName',["ngRoute","ngResource"]);
+	angular.module('moduleName',["ngRoute","ngResource"], function($interpolateProvider) {
+        $interpolateProvider.startSymbol('<%');
+        $interpolateProvider.endSymbol('%>');
+    });
 
 	//Use an exist Angular Module
 	var app = angular.module('moduleName');
@@ -33,16 +36,18 @@
 	  }
 	}]);
 	//Create and append a new cotroller for your module
-	app.controller("actividadController",['$scope','$http','actividadResource', function(s,h,ar){
+	app.controller("actividadController",['$scope','$http','actividadResource','fincaResource', function(s,h,ar,fr){
 	  s.actividadSaveData = {};
+		s.lasfincas = fr.query();
 	  s.actividadSave = function(){
 	    console.log(s.actividadSaveData);
 	    ar.save({data:s.actividadSaveData});
 	  }
 	}]);
 	//Create and append a new cotroller for your module
-	app.controller("laborController",['$scope','$http','laborResource', function(s,h,lr){
+	app.controller("laborController",['$scope','$http','laborResource','actividadResource', function(s,h,lr,ar){
 	  s.laborSaveData = {};
+		s.lasactividades = ar.query();
 	  s.laborSave = function(){
 	    console.log(s.laborSaveData);
 	    lr.save({data:s.laborSaveData});

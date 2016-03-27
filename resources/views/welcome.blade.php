@@ -85,8 +85,12 @@
                                 <input type="text" class="form-control" placeholder="Actividad" name="actividad" data-ng-model="actividadSaveData.nombre">
                             </div>
                             <div class="form-group">
-                                <label for="finca">Finca</label>
-                                <input type="text"class="form-control" placeholder="finca" name="finca" data-ng-model="actividadSaveData.id_finca">
+                              <label for="finca">Finca</label>
+                              <select name="finca" id="fincaSelect" class="form-control" data-ng-model="actividadSaveData.id_finca">
+                                <optgroup label="Fincas">
+                                  <option data-ng-repeat="lafinca in lasfincas" value="<% lafinca.id %>"><% lafinca.nombre %></option>
+                                </optgroup>
+                              </select>
                             </div>
                         </form>
 
@@ -114,10 +118,14 @@
                                 <input type="text" class="form-control" placeholder="Labor" name="labor" data-ng-model="laborSaveData.nombre">
                             </div>
                             <div class="form-group">
-                                <label for="actividad">Actividad</label>
-                                <input type="text"class="form-control" placeholder="Actividad" name="actividad" data-ng-model="laborSaveData.id_actividad">
+                              <label for="actividad">Actividad</label>
+                              <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="laborSaveData.id_actividad">
+                                <optgroup label="Actividades">
+                                  <option data-ng-repeat="laactividad in lasactividades" value="<% laactividad.id %>"><% laactividad.nombre %></option>
+                                </optgroup>
+                              </select>
                             </div>
-                        </form>
+                      </form>
 
                       </div>
                       <div class="modal-footer">
