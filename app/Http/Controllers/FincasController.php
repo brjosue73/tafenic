@@ -44,6 +44,7 @@ class FincasController extends Controller
         $arreglo = $peticion["data"];
 
         $finca = new Finca($arreglo);
+        $finca->estado=1;
         $finca->save();
         return "Finca Agregada!";
     }
