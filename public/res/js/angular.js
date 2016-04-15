@@ -29,15 +29,54 @@
 	}]);
 	//Create and append a new cotroller for your module
 	app.controller("fincaController",['$scope','$http','fincaResource', function(s,h,fr){
+		var $btnFAceptar = $('#fincAceptar') ;
 	  s.fincaSaveData = {};
+
 	  s.fincaSave = function(){
 	    console.log(s.fincaSaveData);
-	    fr.save({data:s.fincaSaveData});
+
+			$('#fincaSpinner').css("display", "inline-block");
+
+			fr.save({data:s.fincaSaveData}, function(res) {
+				console.log(res);
+				$('#fincaSpinner').css("display", "none");
+				$('#exitofinca').css("display","inline");
+				setTimeout(function(){
+					$('#exitofinca').css("display","none");
+				},3000)
+			},function(err){
+				console.log(err.status);
+				$('#fincaSpinner').css("display", "none");
+				$('#errorfinca').css("display","inline");
+				setTimeout(function(){
+					$('#errorfinca').css("display","none");
+				},3000)
+			});
 	  }
 	}]);
 	//Create and append a new cotroller for your module
 	app.controller("actividadController",['$scope','$http','actividadResource','fincaResource', function(s,h,ar,fr){
 	  s.actividadSaveData = {};
+
+		/*var dataEntrante = fr.query();
+		s.lasfincas = dataEntrante;
+
+		console.log(dataEntrante);
+		console.log(s.lasfincas);*/
+
+		/*s.obtener = function(){
+			console.log("actividades");
+			// dataEntrante = fr.query();
+			// s.lasfincas = dataEntrante;
+			h.get('/fincas')
+			.success(function(data){
+				console.log(data);
+				s.lasfincas = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}*/
 		s.lasfincas = fr.query();
 	  s.actividadSave = function(){
 	    console.log(s.actividadSaveData);
@@ -47,7 +86,15 @@
 	//Create and append a new cotroller for your module
 	app.controller("laborController",['$scope','$http','laborResource','actividadResource', function(s,h,lr,ar){
 	  s.laborSaveData = {};
-		s.lasactividades = ar.query();
+
+		var dataEntra = ar.query();
+		s.lasactividades = dataEntra;
+
+		s.obtener = function(){
+			console.log("labores");
+			s.lasactividades = "";
+			dataEntra = "";
+		}
 	  s.laborSave = function(){
 	    console.log(s.laborSaveData);
 	    lr.save({data:s.laborSaveData});
