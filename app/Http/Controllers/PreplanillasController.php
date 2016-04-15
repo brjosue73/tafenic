@@ -21,16 +21,21 @@ class PreplanillasController extends Controller
      */
     public function create()
     {
-        $prep=Preplanilla::find(1);
-        $prep->trabajador;
-        $prep->finca;
-        $prep->actividad;
-        $prep->labor;
-        $prep->lote;
-        $prep->listero;
-        $prep->resp_finca;
+        $preps=Preplanilla::all();
 
-        return $prep;
+        foreach ($preps as $prep) {
+            $prep->trabajador;
+            $prep->finca;
+            $prep->actividad;
+            $prep->labor;
+            $prep->lote;
+            $prep->listero;
+            $prep->resp_finca;
+        }
+
+
+        return response()->json($preps);
+
         //enviar los datos de la preplanilla para que aparezcan en los combo box 
         
     }

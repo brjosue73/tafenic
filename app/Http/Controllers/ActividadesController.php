@@ -57,7 +57,7 @@ class ActividadesController extends Controller
     public function show($id)
     {
         $actividad = Actividad::find($id);
-        $actividad ->nom_finc= $actividad->finca->nombre;
+        $actividad ->finca->nombre;
         return response()->json($actividad);
     }
 
