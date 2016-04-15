@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Actividad;
-use App\Finca;
+use App\Lote;
 
-class ActividadesController extends Controller
+class LotesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,7 @@ class ActividadesController extends Controller
      */
     public function index()
     {
-        $actividad= Actividad::all();
-        return response()->json($actividad);
+        //
     }
 
     /**
@@ -29,7 +27,7 @@ class ActividadesController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -41,11 +39,11 @@ class ActividadesController extends Controller
     public function store(Request $request)
     {
         $peticion = $request->all();
-        $arreglo = $peticion["data"];
+        $arreglo= $peticion ["data"];
 
-        $actividad = new Actividad($arreglo);
-        $actividad->save();
-        return "Actividad Agregada!";
+        $lote = new Lote($arreglo);
+        $lote->save();
+        return "agregado";
     }
 
     /**
@@ -56,9 +54,8 @@ class ActividadesController extends Controller
      */
     public function show($id)
     {
-        $actividad = Actividad::find($id);
-        $actividad ->nom_finc= $actividad->finca->nombre;
-        return response()->json($actividad);
+        $lote = Lote::find($id);
+        return response()->json($lote);
     }
 
     /**
@@ -83,14 +80,10 @@ class ActividadesController extends Controller
     {
         $peticion = $request->all();
         $arreglo = $peticion["data"];
+        $lote= Lote::find($id);
 
-        $actividad = Actividad::find($id);
-
-        $actividad->nombre = $arreglo['nombre'];
-        $actividad->id_finca = $arreglo['id_finca'];
-
-        $actividad->save();
-        return "Done!";
+        $lote->lote=$arreglo['lote'];
+        $lote->id_finca=$arreglo['id_finca'];
     }
 
     /**
@@ -101,8 +94,8 @@ class ActividadesController extends Controller
      */
     public function destroy($id)
     {
-        $actividad = Actividad::find($id);
-        $actividad->delete();
+        $lote = Lote::find($id);
+        $lote->delete();
         return "Registro Eliminado";
     }
 }

@@ -12,4 +12,8 @@ class Labor extends Model
    	public function actividad(){
    		return $this->belongsTo('App\Actividad','id_actividad');
    	}
+   	
+   	public function preplanilla(){
+   		return $this->hasMany('App\Preplanillla');
+   	}
 }

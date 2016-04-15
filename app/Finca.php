@@ -11,4 +11,10 @@ class Finca extends Model
    	public function actividades (){
    		return $this->hasMany('App\Actividad');
    	}
+   	public function lotes (){
+   		return $this->hasMany('App\Lotes');
+   	}
+   	public function preplanilla(){
+   		return $this->hasMany('App\Preplanillla');
+   	}
 }

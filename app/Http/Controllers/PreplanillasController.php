@@ -6,22 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Actividad;
-use App\Finca;
+use App\Preplanilla;
 
-class ActividadesController extends Controller
+class PreplanillasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+     public function index()
     {
-        $actividad= Actividad::all();
-        return response()->json($actividad);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -29,7 +21,18 @@ class ActividadesController extends Controller
      */
     public function create()
     {
+        $prep=Preplanilla::find(1);
+        $prep->trabajador;
+        $prep->finca;
+        $prep->actividad;
+        $prep->labor;
+        $prep->lote;
+        $prep->listero;
+        $prep->resp_finca;
 
+        return $prep;
+        //enviar los datos de la preplanilla para que aparezcan en los combo box 
+        
     }
 
     /**
@@ -43,9 +46,9 @@ class ActividadesController extends Controller
         $peticion = $request->all();
         $arreglo = $peticion["data"];
 
-        $actividad = new Actividad($arreglo);
-        $actividad->save();
-        return "Actividad Agregada!";
+        $labor = new Preplanilla($arreglo);
+        $labor->save();
+        return "Agregada!";
     }
 
     /**
@@ -56,9 +59,8 @@ class ActividadesController extends Controller
      */
     public function show($id)
     {
-        $actividad = Actividad::find($id);
-        $actividad ->nom_finc= $actividad->finca->nombre;
-        return response()->json($actividad);
+        $labor = Preplanilla::find($id);
+        return response()->json($labor);
     }
 
     /**
@@ -84,12 +86,20 @@ class ActividadesController extends Controller
         $peticion = $request->all();
         $arreglo = $peticion["data"];
 
-        $actividad = Actividad::find($id);
+        $preplanilla = Preplanilla::find($id);
 
-        $actividad->nombre = $arreglo['nombre'];
-        $actividad->id_finca = $arreglo['id_finca'];
-
-        $actividad->save();
+        $preplanilla->id_trabajador = $arreglo['id_trabajador'];
+        $preplanilla->id_finca = $arreglo['id_finca'];
+        $preplanilla->id_actividad = $arreglo['id_actividad'];
+        $preplanilla->id_labor = $arreglo['id_labor'];
+        $preplanilla->fecha = $arreglo['fecha'];
+        $preplanilla->lote = $arreglo['lote'];
+        $preplanilla->id_listero = $arreglo['id_listero'];
+        $preplanilla->id_respFinca = $arreglo['id_respFinca'];
+        $preplanilla->cantidad = $arreglo['cantidad'];
+        $preplanilla->hora_ext = $arreglo['hora_ext'];
+        $preplanilla->actividad_ext = $arreglo['actividad_ext'];
+        $preplanilla->save();
         return "Done!";
     }
 
@@ -101,8 +111,8 @@ class ActividadesController extends Controller
      */
     public function destroy($id)
     {
-        $actividad = Actividad::find($id);
-        $actividad->delete();
+        $preplanilla = Preplanilla::find($id);
+        $preplanilla->delete();
         return "Registro Eliminado";
     }
 }
