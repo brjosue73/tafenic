@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Finca;
+use App\Lote;
 
-
-class FincasController extends Controller
+class LotesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +17,7 @@ class FincasController extends Controller
      */
     public function index()
     {
-        $finca = Finca::all();
-        return response()->json($finca);
+        //
     }
 
     /**
@@ -41,12 +39,11 @@ class FincasController extends Controller
     public function store(Request $request)
     {
         $peticion = $request->all();
-        $arreglo = $peticion["data"];
+        $arreglo= $peticion ["data"];
 
-        $finca = new Finca($arreglo);
-        $finca->estado=1;
-        $finca->save();
-        return "Finca Agregada!";
+        $lote = new Lote($arreglo);
+        $lote->save();
+        return "agregado";
     }
 
     /**
@@ -57,8 +54,8 @@ class FincasController extends Controller
      */
     public function show($id)
     {
-        $finca = Finca::find($id);
-        return response()->json($finca);
+        $lote = Lote::find($id);
+        return response()->json($lote);
     }
 
     /**
@@ -69,7 +66,7 @@ class FincasController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -83,14 +80,10 @@ class FincasController extends Controller
     {
         $peticion = $request->all();
         $arreglo = $peticion["data"];
+        $lote= Lote::find($id);
 
-        $finca = Finca::find($id);
-
-        $finca->nombre = $arreglo['nombre'];
-        $finca->estado = $arreglo['estado'];
-
-        $finca->save();
-        return "Done!";
+        $lote->lote=$arreglo['lote'];
+        $lote->id_finca=$arreglo['id_finca'];
     }
 
     /**
@@ -101,8 +94,8 @@ class FincasController extends Controller
      */
     public function destroy($id)
     {
-        $finca = Finca::find($id);
-        $finca->delete();
+        $lote = Lote::find($id);
+        $lote->delete();
         return "Registro Eliminado";
     }
 }

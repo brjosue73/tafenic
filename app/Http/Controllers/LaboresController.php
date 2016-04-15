@@ -28,7 +28,7 @@ class LaboresController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -56,6 +56,7 @@ class LaboresController extends Controller
     public function show($id)
     {
         $labor = Labor::find($id);
+        $labor->actividad;
         return response()->json($labor);
     }
 

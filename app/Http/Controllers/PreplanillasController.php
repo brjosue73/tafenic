@@ -6,22 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Finca;
+use App\Preplanilla;
 
-
-class FincasController extends Controller
+class PreplanillasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+     public function index()
     {
-        $finca = Finca::all();
-        return response()->json($finca);
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -29,7 +21,23 @@ class FincasController extends Controller
      */
     public function create()
     {
-        //
+        $preps=Preplanilla::all();
+
+        foreach ($preps as $prep) {
+            $prep->trabajador;
+            $prep->finca;
+            $prep->actividad;
+            $prep->labor;
+            $prep->lote;
+            $prep->listero;
+            $prep->resp_finca;
+        }
+
+
+        return response()->json($preps);
+
+        //enviar los datos de la preplanilla para que aparezcan en los combo box 
+        
     }
 
     /**
@@ -43,10 +51,9 @@ class FincasController extends Controller
         $peticion = $request->all();
         $arreglo = $peticion["data"];
 
-        $finca = new Finca($arreglo);
-        $finca->estado=1;
-        $finca->save();
-        return "Finca Agregada!";
+        $labor = new Preplanilla($arreglo);
+        $labor->save();
+        return "Agregada!";
     }
 
     /**
@@ -57,8 +64,8 @@ class FincasController extends Controller
      */
     public function show($id)
     {
-        $finca = Finca::find($id);
-        return response()->json($finca);
+        $labor = Preplanilla::find($id);
+        return response()->json($labor);
     }
 
     /**
@@ -69,7 +76,7 @@ class FincasController extends Controller
      */
     public function edit($id)
     {
-
+        //
     }
 
     /**
@@ -84,12 +91,20 @@ class FincasController extends Controller
         $peticion = $request->all();
         $arreglo = $peticion["data"];
 
-        $finca = Finca::find($id);
+        $preplanilla = Preplanilla::find($id);
 
-        $finca->nombre = $arreglo['nombre'];
-        $finca->estado = $arreglo['estado'];
-
-        $finca->save();
+        $preplanilla->id_trabajador = $arreglo['id_trabajador'];
+        $preplanilla->id_finca = $arreglo['id_finca'];
+        $preplanilla->id_actividad = $arreglo['id_actividad'];
+        $preplanilla->id_labor = $arreglo['id_labor'];
+        $preplanilla->fecha = $arreglo['fecha'];
+        $preplanilla->lote = $arreglo['lote'];
+        $preplanilla->id_listero = $arreglo['id_listero'];
+        $preplanilla->id_respFinca = $arreglo['id_respFinca'];
+        $preplanilla->cantidad = $arreglo['cantidad'];
+        $preplanilla->hora_ext = $arreglo['hora_ext'];
+        $preplanilla->actividad_ext = $arreglo['actividad_ext'];
+        $preplanilla->save();
         return "Done!";
     }
 
@@ -101,8 +116,8 @@ class FincasController extends Controller
      */
     public function destroy($id)
     {
-        $finca = Finca::find($id);
-        $finca->delete();
+        $preplanilla = Preplanilla::find($id);
+        $preplanilla->delete();
         return "Registro Eliminado";
     }
 }

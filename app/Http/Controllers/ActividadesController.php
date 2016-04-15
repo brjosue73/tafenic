@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Actividad;
+use App\Finca;
 
 class ActividadesController extends Controller
 {
@@ -28,7 +29,7 @@ class ActividadesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -56,6 +57,7 @@ class ActividadesController extends Controller
     public function show($id)
     {
         $actividad = Actividad::find($id);
+        $actividad ->finca->nombre;
         return response()->json($actividad);
     }
 
