@@ -10,13 +10,17 @@
 }
 .tabla{
   display:table;
+  padding-top:rem;
 }
 .columna{
   display: table-cell;
 }
 .opciones{
   width: 20%;
+  vertical-align: top;
 }
 .cuerpo{
   width: 80%;
+  min-width:80%;
+  overflow:scroll;
 }

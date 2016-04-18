@@ -132,7 +132,7 @@
 	      controllerAs: 'CR2'
 	    })
 	    .when('/preplanilla', {
-	      templateUrl: 'partials/preplanilla.html',
+	      templateUrl: 'partials/preplanillas/prepPanel.html',
 	      controller: 'preplanilla',
 	      controllerAs: 'pplla'
 	    })

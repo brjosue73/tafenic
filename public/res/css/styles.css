@@ -12,16 +12,20 @@
   background-color: #aaa; }
 
 .tabla {
-  display: table; }
+  display: table;
+  padding-top: rem; }
 
 .columna {
   display: table-cell; }
 
 .opciones {
-  width: 20%; }
+  width: 20%;
+  vertical-align: top; }
 
 .cuerpo {
-  width: 80%; }
+  width: 80%;
+  min-width: 80%;
+  overflow: scroll; }
 
 .loggin-wrapper {
   display: flex;
@@ -39,7 +43,6 @@
     text-align: center; }
 
 #options {
-  vertical-align: top;
   padding-top: 3rem; }
 
 .flex-row {
