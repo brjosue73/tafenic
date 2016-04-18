@@ -39,7 +39,8 @@
     text-align: center; }
 
 #options {
-  vertical-align: top; }
+  vertical-align: top;
+  padding-top: 3rem; }
 
 .flex-row {
   display: flex;
