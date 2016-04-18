@@ -23,8 +23,6 @@ class PreplanillasController extends Controller
             $prep->listero;
             $prep->resp_finca;
         }
-
-
         return response()->json($preps);
 
         //enviar los datos de la preplanilla para que aparezcan en los combo box 
@@ -49,14 +47,6 @@ class PreplanillasController extends Controller
                     ->get();
         return response()->json($prep);
 
-        /*if $request->finca = NULL { //si no envia fincas en el request
-            //hacer la consulta solamente en el rango de fechas
-        }
-        else
-        {
-            //hacer la consulta con el rango de fecha y agregar un where ->where('fincas', $request->finca)
-        }
-        */
     }
 
     
