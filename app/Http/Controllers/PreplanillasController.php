@@ -13,6 +13,34 @@ class PreplanillasController extends Controller
      public function index()
     {
     }
+    public function constantes(){ /*Envia las constantes para ser modificadas con algular */
+        $constants = array();
+        $array = [
+            "dia" => 136,
+            "septimo" => 136,
+            "alimentacion" => 30,
+            "vacaciones" => 15,
+            "aguinaldo" => 15,
+            "h_extra" => 37,
+        ];
+        return $array;
+    }
+
+    public function preplanilla_fecha(Request $request){
+        $prep= DB::table('preplanillas')
+                    ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
+                    ->get();
+        return response()->json($prep);
+
+        /*if $request->finca = NULL { //si no envia fincas en el request
+            //hacer la consulta solamente en el rango de fechas
+        }
+        else
+        {
+            //hacer la consulta con el rango de fecha y agregar un where ->where('fincas', $request->finca)
+        }
+        */
+    }
     
     /**
      * Show the form for creating a new resource.
@@ -104,6 +132,12 @@ class PreplanillasController extends Controller
         $preplanilla->cantidad = $arreglo['cantidad'];
         $preplanilla->hora_ext = $arreglo['hora_ext'];
         $preplanilla->actividad_ext = $arreglo['actividad_ext'];
+        $preplanilla->salario_dev = $arreglo['salario_dev'];
+        $preplanilla->septimo = $arreglo['septimo'];
+        $preplanilla->alimentacion = $arreglo['alimentacion'];
+        $preplanilla->vacaciones = $arreglo['vacaciones'];
+        $preplanilla->aguinaldo = $arreglo['aguinaldo'];
+        $preplanilla->salario_acum = $arreglo['salario_acum'];
         $preplanilla->save();
         return "Done!";
     }

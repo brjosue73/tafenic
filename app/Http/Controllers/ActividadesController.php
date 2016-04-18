@@ -28,8 +28,11 @@ class ActividadesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-
+    { 
+        /*enviar ultimo valor de actividades*/
+        $id = Actividad::all()->max('id');
+        $query = Actividad::find($id);
+        return $query;
     }
 
     /**

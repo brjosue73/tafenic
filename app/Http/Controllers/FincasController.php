@@ -29,6 +29,10 @@ class FincasController extends Controller
      */
     public function create()
     {
+        /*enviar ultimo valor de Fincas*/
+        $id = Finca::all()->max('id');
+        $query = Finca::find($id);
+        return $query;
         //
     }
 

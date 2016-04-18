@@ -33,7 +33,10 @@ Route::resource('labor','LaboresController');
 Route::resource("preplanilla",'PreplanillasController');
 Route::resource("lotes",'LotesController');
 
+Route::post('/constantes','PreplanillasController@constantes');
 
+
+/*Finca actividad labor lote*/
 
 Route::group(['middleware' => ['web']], function () {
     //

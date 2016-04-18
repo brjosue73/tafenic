@@ -16,7 +16,6 @@ class AgregarLotesAPreplanillas extends Migration
             $table->integer('id_lote')->unsigned();
             $table->foreign('id_lote')->references('id')->on('lotes')->onDelete('cascade');
             $table->float('salario_dev');
-            $table->float('septimo');
             $table->float('alimentacion');
             $table->float('vacaciones');
             $table->float('aguinaldo');
@@ -35,7 +34,6 @@ class AgregarLotesAPreplanillas extends Migration
         Schema::table('preplanillas', function ($table){
             $table->dropColumn('id_lote'); 
             $table->dropColumn('salario_dev');
-            $table->dropColumn('septimo');
             $table->dropColumn('alimentacion');
             $table->dropColumn('vacaciones');
             $table->dropColumn('aguinaldo');
