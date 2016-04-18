@@ -1,7 +1,7 @@
 {
 "version": 3,
-"mappings": "AAAA,OAAQ;EACN,aAAa,EAAE,CAAC",
-"sources": ["../../src/scss/styles.scss"],
+"mappings": "AAAA,OAAQ;EACN,aAAa,EAAE,CAAC;EAChB,aAAa,EAAE,CAAC;;ACDlB,MAAM;EACJ,MAAM,EAAC,MAAM;;AAEf,KAAK;EACH,gBAAgB,EAAE,IAAI;;AAExB,MAAM;EACJ,gBAAgB,EAAE,IAAI;;AAExB,MAAM;EACJ,OAAO,EAAC,KAAK;;AAEf,QAAQ;EACN,OAAO,EAAE,UAAU;;AAErB,SAAS;EACP,KAAK,EAAE,GAAG;;AAEZ,OAAO;EACL,KAAK,EAAE,GAAG;;ACpBZ,eAAe;EACb,OAAO,EAAE,IAAI;EACb,WAAW,EAAE,MAAM;EACnB,eAAe,EAAE,MAAM;EACvB,gBAAgB,EAAE,IAAI;EAEpB,gBAAK,EAAE,2BAA2B;EAClC,mBAAQ,EAAE,GAAG;EACb,eAAI,EAAE,IAAI;EACV,iBAAM,EAAC,SAAS;;AAGpB,YAAY;EACV,gBAAgB,EAAE,wBAAqB;EAEvC,eAAG;IACD,UAAU,EAAC,MAAM;;AChBrB,QAAQ;EACN,cAAc,EAAE,GAAG;;AAIrB,SAAU;EACR,OAAO,EAAE,IAAI;EACb,eAAe,EAAE,YAAY;EAC7B,WAAW,EAAC,IAAI",
+"sources": ["../../src/scss/framework/_reset.scss","../../src/scss/framework/_clases.scss","../../src/scss/layouts/_logginForm.scss","../../src/scss/layouts/_adminPane.scss"],
 "names": [],
 "file": "styles.css"
 }

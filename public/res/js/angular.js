@@ -6,7 +6,7 @@
 	angular.module('moduleName',["ngRoute","ngResource"], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
-    });
+  });
 
 	//Use an exist Angular Module
 	var app = angular.module('moduleName');
@@ -27,6 +27,9 @@
 	app.factory('laborResource', ['$resource', function(r){
 	  return r('labor/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
+	app.factory('prepResource', ['$resource', function(r){
+		return r('preplanilla/:id',{id:"@id"},{update:{method:"PUT"}});
+	}])
 	//Create and append a new cotroller for your module
 	app.controller("fincaController",['$scope','$http','fincaResource', function(s,h,fr){
 		var $btnFAceptar = $('#fincAceptar') ;
@@ -103,20 +106,35 @@
 	//angular routes config
 	app.config(function ($routeProvider) {
 	$routeProvider
+	    .when('/', {
+	      templateUrl: 'partials/loggin.html',
+	      controller: '',
+	      controllerAs: ''
+	    })
+	    .when('/adminPane', {
+	      templateUrl: 'partials/adminPane.html',
+	      controller: '',
+	      controllerAs: ''
+	    })
 	    .when('/trabajadores/nuevo/', {
-	      templateUrl: 'partials/saveForm.html',
+	      templateUrl: 'partials/trabajadores/actualizarT.html',
 	      controller: 'postOne',
 	      controllerAs: 'CR0'
 	    })
-	    .when('/', {
-	      templateUrl: 'partials/listar.html',
+	    .when('/trabajadores', {
+	      templateUrl: 'partials/trabajadores/listarT.html',
 	      controller: 'getAll',
 	      controllerAs: 'CR1'
 	    })
 	    .when('/trabajador/editar/:id', {
-	      templateUrl: 'partials/saveForm.html',
+	      templateUrl: 'partials/trabajadores/actualizarT.html',
 	      controller: 'getOne',
 	      controllerAs: 'CR2'
+	    })
+	    .when('/preplanilla', {
+	      templateUrl: 'partials/preplanilla.html',
+	      controller: 'preplanilla',
+	      controllerAs: 'pplla'
 	    })
 	    .otherwise({
 	      redirectTo: '/'
@@ -151,6 +169,17 @@
 				console.log(datos);
 				l.path('/');
 			});
+		}
+	}]);
+
+	app.controller('preplanilla',['$scope','prepResource','fincaResource', function(s,pr,fr){
+		s.prepSendData = {};
+		s.preplanillas = pr.query();
+		//s.fincas  = fr.query();
+		//s.fincas = s.preplanillas.finca;
+		s.prepTrab = function() {
+			console.log(s.prepSendData);
+			console.log(s.preplanillas);
 		}
 	}]);
 }());

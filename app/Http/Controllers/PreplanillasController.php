@@ -12,15 +12,6 @@ class PreplanillasController extends Controller
 {
      public function index()
     {
-    }
-    
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
         $preps=Preplanilla::all();
 
         foreach ($preps as $prep) {
@@ -36,8 +27,17 @@ class PreplanillasController extends Controller
 
         return response()->json($preps);
 
-        //enviar los datos de la preplanilla para que aparezcan en los combo box 
-        
+        //enviar los datos de la preplanilla para que aparezcan en los combo box
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
     }
 
     /**
