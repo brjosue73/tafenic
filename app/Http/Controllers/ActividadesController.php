@@ -33,6 +33,8 @@ class ActividadesController extends Controller
         $id = Actividad::all()->max('id');
         $query = Actividad::find($id);
         return $query;
+    {
+
     }
 
     /**

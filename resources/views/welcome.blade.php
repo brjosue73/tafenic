@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Laravel</title>
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css"> -->
         <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="res/css/styles.css">
         <link rel="stylesheet" href="res/dependencies/font-awesome/css/font-awesome.min.css">
@@ -23,9 +23,9 @@
                 <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="" data-toggle="modal" data-target="#miModal">Fincas</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#Activiades">Actividades</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#Labores">Labores</a></li>
+                    <li data-ng-controller="fincaController"><a href="" data-toggle="modal" data-ng-mouseenter="obtener()" data-target="#miModal">Fincas</a></li>
+                    <li data-ng-controller="actividadController"><a href="" data-toggle="modal" data-ng-mouseover="obtener()" data-target="#Activiades">Actividades</a></li>
+                    <li data-ng-controller="laborController"><a href="" data-toggle="modal" data-ng-click="obtener()" data-target="#Labores">Labores</a></li>
                     <li><a href="" data-toggle="modal" data-target="#miModa">Otros</a></li>
                   </ul>
                 </li>
@@ -63,7 +63,10 @@
 
                       </div>
                       <div class="modal-footer">
-                          <button class="btn btn-primary" data-ng-click="fincaSave()">aceptar</button>
+                          <i id="fincaSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
+                          <span id="exitofinca" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
+                          <span id="errorfinca" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
+                          <button id="fincAceptar" class="btn btn-primary" data-ng-click="fincaSave()">aceptar</button>
                           <button class="btn btn-default" data-dismiss="modal">cancelar</button>
                       </div>
 
@@ -140,12 +143,12 @@
 
 
       <script src="res/dependencies/jquery/dist/jquery.min.js"></script>
+      <script src="res/dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
       <script src="res/dependencies/angular/angular.min.js"></script>
       <script src="res/dependencies/angular-route/angular-route.min.js"></script>
       <script src="res/dependencies/angular-resource/angular-resource.min.js"></script>
       <script src="res/dependencies/angular-ui-router/release/angular-ui-router.min.js"></script>
       <script src="res/js/angular.js"></script>
-      <script src="res/dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
       <script src="res/js/scripts.min.js"></script>
     </body>
 </html>

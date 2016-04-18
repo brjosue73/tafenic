@@ -34,7 +34,7 @@ Route::resource("preplanilla",'PreplanillasController');
 Route::resource("lotes",'LotesController');
 
 Route::post('/constantes','PreplanillasController@constantes');
-
+Route::post('/prep_fecha', 'PreplanillasController@preplanilla_fecha');
 
 /*Finca actividad labor lote*/
 

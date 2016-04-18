@@ -32,6 +32,7 @@ class LaboresController extends Controller
         $id = Labor::all()->max('id');
         $query = Labor::find($id);
         return $query;
+        
     }
 
     /**

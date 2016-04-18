@@ -12,7 +12,24 @@ class PreplanillasController extends Controller
 {
      public function index()
     {
+         $preps=Preplanilla::all();
+
+        foreach ($preps as $prep) {
+            $prep->trabajador;
+            $prep->finca;
+            $prep->actividad;
+            $prep->labor;
+            $prep->lote;
+            $prep->listero;
+            $prep->resp_finca;
+        }
+
+
+        return response()->json($preps);
+
+        //enviar los datos de la preplanilla para que aparezcan en los combo box 
     }
+
     public function constantes(){ /*Envia las constantes para ser modificadas con algular */
         $constants = array();
         $array = [
@@ -41,6 +58,7 @@ class PreplanillasController extends Controller
         }
         */
     }
+
     
     /**
      * Show the form for creating a new resource.
@@ -49,22 +67,7 @@ class PreplanillasController extends Controller
      */
     public function create()
     {
-        $preps=Preplanilla::all();
 
-        foreach ($preps as $prep) {
-            $prep->trabajador;
-            $prep->finca;
-            $prep->actividad;
-            $prep->labor;
-            $prep->lote;
-            $prep->listero;
-            $prep->resp_finca;
-        }
-
-
-        return response()->json($preps);
-
-        //enviar los datos de la preplanilla para que aparezcan en los combo box 
         
     }
 
@@ -133,7 +136,6 @@ class PreplanillasController extends Controller
         $preplanilla->hora_ext = $arreglo['hora_ext'];
         $preplanilla->actividad_ext = $arreglo['actividad_ext'];
         $preplanilla->salario_dev = $arreglo['salario_dev'];
-        $preplanilla->septimo = $arreglo['septimo'];
         $preplanilla->alimentacion = $arreglo['alimentacion'];
         $preplanilla->vacaciones = $arreglo['vacaciones'];
         $preplanilla->aguinaldo = $arreglo['aguinaldo'];

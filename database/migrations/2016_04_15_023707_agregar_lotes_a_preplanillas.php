@@ -38,7 +38,6 @@ class AgregarLotesAPreplanillas extends Migration
             $table->dropColumn('vacaciones');
             $table->dropColumn('aguinaldo');
             $table->dropColumn('salario_acum');
-
         });
     }
 }

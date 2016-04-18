@@ -31,6 +31,7 @@ class LotesController extends Controller
         $id = Lote::all()->max('id');
         $query = Lote::find($id);
         return $query;
+        //
     }
 
     /**
