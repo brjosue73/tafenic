@@ -35,7 +35,6 @@ class ActividadesController extends Controller
         return $query;
     {
 
-    }
 
     /**
      * Store a newly created resource in storage.
