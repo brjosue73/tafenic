@@ -33,7 +33,7 @@ class ActividadesController extends Controller
         $id = Actividad::all()->max('id');
         $query = Actividad::find($id);
         return $query;
-    {
+    }
 
 
     /**
@@ -42,7 +42,7 @@ class ActividadesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+        public function store(Request $request)
     {
         $peticion = $request->all();
         $arreglo = $peticion["data"];
