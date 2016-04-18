@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Preplanilla extends Model
 {
 	protected $table = 'preplanillas';
-       protected $fillable = ['id_trabajador','id_finca','id_actividad','id_labor','fecha','id_lote','id_listero','id_respFinca','cantidad','hora_ext','actividad_ext'];
+       protected $fillable = ['id_trabajador','id_finca','id_actividad','id_labor','fecha','id_lote','id_listero','id_respFinca','cantidad','hora_ext','actividad_ext','salario_dev','septimo','alimentacion','vacaciones','aguinaldo','salario_acum'];
     //
-       
    	public function trabajador(){
    		return $this->belongsTo('App\Trabajador','id');
    	}
