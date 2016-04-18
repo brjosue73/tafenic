@@ -27,6 +27,10 @@ class LotesController extends Controller
      */
     public function create()
     {
+        /*enviar ultimo valor de Lotes*/
+        $id = Lote::all()->max('id');
+        $query = Lote::find($id);
+        return $query;
         //
     }
 

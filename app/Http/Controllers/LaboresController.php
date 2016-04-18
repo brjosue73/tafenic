@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\labor;
+use App\Labor;
 
 class LaboresController extends Controller
 {
@@ -28,6 +28,10 @@ class LaboresController extends Controller
      */
     public function create()
     {
+        /*enviar ultimo valor de labores*/
+        $id = Labor::all()->max('id');
+        $query = Labor::find($id);
+        return $query;
         
     }
 
