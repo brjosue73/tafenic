@@ -15,13 +15,16 @@
   display: table; }
 
 .columna {
-  display: table-cell; }
+  display: table-cell;
+  padding-top: 3rem; }
 
 .opciones {
-  width: 20%; }
+  width: 20%;
+  vertical-align: top; }
 
 .cuerpo {
-  width: 80%; }
+  width: 80%;
+  min-width: 80%; }
 
 .loggin-wrapper {
   display: flex;
@@ -39,12 +42,17 @@
     text-align: center; }
 
 #options {
-  vertical-align: top;
   padding-top: 3rem; }
 
 .flex-row {
   display: flex;
   justify-content: space-around;
   padding-top: 3rem; }
+
+#prep_wrapper, #prep_table, .table-striped {
+  width: 100%; }
+
+#trab_wrapper {
+  width: 100%; }
 
 /*# sourceMappingURL=styles.css.map */
