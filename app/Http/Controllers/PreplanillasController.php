@@ -12,7 +12,9 @@ class PreplanillasController extends Controller
 {
      public function index()
     {
-         $preps=Preplanilla::all();
+
+        $preps=Preplanilla::all();
+
 
         foreach ($preps as $prep) {
             $prep->trabajador;
@@ -25,7 +27,7 @@ class PreplanillasController extends Controller
         }
         return response()->json($preps);
 
-        //enviar los datos de la preplanilla para que aparezcan en los combo box 
+        //enviar los datos de la preplanilla para que aparezcan en los combo box
     }
 
     public function constantes(){ /*Envia las constantes para ser modificadas con algular */
@@ -63,8 +65,6 @@ class PreplanillasController extends Controller
         */
 
     }
-
-    
     /**
      * Show the form for creating a new resource.
      *
@@ -72,8 +72,6 @@ class PreplanillasController extends Controller
      */
     public function create()
     {
-
-        
     }
 
     /**

@@ -1,0 +1,19 @@
+.loggin-wrapper{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+  background:{
+    image: url(../img/campoTabaco.jpg);
+    position: 0 0;
+    size: 100%;
+    repeat:no-repeat;
+  }
+}
+#loggin-form{
+  background-color: rgba(255,255,255,0.5);
+  //padding: 1em 2em;
+  h2 {
+    text-align:center;
+  }
+}
