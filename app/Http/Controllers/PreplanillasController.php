@@ -31,8 +31,8 @@ class PreplanillasController extends Controller
     public function constantes(){ /*Envia las constantes para ser modificadas con algular */
         $constants = array();
         $array = [
-            "dia" => 136,
-            "septimo" => 136,
+            "dia" => 106.25,
+            "septimo" => 106.25,
             "alimentacion" => 30,
             "vacaciones" => 15,
             "aguinaldo" => 15,
@@ -46,6 +46,21 @@ class PreplanillasController extends Controller
                     ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
                     ->get();
         return response()->json($prep);
+          /*if $request->finca =! 'Todas' { //sino quiere todas las fincas
+            $prep= DB::table('preplanillas')
+                    ->where('finca',$request->finca)
+                    ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
+                    ->get();
+            //hacer la consulta solamente en el rango de fechas
+        }
+        else
+        {
+            $prep= DB::table('preplanillas')
+                    ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
+                    ->get();
+            //hacer la consulta con el rango de fecha y agregar un where ->where('fincas', $request->finca)
+        }
+        */
 
     }
 
@@ -68,12 +83,29 @@ class PreplanillasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    { 
+    /*Mejorar tomando los valores de la tabla de constantes*/
         $peticion = $request->all();
         $arreglo = $peticion["data"];
+        $dia=106.25;
+        $alim = 30;
+        $vacaciones= $dia*0.083333;
+        $aguin= $dia * 0.083333;
+        if ($request->hora_ext=!null){
+            $ext=$request->hora_ext * 26.56;
+        }
+        else{
+            $ext=0;
+        }
+        $acum = $dia + $alim + $vacaciones + $aguin + $ext;
 
-        $labor = new Preplanilla($arreglo);
-        $labor->save();
+
+        $prep = new Preplanilla($arreglo);
+        $prep->vacaciones = $vacaciones;
+        $prep->aguinaldo = $aguin;
+        $prep->salario_acum = $acum;
+        return $prep;
+        $prep->save();
         return "Agregada!";
     }
 
@@ -85,8 +117,8 @@ class PreplanillasController extends Controller
      */
     public function show($id)
     {
-        $labor = Preplanilla::find($id);
-        return response()->json($labor);
+        $prep = Preplanilla::find($id);
+        return response()->json($prep);
     }
 
     /**
