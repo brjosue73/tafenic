@@ -10,10 +10,10 @@
 }
 .tabla{
   display:table;
-  padding-top:rem;
 }
 .columna{
   display: table-cell;
+  padding-top: 3rem;
 }
 .opciones{
   width: 20%;
@@ -22,5 +22,5 @@
 .cuerpo{
   width: 80%;
   min-width:80%;
-  overflow:scroll;
+  //overflow:scroll;
 }

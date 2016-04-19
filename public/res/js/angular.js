@@ -92,7 +92,7 @@
 
 		var dataEntra = ar.query();
 		s.lasactividades = dataEntra;
-
+		s.laslabores=lr.query();
 		s.obtener = function(){
 			console.log("labores");
 			s.lasactividades = "";
@@ -179,7 +179,8 @@
 		//s.fincas = s.preplanillas.finca;
 		s.prepTrab = function() {
 			console.log(s.prepSendData);
-			console.log(s.preplanillas);
+			// console.log(s.preplanillas);
+			pr.save({data:s.prepSendData});
 		}
 	}]);
 }());

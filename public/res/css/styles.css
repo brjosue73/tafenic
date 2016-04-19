@@ -12,11 +12,11 @@
   background-color: #aaa; }
 
 .tabla {
-  display: table;
-  padding-top: rem; }
+  display: table; }
 
 .columna {
-  display: table-cell; }
+  display: table-cell;
+  padding-top: 3rem; }
 
 .opciones {
   width: 20%;
@@ -24,8 +24,7 @@
 
 .cuerpo {
   width: 80%;
-  min-width: 80%;
-  overflow: scroll; }
+  min-width: 80%; }
 
 .loggin-wrapper {
   display: flex;
@@ -49,5 +48,11 @@
   display: flex;
   justify-content: space-around;
   padding-top: 3rem; }
+
+#prep_wrapper, #prep_table, .table-striped {
+  width: 100%; }
+
+#trab_wrapper {
+  width: 100%; }
 
 /*# sourceMappingURL=styles.css.map */
