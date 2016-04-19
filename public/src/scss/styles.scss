@@ -1,3 +1,5 @@
-.navbar {
-  border-radius: 0;
-}
+
+@import "framework/_reset.scss";
+@import "framework/_clases.scss";
+@import "layouts/_logginForm.scss";
+@import "layouts/_adminPane.scss";
