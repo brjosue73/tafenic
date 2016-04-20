@@ -36,29 +36,29 @@
       <div class="row">
         <nav class="navbar navbar-inverse navbar-fixed">
             <div class="navbar-header">
-              <a href="#/adminPane" class="navbar-brand">TAFENIC.SA</a>
+              <a data-ui-sref="#/adminPane" class="navbar-brand">TAFENIC.SA</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
-                <li><a href="#/">Inicio</a></li>
-                <li><a href="#/">Inicio</a></li>
+                <li><a data-ui-sref="#/">Inicio</a></li>
+                <li><a data-ui-sref="#/">Inicio</a></li>
                 <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Ir a...<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="#/trabajadores">Trabajadores</a></li>
-                    <li><a href="">Fincas</a></li>
-                    <li><a href="#/preplanilla">Preplanillas</a></li>
-                    <li><a href="">Planillas</a></li>
+                    <li><a href="" data-ui-sref="/trabajadores">Trabajadores</a></li>
+                    <li><a >Fincas</a></li>
+                    <li><a href="" data-ui-sref="/preplanilla">Preplanillas</a></li>
+                    <li><a >Planillas</a></li>
                   </ul>
                 </li>
-                <li><a href="">Inicio</a></li>
+                <li><a >Inicio</a></li>
               </ul>
             </div>
         </nav>
       </div>
 
 
-      <main data-ng-view="" class="row"></main>
+      <main data-ui-view class="row"></main>
 
 <!--
       <div class="modal fade" id="miModal">

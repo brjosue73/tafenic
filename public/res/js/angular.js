@@ -3,7 +3,7 @@
 	'use strict';
 
 	//Create a new Angular module
-	angular.module('moduleName',["ngRoute","ngResource"], function($interpolateProvider) {
+	angular.module('moduleName',["ngRoute","ngResource","ui.router"], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
   });
@@ -15,6 +15,9 @@
 	app.factory('Resource', ['$resource', function(r){
 		return r('trabajadores/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
+	/*app.factory('Resource', ['$resource', function(r){
+		return r('trabajadores/editar/:id',{id:"@id"},{update:{method:"PUT"}});
+	}]);*/
 	//Service Factory resource
 	app.factory('fincaResource', ['$resource', function(r){
 	  return r('fincas/:id',{id:"@id"},{update:{method:"PUT"}});
@@ -104,7 +107,7 @@
 	  }
 	}]);
 	//angular routes config
-	app.config(function ($routeProvider) {
+	/*app.config(function ($routeProvider) {
 	$routeProvider
 	    .when('/', {
 	      templateUrl: 'partials/loggin.html',
@@ -139,25 +142,81 @@
 	    .otherwise({
 	      redirectTo: '/'
 	    });
-	});
+	});*/
+	/*UI-ROUTER*/
+	app.config(function($stateProvider, $urlRouterProvider) {
+  	$urlRouterProvider.otherwise("/");
+
+		$stateProvider
+		.state('/', {
+			url: "/",
+			templateUrl: "partials/loggin.html"
+		})
+		.state('/adminPane', {
+			url: "/admin",
+			templateUrl: "partials/adminPane.html"
+		})
+		.state('/trabajadores', {
+			url: "/trabajadores",
+			templateUrl: "partials/trabajadores/listarT.html",
+			controller:"getAll"
+		})
+		.state('/trabajadores.nuevo', {
+			url: "/nuevo",
+			templateUrl: "partials/trabajadores/actualizarT.html",
+			controller:"postOne"
+		})
+		.state('/trabajadores.editar', {
+			url: "/editar",
+			templateUrl: "partials/trabajadores/actualizarT.html",
+			controller:"getOne"
+		})
+		.state('/preplanilla', {
+			url: "/preplanilla",
+			templateUrl: "partials/preplanillas/prepPanel.html",
+			controller:"getAll"
+		})/*
+    .state('state1.list', {
+      url: "/list",
+      templateUrl: "partials/state1.list.html",
+      controller: function($scope) {
+        $scope.items = ["A", "List", "Of", "Items"];
+      }
+    })
+    .state('state2', {
+      url: "/state2",
+      templateUrl: "partials/state2.html"
+    })
+    .state('state2.list', {
+      url: "/list",
+        templateUrl: "partials/state2.list.html",
+        controller: function($scope) {
+          $scope.things = ["A", "Set", "Of", "Things"];
+        }
+      })*/
+    });
 	//Create one
 	app.controller('postOne', ['$scope','Resource','$location', function(s,r,l){
 		s.boton = "Guardar";
 		s.sendData = {};
 		s.save = function(){
-			r.save({data:s.sendData});
-			l.path('/');
+			r.save({data:s.sendData},function(){
+				l.path('/trabajadores');
+			});
 		}
 	}]);
 	//Read one && Update One
-	app.controller('getOne', ['$scope','$routeParams','Resource','$location', function(s,p,r,l){
+	app.controller('getOne', ['$scope','$routeParams','Resource','$location','$stateParams', function(s,p,r,l,sp){
 		//s.sendData = {};
+		//s.id=sp.id;
 		s.boton="Editar";
-		s.sendData = r.get({id:p.id});
+		//console.log(s.id);
+		//console.log(sp.id):
+		s.sendData = r.get({id:sp.id});
 		s.save = function(){
 			r.update({id:s.sendData.id},{data:s.sendData},function(data){
 				console.log(data);
-				l.path('/');
+				l.path('/trabajadores');
 			});
 		}
 	}]);
@@ -167,7 +226,7 @@
 		s.del = function(id){
 			r.delete({id:id}, function(datos){
 				console.log(datos);
-				l.path('/');
+				$route.reload(false);
 			});
 		}
 	}]);
