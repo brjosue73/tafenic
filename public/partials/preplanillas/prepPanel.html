@@ -99,14 +99,15 @@
         <thead>
           <tr class="active">
 
-            <th>Nombres</th>
-            <th>Labores</th>
-            <th>Norm</th>
-            <th>Extra</th>
+            <th>Nombre</th>
+            <th>Labor</th>
+            <th>Horas trab.</th>
+            <th>Horas Ext</th>
             <th>S. Devengado</th>
-            <th>Septimo</th>
             <th>Alimentacion</th>
+            <th>Vacaciones</th>
             <th>Aguinaldo</th>
+            <th>S. acumulado</th>
 
           </tr>
         </thead>
@@ -114,12 +115,13 @@
           <tr data-ng-repeat="preplanilla in preplanillas">
             <td> <% preplanilla.trabajador.nombre %> </td>
             <td> <% preplanilla.labor.nombre %> </td>
-            <td> <% preplanilla.fecha %> </td>
-            <td> <% preplanilla.actividad_ext %> </td>
-            <td> <% preplanilla.hora_ext + preplanilla.cantidad + preplanilla.hora_ext * 5 %> </td>
-            <td> <% preplanilla.hora_ext %> </td>
             <td> <% preplanilla.cantidad %> </td>
-            <td> <% preplanilla.hora_ext * 5 %> </td>
+            <td> <% preplanilla.hora_ext %> </td>
+            <td> <% preplanilla.salario_dev %> </td>
+            <td> <% preplanilla.alimentacion %> </td>
+            <td> <% preplanilla.vacaciones %> </td>
+            <td> <% preplanilla.aguinaldo %> </td>
+            <td> <% preplanilla.salario_acum %> </td>
           </tr>
         </tbody>
       </table>

@@ -167,34 +167,16 @@
 			controller:"postOne"
 		})
 		.state('/trabajadores.editar', {
-			url: "/editar",
+			url: "/editar/:id",
 			templateUrl: "partials/trabajadores/actualizarT.html",
 			controller:"getOne"
 		})
 		.state('/preplanilla', {
 			url: "/preplanilla",
 			templateUrl: "partials/preplanillas/prepPanel.html",
-			controller:"getAll"
-		})/*
-    .state('state1.list', {
-      url: "/list",
-      templateUrl: "partials/state1.list.html",
-      controller: function($scope) {
-        $scope.items = ["A", "List", "Of", "Items"];
-      }
-    })
-    .state('state2', {
-      url: "/state2",
-      templateUrl: "partials/state2.html"
-    })
-    .state('state2.list', {
-      url: "/list",
-        templateUrl: "partials/state2.list.html",
-        controller: function($scope) {
-          $scope.things = ["A", "Set", "Of", "Things"];
-        }
-      })*/
-    });
+			controller:"preplanilla"
+		})
+  });
 	//Create one
 	app.controller('postOne', ['$scope','Resource','$location', function(s,r,l){
 		s.boton = "Guardar";
@@ -215,7 +197,7 @@
 		s.sendData = r.get({id:sp.id});
 		s.save = function(){
 			r.update({id:s.sendData.id},{data:s.sendData},function(data){
-				console.log(data);
+				//console.log(data);
 				l.path('/trabajadores');
 			});
 		}
@@ -226,7 +208,7 @@
 		s.del = function(id){
 			r.delete({id:id}, function(datos){
 				console.log(datos);
-				$route.reload(false);
+				//l.path('/trabajadores');
 			});
 		}
 	}]);
