@@ -37,7 +37,7 @@
 	app.controller("fincaController",['$scope','$http','fincaResource', function(s,h,fr){
 		var $btnFAceptar = $('#fincAceptar') ;
 	  s.fincaSaveData = {};
-
+s.fincas = fr.query();
 	  s.fincaSave = function(){
 	    console.log(s.fincaSaveData);
 
@@ -175,6 +175,11 @@
 			url: "/preplanilla",
 			templateUrl: "partials/preplanillas/prepPanel.html",
 			controller:"preplanilla"
+		})
+		.state('/fincas', {
+			url: "/fincas",
+			templateUrl: "partials/fincas/fincasPane.html",
+			controller:"fincaController"
 		})
   });
 	//Create one
