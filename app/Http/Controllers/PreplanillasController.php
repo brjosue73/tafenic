@@ -72,6 +72,22 @@ class PreplanillasController extends Controller
      */
     public function create()
     {
+        $dia= 106.25;
+        $alim = 30;
+        $vacaciones= $dia*0.083333;
+        $prep= Preplanilla::find(1);
+
+        $prep->salario_dev =$dia;
+        $prep->alimentacion =$alim;
+        $prep->vacaciones= $vacaciones;
+        $prep->aguinaldo= $vacaciones;
+        $sal=$dia+$alim + $vacaciones +$vacaciones;
+        $prep->salario_acum= $sal;
+
+
+        //$prep->save();
+
+        return $prep;
     }
 
     /**
@@ -85,26 +101,29 @@ class PreplanillasController extends Controller
     /*Mejorar tomando los valores de la tabla de constantes*/
         $peticion = $request->all();
         $arreglo = $peticion["data"];
-        $dia=106.25;
+
+        $dia= 106.25;
         $alim = 30;
         $vacaciones= $dia*0.083333;
-        $aguin= $dia * 0.083333;
-        if ($request->hora_ext=!null){
-            $ext=$request->hora_ext * 26.56;
-        }
-        else{
-            $ext=0;
-        }
-        $acum = $dia + $alim + $vacaciones + $aguin + $ext;
+        $prep= new Preplanilla($arreglo);
+        $prep->salario_dev =$dia;
+        $prep->alimentacion =$alim;
+        $prep->vacaciones= $vacaciones;
+        $prep->aguinaldo= $vacaciones;
+        $ext=0;
+        // if ($arreglo->hora_ext=!null){
+        //     $ext=$arreglo->hora_ext * 26.56;
+        // }
+        // else{
+        //     $ext=0;
+        // }
 
+        $sal=$dia+$alim + $vacaciones +$vacaciones+$ext;
+        $prep->salario_acum= $sal;
 
-        $prep = new Preplanilla($arreglo);
-        $prep->vacaciones = $vacaciones;
-        $prep->aguinaldo = $aguin;
-        $prep->salario_acum = $acum;
-        return $prep;
         $prep->save();
         return "Agregada!";
+
     }
 
     /**
