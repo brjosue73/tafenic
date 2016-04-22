@@ -21,12 +21,22 @@ class LaboresController extends Controller
         return response()->json($labores);
     }
 
+    /**************************Para devolver la labor segun su actividad********************************/
+    public function labor_por_actividad(Request $request){
+        
+        $peticion = $request->all();
+        $arreglo= $peticion["data"];
+
+        $id_act=Labor::where('id_actividad',arreglo->id_actividad )->get();
+        return response()->json($id_act);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         /*enviar ultimo valor de labores*/
         $id = Labor::all()->max('id');
