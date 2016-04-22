@@ -29,7 +29,16 @@ class TrabajadoresController extends Controller
     {
         //
     }
-
+      //agregar el request
+    public function prep_trab(){
+      $peticion = $request->all();
+      $arreglo = $peticion["data"];
+      $id_trab= $arreglo->id_trabajador;
+      $fecha_ini= $arreglo->fecha_inicio;
+      $fecha_fin= $arreglo->fecha_fin;
+      
+      return "hola";
+    }
     /**
      * Store a newly created resource in storage.
      *

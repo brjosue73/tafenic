@@ -27,7 +27,7 @@ class LaboresController extends Controller
         $peticion = $request->all();
         $arreglo= $peticion["data"];
 
-        $id_act=Labor::where('id_actividad',arreglo->id_actividad )->get();
+        $id_act=Labor::where('id_actividad',$arreglo->id_actividad )->get();
         return response()->json($id_act);
     }
 
