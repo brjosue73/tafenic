@@ -1,4 +1,4 @@
-<!-- <h1 class="col-md-12 col-lg-12" >Listado de trabajadores</h1> -->
+
 <div id="trab_wrapper" class="fullH tabla">
   <div class="grisD opciones columna">
     <ul>
@@ -12,7 +12,7 @@
         <li><a data-ui-sref="#/">Optiones</a></li>
     </ul>
   </div>
-  <!-- <div data-ui-view></div> -->
+
   <div class="gris cuerpo columna">
 
       <div data-ui-view class="table-responsive col-lg-12 col-md-12 col-sm-12">
@@ -41,8 +41,8 @@
               <td> <% trabajador.celular %> </td>
               <td> <% trabajador.created_at %> </td>
               <td> <% trabajador.updated_at %> </td>
-              <td><a href="" data-ui-sref="/trabajadores.editar(<% trabajador.id %>)">Actualizar</a></td><!-- /<% trabajador.id %> -->
-        			<td><a data-ng-click='del(trabajador.id)' data-ng-href="#/">Eliminar</a></td>
+              <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})")>Actualizar</a></td>
+        			<td><a data-ng-click='del(trabajador.id)' data-ng-href="">Eliminar</a></td>
             </tr>
           </tbody>
         </table>
