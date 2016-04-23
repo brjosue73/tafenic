@@ -105,25 +105,6 @@
 	app.controller("actividadController",['$scope','$http','actividadResource','fincaResource', function(s,h,ar,fr){
 	  s.actividadSaveData = {};
 
-		/*var dataEntrante = fr.query();
-		s.lasfincas = dataEntrante;
-
-		console.log(dataEntrante);
-		console.log(s.lasfincas);*/
-
-		/*s.obtener = function(){
-			console.log("actividades");
-			// dataEntrante = fr.query();
-			// s.lasfincas = dataEntrante;
-			h.get('/fincas')
-			.success(function(data){
-				console.log(data);
-				s.lasfincas = data;
-			})
-			.error(function(err){
-				console.log(err);
-			});
-		}*/
 		s.lasfincas = fr.query();
 	  s.actividadSave = function(){
 	    console.log(s.actividadSaveData);
@@ -182,14 +163,21 @@
 		}
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
-	app.controller('preplanilla',['$scope','prepResource','fincaResource', function(s,pr,fr){
+	app.controller('preplanilla',['$scope','prepResource','$http', function(s,pr,h){
 		s.prepSendData = {};
 		s.preplanillas = pr.query();
-		//s.fincas  = fr.query();
-		//s.fincas = s.preplanillas.finca;
+
+		s.getActividades = function(){
+			h.post('actividad_finca',{id_finca:s.prepSendData.id_finca})
+			.success(function(data){
+				s.lasactividades = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
+
 		s.prepTrab = function() {
-			console.log(s.prepSendData);
-			// console.log(s.preplanillas);
 			pr.save({data:s.prepSendData});
 		}
 	}]);

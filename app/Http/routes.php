@@ -38,7 +38,7 @@ Route::post('/prep_fecha', 'PreplanillasController@preplanilla_fecha');
 
 Route::post('labor_act','LaboresController@labor_por_actividad');
 Route::post('lotes_finca','LotesController@lotes_por_finca');
-Route::get('actividad_finca', 'ActividadesController@actividad_por_finca');
+Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
 
 
 /*Finca actividad labor lote*/

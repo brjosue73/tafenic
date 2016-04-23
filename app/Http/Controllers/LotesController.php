@@ -21,11 +21,11 @@ class LotesController extends Controller
     }
     /**************************Para devolver el lote segun su finca********************************/
     public function lotes_por_finca(Request $request){
-        
+
         $peticion = $request->all();
         $arreglo= $peticion["data"];
 
-        $id_act=Lote::where('id_finca',arreglo->id_finca)->get();
+        $id_act=Lote::where('id_finca',$arreglo->id_finca)->get();
         return response()->json($id_act);
     }
 

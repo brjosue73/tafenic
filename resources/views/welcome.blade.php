@@ -52,6 +52,14 @@
                   </ul>
                 </li>
                 <li><a data-ui-sref="/adminPane">Inicio</a></li>
+                <li class="dropdown">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown">Settings<span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="" data-ui-sref="/trabajadores">Valores</a></li>
+                    <li><a href="" data-ui-sref="#/">Hola</a></li>
+                    <li><a href="" data-ui-sref="#/">Adios</a></li>
+                  </ul>
+                </li>
               </ul>
             </div>
         </nav>

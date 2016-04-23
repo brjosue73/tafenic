@@ -18,7 +18,7 @@
       <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="form-group col-sm-3 col-md-3 col-lg-3">
           <label for="finca">Finca</label>
-          <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca">
+          <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()">
             <optgroup label="Fincas" data-ng-controller="actividadController">
               <option data-ng-repeat="finca in lasfincas" value="<% finca.id %>"><% finca.nombre %></option>
             </optgroup>
@@ -55,7 +55,7 @@
         <div class="form-group">
           <label for="actividad">Actividad</label>
           <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad">
-            <optgroup label="Actividades" data-ng-controller="laborController">
+            <optgroup label="Actividades" data-ng-controller="preplanilla">
               <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
             </optgroup>
           </select>

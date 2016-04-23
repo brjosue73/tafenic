@@ -23,11 +23,11 @@ class LaboresController extends Controller
 
     /**************************Para devolver la labor segun su actividad********************************/
     public function labor_por_actividad(Request $request){
-        
-        $peticion = $request->all();
-        $arreglo= $peticion["data"];
 
-        $id_act=Labor::where('id_actividad',arreglo->id_actividad )->get();
+        // $peticion = $request->all();
+        // $arreglo= $peticion["data"];
+
+        $id_act=Labor::where('id_actividad',$request->all())->get();
         return response()->json($id_act);
     }
 
@@ -42,7 +42,7 @@ class LaboresController extends Controller
         $id = Labor::all()->max('id');
         $query = Labor::find($id);
         return $query;
-        
+
     }
 
     /**
