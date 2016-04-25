@@ -68,7 +68,7 @@
 		.state('/prepxtrab', {
 			url: "/preplanilla_trabajador",
 			templateUrl: "partials/preplanillas/prepxTrab.html",
-			//controller:"preplanilla"
+			controller:"preplanilla"
 		})
 		.state('/fincas', {
 			url: "/fincas",
@@ -195,6 +195,10 @@
 
 		s.prepTrab = function() {
 			pr.save({data:s.prepSendData});
+		}
+
+		s.getPrepxTrab = function(){
+
 		}
 	}]);
 }());

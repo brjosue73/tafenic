@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Preplanilla extends Model
 {
 	protected $table = 'preplanillas';
-       protected $fillable = ['id_trabajador','id_finca','id_actividad','id_labor','fecha','id_lote','id_listero','id_respFinca','cantidad','hora_ext','actividad_ext','salario_dev','alimentacion','vacaciones','aguinaldo','salario_acum'];
+       protected $fillable = ['id_trabajador','id_finca','id_actividad','id_labor','fecha','id_lote','id_listero','id_respFinca','cantidad','hora_ext','actividad_ext','salario_dev','alimentacion','vacaciones','aguinaldo','salario_acum','total_extras'];
     
        
    	public function trabajador(){

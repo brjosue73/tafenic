@@ -110,17 +110,19 @@ class PreplanillasController extends Controller
         $prep->alimentacion =$alim;
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
+        $prep->hora_ext=
         $ext=0;
-        // if ($arreglo->hora_ext=!null){
+        // if ($arreglo['hora_ext']=!null){
         //     $ext=$arreglo->hora_ext * 26.56;
         // }
         // else{
         //     $ext=0;
         // }
-
+        $ext= $arreglo['hora_ext'] * 26.56;
+        $prep->hora_ext = $arreglo['hora_ext'];
+        $prep->total_extras=$ext;
         $sal=$dia+$alim + $vacaciones +$vacaciones+$ext;
         $prep->salario_acum= $sal;
-
         $prep->save();
         return "Agregada!";
 

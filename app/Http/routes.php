@@ -40,6 +40,9 @@ Route::post('labor_act','LaboresController@labor_por_actividad');
 Route::post('lotes_finca','LotesController@lotes_por_finca');
 Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
 
+Route::post('prep_trab','TrabajadoresController@prep_trab');
+
+
 
 /*Finca actividad labor lote*/
 

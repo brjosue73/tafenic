@@ -24,9 +24,11 @@ class ActividadesController extends Controller
     /**************************Para devolver la actividad segun su finca********************************/
     public function actividad_por_finca(Request $request){
 
+
         // $peticion = $request->all();
         // $arreglo= $peticion["data"];
         $id_act=Actividad::where('id_finca',$request->all())->get();
+
         return response()->json($id_act);
     }
 
