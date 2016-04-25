@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Trabajador;
+use App\Preplanilla;
+
 class TrabajadoresController extends Controller
 {
     /**
@@ -30,14 +32,17 @@ class TrabajadoresController extends Controller
         //
     }
       //agregar el request
-    public function prep_trab(){
+    public function prep_trab(Request $request){
       $peticion = $request->all();
       $arreglo = $peticion["data"];
       $id_trab= $arreglo->id_trabajador;
       $fecha_ini= $arreglo->fecha_inicio;
       $fecha_fin= $arreglo->fecha_fin;
-      
-      return "hola";
+      $query= Preplanilla::where('id_trabajador',$id_trab)
+                                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                                ->get();
+      return $query;
+
     }
     /**
      * Store a newly created resource in storage.
