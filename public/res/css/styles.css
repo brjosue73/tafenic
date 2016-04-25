@@ -20,7 +20,12 @@
 
 .opciones {
   width: 20%;
-  vertical-align: top; }
+  vertical-align: top;
+  background-color: #323232;
+  color: white;
+  font-weight: bold; }
+  .opciones a {
+    color: white; }
 
 .cuerpo {
   width: 80%;

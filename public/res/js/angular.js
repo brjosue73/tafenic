@@ -65,6 +65,11 @@
 			templateUrl: "partials/preplanillas/prepPanel.html",
 			controller:"preplanilla"
 		})
+		.state('/prepxtrab', {
+			url: "/preplanilla_trabajador",
+			templateUrl: "partials/preplanillas/prepxTrab.html",
+			//controller:"preplanilla"
+		})
 		.state('/fincas', {
 			url: "/fincas",
 			templateUrl: "partials/fincas/fincasPane.html",
@@ -171,6 +176,17 @@
 			h.post('actividad_finca',{id_finca:s.prepSendData.id_finca})
 			.success(function(data){
 				s.lasactividades = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
+
+		s.getLabores=function(){
+			h.post('labor_act',{id_actividad:s.prepSendData.id_actividad})
+			.success(function(data){
+				s.laslabores = data;
+				//console.log(data);
 			})
 			.error(function(err){
 				console.log(err);

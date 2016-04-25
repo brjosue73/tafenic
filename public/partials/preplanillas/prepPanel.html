@@ -50,11 +50,15 @@
       <div class="col-md-6 col-lg-6">
         <div class="form-group ">
           <label for="">Trabajador </label>
-          <input type="text" class="form-control" data-ng-model="prepSendData.id_trabajador">
+          <select name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="prepSendData.id_trabajador">
+            <optgroup label="trabajadores" data-ng-controller="getAll">
+              <option data-ng-repeat="trabajador in trabajadores" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
+            </optgroup>
+          </select>
         </div>
         <div class="form-group">
           <label for="actividad">Actividad</label>
-          <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad">
+          <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad" data-ng-change="getLabores()">
             <optgroup label="Actividades" data-ng-controller="preplanilla">
               <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
             </optgroup>
@@ -63,7 +67,7 @@
         <div class="form-group">
           <label for="labor">Labor</label>
           <select name="labor" id="laborSelect" class="form-control" data-ng-model="prepSendData.id_labor">
-            <optgroup label="Labores" data-ng-controller="laborController">
+            <optgroup label="Labores" data-ng-controller="preplanilla">
               <option data-ng-repeat="labor in laslabores" value="<% labor.id %>"><% labor.nombre %></option>
             </optgroup>
           </select>
