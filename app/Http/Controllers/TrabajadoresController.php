@@ -33,16 +33,16 @@ class TrabajadoresController extends Controller
     }
       //agregar el request
     public function prep_trab(Request $request){
-      $peticion = $request->all();
-      $arreglo = $peticion["data"];
-      $id_trab= $arreglo->id_trabajador;
-      $fecha_ini= $arreglo->fecha_inicio;
-      $fecha_fin= $arreglo->fecha_fin;
+      //$peticion = $request->all();
+      $arreglo = $request->all();//$peticion["data"];
+      $id_trab = $arreglo['id_trab'];
+      $fecha_ini= $arreglo['fecha_ini'];
+      $fecha_fin= $arreglo['fecha_fin'];
       $query= Preplanilla::where('id_trabajador',$id_trab)
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();
       return $query;
-
+      //return $arreglo['id_trab'];
     }
     /**
      * Store a newly created resource in storage.

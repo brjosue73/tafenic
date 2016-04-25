@@ -197,8 +197,17 @@
 			pr.save({data:s.prepSendData});
 		}
 
+			s.reporTrab = {};
 		s.getPrepxTrab = function(){
-
+			console.log(s.reporTrab);
+			h.post('prep_trab',s.reporTrab)
+			.success(function(data){
+				s.reporTrabTot = data;
+				//console.log(data);
+			})
+			.error(function(err){
+				console.log(err);
+			});
 		}
 	}]);
 }());
