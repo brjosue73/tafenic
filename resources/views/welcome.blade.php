@@ -10,15 +10,7 @@
     </head>
     <body data-ng-app="moduleName" class="container-fluid">
 <!--
-      <div class="row">
-        <nav class="navbar navbar-inverse navbar-fixed">
-            <div class="navbar-header">
-              <a href="#/" class="navbar-brand">TAFENIC.SA</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <ul class="nav navbar-nav">
-                <li><a href="#/">Inicio</a></li>
-                <li><a href="#/trabajadores/nuevo/">Crear Trabj.</a></li>
+
                 <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -28,11 +20,7 @@
                     <li><a href="" data-toggle="modal" data-target="#miModa">Otros</a></li>
                   </ul>
                 </li>
-                <li><a href="#/preplanilla">Preplanilla</a></li>
-              </ul>
-            </div>
-        </nav>
-      </div> -->
+ -->
       <div class="row">
         <nav class="navbar navbar-inverse navbar-fixed">
             <div class="navbar-header">
@@ -49,10 +37,17 @@
                     <li><a href="" data-ui-sref="/fincas">Fincas</a></li>
                     <li><a href="" data-ui-sref="/preplanilla">Preplanillas</a></li>
                     <li><a href="" data-ui-sref="/prepxtrab">Preplanilla por trabajador</a></li>
-                    <!-- <li><a >Planillas</a></li> -->
                   </ul>
                 </li>
                 <li><a data-ui-sref="/adminPane">Inicio</a></li>
+                <li class="dropdown">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
+                  <ul class="dropdown-menu">
+                    <li data-ng-controller="fincaController"><a href="" data-toggle="modal" data-ng-mouseenter="obtener()" data-target="#miModal">Fincas</a></li>
+                    <li data-ng-controller="actividadController"><a href="" data-toggle="modal" data-ng-mouseover="obtener()" data-target="#Activiades">Actividades</a></li>
+                    <li data-ng-controller="laborController"><a href="" data-toggle="modal" data-ng-click="obtener()" data-target="#Labores">Labores</a></li>
+                  </ul>
+                </li>
                 <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Settings<span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -69,7 +64,7 @@
 
       <main data-ui-view class="row"></main>
 
-<!--
+
       <div class="modal fade" id="miModal">
           <div class="modal-dialog">
             <div class="modal-content"  data-ng-controller="fincaController">
@@ -164,7 +159,7 @@
             </div>
           </div>
       </div>
- -->
+
 
 
       <script src="res/dependencies/jquery/dist/jquery.min.js"></script>
