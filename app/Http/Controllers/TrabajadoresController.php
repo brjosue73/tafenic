@@ -31,18 +31,51 @@ class TrabajadoresController extends Controller
     {
         //
     }
-      //agregar el request
-    public function prep_trab(Request $request){
+      //Request $request
+    public function prep_trab(){
       //$peticion = $request->all();
-      $arreglo = $request->all();//$peticion["data"];
-      $id_trab = $arreglo['id_trab'];
-      $fecha_ini= $arreglo['fecha_ini'];
-      $fecha_fin= $arreglo['fecha_fin'];
-      $query= Preplanilla::where('id_trabajador',$id_trab)
+      //$arreglo = $request->all();//$peticion["data"];
+      //$id_trab = $arreglo['id_trab'];
+      $id_trab=2;
+      $fecha_ini="2016-01-01";
+      $fecha_fin="2017-01-01";
+      // $fecha_ini= $arreglo['fecha_ini'];
+      // $fecha_fin= $arreglo['fecha_fin'];
+      $trabs= Preplanilla::where('id_trabajador',$id_trab)
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();
-      return $query;
-      //return $arreglo['id_trab'];
+      $dias= $trabs->count();
+      $salario_tot=0;
+      $alim_tot=0;
+      $vac_tot=0;
+      $agui_tot=0;
+      $extra_tot=0;
+      foreach ($trabs as $trab) {
+        $salario=$trab->salario_acum;
+        $salario_tot += $salario;
+        $alim=$trab->alimentacion;
+        $alim_tot += $alim;
+        $vac= $trab->vacaciones;
+        $vac_tot += $vac;
+        $agui_tot= $vac_tot;
+        $extras=$trab->total_extras;
+        $extra_tot += $extras;
+      }
+      $trabs->dias=$dias;
+      $trabs->salario_tot=$salario_tot;
+      $trabs->alim_tot=$alim_tot;
+      $trabs->vac_tot=$vac_tot;
+      $trabs->agui_tot=$agui_tot;
+      $trabs->extra_tot=$extra_tot;
+      $array = [
+        "dias"=>$dias,
+        "salario_tot"=>$salario_tot,
+        "alim_tot"=>$alim_tot,
+        "vac_tot"=>$vac_tot,
+        "agui_tot"=>$agui_tot,
+        "extra_tot"=>$extra_tot
+      ];
+      return $array;
     }
     /**
      * Store a newly created resource in storage.

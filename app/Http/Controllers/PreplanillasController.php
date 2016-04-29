@@ -122,7 +122,7 @@ class PreplanillasController extends Controller
         $prep->hora_ext = $arreglo['hora_ext'];
         $prep->total_extras=$ext;
         $sal=$dia+$alim + $vacaciones +$vacaciones+$ext;
-        $prep->salario_acum= $sal;
+        $prep->salario_acum= $sal;  
         $prep->save();
         return "Agregada!";
 
