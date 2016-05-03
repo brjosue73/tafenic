@@ -31,6 +31,7 @@ class TrabajadoresController extends Controller
     {
         //
     }
+
       //Request $request
     public function prep_trab(){
       //$peticion = $request->all();
@@ -60,13 +61,14 @@ class TrabajadoresController extends Controller
         $agui_tot= $vac_tot;
         $extras=$trab->total_extras;
         $extra_tot += $extras;
+
       }
-      $trabs->dias=$dias;
-      $trabs->salario_tot=$salario_tot;
-      $trabs->alim_tot=$alim_tot;
-      $trabs->vac_tot=$vac_tot;
-      $trabs->agui_tot=$agui_tot;
-      $trabs->extra_tot=$extra_tot;
+      // $trabs->dias=$dias;
+      // $trabs->salario_tot=$salario_tot;
+      // $trabs->alim_tot=$alim_tot;
+      // $trabs->vac_tot=$vac_tot;
+      // $trabs->agui_tot=$agui_tot;
+      // $trabs->extra_tot=$extra_tot;
       $array = [
         "dias"=>$dias,
         "salario_tot"=>$salario_tot,
@@ -75,7 +77,10 @@ class TrabajadoresController extends Controller
         "agui_tot"=>$agui_tot,
         "extra_tot"=>$extra_tot
       ];
-      return $array;
+      $trabs[] = $array;
+      return $trabs;
+      $todo= array_merge($array2,$array);
+      return $todo;
     }
     /**
      * Store a newly created resource in storage.

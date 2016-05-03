@@ -7,10 +7,77 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Finca;
-
+use App\Preplanilla;
+use App\Trabajador;
 
 class FincasController extends Controller
 {
+    /**********Mostrar el reporte de planilla por finca y fecha************/
+    public function planilla_finca(Request $request){
+      $array_tot=[];
+      //$peticion=$request->all();
+      //$arreglo = $request->all();//$peticion["data"];
+      //$id_finca = $arreglo['id_finca'];
+      $id_finca=2;
+      $fecha_ini="2016-01-01";
+      $fecha_fin="2017-01-01";
+
+      // $fecha_ini= $arreglo['fecha_ini'];
+      // $fecha_fin= $arreglo['fecha_fin'];
+      $fincas= Preplanilla::where('id_finca',$id_finca) /***********Buscar en preplanilla segun la finca y segun el rango de fecha*************/
+                                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                                ->get();
+      //return $fincas;
+      $tamano = sizeof($fincas);
+      $trabajadores=array();
+      $trab=0;
+
+      for ($i=0; $i < $tamano; $i++) {
+        $id_trab=$fincas[$i]->id_trabajador;
+
+        if ($trab!=$id_trab) {
+          $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+                                    ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                                    //->where('id_finca',$id_finca)
+                                   ->get();
+           $dias= $trabs->count();
+           $salario_tot=0;
+           $alim_tot=0;
+           $vac_tot=0;
+           $agui_tot=0;
+           $extra_tot=0;
+           $name='';
+             foreach ($trabs as $trab) {
+                 $salario=$trab->salario_acum;
+                 $salario_tot += $salario;
+                 $alim=$trab->alimentacion;
+                 $alim_tot += $alim;
+                 $vac= $trab->vacaciones;
+                 $vac_tot += $vac;
+                 $agui_tot= $vac_tot;
+                 $extras=$trab->total_extras;
+                 $extra_tot += $extras;
+             }
+
+             $array = [
+               "id_trab"=>$id_trab,
+               "dias"=>$dias,
+               "salario_tot"=>$salario_tot,
+               "alim_tot"=>$alim_tot,
+               "vac_tot"=>$vac_tot,
+               "agui_tot"=>$agui_tot,
+               "extra_tot"=>$extra_tot
+             ];
+
+          $trabajadores[]=$array;
+          $trab=$id_trab;
+        }
+      }
+      return $trabajadores;
+
+//pegar aca
+            //return $array_tot;
+    }
     /**
      * Display a listing of the resource.
      *
