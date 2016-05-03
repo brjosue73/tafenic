@@ -19,16 +19,26 @@
   padding-top: 3rem; }
 
 .opciones {
-  width: 20%;
+  width: 15%;
   vertical-align: top;
   background-color: #323232;
   color: white;
   font-weight: bold; }
   .opciones a {
     color: white; }
+  .opciones ul {
+    list-style-type: none;
+    width: 100%;
+    padding: 0; }
+  .opciones li {
+    text-align: center;
+    padding: 5px; }
+  .opciones li:hover {
+    background-color: #3c3c3c;
+    cursor: pointer; }
 
 .cuerpo {
-  width: 80%;
+  width: 85%;
   min-width: 80%; }
 
 .loggin-wrapper {

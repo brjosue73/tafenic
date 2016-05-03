@@ -39,7 +39,7 @@
 		$stateProvider
 		.state('/', {
 			url: "/",
-			templateUrl: "partials/loggin.html"
+			templateUrl: "partials/adminPane.html"
 		})
 		.state('/adminPane', {
 			url: "/admin",
@@ -70,9 +70,19 @@
 			templateUrl: "partials/preplanillas/prepxTrab.html",
 			controller:"preplanilla"
 		})
+		.state('/prepxfinc', {
+			url: "/preplanilla_finca",
+			templateUrl: "partials/preplanillas/prepxFinc.html",
+			controller:""
+		})
 		.state('/fincas', {
 			url: "/fincas",
 			templateUrl: "partials/fincas/fincasPane.html",
+			controller:"fincaController"
+		})
+		.state('/fincas.nueva', {
+			url: "/nueva_finca",
+			templateUrl: "partials/fincas/crearFinca.html",
 			controller:"fincaController"
 		})
 	});
@@ -80,12 +90,19 @@
 		Create and append a new cotrollers for your exist module in use
 	\*******************************************************************************************************************/
 	//Finca Controller
-	app.controller("fincaController",['$scope','$http','fincaResource', function(s,h,fr){
+	app.controller("fincaController",['$scope','$http','fincaResource','actividadResource','laborResource', function(s,h,fr,ar,lr){
+
 		var $btnFAceptar = $('#fincAceptar') ;
-	  s.fincaSaveData = {};
+
 		s.fincas = fr.query();
+		s.lasactividades = ar.query();
+
+		s.fincaSaveData = {};
+		s.actividadSaveData = {};
+		s.laborSaveData = {};
+
 	  s.fincaSave = function(){
-	  console.log(s.fincaSaveData);
+	  	console.log(s.fincaSaveData);
 
 			$('#fincaSpinner').css("display", "inline-block");
 
@@ -95,7 +112,8 @@
 				$('#exitofinca').css("display","inline");
 				setTimeout(function(){
 					$('#exitofinca').css("display","none");
-				},3000)
+				},3000);
+				s.fincas = fr.query();
 			},function(err){
 				console.log(err.status);
 				$('#fincaSpinner').css("display", "none");
@@ -105,24 +123,59 @@
 				},3000)
 			});
 	  }
+		s.actividadSave = function(){
+			console.log(s.actividadSaveData);
+			$('#actSpinner').css("display", "inline-block");
+			ar.save({data:s.actividadSaveData}, function(res) {
+				console.log(res);
+				$('#actSpinner').css("display", "none");
+				$('#exitoact').css("display","inline");
+				setTimeout(function(){
+					$('#exitoact').css("display","none");
+				},3000);
+				s.lasactividades = ar.query();
+			},function(err){
+				console.log(err.status);
+				$('#actSpinner').css("display", "none");
+				$('#erroract').css("display","block");
+				setTimeout(function(){
+					$('#erroract').css("display","none");
+				},3000)
+			});
+		}
+		s.laborSave = function(){
+			console.log(s.laborSaveData);
+			$('#laborSpinner').css("display", "inline-block");
+			lr.save({data:s.laborSaveData}, function(res) {
+				console.log(res);
+				$('#laborSpinner').css("display", "none");
+				$('#exitolabor').css("display","inline");
+				setTimeout(function(){
+					$('#exitolabor').css("display","none");
+				},3000);
+			},function(err){
+				console.log(err.status);
+				$('#laborSpinner').css("display", "none");
+				$('#errorlabor').css("display","block");
+				setTimeout(function(){
+					$('#errorlabor').css("display","none");
+				},3000)
+			});
+		}
 	}]);
 	//Actividad Controller
 	app.controller("actividadController",['$scope','$http','actividadResource','fincaResource', function(s,h,ar,fr){
-	  s.actividadSaveData = {};
 
-		s.lasfincas = fr.query();
-	  s.actividadSave = function(){
-	    console.log(s.actividadSaveData);
-	    ar.save({data:s.actividadSaveData});
-	  }
+
+
+
 	}]);
 	//Labores controller
 	app.controller("laborController",['$scope','$http','laborResource','actividadResource', function(s,h,lr,ar){
 	  s.laborSaveData = {};
-
-		var dataEntra = ar.query();
-		s.lasactividades = dataEntra;
+		s.lasactividades = ar.query();
 		s.laslabores=lr.query();
+
 		s.obtener = function(){
 			console.log("labores");
 			s.lasactividades = "";
@@ -136,6 +189,7 @@
 	/*TRABAJADOR REST CONTROLLERS*/
 	//Create one
 	app.controller('postOne', ['$scope','Resource','$location', function(s,r,l){
+		s.titulo = "Ingreso de trabajadores nuevos";
 		s.boton = "Guardar";
 		s.sendData = {};
 		s.save = function(){
@@ -147,14 +201,14 @@
 	//Read one && Update One
 	app.controller('getOne', ['$scope','$stateParams','Resource','$location', function(s,sp,r,l){
 		console.log(sp.id);
+		s.titulo = "Modificar Trabajador";
 		s.boton="Editar";
 		s.sendData = r.get({id:sp.id});
 
 		s.save = function(){
-			r.update({id:s.sendData.id},{data:s.sendData},function(data){
-
+			r.update({id:s.sendData.id},{data:s.sendData}/*,function(data){
 				l.path('/trabajadores');
-			});
+			}*/);
 		}
 	}]);
 	//Read all && Del One

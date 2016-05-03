@@ -1,25 +1,30 @@
 <form>
-  <div class="form-group">
+  <h1> <% titulo %> </h1>
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">nombre</label>
     <input type="text" class="form-control" data-ng-model="sendData.nombre">
   </div>
-    <div class="form-group">
+    <div class="form-group col-sm-4 col-md-4 col-lg-4">
       <label for="">apellidos</label>
       <input type="text" class="form-control" data-ng-model="sendData.apellidos">
     </div>
-  <div class="form-group">
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">nss</label>
     <input type="text" class="form-control" data-ng-model="sendData.nss">
   </div>
-  <div class="form-group">
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">cedula</label>
     <input type="text" class="form-control" data-ng-model="sendData.cedula">
   </div>
-  <div class="form-group">
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <label for="">celular</label>
+    <input type="text" class="form-control" data-ng-model="sendData.celular">
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">celular</label>
     <input type="text" class="form-control" data-ng-model="sendData.celular">
   </div>
   <div class="form-group">
-    <button class="btn btn-default btn-primary" data-ng-click="save()"><% boton %></button>
+    <a  href="" data-ui-sref="/trabajadores" class="btn btn-default btn-primary" data-ng-click="save()"><% boton %></a>
   </div>
 </form>

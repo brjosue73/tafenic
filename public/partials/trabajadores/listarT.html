@@ -16,6 +16,7 @@
   <div class="gris cuerpo columna">
 
       <div data-ui-view class="table-responsive col-lg-12 col-md-12 col-sm-12">
+        <h1>Listado de Trabajadores</h1>
         <table class="table table-striped table-bordered table-hover table-condensed">
           <thead>
               <tr class="active">
@@ -27,8 +28,10 @@
                   <th>N° Celular</th>
                   <th>Fecha Alta</th>
                   <th>Fecha Edicion</th>
-                  <th>Update</th>
-                  <th>Delete</th>
+                  <th>Estado</th>
+                  <th>Modificar</th>
+                  <th>accion</th>
+                  <th>Borrar</th>
               </tr>
           </thead>
           <tbody>
@@ -41,8 +44,10 @@
               <td> <% trabajador.celular %> </td>
               <td> <% trabajador.created_at %> </td>
               <td> <% trabajador.updated_at %> </td>
-              <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})")>Actualizar</a></td>
-        			<td><a data-ng-click='del(trabajador.id)' data-ng-href="">Eliminar</a></td>
+              <td> <span class="label label-success">Activo</span> </td>
+              <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})")>Editar</a></td>
+              <td><a href="">Dar de baja</a></td>
+        			<td><a href="" data-ng-click='del(trabajador.id)'>Eliminar</a></td>
             </tr>
           </tbody>
         </table>

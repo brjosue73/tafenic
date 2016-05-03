@@ -39,7 +39,7 @@ Route::post('labor_act','LaboresController@labor_por_actividad');
 Route::post('lotes_finca','LotesController@lotes_por_finca');
 Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
 
-Route::get('prep_trab','TrabajadoresController@prep_trab');
+Route::post('prep_trab','TrabajadoresController@prep_trab');
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();

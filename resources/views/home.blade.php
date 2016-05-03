@@ -36,17 +36,18 @@
                     <li><a href="" data-ui-sref="/fincas">Fincas</a></li>
                     <li><a href="" data-ui-sref="/preplanilla">Preplanillas</a></li>
                     <li><a href="" data-ui-sref="/prepxtrab">Preplanilla por trabajador</a></li>
+                    <li><a href="" data-ui-sref="/prepxfinc">Preplanilla por Fincas</a></li>
                   </ul>
                 </li>
                 <li><a data-ui-sref="/adminPane">Inicio</a></li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
                   <ul class="dropdown-menu">
                     <li data-ng-controller="fincaController"><a href="" data-toggle="modal" data-ng-mouseenter="obtener()" data-target="#miModal">Fincas</a></li>
                     <li data-ng-controller="actividadController"><a href="" data-toggle="modal" data-ng-mouseover="obtener()" data-target="#Activiades">Actividades</a></li>
                     <li data-ng-controller="laborController"><a href="" data-toggle="modal" data-ng-click="obtener()" data-target="#Labores">Labores</a></li>
                   </ul>
-                </li>
+                </li> -->
                 <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Settings<span class="caret"></span></a>
                   <ul class="dropdown-menu">
@@ -64,7 +65,7 @@
       <main data-ui-view class="row"></main>
 
 
-      <div class="modal fade" id="miModal">
+      <!-- <div class="modal fade" id="miModal">
           <div class="modal-dialog">
             <div class="modal-content"  data-ng-controller="fincaController">
 
@@ -157,7 +158,7 @@
 
             </div>
           </div>
-      </div>
+      </div> -->
 
 
 
