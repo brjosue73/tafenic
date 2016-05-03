@@ -99,64 +99,6 @@
       <div class="modal fade" id="Activiades">
           <div class="modal-dialog">
             <div class="modal-content"  data-ng-controller="actividadController">
-
-                <div class="modal-header">
-                    <buton class="close" aria-hidden="true" data-dismiss="modal">&times;</buton>
-                    <h4 class="modal-title">Actividades</h4>
-                </div>
-                <div class="modal-body">
-                  <form>
-                      <div class="form-group">
-                          <label for="actividad">Actividad</label>
-                          <input type="text" class="form-control" placeholder="Actividad" name="actividad" data-ng-model="actividadSaveData.nombre">
-                      </div>
-                      <div class="form-group">
-                        <label for="finca">Finca</label>
-                        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="actividadSaveData.id_finca">
-                          <optgroup label="Fincas">
-                            <option data-ng-repeat="lafinca in lasfincas" value="<% lafinca.id %>"><% lafinca.nombre %></option>
-                          </optgroup>
-                        </select>
-                      </div>
-                  </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-ng-click="actividadSave()">Guardar</button>
-                    <button class="btn btn-default" data-dismiss="modal">cancelar</button>
-                </div>
-            </div>
-          </div>
-      </div>
-      <div class="modal fade" id="Labores">
-          <div class="modal-dialog">
-            <div class="modal-content"  data-ng-controller="laborController">
-
-                <div class="modal-header">
-                    <buton class="close" aria-hidden="true" data-dismiss="modal">&times;</buton>
-                    <h4 class="modal-title">Labores</h4>
-                </div>
-                <div class="modal-body">
-                  <form>
-                      <div class="form-group">
-                          <label for="labor">Labor</label>
-                          <input type="text" class="form-control" placeholder="Labor" name="labor" data-ng-model="laborSaveData.nombre">
-                      </div>
-                      <div class="form-group">
-                        <label for="actividad">Actividad</label>
-                        <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="laborSaveData.id_actividad">
-                          <optgroup label="Actividades">
-                            <option data-ng-repeat="laactividad in lasactividades" value="<% laactividad.id %>"><% laactividad.nombre %></option>
-                          </optgroup>
-                        </select>
-                      </div>
-                </form>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-ng-click="laborSave()">Guardar</button>
-                    <button class="btn btn-default" data-dismiss="modal">cancelar</button>
-                </div>
-
-            </div>
           </div>
       </div> -->
 
@@ -172,3 +114,9 @@
       <script src="res/js/scripts.min.js"></script>
     </body>
 </html>
+=======
+        </div>
+    </div>
+</div>
+@endsection
+>>>>>>> 9ef182a276f475f4951377d210e68da25b8457c9
