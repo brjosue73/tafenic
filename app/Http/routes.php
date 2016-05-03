@@ -26,6 +26,7 @@ Route::group(['middleware' => 'web'], function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
+<<<<<<< HEAD
 // Route::get('profile', ['middleware' => 'auth', function() {
     Route::get('/', function () {
         return view('welcome');
@@ -47,5 +48,3 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('prep_trab','TrabajadoresController@prep_trab');
     Route::post('planilla_finca','FincasController@planilla_finca');
-
-// }]);
