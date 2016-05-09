@@ -15,15 +15,15 @@ class FincasController extends Controller
     /**********Mostrar el reporte de planilla por finca y fecha************/
     public function planilla_finca(Request $request){
       $array_tot=[];
-      //$peticion=$request->all();
-      //$arreglo = $request->all();//$peticion["data"];
-      //$id_finca = $arreglo['id_finca'];
-      $id_finca=2;
-      $fecha_ini="2016-01-01";
-      $fecha_fin="2017-01-01";
+      $peticion=$request->all();
+      $arreglo = $request->all();//$peticion["data"];
+      $id_finca = $arreglo['id_finca'];
+      // $id_finca=2;
+      // $fecha_ini="2016-01-01";
+      // $fecha_fin="2017-01-01";
 
-      // $fecha_ini= $arreglo['fecha_ini'];
-      // $fecha_fin= $arreglo['fecha_fin'];
+        $fecha_ini= $arreglo['fecha_ini'];
+        $fecha_fin= $arreglo['fecha_fin'];
       $fincas= Preplanilla::where('id_finca',$id_finca) /***********Buscar en preplanilla segun la finca y segun el rango de fecha*************/
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();

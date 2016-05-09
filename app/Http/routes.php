@@ -14,7 +14,7 @@
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
-    Route::get('/home', 'HomeController@index');
+    Route::get('/', 'HomeController@index');
 });
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +26,11 @@ Route::group(['middleware' => 'web'], function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-<<<<<<< HEAD
+
 // Route::get('profile', ['middleware' => 'auth', function() {
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    // Route::get('/', function () {
+    //     return view('auth.login');
+    // });
     // Only authenticated users may enter...
     Route::resource('trabajadores','TrabajadoresController');
     Route::resource('fincas','FincasController');
@@ -46,5 +46,5 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('lotes_finca','LotesController@lotes_por_finca');
     Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
 
-    Route::post('prep_trab','TrabajadoresController@prep_trab');
+    Route::get('prep_trab','TrabajadoresController@prep_trab');
     Route::post('planilla_finca','FincasController@planilla_finca');
