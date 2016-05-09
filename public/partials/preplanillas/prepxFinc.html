@@ -1,23 +1,23 @@
-<h1 class="col-lg-12 col-md-12 col-sm-12">Preplanilla por Fincas</h1>
+<h1 class="col-lg-12 col-md-12 col-sm-12">Planilla por Fincas</h1>
 <form class="col-lg-12 col-md-12 col-sm-12">
   <div class="form-group col-md-4 col-sm-4 col-lg-4">
-    <label for="">Trabajador </label>
-    <select name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="reporTrab.id_trab">
-      <optgroup label="trabajadores" data-ng-controller="getAll">
-        <option data-ng-repeat="trabajador in trabajadores" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
+    <label for="">Finca </label>
+    <select name="finca" id="fincaSelect" class="form-control" data-ng-model="reporfinca.id_finca">
+      <optgroup label="fincas" data-ng-controller="getAll">
+        <option data-ng-repeat="finc in fincs" value="<% finc.id %>"><% finc.nombre %></option>
       </optgroup>
     </select>
   </div>
   <div class="form-group col-md-4 col-sm-4 col-lg-4">
     <label for="">Fecha inicio</label>
-    <input type="date" class="form-control" data-ng-model="reporTrab.fecha_ini">
+    <input type="date" class="form-control" data-ng-model="reporfinca.fecha_ini">
   </div>
   <div class="form-group col-md-4 col-sm-4 col-lg-4">
     <label for="">Fecha fin</label>
-    <input type="date" class="form-control" data-ng-model="reporTrab.fecha_fin">
+    <input type="date" class="form-control" data-ng-model="reporfinca.fecha_fin">
   </div>
   <div class="form-group">
-    <button class="btn btn-default btn-primary" ng-click="getPrepxTrab()">
+    <button class="btn btn-default btn-primary" ng-click="getPrepxfinc()">
       Ver
     </button>
   </div>
@@ -28,31 +28,41 @@
     <thead>
       <tr class="active">
 
-        <th>Nombre</th>
-        <th>Labor</th>
-        <th>Horas trab.</th>
-        <th>Horas Ext</th>
-        <th>S. Devengado</th>
+        <th>id</th>
+        <th>Nombre del trabajador</th>
+        <th>Días trabajados</th>
+        <th>Tot. Devengado</th>
         <th>Alimentacion</th>
+        <th>Tot. Básico</th>
+        <th>Otros</th>
+        <th>Feriados</th>
+        <th>Horas Extra</th>
         <th>Vacaciones</th>
         <th>Aguinaldo</th>
-        <th>S. acumulado</th>
-        <th>fecha</th>
+        <th>Tot.Acumulado</th>
+        <th>INSS laboral</th>
+        <th>Prestamos</th>
+        <th>Tot. a Recibir</th>
 
       </tr>
     </thead>
     <tbody>
-      <tr data-ng-repeat="preplanillaTot in reporTrabTot">
-        <td> <% preplanillaTot.nombre %> </td>
-        <td> <% preplanillaTot.nombre %> </td>
-        <td> <% preplanillaTot.cantidad %> </td>
-        <td> <% preplanillaTot.hora_ext %> </td>
-        <td> <% preplanillaTot.salario_dev %> </td>
-        <td> <% preplanillaTot.alimentacion %> </td>
-        <td> <% preplanillaTot.vacaciones %> </td>
-        <td> <% preplanillaTot.aguinaldo %> </td>
-        <td> <% preplanillaTot.salario_acum %> </td>
-        <td> <% preplanillaTot.fecha %> </td>
+      <tr data-ng-repeat="reporfincTota in reporfincTot">
+        <td> <% reporfincTota.id_trab %> </td>
+        <td> <% reporfincTota.nombre %> </td>
+        <td> <% reporfincTota.dias %> </td>
+        <td> <% reporfincTota.hora_ext %> </td>
+        <td> <% reporfincTota.alim_tot %> </td>
+        <td> <% reporfincTota.alimentacion %> </td>
+        <td> <% reporfincTota.vacaciones %> </td>
+        <td> <% reporfincTota.aguinaldo %> </td>
+        <td> <% reporfincTota.extra_tot %> </td>
+        <td><% reporfincTota.vac_tot %></td>
+        <td><% reporfincTota.agui_tot %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td> <% reporfincTota.salario_tot %> </td>
       </tr>
     </tbody>
   </table>

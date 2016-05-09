@@ -1,26 +1,13 @@
- <!DOCTYPE html>
+ <!-- <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <title>Laravel</title>
-        <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css"> -->
         <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="res/css/styles.css">
         <link rel="stylesheet" href="res/dependencies/font-awesome/css/font-awesome.min.css">
     </head>
     <body data-ng-app="moduleName" class="container-fluid">
-<!--
-
-                <li class="dropdown">
-                  <a href="" class="dropdown-toggle" data-toggle="dropdown">Opciones <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li data-ng-controller="fincaController"><a href="" data-toggle="modal" data-ng-mouseenter="obtener()" data-target="#miModal">Fincas</a></li>
-                    <li data-ng-controller="actividadController"><a href="" data-toggle="modal" data-ng-mouseover="obtener()" data-target="#Activiades">Actividades</a></li>
-                    <li data-ng-controller="laborController"><a href="" data-toggle="modal" data-ng-click="obtener()" data-target="#Labores">Labores</a></li>
-                    <li><a href="" data-toggle="modal" data-target="#miModa">Otros</a></li>
-                  </ul>
-                </li>
- -->
       <div class="row">
         <nav class="navbar navbar-inverse navbar-fixed">
             <div class="navbar-header">
@@ -171,4 +158,4 @@
       <script src="res/js/angular.js"></script>
       <script src="res/js/scripts.min.js"></script>
     </body>
-</html>
+</html> -->

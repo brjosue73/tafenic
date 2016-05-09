@@ -26,7 +26,9 @@ Route::group(['middleware' => 'web'], function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-
+Route::get('/', function () {
+    return view('welcome');
+});
 Route::resource('trabajadores','TrabajadoresController');
 Route::resource('fincas','FincasController');
 Route::resource('actividad','ActividadesController');
@@ -42,6 +44,7 @@ Route::post('lotes_finca','LotesController@lotes_por_finca');
 Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
 
 Route::post('prep_trab','TrabajadoresController@prep_trab');
+Route::post('planilla_finca','FincasController@planilla_finca');
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();

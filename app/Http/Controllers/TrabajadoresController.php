@@ -33,15 +33,15 @@ class TrabajadoresController extends Controller
     }
 
       //Request $request
-    public function prep_trab(){
-      //$peticion = $request->all();
-      //$arreglo = $request->all();//$peticion["data"];
-      //$id_trab = $arreglo['id_trab'];
-      $id_trab=2;
-      $fecha_ini="2016-01-01";
-      $fecha_fin="2017-01-01";
-      // $fecha_ini= $arreglo['fecha_ini'];
-      // $fecha_fin= $arreglo['fecha_fin'];
+    public function prep_trab(Request $request){
+      $peticion = $request->all();
+      $arreglo = $request->all();//$peticion["data"];
+      $id_trab = $arreglo['id_trab'];
+      // $id_trab=2;
+      // $fecha_ini="2016-01-01";
+      // $fecha_fin="2017-01-01";
+      $fecha_ini= $arreglo['fecha_ini'];
+      $fecha_fin= $arreglo['fecha_fin'];
       $trabs= Preplanilla::where('id_trabajador',$id_trab)
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();

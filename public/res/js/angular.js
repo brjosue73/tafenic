@@ -43,7 +43,7 @@
 		})
 		.state('/adminPane', {
 			url: "/admin",
-			templateUrl: "partials/adminPane.html"
+			templateUrl: "partials/adminPane.html",
 		})
 		.state('/trabajadores', {
 			url: "/trabajadores",
@@ -63,7 +63,12 @@
 		.state('/preplanilla', {
 			url: "/preplanilla",
 			templateUrl: "partials/preplanillas/prepPanel.html",
-			controller:"preplanilla"
+			controller:"preplanilla"/*,
+			views:{
+				'lateral':{
+					templateUrl:"partials/preplanillas/lateral.html"
+				}
+			}*/
 		})
 		.state('/prepxtrab', {
 			url: "/preplanilla_trabajador",
@@ -73,7 +78,7 @@
 		.state('/prepxfinc', {
 			url: "/preplanilla_finca",
 			templateUrl: "partials/preplanillas/prepxFinc.html",
-			controller:""
+			controller:"prepxfinc"
 		})
 		.state('/fincas', {
 			url: "/fincas",
@@ -164,11 +169,7 @@
 		}
 	}]);
 	//Actividad Controller
-	app.controller("actividadController",['$scope','$http','actividadResource','fincaResource', function(s,h,ar,fr){
-
-
-
-
+/*	app.controller("actividadController",['$scope','$http','actividadResource','fincaResource', function(s,h,ar,fr){
 	}]);
 	//Labores controller
 	app.controller("laborController",['$scope','$http','laborResource','actividadResource', function(s,h,lr,ar){
@@ -185,7 +186,7 @@
 	    console.log(s.laborSaveData);
 	    lr.save({data:s.laborSaveData});
 	  }
-	}]);
+	}]);*/
 	/*TRABAJADOR REST CONTROLLERS*/
 	//Create one
 	app.controller('postOne', ['$scope','Resource','$location', function(s,r,l){
@@ -257,6 +258,22 @@
 			h.post('prep_trab',s.reporTrab)
 			.success(function(data){
 				s.reporTrabTot = data;
+				console.log(data);
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
+	}]);
+
+	app.controller('prepxfinc',['$scope','$http','fincaResource', function(s,h,fr){
+		s.fincs = fr.query();
+		s.reporfinca = {};
+
+		s.getPrepxfinc = function(){
+			h.post('planilla_finca',s.reporfinca)
+			.success(function(data){
+				s.reporfincTot = data;
 				console.log(data);
 			})
 			.error(function(err){
