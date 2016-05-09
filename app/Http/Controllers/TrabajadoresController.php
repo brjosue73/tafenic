@@ -79,7 +79,6 @@ class TrabajadoresController extends Controller
       ];
       $trabs[] = $array;
       return $trabs;
-      $todo= array_merge($array2,$array);
       return $todo;
     }
     /**
