@@ -49,4 +49,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('prep_trab','TrabajadoresController@prep_trab');
     Route::post('planilla_finca','FincasController@planilla_finca');
 
-    Route::post('planilla','PlanillasController@planilla_general');
+    Route::resource("variables",'VariablesController');
+
+    Route::get('planilla','PlanillasController@planilla_general');

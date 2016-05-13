@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Finca;
 use App\Preplanilla;
 use App\Trabajador;
+use App\Labor;
 
 class PlanillasController extends Controller
 {
@@ -15,10 +16,10 @@ class PlanillasController extends Controller
       $peticion = $request->all();
       //$arreglo = $peticion["data"];
 
-      // $fecha_ini="2016-01-01";
-      // $fecha_fin="2017-01-01";
-      $fecha_ini= $arreglo['fecha_ini'];
-      $fecha_fin= $arreglo['fecha_fin'];
+      $fecha_ini="2016-01-01";
+      $fecha_fin="2017-01-01";
+      // $fecha_ini= $arreglo['fecha_ini'];
+      // $fecha_fin= $arreglo['fecha_fin'];
       $trab=0;
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->get();
@@ -40,8 +41,13 @@ class PlanillasController extends Controller
            $tot_inss=0;
            $nombre="Jon";
            $apellido="Doe";
+           $trabajador=Trabajador::find($id_trab);
+           $nombre=$trabajador->nombre;
+           $apellido=$trabajador->apellidos;
+           $dia=0;
              //  si es trabajador por labor -------Falta
              foreach ($trabs as $trab) {
+                $dia +=1;
                 //si trabajo mas de 6 dias y menos de 11 asignar 1 septimo si trabajo 11 asignar 2 septimos
                  $salario=$trab->salario_acum;
                  $salario_tot += $salario;
@@ -52,16 +58,22 @@ class PlanillasController extends Controller
                  $agui_tot= $vac_tot;
                  $extras=$trab->total_extras;
                  $extra_tot += $extras;
+                 $fin_query= Finca::find($trab->id_finca);
+                 $finca=$fin_query->nombre;
+                 $fincas[]=$finca;
+                 $lab_query=Labor::find($trab->id_labor);
+                 $labor=$lab_query->nombre;
+                 $labores[]=$labor;
                  //diferencia si es por labor o por horas
                  $tot_inss=$salario_tot + $septimo + $extra_tot + $vac;
                  $inss= ($tot_inss*4.25)/100;
                  $salario_acum=$salario_tot + $alim + $vac + $agui_tot + $extra_tot -$inss;
              }
              //Si es trabajador de Administrativo -------Falta
-
+             unset ($array);
              $array = [
                "id_trab"=>$id_trab,
-               "dias"=>$dias,
+               "dias"=>$dia,
                "salario_tot"=>$salario_tot,
                "alim_tot"=>$alim_tot,
                "vac_tot"=>$vac_tot,
@@ -69,13 +81,18 @@ class PlanillasController extends Controller
                "extra_tot"=>$extra_tot,
                "inss"=>$inss,
                "salario_acum"=>$salario_acum,
-               "nombres"=>$nombre;
-               "apellidos"=>$apellido;
+               "nombres"=>$nombre,
+               "apellidos"=>$apellido,
+               "fincas"=>$fincas,
+               "labor"=>$labores
              ];
           $trabajadores[]=$array;
+          unset($fincas);
+          unset($labores);
           $trab=$id_trab;
         }
       }
+
       return $trabajadores;
     }
 }
