@@ -19,7 +19,7 @@
         <div class="form-group col-sm-3 col-md-3 col-lg-3">
           <label for="finca">Finca</label>
           <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()">
-            <optgroup label="Fincas" data-ng-controller="actividadController">
+            <optgroup label="Fincas">
               <option data-ng-repeat="finca in lasfincas" value="<% finca.id %>"><% finca.nombre %></option>
             </optgroup>
           </select>

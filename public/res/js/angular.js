@@ -168,25 +168,6 @@
 			});
 		}
 	}]);
-	//Actividad Controller
-/*	app.controller("actividadController",['$scope','$http','actividadResource','fincaResource', function(s,h,ar,fr){
-	}]);
-	//Labores controller
-	app.controller("laborController",['$scope','$http','laborResource','actividadResource', function(s,h,lr,ar){
-	  s.laborSaveData = {};
-		s.lasactividades = ar.query();
-		s.laslabores=lr.query();
-
-		s.obtener = function(){
-			console.log("labores");
-			s.lasactividades = "";
-			dataEntra = "";
-		}
-	  s.laborSave = function(){
-	    console.log(s.laborSaveData);
-	    lr.save({data:s.laborSaveData});
-	  }
-	}]);*/
 	/*TRABAJADOR REST CONTROLLERS*/
 	//Create one
 	app.controller('postOne', ['$scope','Resource','$location', function(s,r,l){
@@ -214,6 +195,7 @@
 	}]);
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location', function(s,r,l){
+		s.buscar;
 		s.trabajadores = r.query();
 		s.del = function(id){
 			r.delete({id:id}, function(datos){
@@ -223,10 +205,10 @@
 		}
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
-	app.controller('preplanilla',['$scope','prepResource','$http', function(s,pr,h){
+	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
 		s.prepSendData = {};
 		s.preplanillas = pr.query();
-
+		s.lasfincas = fr.query();
 		s.getActividades = function(){
 			h.post('actividad_finca',{id_finca:s.prepSendData.id_finca})
 			.success(function(data){
@@ -280,5 +262,8 @@
 				console.log(err);
 			});
 		}
+	}]);
+	app.controller('valoresController',['$scope', function(s){
+
 	}]);
 }());

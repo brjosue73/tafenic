@@ -14,7 +14,7 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
-
+    <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
     <style>
         body {
             font-family: 'Lato';
@@ -55,7 +55,7 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ url('/login') }}">Acceso</a></li>
-                        <li><a href="{{ url('/register') }}">Registro</a></li>
+                        <!-- <li><a href="{{ url('/register') }}">Registro</a></li> -->
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">

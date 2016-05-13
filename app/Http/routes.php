@@ -26,28 +26,25 @@ Route::group(['middleware' => 'web'], function () {
 | kernel and includes session state, CSRF protection, and more.
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::resource('trabajadores','TrabajadoresController');
-Route::resource('fincas','FincasController');
-Route::resource('actividad','ActividadesController');
-Route::resource('labor','LaboresController');
-Route::resource("preplanilla",'PreplanillasController');
-Route::resource("lotes",'LotesController');
 
-Route::get('/constantes','PreplanillasController@constantes');
-Route::post('/prep_fecha', 'PreplanillasController@preplanilla_fecha');
+// Route::get('profile', ['middleware' => 'auth', function() {
+    // Route::get('/', function () {
+    //     return view('auth.login');
+    // });
+    // Only authenticated users may enter...
+    Route::resource('trabajadores','TrabajadoresController');
+    Route::resource('fincas','FincasController');
+    Route::resource('actividad','ActividadesController');
+    Route::resource('labor','LaboresController');
+    Route::resource("preplanilla",'PreplanillasController');
+    Route::resource("lotes",'LotesController');
 
-Route::post('labor_act','LaboresController@labor_por_actividad');
-Route::post('lotes_finca','LotesController@lotes_por_finca');
-Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
+    Route::get('/constantes','PreplanillasController@constantes');
+    Route::post('/prep_fecha', 'PreplanillasController@preplanilla_fecha');
 
-Route::post('prep_trab','TrabajadoresController@prep_trab');
-Route::post('planilla_finca','FincasController@planilla_finca');
+    Route::post('labor_act','LaboresController@labor_por_actividad');
+    Route::post('lotes_finca','LotesController@lotes_por_finca');
+    Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
 
-Route::group(['middleware' => 'web'], function () {
-    Route::auth();
-
-    Route::get('/home', 'HomeController@index');
-});
+    Route::get('prep_trab','TrabajadoresController@prep_trab');
+    Route::post('planilla_finca','FincasController@planilla_finca');
