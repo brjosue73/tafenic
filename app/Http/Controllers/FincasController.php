@@ -9,6 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Finca;
 use App\Preplanilla;
 use App\Trabajador;
+use App\Labor;
+
+
 
 class FincasController extends Controller
 {
@@ -46,6 +49,9 @@ class FincasController extends Controller
            $vac_tot=0;
            $agui_tot=0;
            $extra_tot=0;
+           $trabajador=Trabajador::find($id_trab);
+           $nombre=$trabajador->nombre;
+           $apellido=$trabajador->apellidos;
            $name='';
              foreach ($trabs as $trab) {
                  $salario=$trab->salario_acum;
@@ -57,6 +63,9 @@ class FincasController extends Controller
                  $agui_tot= $vac_tot;
                  $extras=$trab->total_extras;
                  $extra_tot += $extras;
+                 $lab_query=Labor::find($trab->id_labor);
+                 $labor=$lab_query->nombre,
+                 $labores[]=$labor
              }
 
              $array = [
@@ -66,14 +75,20 @@ class FincasController extends Controller
                "alim_tot"=>$alim_tot,
                "vac_tot"=>$vac_tot,
                "agui_tot"=>$agui_tot,
-               "extra_tot"=>$extra_tot
+               "extra_tot"=>$extra_tot,
+               "nombre"=>$nombre,
+               "apellido"=>$apellido,
+               "labores"=>$labores
              ];
 
           $trabajadores[]=$array;
+          unset($labores);
           $trab=$id_trab;
         }
       }
       return $trabajadores;
+
+
 
 //pegar aca
             //return $array_tot;
