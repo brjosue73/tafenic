@@ -69,8 +69,8 @@ class PlanillasController extends Controller
                "extra_tot"=>$extra_tot,
                "inss"=>$inss,
                "salario_acum"=>$salario_acum,
-               "nombres"=>$nombre;
-               "apellidos"=>$apellido;
+               "nombres"=>$nombre,
+               "apellidos"=>$apellido
              ];
           $trabajadores[]=$array;
           $trab=$id_trab;
