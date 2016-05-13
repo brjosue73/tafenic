@@ -46,5 +46,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('lotes_finca','LotesController@lotes_por_finca');
     Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
 
-    Route::get('prep_trab','TrabajadoresController@prep_trab');
+    Route::post('prep_trab','TrabajadoresController@prep_trab');
     Route::post('planilla_finca','FincasController@planilla_finca');
+
+    Route::post('planilla','PlanillasController@planilla_general');
