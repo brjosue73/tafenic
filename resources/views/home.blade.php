@@ -30,7 +30,7 @@
                 <li class="dropdown">
                   <a href="" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
                   <ul class="dropdown-menu">
-                    <li><a href="" data-ui-sref="planilla">Planilla</a></li>
+                    <li><a href="" data-ui-sref="/planilla">Planilla</a></li>
                     <li><a href="" data-ui-sref="preplanilla">preplanilla</a></li>
                     <li><a href="" data-ui-sref="/"></a></li>
                     <li><a href="" data-ui-sref="/"></a></li>

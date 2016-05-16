@@ -51,4 +51,4 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::resource("variables",'VariablesController');
 
-    Route::get('planilla','PlanillasController@planilla_general');
+    Route::post('planilla','PlanillasController@planilla_general');

@@ -26,8 +26,14 @@
 	app.factory('laborResource', ['$resource', function(r){
 	  return r('labor/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
+	app.factory('loteResource', ['$resource', function(r){
+	  return r('lotes/:id',{id:"@id"},{update:{method:"PUT"}});
+	}]);
 	app.factory('prepResource', ['$resource', function(r){
 		return r('preplanilla/:id',{id:"@id"},{update:{method:"PUT"}});
+	}]);
+	app.factory('planillaResource', ['$resource', function(r){
+		return r('planilla/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
 	/*******************************************************************************************************************\
 		App Routing
@@ -90,12 +96,17 @@
 			templateUrl: "partials/fincas/crearFinca.html",
 			controller:"fincaController"
 		})
+		.state('/planilla',{
+			url:"/planilla",
+			templateUrl: "partials/planillas/planillas.html",
+			controller: "planillaController"
+		})
 	});
 	/*******************************************************************************************************************\
 		Create and append a new cotrollers for your exist module in use
 	\*******************************************************************************************************************/
 	//Finca Controller
-	app.controller("fincaController",['$scope','$http','fincaResource','actividadResource','laborResource', function(s,h,fr,ar,lr){
+	app.controller("fincaController",['$scope','$http','fincaResource','actividadResource','laborResource','loteResource', function(s,h,fr,ar,lr,ltr){
 
 		var $btnFAceptar = $('#fincAceptar') ;
 
@@ -105,6 +116,29 @@
 		s.fincaSaveData = {};
 		s.actividadSaveData = {};
 		s.laborSaveData = {};
+		s.loteSaveData = {};
+
+		s.loteSave = function() {
+			console.log(s.loteSaveData);
+			$('#loteSpinner').css("display", "inline-block");
+
+			ltr.save({data:s.loteSaveData}, function(res) {
+				console.log(res);
+				$('#loteSpinner').css("display", "none");
+				$('#exitolote').css("display","inline");
+				setTimeout(function(){
+					$('#exitolote').css("display","none");
+				},3000);
+				//s.fincas = fr.query();
+			},function(err){
+				console.log(err.status);
+				$('#loteSpinner').css("display", "none");
+				$('#errorlote').css("display","inline");
+				setTimeout(function(){
+					$('#errorlote').css("display","none");
+				},3000)
+			});
+		}
 
 	  s.fincaSave = function(){
 	  	console.log(s.fincaSaveData);
@@ -175,6 +209,7 @@
 		s.boton = "Guardar";
 		s.sendData = {};
 		s.save = function(){
+			console.log(s.sendData);
 			r.save({data:s.sendData},function(){
 				l.path('/trabajadores');
 			});
@@ -265,5 +300,16 @@
 	}]);
 	app.controller('valoresController',['$scope', function(s){
 
+	}]);
+	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
+		s.plillaSendData = {};
+		s.getPlanilla = function() {
+			console.log(s.plillaSendData.fecha_ini.getDate()+15);
+			//plr.query();
+			h.post('/planilla',s.plillaSendData)
+			.success(function(data) {
+				s.planillaData = data;
+			});
+		}
 	}]);
 }());

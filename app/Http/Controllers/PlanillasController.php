@@ -16,10 +16,10 @@ class PlanillasController extends Controller
       $peticion = $request->all();
       //$arreglo = $peticion["data"];
 
-      $fecha_ini="2016-01-01";
-      $fecha_fin="2017-01-01";
-      // $fecha_ini= $arreglo['fecha_ini'];
-      // $fecha_fin= $arreglo['fecha_fin'];
+      // $fecha_ini="2016-01-01";
+      // $fecha_fin="2017-01-01";
+      $fecha_ini=$peticion['fecha_ini'];
+      $fecha_fin=$peticion['fecha_fin'];
       $trab=0;
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->get();

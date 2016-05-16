@@ -44,3 +44,17 @@
   min-width:80%;
   //overflow:scroll;
 }
+.lateral{
+  background-color: rgb(50,50,50);
+}
+.full_h{
+  height: calc(100vh - 52px);
+}
+.tarjeta {
+  margin-top: 2rem;
+  border-radius: 3px;
+  box-shadow: 0 0 5px black;
+}
+.m-top{
+  margin-top: 2rem;
+}

@@ -56,4 +56,24 @@
     <span id="exitolabor" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
     <span id="errorlabor" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
   </div>
+
+  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+    <label for="finca">Finca</label>
+    <select name="finca" id="fincaSelect" class="form-control" data-ng-model="loteSaveData.id_finca">
+      <optgroup label="Fincas">
+        <option data-ng-repeat="lafinca in fincas" value="<% lafinca.id %>"><% lafinca.nombre %></option>
+      </optgroup>
+    </select>
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+    <label for="">Lote: </label>
+    <input type="text" class="form-control" data-ng-model="loteSaveData.lote">
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-2">
+    <br>
+    <button class="btn btn-default btn-primary" type="button" name="button" data-ng-click="loteSave()">Registrar Lote</button>
+    <i id="loteSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
+    <span id="exitolote" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
+    <span id="errorlote" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
+  </div>
 </form>

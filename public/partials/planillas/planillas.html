@@ -1,0 +1,52 @@
+<div id="planillaWrapper">
+  <div class="col-md-2 lateral full_h pw--opciones">
+    barra de opciones
+  </div>
+  <div class="col-md-10 full_h pw--cuerpo">
+    <div class="col-md-12 tarjeta gris">
+      <h1>planillas</h1>
+      <form>
+        <div class="form-group col-md-6">
+          <label for="" class="control-label">De: </label>
+          <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_ini">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="" class="control-label">Hasta: </label>
+          <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
+        </div>
+        <div class="form-group col-md-offset-11">
+          <button class="btn btn-default btn-primary" data-ng-click="getPlanilla()">Generar</button>
+        </div>
+      </form>
+    </div>
+
+
+      <table class="table-responsive col-md-12 table table-striped table-bordered table-hover table-condensed m-top">
+        <thead>
+          <th>Trabajador</th>
+          <th>Días Trabajados</th>
+          <th>Labores</th>
+          <th>Alimentacion</th>
+          <th>Fincas</th>
+          <th>vacaciones</th>
+          <th>Aguinaldo</th>
+          <th>Salaraio Acum.</th>
+          <th>Salario total</th>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="planilladatos in planillaData">
+            <td><% planilladatos.nombres +" "+ planilladatos.apellidos%></td>
+            <td><% planilladatos.dias %></td>
+            <td><li data-ng-repeat="labour in planilladatos.labor track by $index"><% labour %></li></td>
+            <td><% planilladatos.alim_tot %></td>
+            <td><li data-ng-repeat="finc in planilladatos.fincas track by $index"><% finc %></li></td>
+            <td><% planilladatos.vac_tot %></td>
+            <td><% planilladatos.agui_tot %></td>
+            <td><% planilladatos.salario_acum %></td>
+            <td><% planilladatos.salario_tot %></td>
+          </tr>
+        </tbody>
+      </table>
+
+  </div>
+</div>

@@ -20,9 +20,38 @@
     <label for="">celular</label>
     <input type="text" class="form-control" data-ng-model="sendData.celular">
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+  <!-- <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">celular</label>
     <input type="text" class="form-control" data-ng-model="sendData.celular">
+  </div> -->
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <label for="">Tipo</label>
+    <select name="" id="" class="form-control" data-ng-model="sendData.tipo">
+      <option value="0">Quincenal</option>
+      <option value="1">Catorcenal</option>
+    </select>
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <label for="">Estado</label>
+    <select name="" id="" class="form-control" data-ng-model="sendData.estado">
+      <option value="0">Activo</option>
+      <option value="1">Inactivo</option>
+    </select>
+  </div>
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <label for="">Cargo</label>
+    <select name="" id="" class="form-control" data-ng-model="sendData.cargo">
+      <option value="planiller">Capataz</option>
+      <option value="guardia">Guardia</option>
+      <option value="tcampo">T. de Campo</option>
+      <option value="listero">Listero</option>
+      <option value="chofer">Chofer</option>
+      <option value="afanadora">Afanadora</option>
+      <option value="fito sanitario">Fito Sanitario</option>
+      <option value="tractorista">Tractorista</option>
+      <option value="mecanico">Mecanico</option>
+      <option value="respfinca">resp. Finca</option>
+    </select>
   </div>
   <div class="form-group">
     <a  href="" data-ui-sref="/trabajadores" class="btn btn-default btn-primary" data-ng-click="save()"><% boton %></a>
