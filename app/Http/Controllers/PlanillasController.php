@@ -70,7 +70,6 @@ class PlanillasController extends Controller
                  $alim=$trab->alimentacion;
                  $alim_tot += $alim;
                  $vac= $trab->vacaciones;
-                 $vac_tot += $vac;
                  $agui_tot= $vac_tot;
                  $extras=$trab->total_extras;
                  $extra_tot += $extras;
@@ -86,6 +85,7 @@ class PlanillasController extends Controller
                  $salario_acum=$salario_tot + $alim + $vac + $agui_tot + $extra_tot -$inss;
              }
              //Si es trabajador de Administrativo -------Falta
+             $alim_tot = $dia *30;
              unset ($array);
              $array = [
                "id_trab"=>$id_trab,
