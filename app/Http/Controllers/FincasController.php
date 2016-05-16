@@ -64,8 +64,8 @@ class FincasController extends Controller
                  $extras=$trab->total_extras;
                  $extra_tot += $extras;
                  $lab_query=Labor::find($trab->id_labor);
-                 $labor=$lab_query->nombre,
-                 $labores[]=$labor
+                 $labor=$lab_query->nombre;
+                 $labores[]=$labor;
              }
 
              $array = [

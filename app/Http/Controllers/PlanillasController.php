@@ -20,9 +20,25 @@ class PlanillasController extends Controller
       $fecha_fin="2017-01-01";
       // $fecha_ini= $arreglo['fecha_ini'];
       // $fecha_fin= $arreglo['fecha_fin'];
+      //$tipo = $arreglo['tipo'];
+      $tipo='campo';
+
+
       $trab=0;
+      if($tipo=='campo'){
+        $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
+                                ->where('tipo', $tipo)
+                                ->get();
+      }
+      elseif ($tipo=='administrativo') {
+        $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
+                                ->where('tipo','administrativo')
+                                ->get();
+      }
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
-                              ->get();
+                                ->where('tipo','administrativo')
+                                ->get();
+
       foreach ($planillas as $planilla) {
         $id_trab = $planilla->id_trabajador;
         if ($trab!=$id_trab) {

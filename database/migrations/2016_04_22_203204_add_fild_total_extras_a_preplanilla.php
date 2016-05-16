@@ -13,7 +13,7 @@ class AddFildTotalExtrasAPreplanilla extends Migration
     public function up()
     {
         Schema::table('preplanillas', function ($table){
-            $table->float('total_extras');         
+            $table->float('total_extras');
         });
     }
 
