@@ -51,32 +51,30 @@ li {
   height: calc(100vh - 52px); }
 
 .tarjeta {
-  margin-top: 2rem;
   border-radius: 3px;
-  box-shadow: 0 0 5px black; }
+  box-shadow: 0 0 3px black; }
 
-.m-top {
-  margin-top: 2rem; }
+.m-top_dow {
+  margin-top: 3rem;
+  margin-bottom: 3rem; }
+
+.view_body, .table-container {
+  padding: 0; }
+
+.form-wrapper {
+  height: 40%; }
+
+.table-wrapper {
+  height: 60%;
+  overflow: scroll; }
 
 .loggin-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #eee;
   background-image: url(../img/campoTabaco.jpg);
   background-position: 0 0;
   background-size: 100%;
   background-repeat: no-repeat; }
 
-#loggin-form {
-  background-color: rgba(255, 255, 255, 0.5); }
-  #loggin-form h2 {
-    text-align: center; }
-
-#options {
-  padding-top: 3rem; }
-
-.flex-row {
+#mod-wrap {
   display: flex;
   justify-content: space-around;
   padding-top: 3rem; }

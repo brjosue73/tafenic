@@ -51,10 +51,25 @@
   height: calc(100vh - 52px);
 }
 .tarjeta {
-  margin-top: 2rem;
   border-radius: 3px;
-  box-shadow: 0 0 5px black;
+  box-shadow: 0 0 3px black;
 }
-.m-top{
-  margin-top: 2rem;
+.m-top_dow{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
 }
+.view_body, .table-container{
+  padding: 0;
+}
+
+.form-wrapper{
+  height: 40%;
+}
+
+.table-wrapper{
+  height: 60%;
+  overflow: scroll;
+}
+// .table-container{
+//   overflow: scroll;
+// }

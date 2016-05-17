@@ -21,20 +21,20 @@ class PlanillasController extends Controller
       // $fecha_fin="2017-01-01";
       $fecha_ini=$peticion['fecha_ini'];
       $fecha_fin=$peticion['fecha_fin'];
-
+      $tipo='campo';
       $trab=0;
       if($tipo=='campo'){
         $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
-                                ->where('tipo', $tipo)
+                                //->where('tipo', $tipo)
                                 ->get();
       }
       elseif ($tipo=='administrativo') {
         $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
-                                ->where('tipo','administrativo')
+                                //->where('tipo','administrativo')
                                 ->get();
       }
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
-                                ->where('tipo','administrativo')
+                                //->where('tipo','administrativo')
                                 ->get();
 
       foreach ($planillas as $planilla) {

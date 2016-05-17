@@ -1,4 +1,4 @@
-<form>
+<form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris ">
   <h1> <% titulo %> </h1>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">nombre</label>
@@ -41,9 +41,9 @@
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">Cargo</label>
     <select name="" id="" class="form-control" data-ng-model="sendData.cargo">
+      <option value="tcampo">T. de Campo</option>
       <option value="planiller">Capataz</option>
       <option value="guardia">Guardia</option>
-      <option value="tcampo">T. de Campo</option>
       <option value="listero">Listero</option>
       <option value="chofer">Chofer</option>
       <option value="afanadora">Afanadora</option>
@@ -53,7 +53,8 @@
       <option value="respfinca">resp. Finca</option>
     </select>
   </div>
-  <div class="form-group">
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
+    <br>
     <a  href="" data-ui-sref="/trabajadores" class="btn btn-default btn-primary" data-ng-click="save()"><% boton %></a>
   </div>
 </form>

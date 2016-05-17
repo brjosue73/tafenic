@@ -101,6 +101,11 @@
 			templateUrl: "partials/planillas/planillas.html",
 			controller: "planillaController"
 		})
+		.state('/layout',{
+			url:"/layout",
+			templateUrl: "partials/layout.html",
+			controller: ""
+		})
 	});
 	/*******************************************************************************************************************\
 		Create and append a new cotrollers for your exist module in use

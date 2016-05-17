@@ -2,10 +2,126 @@
   <div class="col-md-2 lateral full_h tw--opciones">
     barra de opciones
   </div>
-  <div class="col-md-10 full_h tw--cuerpo">
+  <div data-ui-view  class="col-md-10 full_h tw--cuerpo">
     <div class="col-md-12 tarjeta gris">
-      <h1>Trabajadores</h1>
-      
+      <h1>Listado de Trabajadores</h1>
+      <form>
+        <div class="form-group form-inline">
+          <label for="">Buscar: </label>
+          <input type="text" class="form-control" data-ng-model="busqueda">
+        </div>
+      </form>
     </div>
+    <table class="table table-striped table-bordered table-hover table-condensed">
+      <thead>
+          <tr class="active">
+              <th>id</th>
+              <th>Nombre</th>
+              <th>Apellidos</th>
+              <th>INSS</th>
+              <th>Cédula</th>
+              <th>N° Celular</th>
+              <th>Fecha Alta</th>
+              <th>Fecha Edicion</th>
+              <th>Cargo</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Modificar</th>
+              <th>accion</th>
+              <th>Borrar</th>
+          </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="trabajador in trabajadores" ><!-- data-ng-hide="trabajador.nombre != busqueda" -->
+          <td> <% trabajador.id %> </td>
+          <td> <% trabajador.nombre %> </td>
+          <td> <% trabajador.apellidos %> </td>
+          <td> <% trabajador.nss %> </td>
+          <td> <% trabajador.cedula %> </td>
+          <td> <% trabajador.celular %> </td>
+          <td> <% trabajador.created_at %> </td>
+          <td> <% trabajador.updated_at %> </td>
+          <td> <% trabajador.cargo %> </td>
+          <td> <% trabajador.tipo %> </td>
+          <td> <span class="label label-success"> <% trabajador.estado %> </span></td>
+          <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})")>Editar</a></td>
+          <td><a href="">Dar de baja</a></td>
+          <td><a href="" data-ui-sref="/trabajadores" data-ng-click='del(trabajador.id)'>Eliminar</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--**************************************************************************************************************************-->
+
+
+
+<div id="trab_wrapper" class="fullH tabla">
+  <div class="grisD opciones columna">
+    <ul>
+        <li><a data-ui-sref="/trabajadores.nuevo">Nuevo</a></li>
+        <li><a data-ui-sref="#/">Optiones</a></li>
+        <li><a data-ui-sref="#/">Optiones</a></li>
+        <li><a data-ui-sref="#/">Optiones</a></li>
+        <li><a data-ui-sref="#/">Optiones</a></li>
+        <li><a data-ui-sref="#/">Optiones</a></li>
+        <li><a data-ui-sref="#/">Optiones</a></li>
+        <li><a data-ui-sref="#/">Optiones</a></li>
+    </ul>
+  </div>
+
+  <div class="gris cuerpo columna">
+
+      <div data-ui-view class="table-responsive col-lg-12 col-md-12 col-sm-12">
+        <div class="tarjeta">
+
+          <h1>Listado de Trabajadores</h1>
+          <form>
+            <div class="form-group form-inline">
+              <label for="">Buscar: </label>
+              <input type="text" class="form-control" data-ng-model="busqueda">
+            </div>
+          </form>
+        </div>
+        <table class="table table-striped table-bordered table-hover table-condensed">
+          <thead>
+              <tr class="active">
+                  <th>id</th>
+                  <th>Nombre</th>
+                  <th>Apellidos</th>
+                  <th>INSS</th>
+                  <th>Cédula</th>
+                  <th>N° Celular</th>
+                  <th>Fecha Alta</th>
+                  <th>Fecha Edicion</th>
+                  <th>Cargo</th>
+                  <th>Tipo</th>
+                  <th>Estado</th>
+                  <th>Modificar</th>
+                  <th>accion</th>
+                  <th>Borrar</th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="trabajador in trabajadores" ><!-- data-ng-hide="trabajador.nombre != busqueda" -->
+              <td> <% trabajador.id %> </td>
+              <td> <% trabajador.nombre %> </td>
+              <td> <% trabajador.apellidos %> </td>
+              <td> <% trabajador.nss %> </td>
+              <td> <% trabajador.cedula %> </td>
+              <td> <% trabajador.celular %> </td>
+              <td> <% trabajador.created_at %> </td>
+              <td> <% trabajador.updated_at %> </td>
+              <td> <% trabajador.cargo %> </td>
+              <td> <% trabajador.tipo %> </td>
+              <td> <span class="label label-success"> <% trabajador.estado %> </span></td>
+              <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})")>Editar</a></td>
+              <td><a href="">Dar de baja</a></td>
+        			<td><a href="" data-ui-sref="/trabajadores" data-ng-click='del(trabajador.id)'>Eliminar</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
   </div>
 </div>

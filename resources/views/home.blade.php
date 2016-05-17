@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Laravel</title>
+        <title>TAFENICSA</title>
         <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css"> -->
         <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="res/css/styles.css">
@@ -32,9 +32,7 @@
                   <ul class="dropdown-menu">
                     <li><a href="" data-ui-sref="/planilla">Planilla</a></li>
                     <li><a href="" data-ui-sref="preplanilla">preplanilla</a></li>
-                    <li><a href="" data-ui-sref="/"></a></li>
-                    <li><a href="" data-ui-sref="/"></a></li>
-                    <li><a href="" data-ui-sref="/"></a></li>
+                    <li><a href="" data-ui-sref="/layout">Layout</a></li>
                   </ul>
                 </li>
                 <li class="dropdown">
