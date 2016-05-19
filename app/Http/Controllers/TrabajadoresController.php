@@ -142,7 +142,7 @@ class TrabajadoresController extends Controller
        $trabajador->tipo = $arreglo['tipo'];
        $trabajador->estado = $arreglo['estado'];
        $trabajador->cedula = $arreglo['cedula'];
-       $trabajador->cedula = $arreglo['cargo'];
+       $trabajador->cargo = $arreglo['cargo'];
 
        $trabajador->save();
        return "Done!";

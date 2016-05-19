@@ -17,10 +17,10 @@ class PlanillasController extends Controller
       //$arreglo = $peticion["data"];
 
 
-      // $fecha_ini="2016-01-01";
-      // $fecha_fin="2017-01-01";
-      $fecha_ini=$peticion['fecha_ini'];
-      $fecha_fin=$peticion['fecha_fin'];
+      $fecha_ini="2016-01-01";
+      $fecha_fin="2017-01-01";
+      // $fecha_ini=$peticion['fecha_ini'];
+      // $fecha_fin=$peticion['fecha_fin'];
       $tipo='campo';
       $trab=0;
       if($tipo=='campo'){
@@ -59,6 +59,7 @@ class PlanillasController extends Controller
            $nombre=$trabajador->nombre;
            $apellido=$trabajador->apellidos;
            $dia=0;
+
              //  si es trabajador por labor -------Falta
              foreach ($trabs as $trab) {
                 $dia +=1;
@@ -68,6 +69,7 @@ class PlanillasController extends Controller
                  $alim=$trab->alimentacion;
                  $alim_tot += $alim;
                  $vac= $trab->vacaciones;
+                 $vac_tot +=$vac;
                  $agui_tot= $vac_tot;
                  $extras=$trab->total_extras;
                  $extra_tot += $extras;

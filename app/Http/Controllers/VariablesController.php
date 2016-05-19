@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Variable;
+
 
 class VariablesController extends Controller
 {
@@ -15,7 +17,8 @@ class VariablesController extends Controller
      */
     public function index()
     {
-        //
+      $variables= Variable::all();
+      return response()->json($variables);
     }
 
     /**
@@ -36,7 +39,12 @@ class VariablesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $peticion = $request->all();
+      $arreglo = $peticion["data"];
+
+      $variable = new Variable($arreglo);
+      $trabajador->save();
+      return "Trabajador Creado!";
     }
 
     /**
@@ -70,7 +78,22 @@ class VariablesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $peticion = $request->all();
+      $arreglo = $peticion["data"];
+
+      $variable = Variable::find($id);
+
+      $variable->sal_diario = $arreglo['sal_diario'];
+      $variable->alimentacion = $arreglo['alimentacion'];
+      $variable->vacaciones = $arreglo['vacaciones'];
+      $variable->inss_campo = $arreglo['inss_campo'];
+      $variable->inss_admin = $arreglo['inss_admin'];
+      $variable->cuje_peq = $arreglo['cuje_peq'];
+      $variable->cuje_grand = $arreglo['cuje_grand'];
+      $variable->hora_ext = $arreglo['hora_ext'];
+      $variable->septimo = $arreglo['septimo'];
+      $variable->save();
+      return "Registro Actualizado";
     }
 
     /**
@@ -81,6 +104,8 @@ class VariablesController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $variable = Variable::find($id);
+      $variable->delete();
+      return "Registro Eliminado";
     }
 }

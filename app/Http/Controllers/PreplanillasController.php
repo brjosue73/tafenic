@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Preplanilla;
+use App\Trabajador;
 
 class PreplanillasController extends Controller
 {
@@ -17,15 +18,21 @@ class PreplanillasController extends Controller
 
 
         foreach ($preps as $prep) {
-            $prep->trabajador;
+          $trabajador=Trabajador::find($prep->id_trabajador);
+          $nombre=$trabajador->nombre;
+          $apellido=$trabajador->apellidos;
+          $completo="$nombre $apellido";
+            $prep->nombres=$completo;
             $prep->finca;
             $prep->actividad;
             $prep->labor;
             $prep->lote;
             $prep->listero;
             $prep->resp_finca;
+            $prep->trabajador;
+            $prep->apellido;
         }
-        return response()->json($preps);
+        return $preps;
 
         //enviar los datos de la preplanilla para que aparezcan en los combo box
     }
