@@ -8,29 +8,29 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Preplanilla;
 use App\Trabajador;
+use App\Labor;
+use DB;
 
 class PreplanillasController extends Controller
 {
      public function index()
     {
 
-        $preps=Preplanilla::all();
-
+        //$preps=Preplanilla::all();
+        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->get();
+        $preps =DB::table('preplanillas')->orderBy('created_at','desc')->get();
+        //$preps= Preplanilla::all();
+        //return $preps;
 
         foreach ($preps as $prep) {
           $trabajador=Trabajador::find($prep->id_trabajador);
           $nombre=$trabajador->nombre;
           $apellido=$trabajador->apellidos;
           $completo="$nombre $apellido";
+          $labor=Labor::find($prep->id_labor);
+          $lab=$labor->nombre;
             $prep->nombres=$completo;
-            $prep->finca;
-            $prep->actividad;
-            $prep->labor;
-            $prep->lote;
-            $prep->listero;
-            $prep->resp_finca;
-            $prep->trabajador;
-            $prep->apellido;
+            $prep->labor=$lab;
         }
         return $preps;
 
