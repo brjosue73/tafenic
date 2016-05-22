@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Trabajador;
 use App\Preplanilla;
+use DB;
 
 class TrabajadoresController extends Controller
 {
@@ -16,9 +17,17 @@ class TrabajadoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-      $trabajadores = Trabajador::all();
+      /*Si hay cargo de trabajador en el request if ($cargo =!null) entoncs ->where(cargo,$cargo)*/
+      $cargo=$request->cargo;
+      if (isset($cargo)){
+        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo', 'tcampo')->get();
+      }
+      else {
+        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->get();
+      }
+
       return response()->json($trabajadores);
     }
 
@@ -143,7 +152,6 @@ class TrabajadoresController extends Controller
        $trabajador->estado = $arreglo['estado'];
        $trabajador->cedula = $arreglo['cedula'];
        $trabajador->cargo = $arreglo['cargo'];
-
        $trabajador->save();
        return "Done!";
     }
@@ -159,5 +167,8 @@ class TrabajadoresController extends Controller
       $trabajador = Trabajador::find($id);
       $trabajador->delete();
       return "Registro Eliminado";
+    }
+    public function listero(){
+      $listeros= Trabajador::all();
     }
 }
