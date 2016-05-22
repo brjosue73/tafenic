@@ -32,15 +32,16 @@ class CreatePreplanillasTable extends Migration
             $table->date('fecha');
 
             $table->integer('id_listero')->unsigned();
-            
+
             $table->integer('id_respFinca')->unsigned();
-            
+
             $table->foreign('id_respFinca')->references('id')->on('trabajadores');
             $table->foreign('id_listero')->references('id')->on('trabajadores');
 
-            $table->integer('cantidad');
-            $table->integer('hora_ext');
-            $table->integer('actividad_ext');
+            $table->float('cuje_ext');
+            $table->float('hora_trab');
+            $table->float('hora_ext');
+            $table->float('cant_cujes');
 
 
             $table->timestamps();
