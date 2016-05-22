@@ -1,48 +1,8 @@
-
-.fullH{
-  height:92.7vh;
-}
 .gris{
   background-color: #eee;
 }
 .grisD{
   background-color: #aaa;
-}
-.tabla{
-  display:table;
-}
-.columna{
-  display: table-cell;
-  padding-top: 3rem;
-}
-.opciones{
-  width: 15%;
-  vertical-align: top;
-  background-color: rgb(50,50,50);
-  color:white;
-  font-weight:bold;
-  a{
-    color:white;
-  }
-  ul{
-    list-style-type:none;
-    width: 100%;
-    padding: 0;
-  }
-  li{
-    text-align: center;
-    //height: 25px;
-    padding:5px;
-  }
-  li:hover{
-    background-color: rgb(60,60,60);
-    cursor:pointer;
-  }
-}
-.cuerpo{
-  width: 85%;
-  min-width:80%;
-  //overflow:scroll;
 }
 .lateral{
   background-color: rgb(50,50,50);
@@ -70,6 +30,3 @@
   height: 60%;
   overflow: scroll;
 }
-// .table-container{
-//   overflow: scroll;
-// }

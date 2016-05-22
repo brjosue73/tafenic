@@ -5,44 +5,11 @@
 li {
   list-style-type: none; }
 
-.fullH {
-  height: 92.7vh; }
-
 .gris {
   background-color: #eee; }
 
 .grisD {
   background-color: #aaa; }
-
-.tabla {
-  display: table; }
-
-.columna {
-  display: table-cell;
-  padding-top: 3rem; }
-
-.opciones {
-  width: 15%;
-  vertical-align: top;
-  background-color: #323232;
-  color: white;
-  font-weight: bold; }
-  .opciones a {
-    color: white; }
-  .opciones ul {
-    list-style-type: none;
-    width: 100%;
-    padding: 0; }
-  .opciones li {
-    text-align: center;
-    padding: 5px; }
-  .opciones li:hover {
-    background-color: #3c3c3c;
-    cursor: pointer; }
-
-.cuerpo {
-  width: 85%;
-  min-width: 80%; }
 
 .lateral {
   background-color: #323232; }
@@ -73,6 +40,9 @@ li {
   background-position: 0 0;
   background-size: 100%;
   background-repeat: no-repeat; }
+
+.own {
+  margin-top: 15rem; }
 
 #mod-wrap {
   display: flex;

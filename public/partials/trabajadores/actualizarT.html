@@ -1,4 +1,4 @@
-<form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris ">
+<form id="trabForm" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris ">
   <h1> <% titulo %> </h1>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">nombre</label>
@@ -32,13 +32,6 @@
     </select>
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">Estado</label>
-    <select name="" id="" class="form-control" data-ng-model="sendData.estado">
-      <option value="0">Activo</option>
-      <option value="1">Inactivo</option>
-    </select>
-  </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">Cargo</label>
     <select name="" id="" class="form-control" data-ng-model="sendData.cargo">
       <option value="tcampo">T. de Campo</option>
@@ -55,6 +48,9 @@
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <br>
-    <a  href="" data-ui-sref="/trabajadores" class="btn btn-default btn-primary" data-ng-click="save()"><% boton %></a>
+    <a  href="" class="btn btn-default btn-primary" data-ng-click="save()"><% boton %></a>
+    <i id="trabSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
+    <span id="exitotrab" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
+    <span id="errortrab" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
   </div>
 </form>

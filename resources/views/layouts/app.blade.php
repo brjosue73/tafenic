@@ -15,6 +15,7 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
     <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="res/css/styles.css">
     <style>
         body {
             font-family: 'Lato';
@@ -25,7 +26,7 @@
         }
     </style>
 </head>
-<body id="app-layout">
+<body id="app-layout" class="loggin-wrapper">
     <nav class="navbar navbar-default navbar-inverse" style="border-radius:0px">
         <div class="container">
             <div class="navbar-header">

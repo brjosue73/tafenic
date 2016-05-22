@@ -214,9 +214,21 @@
 		s.boton = "Guardar";
 		s.sendData = {};
 		s.save = function(){
-			console.log(s.sendData);
+			$('#trabSpinner').css("display", "inline-block");
 			r.save({data:s.sendData},function(){
-				l.path('/trabajadores');
+					$('#trabSpinner').css("display", "none");
+					$('#exitotrab').css("display","inline");
+					setTimeout(function(){
+						$('#exitotrab').css("display","none");
+						$("#trabForm")[0].reset();
+					},3000);
+				},function(err){
+					console.log(err.status);
+					$('#trabSpinner').css("display", "none");
+					$('#errortrab').css("display","block");
+					setTimeout(function(){
+						$('#errortrab').css("display","none");
+					},3000);
 			});
 		}
 	}]);
