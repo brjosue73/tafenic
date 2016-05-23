@@ -35,6 +35,9 @@
 	app.factory('planillaResource', ['$resource', function(r){
 		return r('planilla/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
+	app.factory('variablesResource', ['$resource', function(r){
+		return r('variables/:id',{id:"@id"},{update:{method:"PUT"}});
+	}]);
 	/*******************************************************************************************************************\
 		App Routing
 	\*******************************************************************************************************************/
@@ -315,8 +318,36 @@
 			});
 		}
 	}]);
-	app.controller('valoresController',['$scope', function(s){
+	app.controller('valoresController',['$scope','variablesResource', function(s, vr){
+		s.valoresSaveData;
+		vr.query(function(data){
+			s.valoresSaveData = data[0];
+		});
+		s.valorSave = function(){
+			console.log(s.valoresSaveData);
+			vr.save({data:s.valoresSaveData},function(data){
+				console.log(data);
+			})
+		}
+		s.valorUpdate = function(){
+			console.log("funciona");
+			$('#variableSpinner').css("display", "inline-block");
+			vr.update({id:s.valoresSaveData.id},{data:s.valoresSaveData},function(data){
 
+						$('#variableSpinner').css("display", "none");
+						$('#exitovariable').css("display","inline");
+						setTimeout(function(){
+							$('#exitovariable').css("display","none");
+						},3000);
+					},function(err){
+						console.log(err.status);
+						$('#variableSpinner').css("display", "none");
+						$('#errorvariable').css("display","block");
+						setTimeout(function(){
+							$('#errorvariable').css("display","none");
+						},3000);
+			});
+		};
 	}]);
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};

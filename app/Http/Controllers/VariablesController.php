@@ -43,8 +43,8 @@ class VariablesController extends Controller
       $arreglo = $peticion["data"];
 
       $variable = new Variable($arreglo);
-      $trabajador->save();
-      return "Trabajador Creado!";
+      $variable->save();
+      return "Valores Actualizados!";
     }
 
     /**
