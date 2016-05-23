@@ -95,7 +95,7 @@ class PlanillasController extends Controller
                                            $finca=$fin_query->nombre;
                                            $fincas[]=$finca;
 
-                                           
+
                                            $tot_dev=$dias * $pago_dia;
                                            $tot_basic=$tot_dev+$alim_tot;
                                            $total_dev2=$tot_basic + $septimo + $otros + $feriados;
@@ -122,7 +122,8 @@ class PlanillasController extends Controller
                                          "cuje_ext_tot"=>$cuje_ext_tot,
                                          "total_acum"=>$total_acum,
                                          "inss"=>$inss,
-                                         "salario_"=>$tot_recib
+                                         "salario_"=>$tot_recib,
+                                         "fincas"=>$fincas
                                        ];
 
                                     $trabajadores[]=$array;
