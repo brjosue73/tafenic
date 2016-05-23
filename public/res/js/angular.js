@@ -30,6 +30,14 @@
 					return "Activo";
 				}
 			}
+	}).filter("labelState",function(){
+			return function(tipo){
+				if(tipo==0){
+					return "label-danger";
+				}else if (tipo==1) {
+					return "label-success";
+				}
+			}
 	});
 	/*******************************************************************************************************************\
 		Use an exist Angular Module
@@ -272,9 +280,22 @@
 		s.sendData = r.get({id:sp.id});
 
 		s.save = function(){
-			r.update({id:s.sendData.id},{data:s.sendData}/*,function(data){
-				l.path('/trabajadores');
-			}*/);
+			$('#trabSpinner').css("display", "inline-block");
+			r.update({id:s.sendData.id},{data:s.sendData},function(data){
+				$('#trabSpinner').css("display", "none");
+				$('#exitotrab').css("display","inline");
+				setTimeout(function(){
+					$('#exitotrab').css("display","none");
+					$("#trabForm")[0].reset();
+				},3000);
+			},function(err){
+				console.log(err.status);
+				$('#trabSpinner').css("display", "none");
+				$('#errortrab').css("display","block");
+				setTimeout(function(){
+					$('#errortrab').css("display","none");
+				},3000);
+			});
 		}
 	}]);
 	//Read all && Del One
@@ -322,6 +343,7 @@
 							$('#exitoprep').css("display","inline");
 							setTimeout(function(){
 								$('#exitoprep').css("display","none");
+								$("#prepResetForm")[0].reset();
 							},3000);
 						},function(err){
 							console.log(err.status);
