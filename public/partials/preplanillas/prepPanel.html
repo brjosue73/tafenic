@@ -19,7 +19,7 @@
           <label for="listero">Listero</label>
           <select name="listero" id="lsiteroSelect" class="form-control" data-ng-model="prepSendData.id_listero">
             <optgroup label="trabajadores" data-ng-controller="getAll">
-              <option data-ng-repeat="trabajador in trabajadores" value="<% trabajador.id %>"><% trabajador.nombre %></option>
+              <option data-ng-repeat="trabajador in trabListero" value="<% trabajador.id %>"><% trabajador.nombre %></option>
             </optgroup>
           </select>
         </div>
@@ -27,7 +27,7 @@
           <label for="responsable">Responsable de finca</label>
           <select name="responsable" id="respFSelect" class="form-control" data-ng-model="prepSendData.id_respFinca">
             <optgroup label="trabajadores" data-ng-controller="getAll">
-              <option data-ng-repeat="trabajador in trabajadores" value="<% trabajador.id %>"><% trabajador.nombre %></option>
+              <option data-ng-repeat="trabajador in trabRespFinc" value="<% trabajador.id %>"><% trabajador.nombre %></option>
             </optgroup>
           </select>
         </div>
@@ -37,7 +37,7 @@
           <label for="">Trabajador </label>
           <select name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="prepSendData.id_trabajador">
             <optgroup label="trabajadores" data-ng-controller="getAll">
-              <option data-ng-repeat="trabajador in trabajadores" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
+              <option data-ng-repeat="trabajador in trabCampo" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
             </optgroup>
           </select>
         </div>

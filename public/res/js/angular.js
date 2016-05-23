@@ -299,29 +299,27 @@
 		}
 	}]);
 	//Read all && Del One
-	app.controller('getAll', ['$scope','Resource','$location', function(s,r,l){
-
-				// h.get('/resp_finca',function(data){
-				// 	console.log(data);
-				// });
-				// h.get('/listero',function(data){
-				// 	console.log(data);
-				// });
-				// h.get('/campo',function(data){
-				// 	console.log(data);
-				// });
-				// 
-
-
-
-		s.buscar;
-		s.trabajadores = r.query();
+	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
+		//s.buscar;
+		//s.trabajadores = r.query();
 		s.del = function(id){
 			r.delete({id:id}, function(datos){
 				console.log(datos);
 				l.path('/trabajadores');
 			});
 		}
+		s.trabRespFinc = {};
+		s.trabListero = {};
+		s.trabCampo = {};
+						h.get('resp_finca').success(function(data){
+							s.trabRespFinc = data;
+						});
+						h.get('listero').success(function(data){
+							s.trabListero = data;
+						});
+						h.get('campo').success(function(data){
+							s.trabCampo = data;
+						});
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
