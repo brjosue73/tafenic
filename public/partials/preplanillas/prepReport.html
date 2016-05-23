@@ -1,0 +1,60 @@
+<div class="view_Wrapper">
+
+  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 full_h lateral">
+    Opciones
+  </div>
+
+  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 full_h view_body" data-ui-view>
+    <h1>PREPREPORT</h1>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-wrapper">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
+        <!-- <h1>View Titular</h1>
+        <form>
+          <h2>FormView</h2>
+        </form> -->
+      </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-wrapper">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive table-container">
+        <table class="table table-striped table-bordered table-hover table-condensed">
+          <thead>
+            <tr class="active">
+
+              <th>Nombre</th>
+              <th>Labor</th>
+              <th>Horas trab.</th>
+              <th>Horas Ext</th>
+              <th>Cujes Tot.</th>
+              <th>Cujes Ext.</th>
+              <th>Tipo Cuje</th>
+              <th>S. Devengado</th>
+              <th>Alimentacion</th>
+              <th>Vacaciones</th>
+              <th>Aguinaldo</th>
+              <th>S. acumulado</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-ng-repeat="preplanilla in preplanillas">
+              <td> <% preplanilla.nombres %> </td>
+              <td> <% preplanilla.labor %> </td>
+              <td> <% preplanilla.hora_trab %> </td>
+              <td> <% preplanilla.hora_ext %> </td>
+              <td> <% preplanilla.cant_cujes %> </td>
+              <td> <% preplanilla.cuje_ext %> </td>
+              <td> <% preplanilla.tamano_cuje | tipoCuje %> </td>
+              <td> <% preplanilla.salario_dev %> </td>
+              <td> <% preplanilla.alimentacion %> </td>
+              <td> <% preplanilla.vacaciones %> </td>
+              <td> <% preplanilla.aguinaldo %> </td>
+              <td> <% preplanilla.salario_acum %> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
