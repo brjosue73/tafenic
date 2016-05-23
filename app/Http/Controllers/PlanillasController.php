@@ -128,6 +128,7 @@ class PlanillasController extends Controller
 
                                     $trabajadores[]=$array;
                                     unset($labores);
+                                    unset($fincas);
                                     $trab=$id_trab;
                                   }
                                 }
