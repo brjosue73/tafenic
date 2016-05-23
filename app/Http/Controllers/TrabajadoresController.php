@@ -68,7 +68,7 @@ class TrabajadoresController extends Controller
       $apellido=$trabajador->apellidos;
       $completo="$nombres $apellido";
 
-      $dias= $trabs->count();
+      $dias= $trabajador->count();
       $salario_tot=0;
       $alim_tot=0;
       $vac_tot=0;
@@ -84,18 +84,16 @@ class TrabajadoresController extends Controller
         $agui_tot= $vac_tot;
         $extras=$trab->total_extras;
         $extra_tot += $extras;
-
+        $array = [
+          "dias"=>$dias,
+          "salario_tot"=>$salario_tot,
+          "alim_tot"=>$alim_tot,
+          "vac_tot"=>$vac_tot,
+          "agui_tot"=>$agui_tot,
+          "extra_tot"=>$extra_tot,
+          "nombre"=>$completo
+        ];
       }
-      unset ($array);
-      $array = [
-        "dias"=>$dias,
-        "salario_tot"=>$salario_tot,
-        "alim_tot"=>$alim_tot,
-        "vac_tot"=>$vac_tot,
-        "agui_tot"=>$agui_tot,
-        "extra_tot"=>$extra_tot,
-        "nombre"=>$completo
-      ];
       // $trabs->dias=$dias;
       // $trabs->salario_tot=$salario_tot;
       // $trabs->alim_tot=$alim_tot;
