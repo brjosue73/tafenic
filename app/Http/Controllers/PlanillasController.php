@@ -90,6 +90,12 @@ class PlanillasController extends Controller
                                            $lab_query=Labor::find($trab->id_labor);
                                            $labor=$lab_query->nombre;
                                            $labores[]=$labor;
+
+                                           $fin_query= Finca::find($trab->id_finca);
+                                           $finca=$fin_query->nombre;
+                                           $fincas[]=$finca;
+
+                                           
                                            $tot_dev=$dias * $pago_dia;
                                            $tot_basic=$tot_dev+$alim_tot;
                                            $total_dev2=$tot_basic + $septimo + $otros + $feriados;
