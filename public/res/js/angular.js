@@ -300,6 +300,20 @@
 	}]);
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location', function(s,r,l){
+
+				// h.get('/resp_finca',function(data){
+				// 	console.log(data);
+				// });
+				// h.get('/listero',function(data){
+				// 	console.log(data);
+				// });
+				// h.get('/campo',function(data){
+				// 	console.log(data);
+				// });
+				// 
+
+
+
 		s.buscar;
 		s.trabajadores = r.query();
 		s.del = function(id){
@@ -314,6 +328,7 @@
 		s.prepSendData = {};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
+
 		s.getActividades = function(){
 			h.post('actividad_finca',{id_finca:s.prepSendData.id_finca})
 			.success(function(data){
