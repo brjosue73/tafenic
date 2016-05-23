@@ -26,11 +26,6 @@ class PlanillasController extends Controller
       // $fecha_fin=$peticion['fecha_fin'];
       // $cargo=$peticion['cargo'];
 
-
-
-        $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
-                                ->get();
-
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_camp=$variable->inss_campo;
@@ -38,106 +33,100 @@ class PlanillasController extends Controller
         $valor_dia= $variable->sal_diario;
         $cuje_grand= $variable->cuje_grand;
         $cuje_peq= $variable->cuje_peq;
-        $valor_dia= $variable->sal_diario;
         $vacaciones= $valor_dia*($variable->vacaciones);
         $pago_dia=$variable->sal_diario;
       }
 
-      foreach ($planillas as $planilla) {
+        $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
+                                ->get();
+
+
+      //foreach ($planillas as $planilla) {
         //solo hay 3 tipos administrativo, campo y serv_tecn
-        $trab=0;
-            $id_trab = $planilla->id_trabajador;
-            if ($trab!=$id_trab) {
+
+      //$id_trab = $planilla->id_trabajador;
+      $tamano = sizeof($planillas);
+      $trabajadores=array();
+      $trab=0;
+
+        for ($i=0; $i < $tamano; $i++) {
+          $id_trab=$planillas[$i]->id_trabajador;
+
+          if ($trab!=$id_trab) {
             $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
                                       ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                       //->where('id_finca',$id_finca)
                                      ->get();
 
-             $dias= $trabs->count();
-             $salario_tot=0;
-             $alim_tot=0;
-             $vac_tot=0;
-             $agui_tot=0;
-             $extra_tot=0;
-             $tot_dias=0;
-             $septimo=0;
-             $tot_inss=0;
-             $horas_ext_tot=0;
-             $cuje_ext_tot=0;
-             $total_dev2=0;
-             $septimo=0;
-             $otros=0;
-             $feriados=0;
+                                     $dias= $trabs->count();
+                                     $salario_tot=0;
+                                     $alim_tot=0;
+                                     $vac_tot=0;
+                                     $agui_tot=0;
+                                     $extra_tot=0;
+                                     $horas_ext_tot=0;
+                                     $cuje_ext_tot=0;
+                                     $total_dev2=0;
+                                     $septimo=0;
+                                     $otros=0;
+                                     $feriados=0;
 
-             $trabajador=Trabajador::find($id_trab);
-             $nombres=$trabajador->nombre;
-             $apellido=$trabajador->apellidos;
-             $nombre="$nombres   $apellido";
-             $dia=0;
-               //  si es trabajador por labor -------Falta
-               foreach ($trabs as $trab) {
-                  $dia +=1;
-                  //si trabajo mas de 6 dias y menos de 11 asignar 1 septimo si trabajo 11 asignar 2 septimos
-                  $salario=$trab->salario_acum;
-                  $salario_tot += $salario;
-                  $alim=$trab->alimentacion;
-                  $alim_tot += $alim;
-                  $vac= $trab->vacaciones;
-                  $vac_tot += $vac;
-                  $agui_tot= $vac_tot;
-                  $horas_ext_tot +=$trab->hora_ext;
-                  $cuje_ext_tot +=$trab->cuje_ext;
-                  $extras=$trab->total_extras;
-                  $extra_tot += $extras;
-                  $lab_query=Labor::find($trab->id_labor);
-                  $labor=$lab_query->nombre;
-                  $labores[]=$labor;
+                                     $trabajador=Trabajador::find($id_trab);
+                                     $nombres=$trabajador->nombre;
+                                     $apellido=$trabajador->apellidos;
+                                     $nombre="$nombres   $apellido";
+                                       foreach ($trabs as $trab) {
+                                           $salario=$trab->salario_acum;
+                                           $salario_tot += $salario;
+                                           $alim=$trab->alimentacion;
+                                           $alim_tot += $alim;
+                                           $vac= $trab->vacaciones;
+                                           $vac_tot += $vac;
+                                           $agui_tot= $vac_tot;
+                                           $horas_ext_tot +=$trab->hora_ext;
+                                           $cuje_ext_tot +=$trab->cuje_ext;
+                                           $extras=$trab->total_extras;
+                                           $extra_tot += $extras;
+                                           $lab_query=Labor::find($trab->id_labor);
+                                           $labor=$lab_query->nombre;
+                                           $labores[]=$labor;
+                                           $tot_dev=$dias * $pago_dia;
+                                           $tot_basic=$tot_dev+$alim_tot;
+                                           $total_dev2=$tot_basic + $septimo + $otros + $feriados;
+                                           $total_acum=$total_dev2+ $extra_tot+$vac +$agui_tot;
 
-                  $fin_query= Finca::find($trab->id_finca);
-                  $finca=$fin_query->nombre;
-                  $fincas[]=$finca;
+                                           $tot_inss=$total_acum-$agui_tot;
+                                           $inss= ($tot_inss*$inss_camp)/100;
 
-                  $tot_dev=$dias * $pago_dia;
-                  $tot_basic=$tot_dev+$alim_tot;
-                  $total_dev2=$tot_basic + $septimo + $otros + $feriados;
-                  $total_acum=$total_dev2+ $extra_tot+$vac +$agui_tot;
+                                           $tot_recib=$total_acum - $inss;
+                                       }
 
-                  $tot_inss=$total_acum-$agui_tot;
-                  $inss= ($tot_inss*$inss_camp)/100;
+                                       $array = [
+                                         "id_trab"=>$id_trab,
+                                         "dias"=>$dias,
+                                         "alim_tot"=>$alim_tot,
+                                         "vac_tot"=>$vac_tot,
+                                         "agui_tot"=>$agui_tot,
+                                         "extra_tot"=>$extra_tot,
+                                         "nombre"=>$nombre,
+                                         "labores"=>$labores,
+                                         "total_deven"=>$tot_dev,
+                                         "total_basic"=>$tot_basic,
+                                         "horas_ext_tot"=>$horas_ext_tot,
+                                         "cuje_ext_tot"=>$cuje_ext_tot,
+                                         "total_acum"=>$total_acum,
+                                         "inss"=>$inss,
+                                         "salario_"=>$tot_recib
+                                       ];
 
-                  $tot_recib=$total_acum - $inss;
-               }
-               //Si es trabajador de Administrativo -------Falta
-               $alim_tot = $dia * $alim_var;
-               unset ($array);
-               $array = [
+                                    $trabajadores[]=$array;
+                                    unset($labores);
+                                    $trab=$id_trab;
+                                  }
+                                }
+                                return $trabajadores;
 
-                 "dias"=>$dias,
-                 "alim_tot"=>$alim_tot,
-                 "vac_tot"=>$vac_tot,
-                 "agui_tot"=>$agui_tot,
-                 "extra_tot"=>$extra_tot,
-                 "inss"=>$inss,
-                 "salario_acum"=>$total_acum,
-                 "nombres"=>$nombre,
-                 //"apellidos"=>$apellido,
-                 "fincas"=>$fincas,
-                 "labor"=>$labores,
-                 "total_deven"=>$tot_dev,
-                 "total_basic"=>$tot_basic,
-                 "horas_ext_tot"=>$horas_ext_tot,
-                 "cuje_ext_tot"=>$cuje_ext_tot,
-                 "total_acum"=>$total_acum,
-                 "inss"=>$inss,
-                 "salario_tot"=>$tot_recib,
-                 "fincas"=>$fincas
-               ];
-            $trabajadores[]=$array;
-            unset($fincas);
-            unset($labores);
-            $trab=$id_trab;
-          }
-        }
-      return $trabajadores;
-    }
+      }
+
+
 }
