@@ -63,6 +63,8 @@
 
             <th>id</th>
             <th>Nombre del trabajador</th>
+            <th>Fincas</th>
+            <th>Labores</th>
             <th>Días trabajados</th>
             <th>Tot. Devengado</th>
             <th>Alimentacion</th>
@@ -83,6 +85,8 @@
           <tr data-ng-repeat="reporfincTota in reporfincTot">
             <td> <% reporfincTota.id_trab %> </td>
             <td> <% reporfincTota.nombre %> </td>
+            <td> <li data-ng-repeat="fincass in reporfincTota.fincas track by $index"><% fincass %> </td>
+            <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
             <td> <% reporfincTota.dias %> </td>
             <td> <% reporfincTota.total_deven %> </td>
             <td> <% reporfincTota.alim_tot %> </td>
