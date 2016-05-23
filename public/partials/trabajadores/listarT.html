@@ -1,12 +1,12 @@
 <div class="view_Wrapper">
-
+<!--
   <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 full_h lateral">
     <ul>
         <li><a data-ui-sref="/trabajadores.nuevo">Nuev0</a></li>
     </ul>
-  </div>
+  </div> -->
 
-  <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 full_h view_body" data-ui-view>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-wrapper">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
@@ -22,6 +22,11 @@
               <option value="">T. campo</option>
               <option value=""></option>
             </select>
+          </div>
+          <div class="form-group col-sm-4 col-md-4 col-lg-4">
+            <a data-ui-sref="/trabajadores.nuevo" class="btn btn-default btn-primary">
+              Nuevo
+            </a>
           </div>
         </form>
       </div>
@@ -58,7 +63,7 @@
               <td> <% trabajador.created_at %> </td>
               <td> <% trabajador.cargo %> </td>
               <td> <% trabajador.tipo | tipoTrab %> </td>
-              <td> <span class="label label-success"> <% trabajador.estado | estadoTrab%> </span></td>
+              <td> <span class="label <% trabajador.estado | labelState %>"> <% trabajador.estado | estadoTrab %> </span></td>
               <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})")>Editar</a></td>
               <!-- <td><a href="">Dar de baja</a></td>
               <td><a href="" data-ui-sref="/trabajadores" data-ng-click='del(trabajador.id)'>Eliminar</a></td> -->
