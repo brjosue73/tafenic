@@ -16,12 +16,12 @@ class CreateVariablesTable extends Migration
             $table->increments('id');
             $table->double('sal_diario');
             $table->float('alimentacion');
-            $table->float('vacaciones');
+            $table->double('vacaciones');
             $table->float('inss_campo');
             $table->float('inss_admin');
-            $table->float('cuje_peq');
-            $table->float('cuje_grand');
-            $table->float('hora_ext');
+            $table->double('cuje_peq');
+            $table->double('cuje_grand');
+            $table->double('hora_ext');
             $table->float('septimo');
             $table->timestamps();
         });

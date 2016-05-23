@@ -10,6 +10,7 @@ use App\Preplanilla;
 use App\Trabajador;
 use App\Labor;
 use DB;
+use Ass\Variable;
 
 class PreplanillasController extends Controller
 {
@@ -55,21 +56,7 @@ class PreplanillasController extends Controller
                     ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
                     ->get();
         return response()->json($prep);
-          /*if $request->finca =! 'Todas' { //sino quiere todas las fincas
-            $prep= DB::table('preplanillas')
-                    ->where('finca',$request->finca)
-                    ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
-                    ->get();
-            //hacer la consulta solamente en el rango de fechas
-        }
-        else
-        {
-            $prep= DB::table('preplanillas')
-                    ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
-                    ->get();
-            //hacer la consulta con el rango de fecha y agregar un where ->where('fincas', $request->finca)
-        }
-        */
+
 
     }
     /**
@@ -77,11 +64,17 @@ class PreplanillasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
-        $dia= 106.25;
-        $alim = 30;
-        $vacaciones= $dia*0.083333;
+        $variables=Variable::all();
+        foreach ($variables as $variable) {
+          $dia=$variable->sal_diario;
+          $alim=$variable->alimentacion;
+          $vacaciones= $dia*($variable->vacaciones);
+          $cuje_grand= $variable->cuje_grand;
+          $cuje_peq= $variable->cuje_peq;
+        }
         $prep= Preplanilla::find(1);
 
         $prep->salario_dev =$dia;
@@ -108,26 +101,45 @@ class PreplanillasController extends Controller
     /*Mejorar tomando los valores de la tabla de constantes*/
         $peticion = $request->all();
         $arreglo = $peticion["data"];
+        $variables=Variable::all();
+        foreach ($variables as $variable) {
+          $dia=$variable->sal_diario;
+          $alim=$variable->alimentacion;
+          $vacaciones= $dia*($variable->vacaciones);
+          $cuje_grand= $variable->cuje_grand;
+          $cuje_peq= $variable->cuje_peq;
+          $h_ext_val= $variable->hora_ext;
+          $cuje_peq_ext=$cuje_peq*2;
+          $cuje_grand_ext=$cuje_grand*2;
+          $pago_hora=$dia/8;
+          $pago_hora_ext=$pago_hora*2;
+        }
 
-        $dia= 106.25;
-        $alim = 30;
-        $vacaciones= $dia*0.083333;
         $prep= new Preplanilla($arreglo);
         $prep->salario_dev =$dia;
         $prep->alimentacion =$alim;
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
-        $prep->hora_ext=
         $ext=0;
-        // if ($arreglo['hora_ext']=!null){
-        //     $ext=$arreglo->hora_ext * 26.56;
-        // }
-        // else{
-        //     $ext=0;
-        // }
-        $ext= $arreglo['hora_ext'] * 26.56;
-        $prep->hora_ext = $arreglo['hora_ext'];
-        $prep->total_extras=$ext;
+
+        if($trab->hora_trab == 0){
+           $cant_cujes=$arreglo->cant_cujes;
+           if($arreglo->tamano_cuje == 0){//pequeno
+             $total_act=$cant_cujes * $cuje_peq;
+           }
+           else {
+             $total_act=$cant_cujes * $cuje_grand;
+           }
+           $prep->cant_cujes=$cant_cujes;
+           $prep->tamano_cuje=$arreglo->tamano_cuje;
+           $prep->total_extras=$total_act;
+        }
+        else{ //Si es por Horas
+          $ext= $arreglo['hora_ext'] * $h_ext_val;
+          $prep->hora_ext = $arreglo['hora_ext'];
+          $prep->total_extras=$ext;
+        }
+
         $sal=$dia+$alim + $vacaciones +$vacaciones+$ext;
         $prep->salario_acum= $sal;
         $prep->save();

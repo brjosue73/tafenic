@@ -9,6 +9,7 @@ use App\Finca;
 use App\Preplanilla;
 use App\Trabajador;
 use App\Labor;
+use App\Variable;
 
 class PlanillasController extends Controller
 {
@@ -36,7 +37,14 @@ class PlanillasController extends Controller
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                                 //->where('tipo','administrativo')
                                 ->get();
-
+      $variables=Variable::all();
+      foreach ($variables as $variable) {
+        $inss_camp=$variable->inss_campo;
+        $alim_var=$variable->alimentacion;
+        $valor_dia= $variable->sal_diario;
+        $cuje_grand= $variable->cuje_grand;
+        $cuje_peq= $variable->cuje_peq;
+      }
       foreach ($planillas as $planilla) {
         $id_trab = $planilla->id_trabajador;
         if ($trab!=$id_trab) {
@@ -53,8 +61,6 @@ class PlanillasController extends Controller
            $tot_dias=0;
            $septimo=0;
            $tot_inss=0;
-           $nombre="Jon";
-           $apellido="Doe";
            $trabajador=Trabajador::find($id_trab);
            $nombre=$trabajador->nombre;
            $apellido=$trabajador->apellidos;
@@ -71,21 +77,29 @@ class PlanillasController extends Controller
                  $vac= $trab->vacaciones;
                  $vac_tot +=$vac;
                  $agui_tot= $vac_tot;
-                 $extras=$trab->total_extras;
-                 $extra_tot += $extras;
+
                  $fin_query= Finca::find($trab->id_finca);
                  $finca=$fin_query->nombre;
                  $fincas[]=$finca;
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
-                 //diferencia si es por labor o por horas
+                 if($trab->hora_trab == 0){
+                  return 'activi';
+                  $cant_cujes=$trab->cant_cujes;
+
+                 }
+                 else{
+                   return 'hora';
+                 }
+                 $extras=$trab->total_extras;
+                 $extra_tot += $extras;
                  $tot_inss=$salario_tot + $septimo + $extra_tot + $vac;
-                 $inss= ($tot_inss*4.25)/100;
+                 $inss= ($tot_inss*$inss_camp)/100;
                  $salario_acum=$salario_tot + $alim + $vac + $agui_tot + $extra_tot -$inss;
              }
              //Si es trabajador de Administrativo -------Falta
-             $alim_tot = $dia *30;
+             $alim_tot = $dia * $alim_var;
              unset ($array);
              $array = [
                "id_trab"=>$id_trab,
