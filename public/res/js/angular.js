@@ -301,7 +301,7 @@
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
 		//s.buscar;
-		//s.trabajadores = r.query();
+		s.trabajadores = r.query();
 		s.del = function(id){
 			r.delete({id:id}, function(datos){
 				console.log(datos);
@@ -427,6 +427,10 @@
 						},3000);
 			});
 		};
+
+		s.tareaVal = function(){
+
+		}
 	}]);
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};

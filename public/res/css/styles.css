@@ -32,7 +32,9 @@ li {
   height: 40%; }
 
 .table-wrapper {
-  height: 60%;
+  height: 60%; }
+
+.view_body {
   overflow: scroll; }
 
 .loggin-wrapper {
