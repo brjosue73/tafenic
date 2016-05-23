@@ -10,7 +10,7 @@ use App\Preplanilla;
 use App\Trabajador;
 use App\Labor;
 use DB;
-use Ass\Variable;
+use App\Variable;
 
 class PreplanillasController extends Controller
 {
@@ -103,6 +103,7 @@ class PreplanillasController extends Controller
         $arreglo = $peticion["data"];
         $variables=Variable::all();
         foreach ($variables as $variable) {
+          $hora_trab=0;
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
           $vacaciones= $dia*($variable->vacaciones);
@@ -121,25 +122,24 @@ class PreplanillasController extends Controller
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
         $ext=0;
-
-        if($trab->hora_trab == 0){
-           $cant_cujes=$arreglo->cant_cujes;
-           if($arreglo->tamano_cuje == 0){//pequeno
+        if(isset($arreglo['cant_cujes'])){ //Si es de tipo actividad/cujes
+           $cant_cujes=$arreglo['cant_cujes'];;
+           if($arreglo['tamano_cuje'] == 0){//pequeno
              $total_act=$cant_cujes * $cuje_peq;
            }
            else {
              $total_act=$cant_cujes * $cuje_grand;
            }
            $prep->cant_cujes=$cant_cujes;
-           $prep->tamano_cuje=$arreglo->tamano_cuje;
+           $prep->tamano_cuje=$arreglo['tamano_cuje'];
            $prep->total_extras=$total_act;
         }
         else{ //Si es por Horas
           $ext= $arreglo['hora_ext'] * $h_ext_val;
           $prep->hora_ext = $arreglo['hora_ext'];
           $prep->total_extras=$ext;
+          $prep->tamano_cuje=3;
         }
-
         $sal=$dia+$alim + $vacaciones +$vacaciones+$ext;
         $prep->salario_acum= $sal;
         $prep->save();

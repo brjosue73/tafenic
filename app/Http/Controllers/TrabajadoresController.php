@@ -17,17 +17,24 @@ class TrabajadoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-      /*Si hay cargo de trabajador en el request if ($cargo =!null) entoncs ->where(cargo,$cargo)*/
-      $cargo=$request->cargo;
-      if (isset($cargo)){
-        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo', 'tcampo')->get();
-      }
-      else {
-        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->get();
-      }
 
+     public function resp_finca(){
+       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo','respfinca')->get();
+       return response()->json($trabajadores);
+     }
+     public function listero(){
+       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo','listero')->get();
+       return response()->json($trabajadores);
+     }
+     public function campo(){
+       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo','tcampo')->get();
+       return response()->json($trabajadores);
+     }
+
+    public function index()
+    {
+
+        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->get();
       return response()->json($trabajadores);
     }
 
@@ -54,6 +61,13 @@ class TrabajadoresController extends Controller
       $trabs= Preplanilla::where('id_trabajador',$id_trab)
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();
+
+      $trabajador=Trabajador::find($id_trab);
+      $nombres=$trabajador->nombre;
+
+      $apellido=$trabajador->apellidos;
+      $completo="$nombres $apellido";
+
       $dias= $trabs->count();
       $salario_tot=0;
       $alim_tot=0;
@@ -72,23 +86,24 @@ class TrabajadoresController extends Controller
         $extra_tot += $extras;
 
       }
-      // $trabs->dias=$dias;
-      // $trabs->salario_tot=$salario_tot;
-      // $trabs->alim_tot=$alim_tot;
-      // $trabs->vac_tot=$vac_tot;
-      // $trabs->agui_tot=$agui_tot;
-      // $trabs->extra_tot=$extra_tot;
+      unset ($array);
       $array = [
         "dias"=>$dias,
         "salario_tot"=>$salario_tot,
         "alim_tot"=>$alim_tot,
         "vac_tot"=>$vac_tot,
         "agui_tot"=>$agui_tot,
-        "extra_tot"=>$extra_tot
+        "extra_tot"=>$extra_tot,
+        "nombre"=>$completo
       ];
+      // $trabs->dias=$dias;
+      // $trabs->salario_tot=$salario_tot;
+      // $trabs->alim_tot=$alim_tot;
+      // $trabs->vac_tot=$vac_tot;
+      // $trabs->agui_tot=$agui_tot;
+      // $trabs->extra_tot=$extra_tot;
       $trabs[] = $array;
       return $trabs;
-      return $todo;
     }
     /**
      * Store a newly created resource in storage.
@@ -102,6 +117,7 @@ class TrabajadoresController extends Controller
       $arreglo = $peticion["data"];
 
       $trabajador = new Trabajador($arreglo);
+      $trabajador->estado= 1;
       $trabajador->save();
       return "Trabajador Creado!";
     }
@@ -168,7 +184,5 @@ class TrabajadoresController extends Controller
       $trabajador->delete();
       return "Registro Eliminado";
     }
-    public function listero(){
-      $listeros= Trabajador::all();
-    }
+
 }
