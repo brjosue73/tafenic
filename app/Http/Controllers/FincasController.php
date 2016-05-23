@@ -43,16 +43,23 @@ class FincasController extends Controller
                                     ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                     //->where('id_finca',$id_finca)
                                    ->get();
+
+
            $dias= $trabs->count();
            $salario_tot=0;
            $alim_tot=0;
            $vac_tot=0;
            $agui_tot=0;
            $extra_tot=0;
+
            $trabajador=Trabajador::find($id_trab);
            $nombre=$trabajador->nombre;
            $apellido=$trabajador->apellidos;
-           $name='';
+
+           $trabajador=Trabajador::find($id_trab);
+           $nombres=$trabajador->nombre;
+           $apellido=$trabajador->apellidos;
+           $nombre="$nombre $apellido";
              foreach ($trabs as $trab) {
                  $salario=$trab->salario_acum;
                  $salario_tot += $salario;
