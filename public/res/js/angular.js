@@ -6,7 +6,31 @@
 	angular.module('moduleName',["ngRoute","ngResource","ui.router"], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
-  });
+  }).filter("tipoCuje",function(){
+			return function(tipo){
+				if(tipo==0){
+					return "Pequeño";
+				}else if (tipo==1) {
+					return "Grande";
+				}
+			}
+	}).filter("tipoTrab",function(){
+			return function(tipo){
+				if(tipo==0){
+					return "Catorcenal";
+				}else if (tipo==1) {
+					return "Quincenal";
+				}
+			}
+	}).filter("estadoTrab",function(){
+			return function(tipo){
+				if(tipo==0){
+					return "Inactivo";
+				}else if (tipo==1) {
+					return "Activo";
+				}
+			}
+	});
 	/*******************************************************************************************************************\
 		Use an exist Angular Module
 	\*******************************************************************************************************************/
@@ -78,6 +102,11 @@
 					templateUrl:"partials/preplanillas/lateral.html"
 				}
 			}*/
+		})
+		.state('/preplanillaR', {
+			url: "/preplanilla_repote",
+			templateUrl: "partials/preplanillas/prepReport.html",
+			controller:"preplanilla"
 		})
 		.state('/prepxtrab', {
 			url: "/preplanilla_trabajador",
@@ -286,7 +315,22 @@
 		}
 
 		s.prepTrab = function() {
-			pr.save({data:s.prepSendData});
+			$('#prepSpinner').css("display", "inline-block");
+			pr.save({data:s.prepSendData}, function(){
+
+							$('#prepSpinner').css("display", "none");
+							$('#exitoprep').css("display","inline");
+							setTimeout(function(){
+								$('#exitoprep').css("display","none");
+							},3000);
+						},function(err){
+							console.log(err.status);
+							$('#prepSpinner').css("display", "none");
+							$('#errorprep').css("display","block");
+							setTimeout(function(){
+								$('#errorprep').css("display","none");
+							},3000);
+			});
 		}
 
 			s.reporTrab = {};
