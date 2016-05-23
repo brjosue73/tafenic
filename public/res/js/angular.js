@@ -439,7 +439,7 @@
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
-				s.planillaData = data;
+				s.reporfincTot = data;
 			});
 		}
 	}]);

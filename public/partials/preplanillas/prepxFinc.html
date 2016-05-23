@@ -30,6 +30,7 @@
 
         <th>id</th>
         <th>Nombre del trabajador</th>
+        <th>Labores</th>
         <th>Días trabajados</th>
         <th>Tot. Devengado</th>
         <th>Alimentacion</th>
@@ -50,19 +51,20 @@
       <tr data-ng-repeat="reporfincTota in reporfincTot">
         <td> <% reporfincTota.id_trab %> </td>
         <td> <% reporfincTota.nombre %> </td>
+        <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"> <% labour %> </li></td>
         <td> <% reporfincTota.dias %> </td>
-        <td> <% reporfincTota.hora_ext %> </td>
+        <td> <% reporfincTota.total_deven %> </td>
         <td> <% reporfincTota.alim_tot %> </td>
-        <td> <% reporfincTota.alimentacion %> </td>
+        <td> <% reporfincTota.total_basic %> </td>
         <td> <% reporfincTota.vacaciones %> </td>
         <td> <% reporfincTota.aguinaldo %> </td>
-        <td> <% reporfincTota.extra_tot %> </td>
+        <td> <% reporfincTota.horas_ext_tot %> </td>
         <td><% reporfincTota.vac_tot %></td>
         <td><% reporfincTota.agui_tot %></td>
+        <td> <% reporfincTota.total_acum %> </td>
+        <td><% reporfincTota.inss %></td>
         <td></td>
-        <td></td>
-        <td></td>
-        <td> <% reporfincTota.salario_tot %> </td>
+        <td> <% reporfincTota.salario_ %> </td>
       </tr>
     </tbody>
   </table>
