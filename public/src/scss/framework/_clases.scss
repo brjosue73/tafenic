@@ -13,12 +13,13 @@
 .tarjeta {
   border-radius: 3px;
   box-shadow: 0 0 3px black;
+  padding: 15px;
 }
 .m-top_dow{
   margin-top: 3rem;
   margin-bottom: 3rem;
 }
-.view_body, .table-container{
+.table-container{
   padding: 0;
 }
 
@@ -27,9 +28,13 @@
 }
 
 .table-wrapper{
-  height: 60%;
+  padding: 0;
+  //height: 60%;
   //overflow: scroll;
 }
 .view_body {
   overflow: scroll;
 }
+/*.text-center{
+  text-align: center;
+}*/

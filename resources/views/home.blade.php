@@ -2,13 +2,16 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>TAFENICSA</title>
-        <!-- <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css"> -->
         <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="res/css/styles.css">
         <link rel="stylesheet" href="res/dependencies/font-awesome/css/font-awesome.min.css">
     </head>
     <body data-ng-app="moduleName" class="container-fluid">
+<!--************************************************************************************
+                                    HEADER START
+****************************************************************************************-->
       <div class="row">
         <nav class="navbar navbar-inverse navbar-fixed">
             <div class="navbar-header">
@@ -51,13 +54,20 @@
             </div>
         </nav>
       </div>
+<!--************************************************************************************
+                                    HEADER END
+****************************************************************************************-->
 
+<!--******************************VIEWS CONTAINER***************************************-->
       <main data-ui-view class="row"></main>
+<!--************************************************************************************-->
 
+<!--************************************************************************************
+                                VALORES MODAL START
+****************************************************************************************-->
       <div class="modal fade" id="valores" data-ng-controller="valoresController">
           <div class="modal-dialog">
             <div class="modal-content">
-
                 <div class="modal-header">
                     <button class="close" aria-hidden="true" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Valores</h4>
@@ -100,7 +110,6 @@
                           <label for="sept">Septimo: </label>
                           <input type="text" class="form-control" placeholder="Septimo" name="sept" data-ng-model="valoresSaveData.septimo">
                       </div>
-
                   </form>
                 </div>
                 <div class="modal-footer">
@@ -114,6 +123,9 @@
             </div>
           </div>
       </div>
+<!--************************************************************************************
+                                    VALORES MODAL END
+****************************************************************************************-->
 
       <script src="res/dependencies/jquery/dist/jquery.min.js"></script>
       <script src="res/dependencies/bootstrap/dist/js/bootstrap.min.js"></script>

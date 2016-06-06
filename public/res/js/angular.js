@@ -136,6 +136,11 @@
 			templateUrl: "partials/fincas/crearFinca.html",
 			controller:"fincaController"
 		})
+		.state('/fincas.ver', {
+			url: "/finca/:id",
+			templateUrl: "partials/fincas/unaFinca.html",
+			controller:"fincaOneController"
+		})
 		.state('/planilla',{
 			url:"/planilla",
 			templateUrl: "partials/planillas/planillas.html",
@@ -247,6 +252,11 @@
 			});
 		}
 	}]);
+	app.controller('fincaOneController', ['$scope','fincaResource','$stateParams', function(s,fr,sp){
+		s.unaFinca = fr.get({id:sp.id}, function(data){
+			console.log(data);
+		});
+	}]);
 	/*TRABAJADOR REST CONTROLLERS*/
 	//Create one
 	app.controller('postOne', ['$scope','Resource','$location', function(s,r,l){
@@ -258,6 +268,7 @@
 			r.save({data:s.sendData},function(){
 					$('#trabSpinner').css("display", "none");
 					$('#exitotrab').css("display","inline");
+					//s.$apply();
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
