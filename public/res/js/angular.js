@@ -459,10 +459,26 @@
 			});
 		}
 	}]);
-	app.controller('planillaQController',['$scope', function(s){
+	app.controller('planillaQController',['$scope','$http', function(s,h){
 		s.pqSendData = {};
+
+		h.get('trab_quinc').success(function(data){
+			s.trabQ = data;
+			console.log(data);
+		}).error(function(err){
+			console.log(err);
+		});
+
 		s.pqSave = function(){
 			console.log(s.pqSendData);
+			h.post('guardar_quincenal',s.pqSendData)
+			.success(function(data){
+				//s.reporfincTot = data;
+				console.log(data);
+			})
+			.error(function(err){
+				console.log(err);
+			});
 		}
 	}]);
 }());
