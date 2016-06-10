@@ -59,3 +59,4 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('planilla_quincenal','QuincenalesController@quincenal');
     Route::get('guardar_quincenal','QuincenalesController@g_quincenal');
     Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
+    Route::resource('acumulados','AcumuladosController');
