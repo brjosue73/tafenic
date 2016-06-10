@@ -23,6 +23,8 @@ class QuincenalesController extends Controller
       $planilla = new Quincenal($arreglo);
       $dias_trab=$arreglo['dias_trab'];
       $salario_quinc=$arreglo['salario_quinc'];
+      $finca=$arreglo['id_finc'];
+      $planilla->id_finc=$finca;
       $salario_dia=$salario_quinc/15;
       $sal_hora=$salario_dia/8;
       $basico=$dias_trab*$salario_quinc;//menos los feriados y los subsidios, porque ya hay una caja de texto
