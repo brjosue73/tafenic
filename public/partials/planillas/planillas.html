@@ -1,63 +1,28 @@
-<div class="view_Wrapper">
-
-  <!-- <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 full_h lateral">
-    Opciones
-  </div> -->
-
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
-
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-wrapper">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
-        <h1>planillas</h1>
-        <form>
-          <div class="form-group col-md-4">
-            <label for="" class="control-label">De: </label>
-            <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_ini">
-          </div>
-          <div class="form-group col-md-4">
-            <label for="" class="control-label">Hasta: </label>
-            <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
-          </div>
-          <div class="form-group col-md-offset-7">
-            <br>
-            <button class="btn btn-default btn-primary" data-ng-click="getPlanilla()">Generar</button>
-          </div>
-        </form>
+<!--
+  REPORTE PLANILLA CATORCENAL
+-->
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
+    <h1>planillas</h1>
+    <form>
+      <div class="form-group col-md-4">
+        <label for="" class="control-label">De: </label>
+        <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_ini">
       </div>
-    </div>
-
-    <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-wrapper">
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive table-container">
-        <table class="table table-striped table-bordered table-hover table-condensed">
-          <thead>
-            <th>Trabajador</th>
-            <th>Días Trabajados</th>
-            <th>Labores</th>
-            <th>Alimentacion</th>
-            <th>Fincas</th>
-            <th>vacaciones</th>
-            <th>Aguinaldo</th>
-            <th>Salaraio Acum.</th>
-            <th>Salario total</th>
-          </thead>
-          <tbody>
-            <tr data-ng-repeat="planilladatos in planillaData">
-              <td><% planilladatos.nombres +" "+ planilladatos.apellidos%></td>
-              <td><% planilladatos.dias %></td>
-              <td><li data-ng-repeat="labour in planilladatos.labor track by $index"><% labour %></li></td>
-              <td><% planilladatos.alim_tot %></td>
-              <td><li data-ng-repeat="finc in planilladatos.fincas track by $index"><% finc %></li></td>
-              <td><% planilladatos.vac_tot %></td>
-              <td><% planilladatos.agui_tot %></td>
-              <td><% planilladatos.salario_acum %></td>
-              <td><% planilladatos.salario_tot %></td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="form-group col-md-4">
+        <label for="" class="control-label">Hasta: </label>
+        <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
       </div>
-    </div> -->
-    <div class="table-responsive col-lg-12 col-md-12 col-sm-12">
-      <table class="table-striped table-bordered table-hover table-condensed">
+      <div class="form-group col-md-offset-7">
+        <br>
+        <button class="btn btn-default btn-primary" data-ng-click="getPlanilla()">Generar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-wrapper">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive table-container">
+      <table class="table table-striped table-bordered table-hover table-condensed">
         <thead>
           <tr class="active">
 
@@ -106,56 +71,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div id="planillaWrapper">
-  <div class="col-md-2 lateral full_h pw--opciones">
-    barra de opciones
-  </div>
-  <div class="col-md-10 full_h pw--cuerpo">
-    <div class="col-md-12 tarjeta gris">
-      <h1>planillas</h1>
-      <form>
-        <div class="form-group col-md-6">
-          <label for="" class="control-label">De: </label>
-          <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_ini">
-        </div>
-        <div class="form-group col-md-6">
-          <label for="" class="control-label">Hasta: </label>
-          <input type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
-        </div>
-        <div class="form-group col-md-offset-11">
-          <button class="btn btn-default btn-primary" data-ng-click="getPlanilla()">Generar</button>
-        </div>
-      </form>
-    </div>
-
-
-      <table class="table-responsive col-md-12 table table-striped table-bordered table-hover table-condensed m-top">
-        <thead>
-          <th>Trabajador</th>
-          <th>Días Trabajados</th>
-          <th>Labores</th>
-          <th>Alimentacion</th>
-          <th>Fincas</th>
-          <th>vacaciones</th>
-          <th>Aguinaldo</th>
-          <th>Salaraio Acum.</th>
-          <th>Salario total</th>
-        </thead>
-        <tbody>
-          <tr data-ng-repeat="planilladatos in planillaData">
-            <td><% planilladatos.nombres +" "+ planilladatos.apellidos%></td>
-            <td><% planilladatos.dias %></td>
-            <td><li data-ng-repeat="labour in planilladatos.labor track by $index"><% labour %></li></td>
-            <td><% planilladatos.alim_tot %></td>
-            <td><li data-ng-repeat="finc in planilladatos.fincas track by $index"><% finc %></li></td>
-            <td><% planilladatos.vac_tot %></td>
-            <td><% planilladatos.agui_tot %></td>
-            <td><% planilladatos.salario_acum %></td>
-            <td><% planilladatos.salario_tot %></td>
-          </tr>
-        </tbody>
-      </table>
-
-  </div>
-</div> -->
