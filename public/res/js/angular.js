@@ -146,6 +146,11 @@
 			templateUrl: "partials/planillas/planillas.html",
 			controller: "planillaController"
 		})
+		.state('/planillaq',{
+			url:"/planilla_quincenal",
+			templateUrl: "partials/planillas/planillaq.html",
+			controller: ""//"planillaQController"
+		})
 		.state('/layout',{
 			url:"/layout",
 			templateUrl: "partials/layout.html",
@@ -311,7 +316,8 @@
 	}]);
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
-		//s.buscar;
+		s.busquedaCriteria = "";
+		s.sorting = "nombre";
 		s.trabajadores = r.query();
 		s.del = function(id){
 			r.delete({id:id}, function(datos){
@@ -331,6 +337,10 @@
 						h.get('campo').success(function(data){
 							s.trabCampo = data;
 						});
+
+		s.verinactivos = function(){
+			console.log("otro");
+		}
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
@@ -453,5 +463,9 @@
 				s.reporfincTot = data;
 			});
 		}
+	}]);
+	app.controller('planillaQController',['$scope', function(s){
+		pqSendData = {};
+
 	}]);
 }());

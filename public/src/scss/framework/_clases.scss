@@ -35,6 +35,12 @@
 .view_body {
   overflow: scroll;
 }
-/*.text-center{
-  text-align: center;
-}*/
+#fincabanner{
+  height: 150px;
+  background-color: black;
+  color: #fff;
+  margin-bottom: 5rem;
+  background: url('/res/img/campoTabaco.jpg') no-repeat;
+  background-size: 100%;
+  background-position: 0 0;
+}

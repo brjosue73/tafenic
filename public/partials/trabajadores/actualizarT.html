@@ -1,25 +1,25 @@
-<form id="trabForm" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
+<form class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
 
   <h1> <% titulo %> </h1>
 
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">nombre</label>
+    <label for="">Nombres: </label>
     <input type="text" class="form-control" data-ng-model="sendData.nombre">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">apellidos</label>
+    <label for="">Apellidos: </label>
     <input type="text" class="form-control" data-ng-model="sendData.apellidos">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">nss</label>
+    <label for="">NSS: </label>
     <input type="text" class="form-control" data-ng-model="sendData.nss">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">cedula</label>
+    <label for="">Cédula: </label>
     <input type="text" class="form-control" data-ng-model="sendData.cedula">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">celular</label>
+    <label for="">N° de Tel. / Celular: </label>
     <input type="text" class="form-control" data-ng-model="sendData.celular">
   </div>
   <!-- <div class="form-group col-sm-4 col-md-4 col-lg-4">
@@ -27,14 +27,14 @@
     <input type="text" class="form-control" data-ng-model="sendData.celular">
   </div> -->
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">Tipo</label>
-    <select name="" id="" class="form-control" data-ng-model="sendData.tipo">
-      <option value="0">Catorcenal</option>
-      <option value="1">Quincenal</option>
+    <label for="">Tipo: </label>
+    <select name="" id="" class="form-control" placeholder="Catorcenal o Quincenal" data-ng-model="sendData.tipo">
+      <option value="catorcenal">Catorcenal</option>
+      <option value="quincenal">Quincenal</option>
     </select>
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
-    <label for="">Cargo</label>
+    <label for="">Cargo: </label>
     <select name="" id="" class="form-control" data-ng-model="sendData.cargo">
       <option value="tcampo" selected>T. de Campo</option>
       <option value="administrativo">Administrativo</option>
