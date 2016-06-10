@@ -23,6 +23,9 @@ class AddDatosQuincenales extends Migration
             $table->integer('feriado_trab');
             $table->integer('feriado_ntrab');
             $table->double('salario_quinc');
+            $table->double('inss_patronal');
+            $table->double('inatec');
+
         });
     }
 
