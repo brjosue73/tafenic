@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Quincenal
+use App\Quincenal;
 use App\Variable;
 
 class QuincenalesController extends Controller
 {
-    public function g_quincenal(){
+    public function g_quincenal(Request $request){
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_admin=$variable->inss_admin;
@@ -18,7 +18,7 @@ class QuincenalesController extends Controller
       }
 
       $peticion = $request->all();
-      $arreglo = $peticion["data"];
+      $arreglo = $peticion;
 
       $planilla = new Quincenal($arreglo);
       $dias_trab=$arreglo['dias_trab'];
@@ -32,27 +32,38 @@ class QuincenalesController extends Controller
       $feriados2=$arreglo['feriado_ntrab'];//no cuenta como dia trabajado
       $feriados=$feriados1+$feriados2;
       $feriado_tot=$feriados*$salario_dia;
-      $planilla->feriado=$feriado_tot;
+      $planilla->feriados=$feriado_tot;
       $otros=$arreglo['otros'];
-      $subsi=$arreglo['subsidos'];
+      $subsi=$arreglo['subsidios'];
       $tot_sub=$subsi*$salario_dia;
       $horas_ext=$arreglo['horas_ext'];
       $tot_h_ext=$horas_ext*($sal_hora*2);
       $planilla->tot_h_ext=$tot_h_ext;
-      $devengado=$basico+$feriados+$otros+$subsidios+$tot_h_ext;
-      $inss_lab=($devengado-$subsidios)*$inss_admin;
-      $planilla->inss_lab=$inss_lab;
+      $devengado=$basico+$feriados+$otros+$subsi+$tot_h_ext;
+      $inss_lab=($devengado-$subsi)*$inss_admin;
+      $planilla->inss_laboral=$inss_lab;
       $IR=0;/*****************************FALTA CALCULAR IR**********************************************/
       $prestamo=$arreglo['prestamos'];
-      $total_pagar=$devengado-$inss_laboral-$IR-$prestamo;
-      $inss_patronal=$devengado*18%;
-      $inatec=($devengado-$subsidios)*2%;
+      $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
+      $inss_patronal=$devengado*18;
+      $inatec=(($devengado-$subsi)*2);
       $planilla->total_pagar=$total_pagar;
-      $planilla->inss_patronal=$inss_patronal
+      $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
 
 
       $planilla->save();
       return "Planilla Almacenada";
+    }
+
+
+    public function quincenal(Request $request){
+      //RETORNAR la planilla de quincenales
+      $peticion = $request->all();
+      $fecha_ini=$peticion['fecha_ini'];
+      $fecha_fin=$peticion['fecha_fin'];
+      $planilla=Quincenal::whereBetween('fecha', [$fecha_ini, $fecha_fin])->get();
+      return response()->json($planilla);
+
     }
 }
