@@ -1,31 +1,11 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
 
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/', 'HomeController@index');
 });
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
 
 // Route::get('profile', ['middleware' => 'auth', function() {
     // Route::get('/', function () {
@@ -52,6 +32,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource("variables",'VariablesController');
 
     Route::post('planilla','PlanillasController@planilla_general');
+    Route::post('reporte_catorcenal','PlanillasController@reporte_planilla');
+
 
     Route::get('listero',"TrabajadoresController@listero");
     Route::get('resp_finca',"TrabajadoresController@resp_finca");
@@ -63,3 +45,17 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('planilla_quincenal','QuincenalesController@quincenal');
     Route::post('guardar_quincenal','QuincenalesController@g_quincenal');
     Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
+
+
+
+    Route::get('pdf', 'PdfController@invoice');
+
+    Route::get('pdf2', function(){
+      $a[]='hola';
+      $pdf = PDF::loadView('pdf',['user'=>$a]);
+      $pdf->setPaper('legal', 'landscape');
+      //return $pdf->download('planilla_quincenal.pdf');
+      // $pdf = App::make('dompdf.wrapper');
+      // $pdf->loadHTML('<h1>Test</h1>');
+      return $pdf->stream();
+    });
