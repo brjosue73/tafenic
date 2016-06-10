@@ -32,8 +32,8 @@
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="" data-ui-sref="/planilla">Planilla</a></li>
-              <li><a href="" data-ui-sref="/preplanillaR">preplanilla</a></li>
+              <li><a href="" data-ui-sref="/planilla">Planilla Catorcenal</a></li>
+              <li><a href="" data-ui-sref="/">Planilla Quincenal</a></li>
               <li><a href="" data-ui-sref="/prepxtrab">Preplanilla por trabajador</a></li>
               <li><a href="" data-ui-sref="/prepxfinc">Preplanilla por Fincas</a></li>
             </ul>

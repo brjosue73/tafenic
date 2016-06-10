@@ -339,7 +339,7 @@
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
-		s.prepSendData = {};
+		s.prepSendData = {subsidio:false};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
 
@@ -366,6 +366,7 @@
 
 		s.prepTrab = function() {
 			$('#prepSpinner').css("display", "inline-block");
+			console.log(s.prepSendData);
 			pr.save({data:s.prepSendData}, function(){
 
 							$('#prepSpinner').css("display", "none");
@@ -459,8 +460,9 @@
 			});
 		}
 	}]);
-	app.controller('planillaQController',['$scope','$http', function(s,h){
+	app.controller('planillaQController',['$scope','$http','fincaResource', function(s,h,fr){
 		s.pqSendData = {};
+		s.pqFincas = fr.query();
 
 		h.get('trab_quinc').success(function(data){
 			s.trabQ = data;
@@ -470,14 +472,23 @@
 		});
 
 		s.pqSave = function(){
-			console.log(s.pqSendData);
+			$('#PlaQSpinner').css("display", "inline-block");
 			h.post('guardar_quincenal',s.pqSendData)
 			.success(function(data){
-				//s.reporfincTot = data;
-				console.log(data);
+				$('#PlaQSpinner').css("display", "none");
+				$('#exitoPlaQ').css("display","inline");
+				setTimeout(function(){
+					$('#exitoPlaQ').css("display","none");
+				},3000);
+				$('#formQuince')[0].reset();
 			})
 			.error(function(err){
-				console.log(err);
+				console.log(err.status);
+				$('#PlaQSpinner').css("display", "none");
+				$('#errorPlaQ').css("display","block");
+				setTimeout(function(){
+					$('#errorPlaQ').css("display","none");
+				},3000);
 			});
 		}
 	}]);
