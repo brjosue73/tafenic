@@ -74,8 +74,8 @@ class PlanillasController extends Controller
                                      $nombres=$trabajador->nombre;
                                      $apellido=$trabajador->apellidos;
                                      $nombre="$nombres   $apellido";
-                                     /********************CALCULO DEL SEPTIMO*/
-                                     /********************CALCULO DEL SEPTIMO*/
+                                     /********************CALCULO DEL SEPTIMO*****************/
+                                     /********************Contar los dias trabajados*****************/
                                     $cant_septimos=0;
                                      if($dias>=6){ //merece por lo menos 1 septimo
                                        $cant_septimos=1;
@@ -161,8 +161,7 @@ class PlanillasController extends Controller
                                            $fin_mayor_query= Finca::find($id_mayor);
                                            $finca_mayor=$fin_mayor_query->nombre;
                                         }
-                                         //$tot_fincas=$fincas->count();
-                                         //return $tot_fincas;
+
                                          /*--------------SEPTIMO**************/
 
 

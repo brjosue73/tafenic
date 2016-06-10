@@ -56,12 +56,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('listero',"TrabajadoresController@listero");
     Route::get('resp_finca',"TrabajadoresController@resp_finca");
     Route::get('campo',"TrabajadoresController@campo");
-    Route::get("funcion",function()
-    {
-        $var1=5;
-        $var2=10;
-        $var3=$var1+$var2;
-        return view('suma', array('var3' => $var3, 'var1'=>$var1));
-        return $var3;
-
-    });
+    Route::get('planilla_quincenal','QuincenalesController@quincenal');
+    Route::get('guardar_quincenal','QuincenalesController@g_quincenal');
+    Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
+    Route::resource('acumulados','AcumuladosController');
