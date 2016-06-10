@@ -149,12 +149,7 @@
 		.state('/planillaq',{
 			url:"/planilla_quincenal",
 			templateUrl: "partials/planillas/planillaq.html",
-			controller: ""//"planillaQController"
-		})
-		.state('/layout',{
-			url:"/layout",
-			templateUrl: "partials/layout.html",
-			controller: ""
+			controller: "planillaQController"
 		})
 	});
 	/*******************************************************************************************************************\
@@ -465,7 +460,9 @@
 		}
 	}]);
 	app.controller('planillaQController',['$scope', function(s){
-		pqSendData = {};
-
+		s.pqSendData = {};
+		s.pqSave = function(){
+			console.log(s.pqSendData);
+		}
 	}]);
 }());

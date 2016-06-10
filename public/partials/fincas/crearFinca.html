@@ -1,16 +1,12 @@
+<!--
+  FORMULARIO REGISTRO DE FINCAS
+-->
 <form class="col-lg-12 col-md-12 col-sm-12 tarjeta gris m-top_dow">
   <h1>Crear Finca Nueva</h1>
   <div class="form-group col-sm-4 col-md-8 col-lg-10">
     <label for="">Nombre finca</label>
     <input type="text" class="form-control" data-ng-model="fincaSaveData.nombre">
   </div>
-  <!-- <div class="form-group col-sm-4 col-md-4 col-lg-5">
-    <label for="">Estado de Finca</label>
-    <select name="" class="form-control" data-ng-model="fincaSaveData.estado">
-      <option value="1">Activa</option>
-      <option value="0">Inactiva</option>
-    </select>
-  </div> -->
   <div class="form-group col-sm-4 col-md-4 col-lg-2">
     <br>
     <button class="btn btn-default btn-primary" type="button" name="button" data-ng-click="fincaSave()">Guardar Finca</button>
@@ -56,7 +52,6 @@
     <span id="exitolabor" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
     <span id="errorlabor" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
   </div>
-
   <div class="form-group col-sm-4 col-md-4 col-lg-5">
     <label for="finca">Finca</label>
     <select name="finca" id="fincaSelect" class="form-control" data-ng-model="loteSaveData.id_finca">
