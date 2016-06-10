@@ -22,7 +22,6 @@ class CreateQuincenalsTable extends Migration
             $table->date('fecha_fin');
             $table->double('dias_vacs');
             $table->timestamps();
-            $table->foreign('id_trabajador')->references('id')->on('trabajadores')->onDelete('cascade');
             $table->foreign('id_finc')->references('id')->on('fincas')->onDelete('cascade');
 
         });

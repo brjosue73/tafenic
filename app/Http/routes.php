@@ -56,4 +56,6 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('listero',"TrabajadoresController@listero");
     Route::get('resp_finca',"TrabajadoresController@resp_finca");
     Route::get('campo',"TrabajadoresController@campo");
-    Route::get('quincenal','QuincenalesController@prueba');
+    Route::get('planilla_quincenal','QuincenalesController@quincenal');
+    Route::get('guardar_quincenal','QuincenalesController@g_quincenal');
+    Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
