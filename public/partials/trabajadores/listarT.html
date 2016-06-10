@@ -9,18 +9,29 @@
         <h1>Listado de Trabajadores</h1>
         <form class="">
 
-          <div class="form-group col-sm-4 col-md-4 col-lg-4">
-            <label for="">Buscar: </label>
+          <div class="form-group col-sm-3 col-md-3 col-lg-3">
+            <label for="">Buscar por <% busquedaCriteria %> </label>
             <input type="text" class="form-control" data-ng-model="busqueda">
           </div>
-          <div class="form-group col-sm-4 col-md-4 col-lg-4">
-            <label class="label-control">Cargo: </label>
-            <select class="form-control">
-              <option value="">T. campo</option>
-              <option value=""></option>
+          <div class="form-group col-sm-3 col-md-3 col-lg-3">
+            <label class="label-control">Criterio de Búsqueda: </label>
+            <!-- <input type="text" class="form-control" data-ng-model="busquedaCriteria"> -->
+            <select class="form-control" data-ng-model="busquedaCriteria">
+              <option value="nombre">Nombre</option>
+              <option value="apellido">Apellido</option>
             </select>
           </div>
-          <div class="form-group col-sm-4 col-md-4 col-lg-4">
+          <div class="form-group col-sm-3 col-md-3 col-lg-3">
+            <label class="label-control">Ordenar por: <% sorting %></label>
+            <select class="form-control" data-ng-model="sorting">
+              <option value="nombre">Nombre</option>
+              <option value="apellidos">Apellidos</option>
+              <option value="cargo">Cargo</option>
+              <option value="inactivos" data-ng-click="verinactivos()">Inactivos</option>
+              <option value="tipo">Tipo</option>
+            </select>
+          </div>
+          <div class="form-group col-sm-3 col-md-3 col-lg-3">
             <br>
             <a data-ui-sref="/trabajadores.nuevo" class="btn btn-default btn-primary"> Nuevo </a>
           </div>
@@ -49,7 +60,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr data-ng-repeat="trabajador in trabajadores" ><!-- data-ng-hide="trabajador.nombre != busqueda" -->
+            <tr data-ng-repeat="trabajador in trabajadores | orderBy:sorting" data-ng-hide="trabajador.estado == 0"><!-- data-ng-hide="trabajador.nombre != busqueda" -->
               <td> <% trabajador.id %> </td>
               <td> <% trabajador.nombre %> </td>
               <td> <% trabajador.apellidos %> </td>
