@@ -32,7 +32,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource("variables",'VariablesController');
 
     Route::post('planilla','PlanillasController@planilla_general');
-    Route::post('reporte_catorcenal','PlanillasController@reporte_planilla');
+    Route::get('reporte_catorcenal','PlanillasController@reporte_planilla');
 
 
     Route::get('listero',"TrabajadoresController@listero");

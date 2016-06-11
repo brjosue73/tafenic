@@ -6,6 +6,10 @@
 </head>
 <body>
 asdasdasd
-  <h1>{{$peticion}}</h1>
+@foreach($peticion as $peti)
+{{$peti->id_trab}}
+@endforeach
+
+  <h1></h1>
 </body>
 </html>

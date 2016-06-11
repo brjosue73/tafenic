@@ -23,13 +23,13 @@ class PlanillasController extends Controller
     //$peticion = $request->all();
     //$arreglo = $peticion["data"];
 
-    $finca_mayor='nada';
-    //$fecha_ini="2016-01-01";
-    //$fecha_fin="2017-01-01";
+    $finca_mayor='--';
+    $fecha_ini="2016-01-01";
+    $fecha_fin="2017-01-01";
     $cargo='tcampo';
 
-    $fecha_ini=$peticion['fecha_ini'];
-    $fecha_fin=$peticion['fecha_fin'];
+    //$fecha_ini=$peticion['fecha_ini'];
+    //$fecha_fin=$peticion['fecha_fin'];
     //$cargo=$peticion['cargo'];
 
     $variables=Variable::all();
@@ -203,10 +203,19 @@ class PlanillasController extends Controller
 
   }
   public function reporte_planilla(Request $request){
-    $peticion=$request->all();
+
+    //$peticion=$request->all();
+    $peticion='';
     $data =$this->calculo_planilla($peticion);
-    $pdf = PDF::loadView('reporte_catorcenal',['peticion'=>$data]);
+
+    //$view =  \View::make('reporte_catorcenal', compact('data'))->render();
+    $view = \View::make('reporte_catorcenal',array('data'=>$data));
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($view);
     $pdf->setPaper('legal', 'landscape');
+    return $pdf->stream('invoice');
+    //$pdf = PDF::loadView('reporte_catorcenal', $data);
+    //$pdf = PDF::loadView('reporte_catorcenal',['peticion'=>$data]);
     return $pdf->stream();
   }
 
