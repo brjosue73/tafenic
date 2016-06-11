@@ -19,7 +19,7 @@
       </div>
       <div class="form-group col-md-offset-7">
         <br>
-        <a href="reporte_catorcenal" class="btn btn-default btn-primary">Generar Imprimible</a>
+        <a href="reporte_catorcenal" target="_blank" class="btn btn-default btn-primary">Generar Imprimible</a>
       </div>
     </form>
   </div>
@@ -34,6 +34,8 @@
             <th>Fincas</th>
             <th>Labores</th>
             <th>Días trabajados</th>
+            <th>septimo</th>
+            <th>finc. Sep.</th>
             <th>Tot. Devengado</th>
             <th>Alimentación</th>
             <th>Tot. Básico</th>
@@ -56,6 +58,8 @@
             <td> <li data-ng-repeat="fincass in reporfincTota.fincas track by $index"><% fincass %> </td>
             <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
             <td> <% reporfincTota.dias %> </td>
+            <td> <% reporfincTota.total_septimo %> </td>
+            <td> <% reporfincTota.finca_septimo %> </td>
             <td> <% reporfincTota.total_deven %> </td>
             <td> <% reporfincTota.alim_tot %> </td>
             <td> <% reporfincTota.total_basic %> </td>
