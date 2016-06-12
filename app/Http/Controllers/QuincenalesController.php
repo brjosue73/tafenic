@@ -14,7 +14,6 @@ class QuincenalesController extends Controller
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_admin=$variable->inss_admin;
-
       }
 
       $peticion = $request->all();
@@ -59,12 +58,16 @@ class QuincenalesController extends Controller
     }
 
 
-    public function quincenal(Request $request){
+    public function quincenal_fecha(Request $request){
       //RETORNAR la planilla de quincenales
-      $peticion = $request->all();
-      $fecha_ini=$peticion['fecha_ini'];
-      $fecha_fin=$peticion['fecha_fin'];
-      $planilla=Quincenal::whereBetween('fecha', [$fecha_ini, $fecha_fin])->get();
+      // $peticion = $request->all();
+      // $fecha_ini=$peticion['fecha_ini'];
+      // $fecha_fin=$peticion['fecha_fin'];
+      $fecha_ini=2010-01-01;
+      $fecha_fin=2018-01-01;
+      $planilla=Quincenal::where('fecha_ini','>',$fecha_ini)
+                ->where('fecha_fin','>',$fecha_fin)
+                ->get();
       return response()->json($planilla);
 
     }
