@@ -18,7 +18,7 @@ class TrabajadoresController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function quincenal(){
-       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('tipo',1)->get();
+       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('tipo','quincenal')->get();
        return response()->json($trabajadores);
      }
      public function resp_finca(){
