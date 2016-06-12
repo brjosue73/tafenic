@@ -146,6 +146,11 @@
 			templateUrl: "partials/planillas/planillas.html",
 			controller: "planillaController"
 		})
+		.state('/RplanillaQ',{
+			url:"/reporte_planilla_quincenal",
+			templateUrl: "partials/reportes/RplanillasQ.html",
+			controller: ""
+		})
 		.state('/planillaq',{
 			url:"/planilla_quincenal",
 			templateUrl: "partials/planillas/planillaq.html",

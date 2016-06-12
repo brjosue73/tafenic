@@ -24,12 +24,12 @@ class PlanillasController extends Controller
     //$arreglo = $peticion["data"];
 
     $finca_mayor='--';
-    $fecha_ini="2016-01-01";
-    $fecha_fin="2017-01-01";
+    //$fecha_ini="2016-01-01";
+    //$fecha_fin="2017-01-01";
     $cargo='tcampo';
 
-    //$fecha_ini=$peticion['fecha_ini'];
-    //$fecha_fin=$peticion['fecha_fin'];
+    $fecha_ini=$peticion['fecha_ini'];
+    $fecha_fin=$peticion['fecha_fin'];
     //$cargo=$peticion['cargo'];
 
     $variables=Variable::all();
@@ -204,8 +204,8 @@ class PlanillasController extends Controller
   }
   public function reporte_planilla(Request $request){
 
-    //$peticion=$request->all();
-    $peticion='';
+    $peticion=$request->all();
+    // $peticion='';
     $data =$this->calculo_planilla($peticion);
 
     //$view =  \View::make('reporte_catorcenal', compact('data'))->render();
