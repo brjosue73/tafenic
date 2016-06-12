@@ -1,0 +1,79 @@
+<!--
+  REPORTE PLANILLA QUINCENAL
+-->
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
+    <h1>Planilla Quincenal</h1>
+    <form method="post" action="reporte_catorcenal">
+      <div class="form-group col-md-3">
+        <label for="" class="control-label">De: </label>
+        <input name="fecha_ini" type="date" class="form-control" data-ng-model="plillaSendData.fecha_ini">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="" class="control-label">Hasta: </label>
+        <input name="fecha_fin" type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
+      </div>
+      <div class="form-group col-md-1">
+        <br>
+        <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanilla()" value="Generar">
+      </div>
+      <div class="form-group col-md-1">
+        <br>
+        <input type="submit" href="reporte_catorcenal" target="_blank" class="btn btn-default btn-primary" value="Generar Imprimible">
+      </div>
+    </form>
+  </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive table-container">
+      <table class="table table-striped table-bordered table-hover table-condensed">
+        <thead>
+          <tr class="active">
+
+            <th>Nombre del trabajador</th>
+            <th>Fincas</th>
+            <th>Labores</th>
+            <th>Días trabajados</th>
+            <th>septimo</th>
+            <th>finc. Sep.</th>
+            <th>Tot. Devengado</th>
+            <th>Alimentación</th>
+            <th>Tot. Básico</th>
+            <th>Otros</th>
+            <th>Feriados</th>
+            <th>Horas Extra</th>
+            <th>Vacaciones</th>
+            <th>Aguinaldo</th>
+            <th>Tot.Acumulado</th>
+            <th>INSS laboral</th>
+            <th>Préstamos</th>
+            <th>Tot. a Recibir</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-ng-repeat="reporfincTota in reporfincTot">
+
+            <td> <% reporfincTota.nombre %> </td>
+            <td> <li data-ng-repeat="fincass in reporfincTota.fincas track by $index"><% fincass %> </td>
+            <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
+            <td> <% reporfincTota.dias %> </td>
+            <td> <% reporfincTota.total_septimo %> </td>
+            <td> <% reporfincTota.finca_septimo %> </td>
+            <td> <% reporfincTota.total_deven %> </td>
+            <td> <% reporfincTota.alim_tot %> </td>
+            <td> <% reporfincTota.total_basic %> </td>
+            <td> <% reporfincTota.vacaciones %> </td>
+            <td> <% reporfincTota.aguinaldo %> </td>
+            <td> <% reporfincTota.horas_ext_tot %> </td>
+            <td><% reporfincTota.vac_tot %></td>
+            <td><% reporfincTota.agui_tot %></td>
+            <td> <% reporfincTota.total_acum %> </td>
+            <td><% reporfincTota.inss %></td>
+            <td></td>
+            <td> <% reporfincTota.salario_ %> </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+h4,h5 {
+  text-align: center;
+}
+th, td{
+  font-family: sans-serif;
+  font-size: 11px;
+}
+td li{
+  list-style-type: none;
+}
+td hr{
+  margin: 0;
+}
