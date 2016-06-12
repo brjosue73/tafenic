@@ -41,7 +41,7 @@ class QuincenalesController extends Controller
       $tot_h_ext=$horas_ext*($sal_hora*2);
       $planilla->tot_h_ext=$tot_h_ext;
       $devengado=$basico+$feriados+$otros+$subsi+$tot_h_ext;
-      $inss_lab=($devengado-$subsi)*$inss_admin;
+      $inss_lab=(($devengado-$subsi)*$inss_admin)/100;
       $planilla->inss_laboral=$inss_lab;
       $IR=0;/*****************************FALTA CALCULAR IR**********************************************/
       $prestamo=$arreglo['prestamos'];
