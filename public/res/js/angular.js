@@ -94,7 +94,7 @@
 		.state('/trabajadores.nuevo', {
 			url: "/nuevo",
 			templateUrl: "partials/trabajadores/actualizarT.html",
-			controller:"postOne"
+			controller:"getAll"
 		})
 		.state('/trabajadores.editar', {
 			url: "/editar/:id",
@@ -319,7 +319,32 @@
 		s.busquedaCriteria = "";
 		s.sorting = "nombre";
 		s.trabajadores = r.query();
-		s.del = function(id){
+
+		s.titulo = "Ingreso de trabajadores nuevos";
+		s.boton = "Guardar";
+		s.sendData = {};
+		s.save = function(){
+			$('#trabSpinner').css("display", "inline-block");
+			r.save({data:s.sendData},function(data){
+					$('#trabSpinner').css("display", "none");
+					$('#exitotrab').css("display","inline");
+					//s.$apply();
+					setTimeout(function(){
+						$('#exitotrab').css("display","none");
+						$("#trabForm")[0].reset();
+						s.trabajadores.push(data[0]);
+						s.$apply();
+					},3000);
+				},function(err){
+					console.log(err.status);
+					$('#trabSpinner').css("display", "none");
+					$('#errortrab').css("display","block");
+					setTimeout(function(){
+						$('#errortrab').css("display","none");
+					},3000);
+			});
+		}
+		/*s.del = function(id){
 			r.delete({id:id}, function(datos){
 				console.log(datos);
 				l.path('/trabajadores');
@@ -340,7 +365,7 @@
 
 		s.verinactivos = function(){
 			console.log("otro");
-		}
+		}*/
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
@@ -390,7 +415,7 @@
 			});
 		}
 
-			s.reporTrab = {};
+		s.reporTrab = {};
 		s.getPrepxTrab = function(){
 			//console.log(s.reporTrab);
 			h.post('prep_trab',s.reporTrab)
@@ -402,6 +427,19 @@
 				console.log(err);
 			});
 		}
+
+		s.trabRespFinc = {};
+		s.trabListero = {};
+		s.trabCampo = {};
+		h.get('resp_finca').success(function(data){
+			s.trabRespFinc = data;
+		});
+		h.get('listero').success(function(data){
+			s.trabListero = data;
+		});
+		h.get('campo').success(function(data){
+			s.trabCampo = data;
+		});
 	}]);
 
 	app.controller('prepxfinc',['$scope','$http','fincaResource', function(s,h,fr){
@@ -485,7 +523,7 @@
 				setTimeout(function(){
 					$('#exitoPlaQ').css("display","none");
 				},3000);
-				//$('#formQuince')[0].reset();
+				$('#formQuince')[0].reset();
 			})
 			.error(function(err){
 				console.log(err.status);

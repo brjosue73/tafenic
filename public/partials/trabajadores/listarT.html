@@ -66,7 +66,7 @@
             <td> <% trabajador.celular %> </td>
             <td> <% trabajador.created_at %> </td>
             <td> <% trabajador.cargo %> </td>
-            <td> <% trabajador.tipo | tipoTrab %> </td>
+            <td> <% trabajador.tipo%> </td>
             <td> <span class="label <% trabajador.estado | labelState %>"> <% trabajador.estado | estadoTrab %> </span></td>
             <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})">Editar</a></td>
             <!-- <td><a href="">Dar de baja</a></td>
