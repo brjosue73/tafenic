@@ -19,6 +19,21 @@ class PlanillasController extends Controller
      $data =$this->calculo_planilla($peticion);
      return $data;
   }
+  public function reporte_planilla(Request $request){
+
+    $peticion=$request->all();
+    // $peticion='';
+    $data =$this->calculo_planilla($peticion);
+    $view = \View::make('reporte_catorcenal',array('data'=>$data));
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($view);
+    $pdf->setPaper('legal', 'landscape');
+    return $pdf->stream('invoice');
+    return $pdf->stream();
+  }
+  public function sobres_catorcenal(){
+    
+  }
   public function calculo_planilla($peticion){
     //$peticion = $request->all();
     //$arreglo = $peticion["data"];
@@ -200,17 +215,6 @@ class PlanillasController extends Controller
       return $trabajadores;
 
   }
-  public function reporte_planilla(Request $request){
 
-    $peticion=$request->all();
-    // $peticion='';
-    $data =$this->calculo_planilla($peticion);
-    $view = \View::make('reporte_catorcenal',array('data'=>$data));
-    $pdf = \App::make('dompdf.wrapper');
-    $pdf->loadHTML($view);
-    $pdf->setPaper('legal', 'landscape');
-    return $pdf->stream('invoice');
-    return $pdf->stream();
-  }
 
 }

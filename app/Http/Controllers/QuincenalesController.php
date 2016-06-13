@@ -93,13 +93,14 @@ class QuincenalesController extends Controller
     }
 
     public function planilla_quincenal($peticion){
-      //RETORNAR la planilla de quincenales
+      //RETOR$NAR la planilla de quincenales
       // $peticion = $request->all();
-      $fecha_ini=$peticion['fecha_ini'];
-      $fecha_fin=$peticion['fecha_fin'];
-      $tipo=$peticion['tipo'];
-      //$fecha_ini='2016-06-10';
-      //$fecha_fin='2016-06-25';
+      // $fecha_ini=$peticion['fecha_ini'];
+      // $fecha_fin=$peticion['fecha_fin'];
+      // $tipo=$peticion['tipo'];
+      $tipo='servicios tecnicos';
+      $fecha_ini='2016-06-10';
+      $fecha_fin='2016-06-25';
       $planilla=Quincenal::where('fecha_ini','>=',$fecha_ini)
                 ->where('fecha_fin','<=',$fecha_fin)
                 //whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
@@ -119,7 +120,91 @@ class QuincenalesController extends Controller
             $plan->nombre=$nombre;
             $planillas[]=$plan;
         }
-        return $planillas;
-        return response()->json($planilla);
+        if (isset($planillas)){
+          return $planillas;
+        }
+        else {
+          return '$No hay datos';
+        }
+        //return response()->json($planilla);
     }
+    public function billetes(Request $request){
+      $peticion=$request->all();
+      $planillas=$this->planilla_quincenal($peticion);
+      $data =$this->calcular_billetes($planillas);
+      return $data;
+    }
+
+    public function calcular_billetes($planillas){
+      foreach ($planillas as $planilla) {
+        $nums[]=$planilla['total_pagar'];
+      }
+
+      foreach ($nums as $N) {
+        //recibir el total de pagos en un array
+        //recibe el nombre de la gente
+        $billete=$N;
+        $numero_de_billetes_500 = $billete / 500;
+        $billete = $billete % 500;
+        $numero_de_billetes_500=floor($numero_de_billetes_500);
+
+        $numero_de_billetes_200 = floor($billete / 200);
+        $billete = $billete % 200;
+
+        $numero_de_billetes_100 =floor($billete / 100);
+        $billete = $billete % 100;
+
+        $numero_de_billetes_50 =floor ($billete / 50);
+        $billete = $billete % 50;
+
+        $numero_de_billetes_20 = floor($billete / 20);
+        $billete = $billete % 20;
+
+        $numero_de_billetes_10 =floor ($billete / 10);
+        $billete = $billete % 10;
+
+        $numero_de_billetes_5 = floor($billete / 5);
+        $billete = $billete % 5;
+
+        $numero_de_billetes_1 = floor($billete / 1);
+        $billete = $billete % 1;
+        $num[0]=$N;
+        $num[500]=$numero_de_billetes_500;
+        $num[200]=$numero_de_billetes_200;
+        $num[100]=$numero_de_billetes_100;
+        $num[50]=$numero_de_billetes_50;
+        $num[20]=$numero_de_billetes_20;
+        $num[10]=$numero_de_billetes_10;
+        $num[5]=$numero_de_billetes_5;
+        $num[1]=$numero_de_billetes_1;
+        $num[2]=$billete;
+        $todos[]=$num;
+      }
+      $tot_500=0;$tot_200=0;$tot_100=0;$tot_50=0;$tot_20=0;$tot_10=0;$tot_5=0;$tot_1=0;$tot_billetes=0;
+      foreach ($todos as $key) {
+
+        $tot_500=$key[500]+$tot_500;
+        $tot_200=$key[200]+$tot_200;
+        $tot_100=$key[100]+$tot_100;
+        $tot_50=$key[50]+$tot_50;
+        $tot_20=$key[20]+$tot_20;
+        $tot_10=$key[10]+$tot_10;
+        $tot_5=$key[5]+$tot_5;
+        $tot_1=$key[1]+$tot_1;
+        $tot_billetes=round($key[0]+$tot_billetes,2);
+        $cant_mult_500=$tot_500*500;$tot_500*500;$cant_mult_200=$tot_200*200;$cant_mult_100=$tot_100*100;$cant_mult_50=$tot_50*50;$cant_mult_20=$tot_20*20;$cant_mult_10=$tot_10*10;
+        $cant_mult_5=$tot_5*5;$cant_mult_1=$tot_1*1;
+      }
+      $cant_ind[500]=$tot_500;$cant_ind[200]=$tot_200;$cant_ind[100]=$tot_100;$cant_ind[50]=$tot_50;$cant_ind[20]=$tot_20;
+      $cant_ind[10]=$tot_10;$cant_ind[5]=$tot_5;$cant_ind[1]=$tot_1;$cant_ind[0]=$tot_billetes;
+      $tot_mul=$cant_mult_500+$cant_mult_200+$cant_mult_100+$cant_mult_50+$cant_mult_20+$cant_mult_10+$cant_mult_5+$cant_mult_1;
+      $dif=round($tot_billetes-$tot_mul,2);
+      $todos['diferencia']=$dif;
+      $todos['cantidad_multiplicada']=$tot_mul;
+      $todos['total_billetes']=$tot_billetes;
+      $todos['total_individual']=$cant_ind;
+      return $todos;
+    }
+
+
 }
