@@ -13,7 +13,7 @@ class QuincenalesController extends Controller
     public function quincenal_fecha(Request $request){
       $peticion=$request->all();
       //return $peticion;
-       $data =$this->calculo_planilla($peticion);
+       $data =$this->planilla_quincenal($peticion);
        return $data;
     }
     public function g_quincenal(Request $request){
@@ -82,11 +82,11 @@ class QuincenalesController extends Controller
 
     public function planilla_quincenal($peticion){
       //RETORNAR la planilla de quincenales
-      // $peticion = $request->all();
-      // $fecha_ini=$peticion['fecha_ini'];
-      // $fecha_fin=$peticion['fecha_fin'];
-      $fecha_ini='2016-06-10';
-      $fecha_fin='2016-06-25';
+      //$peticion = $request->all();
+      $fecha_ini=$peticion['fecha_ini'];
+      $fecha_fin=$peticion['fecha_fin'];
+      //$fecha_ini='2016-06-10';
+      //$fecha_fin='2016-06-25';
       $planilla=Quincenal::whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
                 ->whereBetween('fecha_fin', [$fecha_ini, $fecha_fin])
                 ->get();
