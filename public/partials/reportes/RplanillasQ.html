@@ -7,16 +7,16 @@
     <form method="post" action="reporte_quincenal">
       <div class="form-group col-md-3">
         <label for="" class="control-label">De: </label>
-        <input form="cash" name="fecha_ini" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_ini">
+        <input name="fecha_ini" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_ini">
       </div>
       <div class="form-group col-md-3">
         <label for="" class="control-label">Hasta: </label>
-        <input form="cash" name="fecha_fin" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_fin">
+        <input name="fecha_fin" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_fin">
       </div>
       <div class="form-group col-md-3">
         <label class="form-label">Tipo:</label>
-        <select form="cash" name="tipo" class="form-control" data-ng-model="RplillaQSendData.tipo">
-          <option value="administrativo" selected>Administrativos</option>
+        <select class="form-control" data-ng-model="RplillaQSendData.tipo">
+          <option value="administrativo">Administrativos</option>
           <option value="servicios tecnicos">Servicios Técnicos</option>
         </select>
       </div>
@@ -27,12 +27,6 @@
       <div class="form-group col-md-1">
         <br>
         <input type="submit" href="reporte_catorcenal" target="_blank" class="btn btn-default btn-primary" value="Generar Imprimible">
-      </div>
-    </form>
-    <form name="cash" action="billetes" action="post">
-      <div class="form-group col-md-2">
-          <br>
-          <input type="submit" class="btn btn-default btn-primary" value="Rep. Billetes">
       </div>
     </form>
   </div>
