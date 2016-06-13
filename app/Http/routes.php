@@ -47,16 +47,14 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('guardar_quincenal','QuincenalesController@g_quincenal');
     Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
 
+    Route::get('reporte_quincenal','QuincenalesController@reporte_quincenal');
 
-
-    Route::get('pdf', 'PdfController@invoice');
-
-    Route::get('pdf2', function(){
-      $a[]='hola';
-      $pdf = PDF::loadView('pdf',['user'=>$a]);
-      $pdf->setPaper('legal', 'landscape');
-      //return $pdf->download('planilla_quincenal.pdf');
-      // $pdf = App::make('dompdf.wrapper');
-      // $pdf->loadHTML('<h1>Test</h1>');
-      return $pdf->stream();
-    });
+    // Route::get('pdf2', function(){
+    //   $a[]='hola';
+    //   $pdf = PDF::loadView('pdf',['user'=>$a]);
+    //   $pdf->setPaper('legal', 'landscape');
+    //   //return $pdf->download('planilla_quincenal.pdf');
+    //   // $pdf = App::make('dompdf.wrapper');
+    //   // $pdf->loadHTML('<h1>Test</h1>');
+    //   return $pdf->stream();
+    // });
