@@ -102,8 +102,8 @@ class QuincenalesController extends Controller
           $planillas[]=$plan;
       }
 
-      //return $planillas;
-      return response()->json($planillas);
+      return $planillas;
+      return response()->json($planilla);
 
     }
 }

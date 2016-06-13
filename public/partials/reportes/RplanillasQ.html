@@ -13,6 +13,13 @@
         <label for="" class="control-label">Hasta: </label>
         <input name="fecha_fin" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_fin">
       </div>
+      <div class="form-group col-md-3">
+        <label class="form-label">Tipo:</label>
+        <select class="form-control" data-ng-model="RplillaQSendData.tipo">
+          <option value="administrativo">Administrativos</option>
+          <option value="servicios tecnicos">Servicios Técnicos</option>
+        </select>
+      </div>
       <div class="form-group col-md-1">
         <br>
         <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanillaRQ()" value="Generar">
