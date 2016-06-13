@@ -13,7 +13,7 @@
         <label for="" class="control-label">Hasta: </label>
         <input name="fecha_fin" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_fin">
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2">
         <label class="form-label">Tipo:</label>
         <select name='tipo' class="form-control" data-ng-model="RplillaQSendData.tipo">
           <option value="administrativo">Administrativos</option>
@@ -26,7 +26,11 @@
       </div>
       <div class="form-group col-md-1">
         <br>
-        <input type="submit" href="reporte_catorcenal" target="_blank" class="btn btn-default btn-primary" value="Generar Imprimible">
+        <input type="submit" class="btn btn-default btn-primary" name="imprimir" value="Generar Imprimible">
+      </div>
+      <div class="form-group col-md-1">
+        <br>
+        <input type="submit" class="btn btn-default btn-primary" name="sobres" value="Generar sobres">
       </div>
     </form>
   </div>
@@ -60,8 +64,8 @@
           <tr data-ng-repeat="reporteQ in reporQuinc">
 
             <td> <% reporteQ.nombre %> </td>
-            <td> <li data-ng-repeat="fincass in reporteQ.fincas track by $index"><% fincass %> </td>
-            <td> <li data-ng-repeat="labour in reporteQ.labores track by $index"><% labour %> </li></td>
+            <td> <% reporteQ.nombre %> </td>
+            <td> <% reporteQ.cargo %> </td>
             <td> <% reporteQ.dias_trab %> </td>
             <td> <% reporteQ.basico %> </td>
             <td> <% reporteQ.feriados %> </td>
