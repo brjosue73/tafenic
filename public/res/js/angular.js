@@ -149,7 +149,7 @@
 		.state('/RplanillaQ',{
 			url:"/reporte_planilla_quincenal",
 			templateUrl: "partials/reportes/RplanillasQ.html",
-			controller: ""
+			controller: "RplanillaQController"
 		})
 		.state('/planillaq',{
 			url:"/planilla_quincenal",
@@ -328,13 +328,16 @@
 			r.save({data:s.sendData},function(data){
 					$('#trabSpinner').css("display", "none");
 					$('#exitotrab').css("display","inline");
-					//s.$apply();
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
-						s.trabajadores.push(data[0]);
-						s.$apply();
 					},3000);
+					//console.log(data);
+					console.log(s.trabajadores);
+					s.trabajadores.push(data);
+					console.log(s.trabajadores);
+					//s.$apply();
+					//s.$digest();
 				},function(err){
 					console.log(err.status);
 					$('#trabSpinner').css("display", "none");
@@ -495,11 +498,22 @@
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
 		s.getPlanilla = function() {
-			console.log(s.plillaSendData.fecha_ini.getDate()+15);
+			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
 				s.reporfincTot = data;
+			});
+		}
+	}]);
+	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
+		s.RplillaQSendData = {};
+		s.getPlanillaRQ = function() {
+			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
+			//plr.query();
+			h.post('/planilla_quincenal',s.RplillaQSendData)
+			.success(function(data) {
+				s.reporQuinc = data;
 			});
 		}
 	}]);
