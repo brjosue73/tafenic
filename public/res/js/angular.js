@@ -485,7 +485,7 @@
 				setTimeout(function(){
 					$('#exitoPlaQ').css("display","none");
 				},3000);
-				//$('#formQuince')[0].reset();
+				$('#formQuince')[0].reset();
 			})
 			.error(function(err){
 				console.log(err.status);

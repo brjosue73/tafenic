@@ -25,8 +25,9 @@ class QuincenalesController extends Controller
       $finca=$arreglo['id_finc'];
       $planilla->id_finc=$finca;
       $salario_dia=$salario_quinc/15;
+      $planilla->basico=$salario_quinc;
       $sal_hora=$salario_dia/8;
-      $basico=$dias_trab*$salario_quinc;//menos los feriados y los subsidios, porque ya hay una caja de texto
+      $basico=$dias_trab*$salario_dia;//menos los feriados y los subsidios, porque ya hay una caja de texto
 
 
       $feriados1=$arreglo['feriado_trab'];//cuenta en los dias trab + valor del feriado
@@ -38,22 +39,27 @@ class QuincenalesController extends Controller
       $subsi=$arreglo['subsidios'];
       $tot_sub=$subsi*$salario_dia;
       $horas_ext=$arreglo['horas_ext'];
+      $planilla->horas_extra=$horas_ext;
       $tot_h_ext=$horas_ext*($sal_hora*2);
       $planilla->tot_h_ext=$tot_h_ext;
+
       $devengado=$basico+$feriados+$otros+$subsi+$tot_h_ext;
+      //return 'basico'.$basico.'feria'.$feriados.'otros'.$otros.'subs'.$subsi.'hext'.$tot_h_ext;
+      $planilla->devengado=$devengado;
       $inss_lab=(($devengado-$subsi)*$inss_admin)/100;
       $planilla->inss_laboral=$inss_lab;
       $IR=0;/*****************************FALTA CALCULAR IR**********************************************/
       $prestamo=$arreglo['prestamos'];
       $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
-      $inss_patronal=$devengado*18;
-      $inatec=(($devengado-$subsi)*2);
+      $inss_patronal=($devengado*18)/100;
+      $inatec=(($devengado-$subsi)*2)/100;
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
 
-
+      return $planilla;
       $planilla->save();
+      //return $planilla;
       return "Planilla Almacenada";
     }
 
