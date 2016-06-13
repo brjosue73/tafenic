@@ -95,12 +95,12 @@ class QuincenalesController extends Controller
     public function planilla_quincenal($peticion){
       //RETOR$NAR la planilla de quincenales
       // $peticion = $request->all();
-      // $fecha_ini=$peticion['fecha_ini'];
-      // $fecha_fin=$peticion['fecha_fin'];
-      // $tipo=$peticion['tipo'];
-      $tipo='servicios tecnicos';
-      $fecha_ini='2016-06-10';
-      $fecha_fin='2016-06-25';
+      $fecha_ini=$peticion['fecha_ini'];
+      $fecha_fin=$peticion['fecha_fin'];
+      $tipo=$peticion['tipo'];
+      // $tipo='servicios tecnicos';
+      // $fecha_ini='2016-06-10';
+      // $fecha_fin='2016-06-25';
       $planilla=Quincenal::where('fecha_ini','>=',$fecha_ini)
                 ->where('fecha_fin','<=',$fecha_fin)
                 //whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
