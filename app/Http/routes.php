@@ -51,7 +51,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('sobres_quincenal','QuincenalesController@sobres_quincenal');
     Route::post('reporte_quincenal','QuincenalesController@reporte_quincenal');
 
-    Route::get('billetes','QuincenalesController@billetes');
+    Route::post('billetes_quince','QuincenalesController@billetes');
 
     // Route::get('pdf2', function(){
     //   $a[]='hola';
