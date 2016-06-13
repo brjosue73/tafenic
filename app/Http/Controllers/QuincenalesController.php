@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Quincenal;
 use App\Variable;
+use APP\Trabajador;
 
 class QuincenalesController extends Controller
 {
@@ -61,6 +62,9 @@ class QuincenalesController extends Controller
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
+      $trabajador=Trabajador::find($planilla['id_trab']);
+      $nombres=$trabajador->nombre;
+      $nombre:
 
       $planilla->save();
 

@@ -41,7 +41,7 @@ class PlanillasController extends Controller
       $cuje_peq= $variable->cuje_peq;
       $vacaciones= $valor_dia*($variable->vacaciones);
       $pago_dia=$variable->sal_diario;
-      $inss_laboral=12;
+      $inss_patronal=12;
     }
 
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
@@ -120,7 +120,7 @@ class PlanillasController extends Controller
 
                  $tot_inss=$total_acum-$agui_tot;
                  $inss= ($tot_inss*$inss_camp)/100;
-                 $inss_lab=(($total_acum-$agui_tot)*$inss_laboral)/100;
+                 $inss_pat=(($total_acum-$agui_tot)*$inss_patronal)/100;
                  $tot_recib=$total_acum - $inss;
                  $f=0;
                  $c=0;
@@ -188,7 +188,7 @@ class PlanillasController extends Controller
                "fincas"=>$fincas,
                "total_septimo"=>$tot_sept,
                "finca_septimo"=>$finca_mayor,
-               "inss_laboral"=>$inss_lab
+               "inss_patronal"=>$inss_pat
              ];
           $trabajadores[]=$array;
           unset($labores);
