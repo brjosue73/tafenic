@@ -29,24 +29,23 @@
         <thead>
           <tr class="active">
 
-            <th>Nombre del trabajador</th>
-            <th>Fincas</th>
-            <th>Labores</th>
-            <th>Días trabajados</th>
-            <th>septimo</th>
-            <th>finc. Sep.</th>
-            <th>Tot. Devengado</th>
-            <th>Alimentación</th>
-            <th>Tot. Básico</th>
-            <th>Otros</th>
+            <th>N° INSS</th>
+            <th>Nombre de Trab.</th>
+            <th>cargo</th>
+            <th>Días trab.</th>
+            <th>Básico</th>
             <th>Feriados</th>
-            <th>Horas Extra</th>
-            <th>Vacaciones</th>
-            <th>Aguinaldo</th>
-            <th>Tot.Acumulado</th>
-            <th>INSS laboral</th>
-            <th>Préstamos</th>
-            <th>Tot. a Recibir</th>
+            <th>Otros</th>
+            <th>Subsidio</th>
+            <th>Cant. H. Ext.</th>
+            <th>Tot. H. Ext.</th>
+            <th>Devengado</th>
+            <th>INSS lab.</th>
+            <th>IR</th>
+            <th>Prestamos</th>
+            <th>total_pagar</th>
+            <th>INSS Patronal</th>
+            <th>INATEC</th>
 
           </tr>
         </thead>
@@ -56,21 +55,20 @@
             <td> <% reporteQ.nombre %> </td>
             <td> <li data-ng-repeat="fincass in reporteQ.fincas track by $index"><% fincass %> </td>
             <td> <li data-ng-repeat="labour in reporteQ.labores track by $index"><% labour %> </li></td>
-            <td> <% reporteQ.dias %> </td>
-            <td> <% reporteQ.total_septimo %> </td>
-            <td> <% reporteQ.finca_septimo %> </td>
-            <td> <% reporteQ.total_deven %> </td>
-            <td> <% reporteQ.alim_tot %> </td>
-            <td> <% reporteQ.total_basic %> </td>
-            <td> <% reporteQ.vacaciones %> </td>
-            <td> <% reporteQ.aguinaldo %> </td>
-            <td> <% reporteQ.horas_ext_tot %> </td>
-            <td><% reporteQ.vac_tot %></td>
-            <td><% reporteQ.agui_tot %></td>
-            <td> <% reporteQ.total_acum %> </td>
-            <td><% reporteQ.inss %></td>
-            <td></td>
-            <td> <% reporteQ.salario_ %> </td>
+            <td> <% reporteQ.dias_trab %> </td>
+            <td> <% reporteQ.basico %> </td>
+            <td> <% reporteQ.feriados %> </td>
+            <td> <% reporteQ.otros %> </td>
+            <td> <% reporteQ.subsidios %> </td>
+            <td> <% reporteQ.horas_extra %> </td>
+            <td> <% reporteQ.tot_h_ext %> </td>
+            <td> <% reporteQ.devengado %> </td>
+            <td><% reporteQ.inss_laboral %></td>
+            <td><% reporteQ.ir %></td>
+            <td> <% reporteQ.prestamos %> </td>
+            <td><% reporteQ.total_pagar %></td>
+            <td> <% reporteQ.inss_patronal %> </td>
+            <td> <% reporteQ.inatec %> </td>
 
           </tr>
         </tbody>
