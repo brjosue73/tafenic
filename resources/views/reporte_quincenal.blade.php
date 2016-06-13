@@ -5,6 +5,8 @@
   <title>Document</title>
 </head>
 <body>
-asdasdasda
+@foreach ($data as $dat)
+  {{$dat['tipo']}} <br>
+@endforeach
 </body>
 </html>

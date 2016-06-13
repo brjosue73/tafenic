@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Quincenal;
 use App\Variable;
-use APP\Trabajador;
+use App\Trabajador;
 
 class QuincenalesController extends Controller
 {
@@ -62,10 +62,7 @@ class QuincenalesController extends Controller
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
-      return $planilla;
-      $trabajador=Trabajador::find($planilla['id_trab']);
-      $nombres=$trabajador->nombre;
-      $nombre:
+
 
       $planilla->save();
 
@@ -74,7 +71,6 @@ class QuincenalesController extends Controller
     }
     public function reporte_quincenal(Request $request){
       $peticion=$request->all();
-
       $data =$this->planilla_quincenal($peticion);
 
       $view = \View::make('reporte_quincenal',array('data'=>$data));
@@ -88,13 +84,25 @@ class QuincenalesController extends Controller
     public function planilla_quincenal($peticion){
       //RETORNAR la planilla de quincenales
       //$peticion = $request->all();
-      $fecha_ini=$peticion['fecha_ini'];
-      $fecha_fin=$peticion['fecha_fin'];
-      //$fecha_ini='2016-06-10';
-      //$fecha_fin='2016-06-25';
+      //$fecha_ini=$peticion['fecha_ini'];
+      //$fecha_fin=$peticion['fecha_fin'];
+      $fecha_ini='2016-06-10';
+      $fecha_fin='2016-06-25';
       $planilla=Quincenal::whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
                 ->whereBetween('fecha_fin', [$fecha_ini, $fecha_fin])
                 ->get();
+      foreach ($planilla as $plan){
+          $id= $plan['id_trabajador'];
+          $trabajador=Trabajador::find($id);
+          $nom=$trabajador['nombre'];
+          $ape=$trabajador['apellidos'];
+          $nombre=$nom.' '.$ape;
+          $nombres[]=$nombre;
+          $plan->nombre=$nombre;
+          $planillas[]=$plan;
+      }
+
+      return $planillas;
       return response()->json($planilla);
 
     }
