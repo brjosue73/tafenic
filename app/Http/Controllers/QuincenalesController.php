@@ -86,10 +86,12 @@ class QuincenalesController extends Controller
       //$peticion = $request->all();
       $fecha_ini=$peticion['fecha_ini'];
       $fecha_fin=$peticion['fecha_fin'];
+      $tipo=$peticion['tipo'];
       //$fecha_ini='2016-06-10';
       //$fecha_fin='2016-06-25';
       $planilla=Quincenal::whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
                 ->whereBetween('fecha_fin', [$fecha_ini, $fecha_fin])
+                ->where('tipo',$tipo)
                 ->get();
       foreach ($planilla as $plan){
           $id= $plan['id_trabajador'];
@@ -97,9 +99,11 @@ class QuincenalesController extends Controller
           $nom=$trabajador['nombre'];
           $ape=$trabajador['apellidos'];
           $nombre=$nom.' '.$ape;
-          $nombres[]=$nombre;
+          $cargo=$trabajador['cargo'];
+          $plan->cargo=$cargo;
           $plan->nombre=$nombre;
           $planillas[]=$plan;
+
       }
 
       return $planillas;
