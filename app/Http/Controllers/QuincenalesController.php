@@ -38,7 +38,6 @@ class QuincenalesController extends Controller
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
-        return $data;
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);

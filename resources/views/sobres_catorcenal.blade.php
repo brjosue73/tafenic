@@ -10,7 +10,8 @@
       margin: 0;
     }
     hr{
-      margin-bottom: 10cm;
+      margin-top: 0;
+      margin-bottom: 8cm;
     }
     .cien{
       width: 100%;
@@ -32,7 +33,7 @@
   @foreach($data as $dat)
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">FINCA</h5>
-  <h5 class="text-centro">PLANILLA DE PAGO DEL al</h5>
+  <h5 class="text-centro">PLANILLA DE PAGO DEL {{ $dat['fecha_ini'] }} al {{ $dat['fecha_fin'] }}</h5>
   <table class="centrado">
       <tr><th>{{$dat['nombre']}}</th></tr>
       <tr>

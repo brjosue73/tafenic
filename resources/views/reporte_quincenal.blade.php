@@ -30,6 +30,7 @@
             <th>IR</th>
             <th>Prestamos</th>
             <th>total_pagar</th>
+            <th>Recibí conforme</th>
             <th>INSS Patronal</th>
             <th>INATEC</th>
 
@@ -53,6 +54,7 @@
             <td> {{ $dat['ir'] }}</td>
             <td> {{ $dat['prestamos'] }} </td>
             <td> {{ $dat['total_pagar'] }}</td>
+            <td></td>
             <td> {{ $dat['inss_patronal'] }} </td>
             <td> {{ $dat['inatec'] }} </td>
           </tr>

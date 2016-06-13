@@ -295,7 +295,9 @@ class PlanillasController extends Controller
                "fincas"=>$fincas,
                "total_septimo"=>$tot_sept,
                "finca_septimo"=>$finca_mayor,
-               "inss_patronal"=>$inss_pat
+               "inss_patronal"=>$inss_pat,
+               "fecha_ini"=>$fecha_ini,
+               "fecha_fin"=>$fecha_fin
              ];
           $trabajadores[]=$array;
           unset($labores);
