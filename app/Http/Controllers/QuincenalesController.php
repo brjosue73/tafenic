@@ -48,7 +48,7 @@ class QuincenalesController extends Controller
       elseif($funcion == 'Billetes'){
         $peticion=$request->all();
         //$data =$this->billetes($peticion);
-        $planillas=$this->calculo_planilla($peticion);
+        $planillas=$this->planilla_quincenal($peticion);
         $data =$this->calcular_billetes($planillas);
         return $data;
         $view = \View::make('billetes_quincenal',array('data'=>$data));
