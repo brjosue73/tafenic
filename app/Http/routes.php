@@ -47,6 +47,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('guardar_quincenal','QuincenalesController@g_quincenal');
     Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
 
+    Route::post('sobres_quincenal','QuincenalesController@sobres_quincenal');
     Route::post('reporte_quincenal','QuincenalesController@reporte_quincenal');
 
     // Route::get('pdf2', function(){
