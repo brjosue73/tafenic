@@ -43,11 +43,11 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('acumulados','AcumuladosController');
 
     Route::post('quincenales','QuincenalesController@quincenales');
-    Route::get('planilla_quincenal','QuincenalesController@quincenal_fecha');
+    Route::post('planilla_quincenal','QuincenalesController@quincenal_fecha');
     Route::post('guardar_quincenal','QuincenalesController@g_quincenal');
     Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
 
-    Route::get('reporte_quincenal','QuincenalesController@reporte_quincenal');
+    Route::post('reporte_quincenal','QuincenalesController@reporte_quincenal');
 
     // Route::get('pdf2', function(){
     //   $a[]='hola';

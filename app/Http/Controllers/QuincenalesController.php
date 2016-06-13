@@ -13,7 +13,7 @@ class QuincenalesController extends Controller
     public function quincenal_fecha(Request $request){
       $peticion=$request->all();
       //return $peticion;
-       $data =$this->calculo_planilla($peticion);
+       $data =$this->planilla_quincenal($peticion);
        return $data;
     }
     public function g_quincenal(Request $request){
