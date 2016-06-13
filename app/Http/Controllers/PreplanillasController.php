@@ -16,7 +16,6 @@ class PreplanillasController extends Controller
 {
      public function index()
     {
-
         //$preps=Preplanilla::all();
         $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->get();
         $preps =DB::table('preplanillas')->orderBy('created_at','desc')->get();
@@ -98,11 +97,10 @@ class PreplanillasController extends Controller
      */
     public function store(Request $request)
     {
-    /*Mejorar tomando los valores de la tabla de constantes*/
         $peticion = $request->all();
         $arreglo = $peticion["data"];
-        $variables=Variable::all();
-        foreach ($variables as $variable) {
+        $variables=Variable::all();//
+        foreach ($variables as $variable) {//Toma los datos de la tabla variables
           $hora_trab=0;
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
@@ -122,6 +120,8 @@ class PreplanillasController extends Controller
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
         $ext=0;
+        $otros=$arreglo['otros'];
+        $prep->otros=$otros;
         if(isset($arreglo['cant_cujes'])){ //Si es de tipo actividad/cujes
            $cant_cujes=$arreglo['cant_cujes'];;
            if($arreglo['tamano_cuje'] == 0){//pequeno
@@ -140,8 +140,9 @@ class PreplanillasController extends Controller
           $prep->total_extras=$ext;
           $prep->tamano_cuje=3;
         }
-        $sal=$dia+$alim + $vacaciones +$vacaciones+$ext;
+        $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;;
         $prep->salario_acum= $sal;
+        return $prep;
         $prep->save();
         return "Agregada!";
 
