@@ -26,11 +26,12 @@
   </style>
 </head>
 <body>
+  @foreach($data as $dat)
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">FINCA</h5>
-  <h5 class="text-centro">PLANILLA DE PAGO DEL 27 ENERO 09 DE FEBRERO DEL 2016</h5>
+  <h5 class="text-centro">PLANILLA DE PAGO DEL {{$dat['fecha_ini']}} al {{$dat['fecha_fin']}}</h5>
   <table class="centrado">
-      <tr><th></th></tr>
+      <tr><th>{{$dat['nombre']}}</th></tr>
       <tr>
           <th>INGRESOS</th><th>-------</th>
           <th>DEDUCCIONES</th><th>-------</th>
@@ -38,43 +39,43 @@
     <tbody>
       <tr>
         <td> BASICO </td>
-        <td>  </td>
+        <td> {{$dat['basico']}} </td>
         <td> INSS </td>
-        <td>  </td>
+        <td> {{$dat['inss_laboral']}} </td>
       </tr>
       <tr>
         <td> SEPTIMO </td>
         <td>  </td>
         <td> PRESTAMOS </td>
-        <td>  </td>
+        <td> {{$dat['prestamos']}} </td>
       </tr>
       <tr>
         <td> IR </td>
-        <td>  </td>
+        <td> {{$dat['ir']}} </td>
         <td>  </td>
         <td>  </td>
       </tr>
       <tr>
         <td> N° HORAS EXTRAS </td>
-        <td>  </td>
+        <td> {{$dat['horas_extra']}} </td>
         <td>  </td>
         <td>  </td>
       </tr>
       <tr>
         <td> HORAS EXTRAS </td>
-        <td>  </td>
+        <td> {{$dat['tot_h_ext']}} </td>
         <td>  </td>
         <td>  </td>
       </tr>
       <tr>
         <td> FERIADO </td>
-        <td>  </td>
+        <td> {{$dat['feriados']}} </td>
         <td>  </td>
         <td>  </td>
       </tr>
       <tr>
         <td> VACACIONES </td>
-        <td>  </td>
+        <td> </td>
         <td>  </td>
         <td>  </td>
       </tr>
@@ -86,17 +87,19 @@
       </tr>
       <tr>
         <td> OTROS </td>
-        <td>  </td>
+        <td> {{$dat['otros']}} </td>
         <td> TOTAL DEDUCCIONES </td>
         <td>  </td>
       </tr>
       <tr>
         <td> DEVENGADO </td>
-        <td>  </td>
+        <td> {{$dat['devengado']}} </td>
         <td> TOTAL A PAGAR </td>
-        <td>  </td>
+        <td> {{$dat['total_pagar']}} </td>
       </tr>
     </tbody>
   </table>
+
+  @endforeach
 </body>
 </html>
