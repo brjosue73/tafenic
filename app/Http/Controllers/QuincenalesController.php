@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Quincenal;
 use App\Variable;
 use App\Trabajador;
+use App\Finca;
 
 class QuincenalesController extends Controller
 {
@@ -37,19 +38,21 @@ class QuincenalesController extends Controller
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
+        return $data;
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        $pdf->setPaper('legal', 'landscape');
+        $paper_size = array(0,0,360,360);
+        $pdf->setPaper($paper_size,'landscape');
+        //$pdf->setPaper('a4', 'landscape');
         return $pdf->stream('invoice');
         return $pdf->stream();
       }
       elseif($funcion == 'Billetes'){
         $peticion=$request->all();
         //$data =$this->billetes($peticion);
-        $planillas=$this->calculo_planilla($peticion);
+        $planillas=$this->planilla_quincenal($peticion);
         $data =$this->calcular_billetes($planillas);
-        return $data;
         $view = \View::make('billetes_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
@@ -86,6 +89,9 @@ class QuincenalesController extends Controller
             $nom=$trabajador['nombre'];
             $ape=$trabajador['apellidos'];
             $nombre=$nom.' '.$ape;
+            $fincas=Finca::find($plan['id_finc']);
+            $finca=$fincas['nombre'];
+            $plan->finca=$finca;
             $cargo=$trabajador['cargo'];
             $inss=$trabajador['nss'];
             $plan->inss=$inss;
@@ -209,9 +215,19 @@ class QuincenalesController extends Controller
       $planilla->devengado=$devengado;
       $inss_lab=(($devengado-$subsi)*$inss_admin)/100;
       $planilla->inss_laboral=$inss_lab;
-      $IR=0;/*****************************FALTA CALCULAR IR**********************************************/
+
+      /*****************************FALTA CALCULAR IR**********************************************/
+      $devengado_mensual=$devengado*2;
+      $dev_anual=$devengado_mensual*12;
+      if($dev_anual<=10000){
+        $IR=0;
+      }
+      elseif ($dev_anual>=100001&&$dev_anual<=200000) {
+        $IR=0;
+      }
       $prestamo=$arreglo['prestamos'];
       $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
+
       $inss_patronal=($devengado*18)/100;
       $inatec=(($devengado-$subsi)*2)/100;
       $planilla->total_pagar=$total_pagar;

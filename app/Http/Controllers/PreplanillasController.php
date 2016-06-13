@@ -145,7 +145,6 @@ class PreplanillasController extends Controller
         return $prep;
         $prep->save();
         return "Agregada!";
-
     }
 
     /**
