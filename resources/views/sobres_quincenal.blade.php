@@ -9,6 +9,9 @@
       border: 1px solid black;
       margin: 0;
     }
+    table{
+      margin: 10cm;
+    }
     .cien{
       width: 100%;
     }
@@ -41,7 +44,7 @@
         <td> BASICO </td>
         <td> {{$dat['basico']}} </td>
         <td> INSS </td>
-        <td> {{$dat['inss_laboral']}} </td>
+        <td>  </td>
       </tr>
       <tr>
         <td> SEPTIMO </td>

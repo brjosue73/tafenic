@@ -38,23 +38,23 @@
         <tbody>
           @foreach ($data as $dat)
           <tr>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-            <td> </td>
+            <td>  </td>
+            <td> {{ $dat['nombre'] }} </td>
+            <td> {{ $dat['cargo'] }} </td>
+            <td> {{ $dat['dias_trab'] }} </td>
+            <td> {{ $dat['basico'] }} </td>
+            <td> {{ $dat['feriados'] }} </td>
+            <td> {{ $dat['otros'] }} </td>
+            <td> {{ $dat['subsidios'] }} </td>
+            <td> {{ $dat['horas_extra'] }} </td>
+            <td> {{ $dat['tot_h_ext'] }} </td>
+            <td> {{ $dat['devengado'] }} </td>
+            <td> {{ $dat['inss_laboral'] }}</td>
+            <td> {{ $dat['ir'] }}</td>
+            <td> {{ $dat['prestamos'] }} </td>
+            <td> {{ $dat['total_pagar'] }}</td>
+            <td> {{ $dat['inss_patronal'] }} </td>
+            <td> {{ $dat['inatec'] }} </td>
           </tr>
           @endforeach
         </tbody>
