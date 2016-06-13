@@ -10,12 +10,17 @@ use App\Variable;
 
 class QuincenalesController extends Controller
 {
+    public function quincenal_fecha(Request $request){
+      $peticion=$request->all();
+      //return $peticion;
+       $data =$this->calculo_planilla($peticion);
+       return $data;
+    }
     public function g_quincenal(Request $request){
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_admin=$variable->inss_admin;
       }
-
       $peticion = $request->all();
       $arreglo = $peticion;
 
@@ -57,22 +62,33 @@ class QuincenalesController extends Controller
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
 
-      return $planilla;
       $planilla->save();
+
       //return $planilla;
       return "Planilla Almacenada";
     }
+    public function reporte_quincenal(Request $request){
+      $peticion=$request->all();
 
+      $data =$this->planilla_quincenal($peticion);
 
-    public function quincenal_fecha(Request $request){
+      $view = \View::make('reporte_quincenal',array('data'=>$data));
+      $pdf = \App::make('dompdf.wrapper');
+      $pdf->loadHTML($view);
+      $pdf->setPaper('legal', 'landscape');
+      return $pdf->stream('invoice');
+      return $pdf->stream();
+    }
+
+    public function planilla_quincenal($peticion){
       //RETORNAR la planilla de quincenales
       // $peticion = $request->all();
       // $fecha_ini=$peticion['fecha_ini'];
       // $fecha_fin=$peticion['fecha_fin'];
-      $fecha_ini=2010-01-01;
-      $fecha_fin=2018-01-01;
-      $planilla=Quincenal::where('fecha_ini','>',$fecha_ini)
-                ->where('fecha_fin','>',$fecha_fin)
+      $fecha_ini='2016-06-10';
+      $fecha_fin='2016-06-25';
+      $planilla=Quincenal::whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
+                ->whereBetween('fecha_fin', [$fecha_ini, $fecha_fin])
                 ->get();
       return response()->json($planilla);
 
