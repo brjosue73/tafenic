@@ -120,7 +120,8 @@ class TrabajadoresController extends Controller
       $trabajador = new Trabajador($arreglo);
       $trabajador->estado= 1;
       $trabajador->save();
-      return "Trabajador Creado!";
+      $ultimo_trab=Trabajador::all()->last();
+      return $ultimo_trab;
     }
 
     /**
