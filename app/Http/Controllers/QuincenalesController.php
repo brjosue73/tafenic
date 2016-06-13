@@ -217,28 +217,57 @@ class QuincenalesController extends Controller
       $planilla->inss_laboral=$inss_lab;
 
       /*****************************FALTA CALCULAR IR**********************************************/
-      $devengado_mensual=$devengado*2;
-      $dev_anual=$devengado_mensual*12;
-      if($dev_anual<=10000){
-        $IR=0;
-      }
-      elseif ($dev_anual>=100001&&$dev_anual<=200000) {
-        $IR=0;
-      }
+      $IR=$this->calculo_ir($devengado);
       $prestamo=$arreglo['prestamos'];
       $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
-
+      $planilla->ir=$IR;
       $inss_patronal=($devengado*18)/100;
       $inatec=(($devengado-$subsi)*2)/100;
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
-
-
+      return $planilla;
       $planilla->save();
 
       //return $planilla;
       return "Planilla Almacenada";
+    }
+    public function calculo_ir($devengado){
+      $quinc_i=$devengado-$inss_lab;
+      $devengado_mensual=$quinc_i*2;
+      $dev_anual=$devengado_mensual*12;
+      if($dev_anual<=10000){
+        $IR=0;
+      }
+      elseif ($dev_anual>=100000.01 && $dev_anual<=200000) {
+        $dev_sobre=$dev_anual-100000;
+        $dev_por=($dev_sobre*15)/100;
+        $imp_base=0;
+        $ir_anual=$dev_por+$imp_base;
+        $IR=$ir_anual/24;
+      }
+      elseif ($dev_anual>=200000.01 && $dev_anual<=350000) {
+        $dev_sobre=$dev_anual-200000;
+        $dev_por=($dev_sobre*20)/100;
+        $imp_base=15000;
+        $ir_anual=$dev_por+$imp_base;
+        $IR=$ir_anual/24;
+      }
+      elseif ($dev_anual>=350000.01 && $dev_anual<=500000) {
+        $dev_sobre=$dev_anual-350000;
+        $dev_por=($dev_sobre*25)/100;
+        $imp_base=45000;
+        $ir_anual=$dev_por+$imp_base;
+        $IR=$ir_anual/24;
+      }
+      elseif ($dev_anual>=500000.01) {
+        $dev_sobre=$dev_anual-500000;
+        $dev_por=($dev_sobre*30)/100;
+        $imp_base=82500;
+        $ir_anual=$dev_por+$imp_base;
+        $IR=$ir_anual/24;
+      }
+      return $IR;
     }
     // public function sobres_quincenal(Request $request){
     //   $peticion=$request->all();
