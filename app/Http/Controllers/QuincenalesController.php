@@ -80,30 +80,46 @@ class QuincenalesController extends Controller
       return $pdf->stream('invoice');
       return $pdf->stream();
     }
+    public function sobres_quincenal(Request $request){
+      $peticion=$request->all();
+      $data =$this->planilla_quincenal($peticion);
+
+      $view = \View::make('sobres_quincenal',array('data'=>$data));
+      $pdf = \App::make('dompdf.wrapper');
+      $pdf->loadHTML($view);
+      $pdf->setPaper('legal', 'landscape');
+      return $pdf->stream('invoice');
+      return $pdf->stream();
+    }
 
     public function planilla_quincenal($peticion){
       //RETORNAR la planilla de quincenales
       // $peticion = $request->all();
       $fecha_ini=$peticion['fecha_ini'];
       $fecha_fin=$peticion['fecha_fin'];
-      // $fecha_ini='2016-06-10';
-      // $fecha_fin='2016-06-25';
-      $planilla=Quincenal::whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
-                ->whereBetween('fecha_fin', [$fecha_ini, $fecha_fin])
+      $tipo=$peticion['tipo'];
+      //$fecha_ini='2016-06-10';
+      //$fecha_fin='2016-06-25';
+      $planilla=Quincenal::where('fecha_ini','>=',$fecha_ini)
+                ->where('fecha_fin','<=',$fecha_fin)
+                //whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
+                //->whereBetween('fecha_fin', [$fecha_ini, $fecha_fin])
+                ->where('tipo',$tipo)
                 ->get();
-      foreach ($planilla as $plan){
-          $id= $plan['id_trabajador'];
-          $trabajador=Trabajador::find($id);
-          $nom=$trabajador['nombre'];
-          $ape=$trabajador['apellidos'];
-          $nombre=$nom.' '.$ape;
-          $nombres[]=$nombre;
-          $plan->nombre=$nombre;
-          $planillas[]=$plan;
-      }
-
-      return $planillas;
-      return response()->json($planilla);
-
+        foreach ($planilla as $plan){
+            $id= $plan['id_trabajador'];
+            $trabajador=Trabajador::find($id);
+            $nom=$trabajador['nombre'];
+            $ape=$trabajador['apellidos'];
+            $nombre=$nom.' '.$ape;
+            $cargo=$trabajador['cargo'];
+            $inss=$trabajador['nss'];
+            $plan->inss=$inss;
+            $plan->cargo=$cargo;
+            $plan->nombre=$nombre;
+            $planillas[]=$plan;
+        }
+        return $planillas;
+        return response()->json($planilla);
     }
 }
