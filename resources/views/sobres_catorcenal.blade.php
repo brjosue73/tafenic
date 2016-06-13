@@ -10,7 +10,8 @@
       margin: 0;
     }
     hr{
-      margin-bottom: 10cm;
+      margin-top: 0;
+      margin-bottom: 8cm;
     }
     .cien{
       width: 100%;
