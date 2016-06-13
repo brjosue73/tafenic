@@ -63,7 +63,7 @@ class PlanillasController extends Controller
   }
   public function calcular_billetes($planillas){
     foreach ($planillas as $planilla) {
-      $nums[]=$planilla['total_pagar'];
+      $nums[]=$planilla['salario_'];
     }
 
     foreach ($nums as $N) {
@@ -199,7 +199,7 @@ class PlanillasController extends Controller
            /*-------------CALCULO DEL SEPTIMO*/
            /*-------------CALCULO DEL SEPTIMO*/
              foreach ($trabs as $trab) {
-
+                 $otros+=$trab->otros;
                  $salario=$trab->salario_acum;
                  $salario_tot += $salario;
                  $alim=$trab->alimentacion;
