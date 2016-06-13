@@ -4,34 +4,46 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
     <h1>Planilla Quincenal</h1>
-    <form method="post" action="reporte_quincenal">
-      <div class="form-group col-md-3">
+    <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12" method="post" action="reporte_quincenal">
+
+      <div class="form-group col-md-4">
         <label for="" class="control-label">De: </label>
         <input name="fecha_ini" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_ini">
       </div>
-      <div class="form-group col-md-3">
+
+      <div class="form-group col-md-4">
         <label for="" class="control-label">Hasta: </label>
         <input name="fecha_fin" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_fin">
       </div>
-      <div class="form-group col-md-2">
+
+      <div class="form-group col-md-4">
         <label class="form-label">Tipo:</label>
         <select name='tipo' class="form-control" data-ng-model="RplillaQSendData.tipo">
           <option value="administrativo">Administrativos</option>
           <option value="servicios tecnicos">Servicios Técnicos</option>
         </select>
       </div>
-      <div class="form-group col-md-1">
+
+      <div class="form-group col-md-3">
         <br>
         <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanillaRQ()" value="Generar">
       </div>
-      <div class="form-group col-md-1">
+
+      <div class="form-group col-md-3">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Generar Imprimible">
       </div>
-      <div class="form-group col-md-1">
+
+      <div class="form-group col-md-3">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Generar sobres">
       </div>
+
+      <div class="form-group col-md-3">
+        <br>
+        <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Billetes">
+      </div>
+
     </form>
   </div>
 
