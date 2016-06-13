@@ -17,7 +17,10 @@ class TrabajadoresController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
+     public function quincenal(){
+       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('tipo','quincenal')->get();
+       return response()->json($trabajadores);
+     }
      public function resp_finca(){
        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo','respfinca')->get();
        return response()->json($trabajadores);
@@ -117,7 +120,8 @@ class TrabajadoresController extends Controller
       $trabajador = new Trabajador($arreglo);
       $trabajador->estado= 1;
       $trabajador->save();
-      return "Trabajador Creado!";
+      $ultimo_trab=Trabajador::all()->last();
+      return $ultimo_trab;
     }
 
     /**

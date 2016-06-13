@@ -13,7 +13,7 @@ class DatosUsuario extends Migration
     public function up()
     {
       Schema::table('trabajadores', function ($table) {
-        $table->boolean('tipo');
+        $table->string('tipo',10);
         $table->boolean('estado');
         $table->string('cargo',20);
       });

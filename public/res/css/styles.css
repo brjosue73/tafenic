@@ -19,23 +19,33 @@ li {
 
 .tarjeta {
   border-radius: 3px;
-  box-shadow: 0 0 3px black; }
+  box-shadow: 0 0 3px black;
+  padding: 15px; }
 
 .m-top_dow {
   margin-top: 3rem;
   margin-bottom: 3rem; }
 
-.view_body, .table-container {
+.table-container {
   padding: 0; }
 
 .form-wrapper {
   height: 40%; }
 
 .table-wrapper {
-  height: 60%; }
+  padding: 0; }
 
 .view_body {
   overflow: scroll; }
+
+#fincabanner {
+  height: 150px;
+  background-color: black;
+  color: #fff;
+  margin-bottom: 5rem;
+  background: url("/res/img/campoTabaco.jpg") no-repeat;
+  background-size: 100%;
+  background-position: 0 0; }
 
 .loggin-wrapper {
   background-image: url(../img/campoTabaco.jpg);

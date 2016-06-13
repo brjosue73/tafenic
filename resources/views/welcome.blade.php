@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Laravel</title>
+        <title>TAFENICSA</title>
         <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="res/css/styles.css">
         <link rel="stylesheet" href="res/dependencies/font-awesome/css/font-awesome.min.css">
