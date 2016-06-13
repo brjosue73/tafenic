@@ -33,6 +33,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('planilla','PlanillasController@planilla_general');
     Route::post('reporte_catorcenal','PlanillasController@reporte_planilla');
+    Route::post('sobres_catorcenal','PlanillasController@sobres_catorcenal');
 
 
     Route::get('listero',"TrabajadoresController@listero");
@@ -49,6 +50,8 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('sobres_quincenal','QuincenalesController@sobres_quincenal');
     Route::post('reporte_quincenal','QuincenalesController@reporte_quincenal');
+
+    Route::post('billetes_quince','QuincenalesController@billetes');
 
     // Route::get('pdf2', function(){
     //   $a[]='hola';
