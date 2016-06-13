@@ -62,6 +62,7 @@ class QuincenalesController extends Controller
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
+      return $planilla;
       $trabajador=Trabajador::find($planilla['id_trab']);
       $nombres=$trabajador->nombre;
       $nombre:
