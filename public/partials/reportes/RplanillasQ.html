@@ -4,18 +4,18 @@
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
     <h1>Planilla Quincenal</h1>
-    <form method="post" action="reporte_catorcenal">
+    <form method="post" action="reporte_quincenal">
       <div class="form-group col-md-3">
         <label for="" class="control-label">De: </label>
-        <input name="fecha_ini" type="date" class="form-control" data-ng-model="plillaSendData.fecha_ini">
+        <input name="fecha_ini" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_ini">
       </div>
       <div class="form-group col-md-3">
         <label for="" class="control-label">Hasta: </label>
-        <input name="fecha_fin" type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
+        <input name="fecha_fin" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_fin">
       </div>
       <div class="form-group col-md-1">
         <br>
-        <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanilla()" value="Generar">
+        <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanillaRQ()" value="Generar">
       </div>
       <div class="form-group col-md-1">
         <br>
@@ -29,48 +29,46 @@
         <thead>
           <tr class="active">
 
-            <th>Nombre del trabajador</th>
-            <th>Fincas</th>
-            <th>Labores</th>
-            <th>Días trabajados</th>
-            <th>septimo</th>
-            <th>finc. Sep.</th>
-            <th>Tot. Devengado</th>
-            <th>Alimentación</th>
-            <th>Tot. Básico</th>
-            <th>Otros</th>
+            <th>N° INSS</th>
+            <th>Nombre de Trab.</th>
+            <th>cargo</th>
+            <th>Días trab.</th>
+            <th>Básico</th>
             <th>Feriados</th>
-            <th>Horas Extra</th>
-            <th>Vacaciones</th>
-            <th>Aguinaldo</th>
-            <th>Tot.Acumulado</th>
-            <th>INSS laboral</th>
-            <th>Préstamos</th>
-            <th>Tot. a Recibir</th>
+            <th>Otros</th>
+            <th>Subsidio</th>
+            <th>Cant. H. Ext.</th>
+            <th>Tot. H. Ext.</th>
+            <th>Devengado</th>
+            <th>INSS lab.</th>
+            <th>IR</th>
+            <th>Prestamos</th>
+            <th>total_pagar</th>
+            <th>INSS Patronal</th>
+            <th>INATEC</th>
 
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-repeat="reporfincTota in reporfincTot">
+          <tr data-ng-repeat="reporteQ in reporQuinc">
 
-            <td> <% reporfincTota.nombre %> </td>
-            <td> <li data-ng-repeat="fincass in reporfincTota.fincas track by $index"><% fincass %> </td>
-            <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
-            <td> <% reporfincTota.dias %> </td>
-            <td> <% reporfincTota.total_septimo %> </td>
-            <td> <% reporfincTota.finca_septimo %> </td>
-            <td> <% reporfincTota.total_deven %> </td>
-            <td> <% reporfincTota.alim_tot %> </td>
-            <td> <% reporfincTota.total_basic %> </td>
-            <td> <% reporfincTota.vacaciones %> </td>
-            <td> <% reporfincTota.aguinaldo %> </td>
-            <td> <% reporfincTota.horas_ext_tot %> </td>
-            <td><% reporfincTota.vac_tot %></td>
-            <td><% reporfincTota.agui_tot %></td>
-            <td> <% reporfincTota.total_acum %> </td>
-            <td><% reporfincTota.inss %></td>
-            <td></td>
-            <td> <% reporfincTota.salario_ %> </td>
+            <td> <% reporteQ.nombre %> </td>
+            <td> <li data-ng-repeat="fincass in reporteQ.fincas track by $index"><% fincass %> </td>
+            <td> <li data-ng-repeat="labour in reporteQ.labores track by $index"><% labour %> </li></td>
+            <td> <% reporteQ.dias_trab %> </td>
+            <td> <% reporteQ.basico %> </td>
+            <td> <% reporteQ.feriados %> </td>
+            <td> <% reporteQ.otros %> </td>
+            <td> <% reporteQ.subsidios %> </td>
+            <td> <% reporteQ.horas_extra %> </td>
+            <td> <% reporteQ.tot_h_ext %> </td>
+            <td> <% reporteQ.devengado %> </td>
+            <td><% reporteQ.inss_laboral %></td>
+            <td><% reporteQ.ir %></td>
+            <td> <% reporteQ.prestamos %> </td>
+            <td><% reporteQ.total_pagar %></td>
+            <td> <% reporteQ.inss_patronal %> </td>
+            <td> <% reporteQ.inatec %> </td>
 
           </tr>
         </tbody>

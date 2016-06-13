@@ -94,7 +94,7 @@
 		.state('/trabajadores.nuevo', {
 			url: "/nuevo",
 			templateUrl: "partials/trabajadores/actualizarT.html",
-			controller:"postOne"
+			controller:"getAll"
 		})
 		.state('/trabajadores.editar', {
 			url: "/editar/:id",
@@ -149,7 +149,7 @@
 		.state('/RplanillaQ',{
 			url:"/reporte_planilla_quincenal",
 			templateUrl: "partials/reportes/RplanillasQ.html",
-			controller: ""
+			controller: "RplanillaQController"
 		})
 		.state('/planillaq',{
 			url:"/planilla_quincenal",
@@ -319,7 +319,35 @@
 		s.busquedaCriteria = "";
 		s.sorting = "nombre";
 		s.trabajadores = r.query();
-		s.del = function(id){
+
+		s.titulo = "Ingreso de trabajadores nuevos";
+		s.boton = "Guardar";
+		s.sendData = {};
+		s.save = function(){
+			$('#trabSpinner').css("display", "inline-block");
+			r.save({data:s.sendData},function(data){
+					$('#trabSpinner').css("display", "none");
+					$('#exitotrab').css("display","inline");
+					setTimeout(function(){
+						$('#exitotrab').css("display","none");
+						$("#trabForm")[0].reset();
+					},3000);
+					//console.log(data);
+					console.log(s.trabajadores);
+					s.trabajadores.push(data);
+					console.log(s.trabajadores);
+					//s.$apply();
+					//s.$digest();
+				},function(err){
+					console.log(err.status);
+					$('#trabSpinner').css("display", "none");
+					$('#errortrab').css("display","block");
+					setTimeout(function(){
+						$('#errortrab').css("display","none");
+					},3000);
+			});
+		}
+		/*s.del = function(id){
 			r.delete({id:id}, function(datos){
 				console.log(datos);
 				l.path('/trabajadores');
@@ -340,7 +368,7 @@
 
 		s.verinactivos = function(){
 			console.log("otro");
-		}
+		}*/
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
@@ -390,7 +418,7 @@
 			});
 		}
 
-			s.reporTrab = {};
+		s.reporTrab = {};
 		s.getPrepxTrab = function(){
 			//console.log(s.reporTrab);
 			h.post('prep_trab',s.reporTrab)
@@ -402,6 +430,19 @@
 				console.log(err);
 			});
 		}
+
+		s.trabRespFinc = {};
+		s.trabListero = {};
+		s.trabCampo = {};
+		h.get('resp_finca').success(function(data){
+			s.trabRespFinc = data;
+		});
+		h.get('listero').success(function(data){
+			s.trabListero = data;
+		});
+		h.get('campo').success(function(data){
+			s.trabCampo = data;
+		});
 	}]);
 
 	app.controller('prepxfinc',['$scope','$http','fincaResource', function(s,h,fr){
@@ -457,11 +498,22 @@
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
 		s.getPlanilla = function() {
-			console.log(s.plillaSendData.fecha_ini.getDate()+15);
+			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
 				s.reporfincTot = data;
+			});
+		}
+	}]);
+	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
+		s.RplillaQSendData = {};
+		s.getPlanillaRQ = function() {
+			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
+			//plr.query();
+			h.post('/planilla_quincenal',s.RplillaQSendData)
+			.success(function(data) {
+				s.reporQuinc = data;
 			});
 		}
 	}]);
