@@ -70,6 +70,16 @@ class QuincenalesController extends Controller
       return "Planilla Almacenada";
     }
     public function reporte_quincenal(Request $request){
+      if (Input::has('sobres'))
+      {
+          return 'form 1';
+      }
+      elseif (Input::has('imprimir'))
+      {
+          return 'form 2';
+      }
+        
+
       $peticion=$request->all();
       $data =$this->planilla_quincenal($peticion);
 
