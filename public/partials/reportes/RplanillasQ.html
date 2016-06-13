@@ -60,8 +60,8 @@
           <tr data-ng-repeat="reporteQ in reporQuinc">
 
             <td> <% reporteQ.nombre %> </td>
-            <td> <li data-ng-repeat="fincass in reporteQ.fincas track by $index"><% fincass %> </td>
-            <td> <li data-ng-repeat="labour in reporteQ.labores track by $index"><% labour %> </li></td>
+            <td> <% reporteQ.nombre %> </td>
+            <td> <% reporteQ.cargo %> </td>
             <td> <% reporteQ.dias_trab %> </td>
             <td> <% reporteQ.basico %> </td>
             <td> <% reporteQ.feriados %> </td>

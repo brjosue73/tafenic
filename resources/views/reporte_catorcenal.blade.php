@@ -66,5 +66,18 @@
         </tbody>
       </table>
     </div>
+
+    <div>
+      <div class="firmas">
+        Elaborado Por:____________________________
+      </div>
+      <div class="firmas">
+        Revisado Por:____________________________
+      </div>
+      <div class="firmas">
+        Autorizado Por:____________________________
+      </div>
+    </div>
+
 </body>
 </html>

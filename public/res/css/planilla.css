@@ -11,3 +11,9 @@ td li{
 td hr{
   margin: 0;
 }
+
+.firmas {
+  width: 33%;
+  display: inline-block;
+  float: left;
+}
