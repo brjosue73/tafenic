@@ -38,7 +38,8 @@ class PlanillasController extends Controller
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
-      $pdf->setPaper('legal', 'landscape');
+      $paper_size = array(0,0,360,360);
+      $pdf->setPaper($paper_size, 'landscape');
       return $pdf->stream('invoice');
       return $pdf->stream();
     }
