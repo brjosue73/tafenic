@@ -170,7 +170,7 @@
 
 		s.fincaSaveData = {};
 		s.actividadSaveData = {};
-		s.laborSaveData = {};
+		s.laborSaveData = {tipo_lab:"hora"};
 		s.loteSaveData = {};
 
 		s.loteSave = function() {
