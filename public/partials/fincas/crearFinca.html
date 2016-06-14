@@ -3,18 +3,18 @@
 -->
 <form class="col-lg-12 col-md-12 col-sm-12 tarjeta gris m-top_dow">
   <h1>Crear Finca Nueva</h1>
-  <div class="form-group col-sm-4 col-md-8 col-lg-10">
+  <div class="form-group col-sm-10 col-md-10 col-lg-10">
     <label for="">Nombre finca</label>
     <input type="text" class="form-control" data-ng-model="fincaSaveData.nombre">
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-2">
+  <div class="form-group col-sm-2 col-md-2 col-lg-2">
     <br>
     <button class="btn btn-default btn-primary" type="button" name="button" data-ng-click="fincaSave()">Guardar Finca</button>
     <i id="fincaSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
     <span id="exitofinca" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
     <span id="errorfinca" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+  <div class="form-group col-sm-5 col-md-5 col-lg-5">
     <label for="finca">Finca</label>
     <select name="finca" id="fincaSelect" class="form-control" data-ng-model="actividadSaveData.id_finca">
       <optgroup label="Fincas">
@@ -22,18 +22,18 @@
       </optgroup>
     </select>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+  <div class="form-group col-sm-5 col-md-5 col-lg-5">
     <label for="">Nombre Actividad</label>
     <input type="text" class="form-control" data-ng-model="actividadSaveData.nombre">
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-2">
+  <div class="form-group col-sm-2 col-md-2 col-lg-2">
     <br>
     <button class="btn btn-default btn-primary" type="button" name="button" data-ng-click="actividadSave()">Reg. actividad</button>
     <i id="actSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
     <span id="exitoact" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
     <span id="erroract" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+  <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="actividad">Actividad</label>
     <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="laborSaveData.id_actividad">
       <optgroup label="Actividades">
@@ -41,18 +41,25 @@
       </optgroup>
     </select>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+  <div class="form-group col-sm-3 col-md-3 col-lg-3">
     <label for="">Nombre Labor</label>
     <input type="text" class="form-control" data-ng-model="laborSaveData.nombre">
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-2">
+  <div class="form-group col-sm-3 col-md-3 col-lg-3">
+    <label class="label-form">Tipo Lab.</label>
+    <select class="form-control" data-ng-model="laborSaveData.tipo_lab">
+      <option value="hora">Hora</option>
+      <option value="prod">Producción</option>
+    </select>
+  </div>
+  <div class="form-group col-sm-2 col-md-2 col-lg-2">
     <br>
     <button class="btn btn-default btn-primary" type="button" name="button" data-ng-click="laborSave()">Registrar Labor</button>
     <i id="laborSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
     <span id="exitolabor" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
     <span id="errorlabor" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+  <div class="form-group col-sm-5 col-md-5 col-lg-5">
     <label for="finca">Finca</label>
     <select name="finca" id="fincaSelect" class="form-control" data-ng-model="loteSaveData.id_finca">
       <optgroup label="Fincas">
@@ -60,11 +67,11 @@
       </optgroup>
     </select>
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-5">
+  <div class="form-group col-sm-5 col-md-5 col-lg-5">
     <label for="">Lote: </label>
     <input type="text" class="form-control" data-ng-model="loteSaveData.lote">
   </div>
-  <div class="form-group col-sm-4 col-md-4 col-lg-2">
+  <div class="form-group col-sm-2 col-md-2 col-lg-2">
     <br>
     <button class="btn btn-default btn-primary" type="button" name="button" data-ng-click="loteSave()">Registrar Lote</button>
     <i id="loteSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
