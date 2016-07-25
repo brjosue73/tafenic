@@ -257,10 +257,13 @@
 			});
 		}
 	}]);
-	app.controller('fincaOneController', ['$scope','fincaResource','$stateParams', function(s,fr,sp){
+	app.controller('fincaOneController', ['$scope','fincaResource','$stateParams','laborResource','actividadResource', function(s,fr,sp,lr,ar){
 		s.unaFinca = fr.get({id:sp.id}, function(data){
 			console.log(data);
 		});
+		s.estaLabores = ar.query(function(data){
+			console.log(data);
+		})
 	}]);
 	/*TRABAJADOR REST CONTROLLERS*/
 	//Create one
