@@ -261,7 +261,10 @@
 		s.unaFinca = fr.get({id:sp.id}, function(data){
 			console.log(data);
 		});
-		s.estaLabores = ar.query(function(data){
+		s.estaAct = ar.query(function(data){
+			console.log(data);
+		});
+		s.estaLab = lr.query(function(data){
 			console.log(data);
 		})
 	}]);
