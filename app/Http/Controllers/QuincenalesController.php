@@ -38,7 +38,6 @@ class QuincenalesController extends Controller
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
-        return $data;
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
@@ -217,22 +216,6 @@ class QuincenalesController extends Controller
       $planilla->inss_laboral=$inss_lab;
 
       /*****************************FALTA CALCULAR IR**********************************************/
-      $IR=$this->calculo_ir($devengado);
-      $prestamo=$arreglo['prestamos'];
-      $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
-      $planilla->ir=$IR;
-      $inss_patronal=($devengado*18)/100;
-      $inatec=(($devengado-$subsi)*2)/100;
-      $planilla->total_pagar=$total_pagar;
-      $planilla->inss_patronal=$inss_patronal;
-      $planilla->inatec=$inatec;
-      return $planilla;
-      $planilla->save();
-
-      //return $planilla;
-      return "Planilla Almacenada";
-    }
-    public function calculo_ir($devengado){
       $quinc_i=$devengado-$inss_lab;
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
@@ -267,6 +250,21 @@ class QuincenalesController extends Controller
         $ir_anual=$dev_por+$imp_base;
         $IR=$ir_anual/24;
       }
+      $prestamo=$arreglo['prestamos'];
+      $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
+      $planilla->ir=$IR;
+      $inss_patronal=($devengado*18)/100;
+      $inatec=(($devengado-$subsi)*2)/100;
+      $planilla->total_pagar=$total_pagar;
+      $planilla->inss_patronal=$inss_patronal;
+      $planilla->inatec=$inatec;
+      $planilla->save();
+
+      //return $planilla;
+      return "Planilla Almacenada";
+    }
+    public function calculo_ir($devengado){
+
       return $IR;
     }
     // public function sobres_quincenal(Request $request){
