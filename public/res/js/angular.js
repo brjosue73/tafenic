@@ -277,7 +277,7 @@
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
-					},3000);
+					},1000);
 				},function(err){
 					console.log(err.status);
 					$('#trabSpinner').css("display", "none");
@@ -300,10 +300,15 @@
 			r.update({id:s.sendData.id},{data:s.sendData},function(data){
 				$('#trabSpinner').css("display", "none");
 				$('#exitotrab').css("display","inline");
-				setTimeout(function(){
+				$('#exitotrab').css("display","none");
+				$("#trabForm")[0].reset();
+				l.path('/trabajadores');
+				/*setTimeout(function(){
 					$('#exitotrab').css("display","none");
 					$("#trabForm")[0].reset();
-				},3000);
+					l.path('/trabajadores');
+				},100);*/
+				//l.path('/trabajadores');
 			},function(err){
 				console.log(err.status);
 				$('#trabSpinner').css("display", "none");
@@ -318,6 +323,7 @@
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
 		s.busquedaCriteria = "";
 		s.sorting = "nombre";
+		s.filtrar = "todos";
 		s.trabajadores = r.query();
 
 		s.titulo = "Ingreso de trabajadores nuevos";
