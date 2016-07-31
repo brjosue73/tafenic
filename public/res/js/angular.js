@@ -384,7 +384,11 @@
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
-		s.prepSendData = {subsidio:false};
+		s.prepSendData = {
+			otros:0,
+			hora_ext:0,
+			prestamos:0
+		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
 
@@ -408,10 +412,18 @@
 				console.log(err);
 			});
 		}
-
+		/*$('#chkSub').change(function(){
+					var cb;
+		     cb = $(this);
+		     cb.val(cb.prop('checked'));
+				 s.prepSendData.subsidio = cb.val();
+				 console.log(s.prepSendData.subsidio);
+		 });*/
 		s.prepTrab = function() {
+			s.prepSendData.subsidio = $('#chkSub').prop('checked');
 			$('#prepSpinner').css("display", "inline-block");
 			console.log(s.prepSendData);
+			//$('#chkSub').prop('checked',false);
 			pr.save({data:s.prepSendData}, function(){
 
 							$('#prepSpinner').css("display", "none");
@@ -419,6 +431,8 @@
 							setTimeout(function(){
 								$('#exitoprep').css("display","none");
 								$("#prepResetForm")[0].reset();
+								$('#chkSub').prop('checked',false);
+								//s.prepSendData.subsidio = false;
 							},3000);
 						},function(err){
 							console.log(err.status);
