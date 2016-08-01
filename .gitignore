@@ -1,4 +1,5 @@
 /.env
+
 /vendor
 /node_modules
 /public/storage
@@ -6,3 +7,5 @@
 /public/.sass-cache
 Homestead.yaml
 Homestead.json
+
+.env
