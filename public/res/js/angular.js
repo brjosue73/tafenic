@@ -257,10 +257,16 @@
 			});
 		}
 	}]);
-	app.controller('fincaOneController', ['$scope','fincaResource','$stateParams', function(s,fr,sp){
+	app.controller('fincaOneController', ['$scope','fincaResource','$stateParams','laborResource','actividadResource', function(s,fr,sp,lr,ar){
 		s.unaFinca = fr.get({id:sp.id}, function(data){
 			console.log(data);
 		});
+		s.estaAct = ar.query(function(data){
+			console.log(data);
+		});
+		s.estaLab = lr.query(function(data){
+			console.log(data);
+		})
 	}]);
 	/*TRABAJADOR REST CONTROLLERS*/
 	//Create one
@@ -277,7 +283,7 @@
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
-					},3000);
+					},1000);
 				},function(err){
 					console.log(err.status);
 					$('#trabSpinner').css("display", "none");
@@ -300,10 +306,15 @@
 			r.update({id:s.sendData.id},{data:s.sendData},function(data){
 				$('#trabSpinner').css("display", "none");
 				$('#exitotrab').css("display","inline");
-				setTimeout(function(){
+				$('#exitotrab').css("display","none");
+				$("#trabForm")[0].reset();
+				l.path('/trabajadores');
+				/*setTimeout(function(){
 					$('#exitotrab').css("display","none");
 					$("#trabForm")[0].reset();
-				},3000);
+					l.path('/trabajadores');
+				},100);*/
+				//l.path('/trabajadores');
 			},function(err){
 				console.log(err.status);
 				$('#trabSpinner').css("display", "none");
@@ -318,6 +329,7 @@
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
 		s.busquedaCriteria = "";
 		s.sorting = "nombre";
+		s.filtrar = "todos";
 		s.trabajadores = r.query();
 
 		s.titulo = "Ingreso de trabajadores nuevos";
@@ -372,7 +384,11 @@
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
-		s.prepSendData = {subsidio:false};
+		s.prepSendData = {
+			otros:0,
+			hora_ext:0,
+			prestamos:0
+		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
 
@@ -396,10 +412,18 @@
 				console.log(err);
 			});
 		}
-
+		/*$('#chkSub').change(function(){
+					var cb;
+		     cb = $(this);
+		     cb.val(cb.prop('checked'));
+				 s.prepSendData.subsidio = cb.val();
+				 console.log(s.prepSendData.subsidio);
+		 });*/
 		s.prepTrab = function() {
+			s.prepSendData.subsidio = $('#chkSub').prop('checked');
 			$('#prepSpinner').css("display", "inline-block");
 			console.log(s.prepSendData);
+			//$('#chkSub').prop('checked',false);
 			pr.save({data:s.prepSendData}, function(){
 
 							$('#prepSpinner').css("display", "none");
@@ -407,6 +431,8 @@
 							setTimeout(function(){
 								$('#exitoprep').css("display","none");
 								$("#prepResetForm")[0].reset();
+								$('#chkSub').prop('checked',false);
+								//s.prepSendData.subsidio = false;
 							},3000);
 						},function(err){
 							console.log(err.status);

@@ -5,6 +5,14 @@
   <h1> Finca <% unaFinca.nombre %> </h1>
 </div>
 <ol class="list-group col-sm-4 col-md-4 col-lg-4">
+  <li class="active list-group-item">ACTIVIDADES</li>
+  <li class="list-group-item" data-ng-repeat="act in estaAct"><% act.nombre %></li>
+</ol>
+<ol class="list-group col-sm-4 col-md-4 col-lg-4">
+  <li class="active list-group-item">ACTIVIDADES</li>
+  <li class="list-group-item" data-ng-repeat="lab in estaLab"><% lab.nombre %></li>
+</ol>
+<!--<ol class="list-group col-sm-4 col-md-4 col-lg-4">
   <li class="active list-group-item">LABORES</li>
   <li class="list-group-item">Imágenes</li>
   <li class="list-group-item">Audio</li>
@@ -27,4 +35,4 @@
   <li class="list-group-item">Archivos</li>
   <li class="list-group-item">Videos</li>
   <li class="list-group-item">Mensajes</li>
-</ol>
+</ol>-->

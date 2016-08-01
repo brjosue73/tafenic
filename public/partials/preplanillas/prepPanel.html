@@ -75,7 +75,7 @@
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-hide="prepSendData.id_labor == 2">
         <label for="">horas extra </label>
-        <input type="text" class="form-control" data-ng-model="prepSendData.hora_ext">
+        <input type="text" class="form-control" data-ng-model="prepSendData.hora_ext" value=0  >
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="prepSendData.id_labor == 2">
         <label for="" class="label-control">Tipo: </label>
@@ -94,15 +94,15 @@
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Otros: </label>
-        <input type="text" class="form-control" data-ng-model="prepSendData.otros">
+        <input type="text" class="form-control" data-ng-model="prepSendData.otros" value=0>
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Préstamos: </label>
-        <input type="text" class="form-control" data-ng-model="prepSendData.prestamos">
+        <input type="text" class="form-control" data-ng-model="prepSendData.prestamos" value=0>
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Subsidio: </label>
-        <input type="checkbox" data-ng-model="prepSendData.subsidio">
+        <input id="chkSub" type="checkbox"><!-- data-ng-model="prepSendData.subsidio"-->
       </div>
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
