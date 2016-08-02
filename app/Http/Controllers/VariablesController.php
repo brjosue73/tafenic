@@ -39,6 +39,7 @@ class VariablesController extends Controller
      */
     public function store(Request $request)
     {
+      return 'yeah';
       $peticion = $request->all();
       $arreglo = $peticion["data"];
 
