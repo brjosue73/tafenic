@@ -97,6 +97,7 @@ class PreplanillasController extends Controller
      */
     public function store(Request $request)
     {
+
         $peticion = $request->all();
         $arreglo = $peticion["data"];
         $variables=Variable::all();//
@@ -115,36 +116,92 @@ class PreplanillasController extends Controller
         }
 
         $prep= new Preplanilla($arreglo);
+        $subsidio=$arreglo['subsidio'];
+
         $prep->salario_dev =$dia;
         $prep->alimentacion =$alim;
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
-        $ext=0;
-        $otros=$arreglo['otros'];
-        $prep->otros=$otros;
-        if(isset($arreglo['cant_cujes'])){ //Si es de tipo actividad/cujes
-           $cant_cujes=$arreglo['cant_cujes'];;
-           if($arreglo['tamano_cuje'] == 0){//pequeno
-             $total_act=$cant_cujes * $cuje_peq;
-           }
-           else {
-             $total_act=$cant_cujes * $cuje_grand;
-           }
-           $prep->cant_cujes=$cant_cujes;
-           $prep->tamano_cuje=$arreglo['tamano_cuje'];
-           $prep->total_extras=$total_act;
+        if (isset($arreglo['feriado'])) {
+          $feriado=$arreglo['feriado'];
+          if ($feriado==0) { //feriado no trabajado
+            $tot_feriado=$dia+$alim+$vacaciones+$vacaciones;
+            $prep->feriados=$tot_feriado;
+            $prep->save();
+            return 'Agregada con exito';
+          }
+          else { //si es feriado trabajado
+            $ext=0;
+            $otros=$arreglo['otros'];
+            $prep->otros=$otros;
+            if(isset($arreglo['cant_cujes'])){ //Si es de tipo actividad/cujes
+               $cant_cujes=$arreglo['cant_cujes'];
+               if($arreglo['tamano_cuje'] == 0){//pequeno
+                 $total_act=$cant_cujes * $cuje_peq;
+               }
+               else {
+                 $total_act=$cant_cujes * $cuje_grand;
+               }
+               $prep->cant_cujes=$cant_cujes;
+               $prep->tamano_cuje=$arreglo['tamano_cuje'];
+               $prep->total_extras=$total_act;
+            }
+            else{ //Si es por Horas
+              $ext= $arreglo['hora_ext'] * $h_ext_val;
+              $prep->hora_ext = $arreglo['hora_ext'];
+              $prep->total_extras=$ext;
+              $prep->tamano_cuje=3;
+            }
+            $sal1=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
+            $sal=$sal1*2;
+            $prep->salario_acum= $sal;
+            $subsidio=0;
+
+            $prep->save();
+            $subs=0;
+            return "Agregada!";
+          }
         }
-        else{ //Si es por Horas
-          $ext= $arreglo['hora_ext'] * $h_ext_val;
-          $prep->hora_ext = $arreglo['hora_ext'];
-          $prep->total_extras=$ext;
-          $prep->tamano_cuje=3;
+
+        if ($subsidio===true) {//si esta de subsidio
+
+          $subs=$dia+$alim+$vacaciones+$vacaciones;
+          $prep->subsidio=$subs;
+          $prep->save();
+          return "Agregada!";
         }
-        $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;;
-        $prep->salario_acum= $sal;
-        return $prep;
-        $prep->save();
-        return "Agregada!";
+        else {
+          $ext=0;
+          $otros=$arreglo['otros'];
+          $prep->otros=$otros;
+          if(isset($arreglo['cant_cujes'])){ //Si es de tipo actividad/cujes
+             $cant_cujes=$arreglo['cant_cujes'];
+             if($arreglo['tamano_cuje'] == 0){//pequeno
+               $total_act=$cant_cujes * $cuje_peq;
+             }
+             else {
+               $total_act=$cant_cujes * $cuje_grand;
+             }
+             $prep->cant_cujes=$cant_cujes;
+             $prep->tamano_cuje=$arreglo['tamano_cuje'];
+             $prep->total_extras=$total_act;
+          }
+          else{ //Si es por Horas
+            $ext= $arreglo['hora_ext'] * $h_ext_val;
+            $prep->hora_ext = $arreglo['hora_ext'];
+            $prep->total_extras=$ext;
+            $prep->tamano_cuje=3;
+          }
+          $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
+          $prep->salario_acum= $sal;
+          $subsidio=0;
+
+          $prep->save();
+          $subs=0;
+          return "Agregada!";
+        }
+
+
     }
 
     /**
