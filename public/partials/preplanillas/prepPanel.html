@@ -56,7 +56,7 @@
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="actividad">Actividad</label>
         <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad" data-ng-change="getLabores()">
-          <optgroup label="Actividades" data-ng-controller="preplanilla">
+          <optgroup label="Actividades">
             <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
           </optgroup>
         </select>
