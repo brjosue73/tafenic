@@ -60,6 +60,7 @@ class LaboresController extends Controller
 
         $labor = new Labor($arreglo);
         $tipo_lab=$arreglo['tipo_lab'];
+
         $labor->tipo_labor=$tipo_lab;
         $labor->save();
         return "Labor Agregada!";

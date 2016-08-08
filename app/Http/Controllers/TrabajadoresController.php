@@ -30,7 +30,9 @@ class TrabajadoresController extends Controller
        return response()->json($trabajadores);
      }
      public function campo(){
-       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo','tcampo')->get();
+       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')
+       ->where('cargo','tcampo')
+       ->orWhere('cargo','guardia')->get();
        return response()->json($trabajadores);
      }
 
