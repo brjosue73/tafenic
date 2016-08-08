@@ -27,12 +27,11 @@ class QuincenalesController extends Controller
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
 
-        $view = \View::make('reporte_quincenal',array('data'=>$data));
+        $view = \View::make('reporte_quincenal',array('data'=>$data)); // recuerden que data es la variable del arreglo
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         $pdf->setPaper('legal', 'landscape');
         return $pdf->stream('invoice');
-        return $pdf->stream();
       }
       elseif ($funcion == 'Generar sobres')
       {

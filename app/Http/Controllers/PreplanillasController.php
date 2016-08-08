@@ -166,7 +166,7 @@ class PreplanillasController extends Controller
         if ($subsidio===true) {//si esta de subsidio
 
           $subs=$dia+$alim+$vacaciones+$vacaciones;
-          $prep->subsidio=$subs;
+          $prep->subsidios=$subs;
           $prep->save();
           return "Agregada!";
         }
