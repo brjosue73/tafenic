@@ -2,12 +2,28 @@
   FORMULARIO PLANILLA QUINCENAL
 -->
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
     <h1>Registro de Planilla Quincenal</h1>
 
     <form id="formQuince" class="col-lg-12 col-md-12 col-sm-12">
 
-      <div class="form-group">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Fecha de Apertura:</label>
+        <input type="date" class="form-control" data-ng-model="pqSendData.fecha_ini">
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Fecha Cierre:</label>
+        <input type="date" class="form-control" data-ng-model="pqSendData.fecha_fin">
+      </div>
+      <div class="form-group col-sm-3 col-md-4 col-lg-4">
+        <label for="finca">Finca</label>
+        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="pqSendData.id_finc">
+          <optgroup label="Fincas">
+            <option data-ng-repeat="finca in pqFincas" value="<% finca.id %>"><% finca.nombre %></option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
         <label for="">Trabajador: </label>
         <select name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="pqSendData.id_trabajador">
           <optgroup label="trabajadores">
@@ -15,67 +31,52 @@
           </optgroup>
         </select>
       </div>
-        <div class="form-group">
-          <label for="finca">Finca</label>
-          <select name="finca" id="fincaSelect" class="form-control" data-ng-model="pqSendData.id_finc">
-            <optgroup label="Fincas">
-              <option data-ng-repeat="finca in pqFincas" value="<% finca.id %>"><% finca.nombre %></option>
-            </optgroup>
-          </select>
-        </div>
-      <div class="form-group">
-        <label class="form-label">Salario:</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.salario_quinc">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Días Subsidiados</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.subsidios">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Feriados Trabajados:</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.feriado_trab">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Feriados No Trab:</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.feriado_ntrab">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Días No Trab:</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.dias_falt">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Horas extras:</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.horas_ext">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Préstamos:</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.prestamos">
-      </div>
-      <div class="form-group">
-        <label class="form-label">Otros:</label>
-        <input type="text" class="form-control" data-ng-model="pqSendData.otros">
-      </div>
-      <div class="form-group">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
         <label class="form-label">Tipo:</label>
         <select class="form-control" data-ng-model="pqSendData.tipo">
           <option value="administrativo">Administrativo</option>
           <option value="servicios tecnicos">Servicios Técnicos</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
         <label class="form-label">Días Trabajados:</label>
         <input type="text" class="form-control" data-ng-model="pqSendData.dias_trab">
       </div>
-      <div class="form-group">
-        <label class="form-label">Fecha Inicial:</label>
-        <input type="date" class="form-control" data-ng-model="pqSendData.fecha_ini">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Días No Trab:</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.dias_falt">
       </div>
-      <div class="form-group">
-        <label class="form-label">Fecha Cierre:</label>
-        <input type="date" class="form-control" data-ng-model="pqSendData.fecha_fin">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Horas extras:</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.horas_ext">
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Salario:</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.salario_quinc">
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Feriados Trabajados:</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.feriado_trab">
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Feriados No Trab:</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.feriado_ntrab">
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Días Subsidiados</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.subsidios">
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Préstamos:</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.prestamos">
+      </div>
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label class="form-label">Otros:</label>
+        <input type="text" class="form-control" data-ng-model="pqSendData.otros">
       </div>
 
-      <div class="form-group">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <br>
         <button class="btn btn-default btn-primary" data-ng-click="pqSave()">Guardar</button>
         <i id="PlaQSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
         <span id="exitoPlaQ" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>

@@ -173,6 +173,15 @@
 		s.laborSaveData = {tipo_lab:"hora"};
 		s.loteSaveData = {};
 
+		s.getActividade = function(){
+			h.post('actividad_finca',{id_finca:s.actividadSaveData.id_finca})
+			.success(function(data){
+				s.actividades = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
 		s.loteSave = function() {
 			console.log(s.loteSaveData);
 			$('#loteSpinner').css("display", "inline-block");
@@ -516,10 +525,6 @@
 						},3000);
 			});
 		};
-
-		s.tareaVal = function(){
-
-		}
 	}]);
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};

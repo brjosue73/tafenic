@@ -2,7 +2,7 @@
   LISTADO DE TRABAJADORES
 -->
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
     <h1>Listado de Trabajadores</h1>
     <form>
 
@@ -37,44 +37,42 @@
     </form>
   </div>
 
-  <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-wrapper"> -->
-    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive table-container">
-      <table class="table table-striped table-bordered table-hover table-condensed">
-        <thead>
-          <tr class="active">
-            <th>id</th>
-            <th data-ng-click="sorting = 'nombre' ">Nombre</th>
-            <th data-ng-click="sorting = 'apellidos' " >Apellidos</th>
-            <th>INSS</th>
-            <th>Cédula</th>
-            <th>N° Celular</th>
-            <th>Fecha Alta</th>
-            <th data-ng-click="sorting = 'cargo' ">Cargo</th>
-            <th data-ng-click="sorting = 'tipo' ">Tipo</th>
-            <th data-ng-click="sorting = 'estado' ">Estado</th>
-            <th>Modificar</th>
-            <!-- <th>accion</th>
-            <th>Borrar</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-ng-repeat="trabajador in trabajadores"> <!-- | orderBy:sorting" data-ng-hide="filtrar !== 'todos' || filtrar != 'quincenal' "data-ng-hide=" filtrar!='todos' || trabajador.tipo !== filtrar ">  data-ng-show="trabajador.tipo == filtrar" data-ng-hide="filtrar != 'todos'">data-ng-hide="trabajador.nombre != busqueda" -->
-            <td> <% trabajador.id %> </td>
-            <td> <% trabajador.nombre %> </td>
-            <td> <% trabajador.apellidos %> </td>
-            <td> <% trabajador.nss %> </td>
-            <td> <% trabajador.cedula %> </td>
-            <td> <% trabajador.celular %> </td>
-            <td> <% trabajador.created_at %> </td>
-            <td> <% trabajador.cargo %> </td>
-            <td> <% trabajador.tipo%> </td>
-            <td> <span class="label <% trabajador.estado | labelState %>"> <% trabajador.estado | estadoTrab %> </span></td>
-            <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})">Editar</a></td>
-            <!-- <td><a href="">Dar de baja</a></td>
-            <td><a href="" data-ui-sref="/trabajadores" data-ng-click='del(trabajador.id)'>Eliminar</a></td> -->
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  <!-- </div> -->
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive table-container">
+    <table class="table table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr class="active">
+          <th>id</th>
+          <th data-ng-click="sorting = 'nombre' ">Nombre</th>
+          <th data-ng-click="sorting = 'apellidos' " >Apellidos</th>
+          <th>INSS</th>
+          <th>Cédula</th>
+          <th>N° Celular</th>
+          <th>Fecha Alta</th>
+          <th data-ng-click="sorting = 'cargo' ">Cargo</th>
+          <th data-ng-click="sorting = 'tipo' ">Tipo</th>
+          <th data-ng-click="sorting = 'estado' ">Estado</th>
+          <th>Modificar</th>
+          <!-- <th>accion</th>
+          <th>Borrar</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="trabajador in trabajadores"> <!-- | orderBy:sorting" data-ng-hide="filtrar !== 'todos' || filtrar != 'quincenal' "data-ng-hide=" filtrar!='todos' || trabajador.tipo !== filtrar ">  data-ng-show="trabajador.tipo == filtrar" data-ng-hide="filtrar != 'todos'">data-ng-hide="trabajador.nombre != busqueda" -->
+          <td> <% trabajador.id %> </td>
+          <td> <% trabajador.nombre %> </td>
+          <td> <% trabajador.apellidos %> </td>
+          <td> <% trabajador.nss %> </td>
+          <td> <% trabajador.cedula %> </td>
+          <td> <% trabajador.celular %> </td>
+          <td> <% trabajador.created_at %> </td>
+          <td> <% trabajador.cargo %> </td>
+          <td> <% trabajador.tipo%> </td>
+          <td> <span class="label <% trabajador.estado | labelState %>"> <% trabajador.estado | estadoTrab %> </span></td>
+          <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})">Editar</a></td>
+          <!-- <td><a href="">Dar de baja</a></td>
+          <td><a href="" data-ui-sref="/trabajadores" data-ng-click='del(trabajador.id)'>Eliminar</a></td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

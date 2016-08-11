@@ -6,7 +6,10 @@ li {
   list-style-type: none; }
 
 .gris {
-  background-color: #eee; }
+  background-color: #e9ebee; }
+
+.blanco {
+  background-color: #fff; }
 
 .grisD {
   background-color: #aaa; }
@@ -19,7 +22,7 @@ li {
 
 .tarjeta {
   border-radius: 3px;
-  box-shadow: 0 0 3px black;
+  box-shadow: 0 0 3px #aaa;
   padding: 15px; }
 
 .m-top_dow {
