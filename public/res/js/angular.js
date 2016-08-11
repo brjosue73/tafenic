@@ -153,7 +153,7 @@
 		})
 		.state('/planillaq',{
 			url:"/planilla_quincenal",
-			templateUrl: "partials/planillas/planillaq.html",
+			templateUrl: "partials/planillas/planilla.html",
 			controller: "planillaQController"
 		})
 	});
