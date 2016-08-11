@@ -525,10 +525,6 @@
 						},3000);
 			});
 		};
-
-		s.tareaVal = function(){
-
-		}
 	}]);
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
