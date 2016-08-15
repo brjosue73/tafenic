@@ -43,15 +43,15 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::resource('acumulados','AcumuladosController');
 
-    Route::post('quincenales','QuincenalesController@quincenales');
+    Route::post('quincenales','quincenalesController@quincenales');
     Route::post('planilla_quincenal','quincenalesController@quincenal_fecha');
-    Route::post('guardar_quincenal','QuincenalesController@g_quincenal');
-    Route::get('actualizar_quincenal','QuincenalesController@a_quincenal');
+    Route::post('guardar_quincenal','quincenalesController@g_quincenal');
+    Route::get('actualizar_quincenal','quincenalesController@a_quincenal');
 
-    Route::post('sobres_quincenal','QuincenalesController@sobres_quincenal');
-    Route::post('reporte_quincenal','QuincenalesController@reporte_quincenal');
+    Route::post('sobres_quincenal','quincenalesController@sobres_quincenal');
+    Route::post('reporte_quincenal','quincenalesController@reporte_quincenal');
 
-    Route::post('billetes_quince','QuincenalesController@billetes');
+    Route::post('billetes_quince','quincenalesController@billetes');
 
     // Route::get('pdf2', function(){
     //   $a[]='hola';
