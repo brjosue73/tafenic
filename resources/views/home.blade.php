@@ -93,12 +93,24 @@
               <input type="text" class="form-control" placeholder="INSS Trabajador Administrativo" name="inssA" data-ng-model="valoresSaveData.inss_admin">
             </div>
             <div class="form-group col-sm-6 col-md-6 col-lg-6">
-              <label for="cujeP">Cuje Pequeño: </label>
-              <input type="text" class="form-control" placeholder="Cuje Pequeño" name="cujeP" data-ng-model="valoresSaveData.cuje_peq">
+              <label for="inssP">INSS Patronal: </label>
+              <input type="text" class="form-control" placeholder="INSS Patronal" name="inssp" data-ng-model="valoresSaveData.inss_patron">
             </div>
             <div class="form-group col-sm-6 col-md-6 col-lg-6">
               <label for="cujeG">Cuje Grande: </label>
               <input type="text" class="form-control" placeholder="Cuje Grande" name="cujeG" data-ng-model="valoresSaveData.cuje_grand">
+            </div>
+            <div class="form-group col-sm-6 col-md-6 col-lg-6">
+              <label for="cujeP">Cuje Pequeña: </label>
+              <input type="text" class="form-control" placeholder="Cuje Pequeño" name="cujeP" data-ng-model="valoresSaveData.cuje_peq">
+            </div>
+            <div class="form-group col-sm-6 col-md-6 col-lg-6">
+              <label for="safaG">Safadura Grande: </label>
+              <input type="text" class="form-control" placeholder="Safa Grande" name="safaG" data-ng-model="valoresSaveData.safa_grand">
+            </div>
+            <div class="form-group col-sm-6 col-md-6 col-lg-6">
+              <label for="safaP">Safadura Pequeño: </label>
+              <input type="text" class="form-control" placeholder="Safa Pequeño" name="safaP" data-ng-model="valoresSaveData.safa_peq">
             </div>
             <div class="form-group col-sm-6 col-md-6 col-lg-6">
               <label for="horaX">Hora Extra: </label>
