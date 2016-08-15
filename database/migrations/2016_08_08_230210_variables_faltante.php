@@ -13,8 +13,9 @@ class VariablesFaltante extends Migration
     public function up()
     {
         Schema::table('variables', function (Blueprint $table) {
-            $table->double('inss_pat')->default(0);
-            $table->double('safadura')->default(0);
+            $table->double('inss_patron');
+            $table->double('safa_peq');
+            $table->double('safa_grand');
         });
     }
 
