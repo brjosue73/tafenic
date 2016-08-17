@@ -93,7 +93,7 @@ class VariablesController extends Controller
       $variable->cuje_grand = $arreglo['cuje_grand'];
       $variable->hora_ext = $arreglo['hora_ext'];
       $variable->septimo = $arreglo['septimo'];
-      $variable->inss_pat = $arreglo['inss_pat'];
+      $variable->inss_patron = $arreglo['inss_pat'];
       $variable->safadura = $arreglo['safadura'];
       $variable->save();
       return "Registro Actualizado";

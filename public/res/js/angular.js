@@ -396,7 +396,8 @@
 		s.prepSendData = {
 			otros:0,
 			hora_ext:0,
-			prestamos:0
+			prestamos:0,
+			labName: ""
 		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
@@ -406,12 +407,17 @@
 		s.selectLab = function(){
 			var labSelected = $('#laborSelect option:selected').text();
 			//s.labValue = labSelected;
-			if (labSelected == "safadura" || labSelected == "Safadura") {
+			if (labSelected == "safadura" || labSelected == "Safa") {
 				s.labValue = 1;
+				s.prepSendData.labName = "safadura";
+				console.log(s.prepSendData.labName);
 			} else if (labSelected == "ensarte" || labSelected == "Ensarte") {
 				s.labValue = 2;
+				s.prepSendData.labName = "cuje";
+				console.log(s.prepSendData.labName);
 			} else {
 				s.labValue = 0;
+				s.prepSendData.labName = "";
 			}
 			console.log(s.labValue);
 		}
