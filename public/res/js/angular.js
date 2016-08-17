@@ -401,6 +401,20 @@
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
 
+		s.labValue = 0;
+
+		s.selectLab = function(){
+			var labSelected = $('#laborSelect option:selected').text();
+			//s.labValue = labSelected;
+			if (labSelected == "safadura" || labSelected == "Safadura") {
+				s.labValue = 1;
+			} else if (labSelected == "ensarte" || labSelected == "Ensarte") {
+				s.labValue = 2;
+			} else {
+				s.labValue = 0;
+			}
+			console.log(s.labValue);
+		}
 		s.getActividades = function(){
 			h.post('actividad_finca',{id_finca:s.prepSendData.id_finca})
 			.success(function(data){
