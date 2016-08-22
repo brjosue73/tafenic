@@ -397,7 +397,9 @@
 			otros:0,
 			hora_ext:0,
 			prestamos:0,
-			labName: ""
+			labName: "",
+			safa_ext: 0,
+			cuje_ext: 0
 		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
