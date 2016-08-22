@@ -459,7 +459,7 @@
 							$('#exitoprep').css("display","inline");
 							setTimeout(function(){
 								$('#exitoprep').css("display","none");
-								$("#prepResetForm")[0].reset();
+								$("#clean")[0].reset();
 								$('#chkSub').prop('checked',false);
 								//s.prepSendData.subsidio = false;
 							},3000);
