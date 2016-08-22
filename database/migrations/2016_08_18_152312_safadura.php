@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddVariableFaltante extends Migration
+class Safadura extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class AddVariableFaltante extends Migration
      */
     public function up()
     {
-        Schema::table('variables', function (Blueprint $table) {
-            $table->double('inss_patron');
-            $table->double('safa_peq');
-            $table->double('safa_grand');
+        Schema::table('preplanillas', function (Blueprint $table) {
+          $table->integer('safa_ext');
+          $table->double('cant_safa');
+          $table->boolean('tamano_safa');
         });
     }
 
@@ -26,7 +26,7 @@ class AddVariableFaltante extends Migration
      */
     public function down()
     {
-        Schema::table('variables', function (Blueprint $table) {
+        Schema::table('preplanillas', function (Blueprint $table) {
             //
         });
     }
