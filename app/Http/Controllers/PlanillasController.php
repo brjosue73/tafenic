@@ -149,7 +149,7 @@ class PlanillasController extends Controller
       $valor_dia= $variable->sal_diario;
       $cuje_grand= $variable->cuje_grand;
       $cuje_peq= $variable->cuje_peq;
-      $vacaciones= $valor_dia*($variable->vacaciones);
+      $vacaciones= ($variable->vacaciones)/100;
       $pago_dia=$variable->sal_diario;
       $inss_patronal=12;
     }
