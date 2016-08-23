@@ -70,7 +70,7 @@ class PreplanillasController extends Controller
         foreach ($variables as $variable) {
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
-          $vacaciones= $dia*($variable->vacaciones);
+          $vacaciones= ($variable->vacaciones)/100;
           $cuje_grand= $variable->cuje_grand;
           $cuje_peq= $variable->cuje_peq;
         }
