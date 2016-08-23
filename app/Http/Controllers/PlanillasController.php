@@ -149,7 +149,7 @@ class PlanillasController extends Controller
       $valor_dia= $variable->sal_diario;
       $cuje_grand= $variable->cuje_grand;
       $cuje_peq= $variable->cuje_peq;
-      $vacaciones= $valor_dia*($variable->vacaciones);
+      $vacaciones= ($variable->vacaciones)/100;
       $pago_dia=$variable->sal_diario;
       $inss_patronal=12;
     }
@@ -182,6 +182,7 @@ class PlanillasController extends Controller
            $septimo=0;
            $otros=0;
            $feriados=0;
+           $tot_dev=0;
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -196,6 +197,7 @@ class PlanillasController extends Controller
                $cant_septimos=2;
              }
            }
+
            $tot_sept=$cant_septimos*$valor_dia;
            /*-------------CALCULO DEL SEPTIMO*/
            /*-------------CALCULO DEL SEPTIMO*/
@@ -210,15 +212,24 @@ class PlanillasController extends Controller
                  $agui_tot= $vac_tot;
                  $horas_ext_tot +=$trab->hora_ext;
                  $cuje_ext_tot +=$trab->cuje_ext;
-                 $extras=$trab->total_extras;
+                 $extras=$trab['total_extras'];
                  $extra_tot += $extras;
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
+                 $tot_dev +=$trab['total_actividad'];
 
                  $fin_query= Finca::find($trab->id_finca);
                  $finca=$fin_query->nombre;
                  $fincas[]=$finca;
+                 //si la labor es de hora o de actividad
+                //  if($lab_query['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
+                //      $tot_dev=$trab['total_actividad'];
+                //  }
+                //  else {//si es por horas
+                //    $tot_dev=$dias * $pago_dia;
+                //  }
+
 
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
@@ -275,19 +286,18 @@ class PlanillasController extends Controller
                  $finca_mayor=$fin_mayor_query->nombre;
               }
                /*--------------SEPTIMO**************/
-
              $array = [
                "id_trab"=>$id_trab,
                "dias"=>$dias,
                "alim_tot"=>$alim_tot,
                "vac_tot"=>$vac_tot,
                "agui_tot"=>$agui_tot,
-               "extra_tot"=>$extra_tot,
+               "horas_ext_tot"=>$extra_tot,
                "nombre"=>$nombre,
                "labores"=>$labores,
                "total_deven"=>$tot_dev,
                "total_basic"=>$tot_basic,
-               "horas_ext_tot"=>$horas_ext_tot,
+               "horas_ext_tot"=>$extra_tot,
                "cuje_ext_tot"=>$cuje_ext_tot,
                "total_acum"=>$total_acum,
                "inss"=>$inss,
@@ -306,6 +316,7 @@ class PlanillasController extends Controller
           $trab=$id_trab;
         }
       }
+
       return $trabajadores;
 
   }

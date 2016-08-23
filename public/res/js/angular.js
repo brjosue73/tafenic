@@ -397,7 +397,9 @@
 			otros:0,
 			hora_ext:0,
 			prestamos:0,
-			labName: ""
+			labName: "",
+			safa_ext: 0,
+			cuje_ext: 0
 		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
@@ -459,7 +461,7 @@
 							$('#exitoprep').css("display","inline");
 							setTimeout(function(){
 								$('#exitoprep').css("display","none");
-								$("#prepResetForm")[0].reset();
+								$("#clean")[0].reset();
 								$('#chkSub').prop('checked',false);
 								//s.prepSendData.subsidio = false;
 							},3000);
