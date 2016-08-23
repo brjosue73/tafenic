@@ -136,6 +136,7 @@ class PreplanillasController extends Controller
             return 'Agregada con exito Feriado no trab';
           }
           else { //si es feriado trabajado
+            $prep->total_actividad=$dia;//aqui
             $ext=0;
             $otros=$arreglo['otros'];
             $prep->otros=$otros;
@@ -161,20 +162,19 @@ class PreplanillasController extends Controller
                  return $arreglo;
                  $cant_safa=$arreglo['cant_safa'];
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
-                   $total_act=$cant_safa * $safa_peq;
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
                  }
                  else { //safadura grande
-                   $total_act=$cant_safa * $safa_grand;
                    $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
                  }
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
                  $prep->total_extras=$total_act_ext;//falta el total de las actividades
-                 $prep->total_actividad=$total_act;
+
                }
             }
             else{ //Si es por Horas
+              $prep->total_actividad=$dia;
               $ext= $arreglo['hora_ext'] * $h_ext_val;
               $prep->hora_ext = $arreglo['hora_ext'];
               $prep->total_extras=$ext;

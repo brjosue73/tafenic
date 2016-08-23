@@ -182,6 +182,7 @@ class PlanillasController extends Controller
            $septimo=0;
            $otros=0;
            $feriados=0;
+           $tot_dev=0;
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -216,17 +217,18 @@ class PlanillasController extends Controller
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
+                 $tot_dev +=$trab['total_actividad'];
 
                  $fin_query= Finca::find($trab->id_finca);
                  $finca=$fin_query->nombre;
                  $fincas[]=$finca;
                  //si la labor es de hora o de actividad
-                 if($lab_query['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
-                     $tot_dev=$trab['total_actividad'];
-                 }
-                 else {//si es por horas
-                   $tot_dev=$dias * $pago_dia;
-                 }
+                //  if($lab_query['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
+                //      $tot_dev=$trab['total_actividad'];
+                //  }
+                //  else {//si es por horas
+                //    $tot_dev=$dias * $pago_dia;
+                //  }
 
 
                  $tot_dev=$dias * $pago_dia;
