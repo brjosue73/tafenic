@@ -70,7 +70,8 @@ class PreplanillasController extends Controller
         foreach ($variables as $variable) {
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
-          $vacaciones= $dia*($variable->vacaciones);
+          $vacaciones= ($variable->vacaciones)/100;
+
           $cuje_grand= $variable->cuje_grand;
           $cuje_peq= $variable->cuje_peq;
         }
@@ -105,7 +106,7 @@ class PreplanillasController extends Controller
           $hora_trab=0;
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
-          $vacaciones= $dia*($variable->vacaciones);
+          $vacaciones=$variable->vacaciones/100;
           $cuje_grand= $variable->cuje_grand;
           $cuje_peq= $variable->cuje_peq;
           $h_ext_val= $variable->hora_ext;
@@ -178,7 +179,6 @@ class PreplanillasController extends Controller
               $ext= $arreglo['hora_ext'] * $h_ext_val;
               $prep->hora_ext = $arreglo['hora_ext'];
               $prep->total_extras=$ext;
-              $prep->tamano_cuje=3;
             }
             $sal1=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
             $sal=$sal1*2;
@@ -234,10 +234,10 @@ class PreplanillasController extends Controller
              }
           }
           else{ //Si es por Horas
+            $prep->total_actividad=$dia;
             $ext= $arreglo['hora_ext'] * $h_ext_val;
             $prep->hora_ext = $arreglo['hora_ext'];
             $prep->total_extras=$ext;
-            $prep->tamano_cuje=3;
           }
           $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
           $prep->salario_acum= $sal;

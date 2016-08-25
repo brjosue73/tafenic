@@ -149,7 +149,7 @@ class PlanillasController extends Controller
       $valor_dia= $variable->sal_diario;
       $cuje_grand= $variable->cuje_grand;
       $cuje_peq= $variable->cuje_peq;
-      $vacaciones= $valor_dia*($variable->vacaciones);
+      $vacaciones= ($variable->vacaciones)/100;
       $pago_dia=$variable->sal_diario;
       $inss_patronal=12;
     }
@@ -208,8 +208,8 @@ class PlanillasController extends Controller
                  $alim=$trab->alimentacion;
                  $alim_tot += $alim;
                  $vac= $trab->vacaciones;
-                 $vac_tot += $vac;
-                 $agui_tot= $vac_tot;
+                //  $vac_tot += $vac;
+                //  $agui_tot= $vac_tot;
                  $horas_ext_tot +=$trab->hora_ext;
                  $cuje_ext_tot +=$trab->cuje_ext;
                  $extras=$trab['total_extras'];
@@ -218,6 +218,7 @@ class PlanillasController extends Controller
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
                  $tot_dev +=$trab['total_actividad'];
+                 $feriados=$trab->feriados;
 
                  $fin_query= Finca::find($trab->id_finca);
                  $finca=$fin_query->nombre;
@@ -234,7 +235,8 @@ class PlanillasController extends Controller
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev2=$tot_basic + $tot_sept + $otros + $feriados;
-                 $total_acum=$total_dev2+ $extra_tot+$vac +$agui_tot;
+                 $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
+                 $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
 
                  $tot_inss=$total_acum-$agui_tot;
                  $inss= ($tot_inss*$inss_camp)/100;
@@ -285,13 +287,15 @@ class PlanillasController extends Controller
                  $fin_mayor_query= Finca::find($id_mayor);
                  $finca_mayor=$fin_mayor_query->nombre;
               }
-               /*--------------SEPTIMO**************/
+
+            //return $tot_dev."-- ".$tot_sept."--".$feriados."--".$vac;
+
              $array = [
                "id_trab"=>$id_trab,
                "dias"=>$dias,
                "alim_tot"=>$alim_tot,
-               "vac_tot"=>$vac_tot,
-               "agui_tot"=>$agui_tot,
+               "vac_tot"=>$tot_a_vacs,
+               "agui_tot"=>$tot_a_vacs,
                "horas_ext_tot"=>$extra_tot,
                "nombre"=>$nombre,
                "labores"=>$labores,
