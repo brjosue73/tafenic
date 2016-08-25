@@ -251,7 +251,7 @@ class QuincenalesController extends Controller
       $prestamo=$arreglo['prestamos'];
       $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
       $planilla->ir=$IR;
-      $inss_patronal=($devengado*18.5)/100;
+      $inss_patronal=($devengado*18)/100;
       $inatec=(($devengado-$subsi)*2)/100;
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
