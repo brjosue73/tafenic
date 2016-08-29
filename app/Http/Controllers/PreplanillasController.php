@@ -127,6 +127,7 @@ class PreplanillasController extends Controller
         $prep->alimentacion =$alim;
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
+        $prep->prestamo =$arreglo['prestamos'];
 
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
@@ -170,7 +171,7 @@ class PreplanillasController extends Controller
                  }
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
-                 $prep->total_extras=$total_act_ext;//falta el total de las actividades
+                 $prep->total_extras=$total_act_ext;
 
                }
             }
