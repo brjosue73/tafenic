@@ -50,6 +50,7 @@
           <th>Feriados</th>
           <th>Tot. Dev 2</th>
           <th>Horas Extra</th>
+          <th>Activ Extra</th>
           <th>Tot H. Ext.</th>
           <th>Vacaciones</th>
           <th>Aguinaldo</th>
@@ -74,12 +75,13 @@
           <td> <% reporfincTota.alim_tot %> </td>
           <td> <% reporfincTota.total_basic %> </td>
           <td> <% reporfincTota.total_septimo %> </td>
-          <td>Subsidio</td>
-          <td>otros</td>
-          <td>feriado</td>
-          <td>devengado2</td>
-          <td> <% reporfincTota.horas_ext_tot %> </td>
-          <td>hotas ext tot</td>
+          <td><% reporfincTota.subsidio %></td>
+          <td><% reporfincTota.otros %></td>
+          <td><% reporfincTota.feriado %></td>
+          <td><% reporfincTota.devengado2 %></td>
+          <td><% reporfincTota.cant_horas_ext%>  </td>
+          <td><% reporfincTota.cant_act_ext%>  </td>
+          <td><% reporfincTota.horas_ext_tot %></td>
           <td><% reporfincTota.vac_tot %></td>
           <td><% reporfincTota.agui_tot %></td>
           <td> <% reporfincTota.total_acum %> </td>
@@ -93,6 +95,30 @@
           <!-- <td> <% reporfincTota.aguinaldo %> </td>
           <td> <% reporfincTota.vacaciones %> </td> -->
 
+        </tr>
+        <tr>
+          <td colspan="2">Total</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
       </tbody>
     </table>
