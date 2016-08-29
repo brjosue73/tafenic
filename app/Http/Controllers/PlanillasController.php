@@ -186,6 +186,7 @@ class PlanillasController extends Controller
            $subsidios=0;
            $cant_horas_ext=0;
            $cant_act_ext=0;
+           $sum_tot_recib=0;
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -294,7 +295,6 @@ class PlanillasController extends Controller
                  $finca_mayor=$fin_mayor_query->nombre;
               }
 
-            //return $tot_dev."-- ".$tot_sept."--".$feriados."--".$vac;
 
              $array = [
                "id_trab"=>$id_trab,
@@ -323,15 +323,20 @@ class PlanillasController extends Controller
                "otros"=>$otros,
                "feriado"=>$feriados,
                "devengado2"=>$total_dev2,
+               "sum_tot_recib"=>$sum_tot_recib,
              ];
           $trabajadores[]=$array;
+
           unset($labores);
           unset($fincas);
           unset($fincas_sinRep);
           $trab=$id_trab;
         }
       }
-
+      foreach ($trabajadores as $trab) {
+        $sum_tot_recib +=$trab['salario_'];
+      }
+      $trabajadores[]=$sum_tot_recib;
       return $trabajadores;
 
   }
