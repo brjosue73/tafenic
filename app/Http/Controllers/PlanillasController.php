@@ -187,6 +187,26 @@ class PlanillasController extends Controller
            $cant_horas_ext=0;
            $cant_act_ext=0;
            $sum_tot_recib=0;
+           /****************Totales******************/
+           $sum_dias_trab=0;
+           $sum_dev1=0;
+           $sum_alim=0;
+           $sum_basico=0;
+           $sum_septimos=0;
+           $sum_subsidios=0;
+           $sum_otros=0;
+           $sum_feriados=0;
+           $sum_dev2=0;
+           $sum_h_ext=0;
+           $sum_tot_hext=0;
+           $sum_vacs=0;
+           $sum_aguin=0;
+           $sum_acum=0;
+           $sum_inss_lab=0;
+           $sum_prestam=0;
+           $sum_inss_pat=0;
+           $prestamo=0;
+           /****************Totales*****************/
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -212,6 +232,7 @@ class PlanillasController extends Controller
                  $alim=$trab->alimentacion;
                  $alim_tot += $alim;
                  $vac= $trab->vacaciones;
+                 $prestamo+= $trab->prestamo;
                 //  $vac_tot += $vac;
                 //  $agui_tot= $vac_tot;
                  $horas_ext_tot +=$trab->hora_ext;
@@ -324,6 +345,7 @@ class PlanillasController extends Controller
                "feriado"=>$feriados,
                "devengado2"=>$total_dev2,
                "sum_tot_recib"=>$sum_tot_recib,
+               "prestamos"=>$prestamo,
              ];
           $trabajadores[]=$array;
 
@@ -335,8 +357,48 @@ class PlanillasController extends Controller
       }
       foreach ($trabajadores as $trab) {
         $sum_tot_recib +=$trab['salario_'];
+        $sum_dias_trab+=$trab['dias'];
+        $sum_dev1+=$trab['total_deven'];
+        $sum_alim+=$trab['alim_tot'];
+        $sum_basico+=$trab['total_basic'];
+        $sum_septimos+=$trab['total_septimo'];
+        $sum_subsidios+=$trab['subsidio'];
+        $sum_otros+=$trab['otros'];
+        $sum_feriados+=$trab['feriado'];
+        $sum_dev2+=$trab['devengado2'];
+        $sum_h_ext+=$trab['cant_horas_ext'];
+        $sum_tot_hext+=$trab['horas_ext_tot'];
+        $sum_vacs+=$trab['vac_tot'];
+        $sum_aguin+=$trab['agui_tot'];
+        $sum_acum+=$trab['total_acum'];
+        $sum_inss_lab+=$trab['inss'];
+        $sum_prestam+=$trab['prestamos'];
+        $sum_inss_pat+=$trab['inss_patronal'];
+
       }
-      $trabajadores[]=$sum_tot_recib;
+      $totales=  [
+         "sum_tot_recib"=>$sum_tot_recib,
+         'sum_dias_trab'=>$sum_dias_trab,
+         "sum_dev1"=>$sum_dev1,
+         "sum_alim"=>$sum_alim,
+         "sum_basico"=>$sum_basico,
+         'sum_septimos'=>$sum_septimos,
+         'sum_subsidios'=>$sum_subsidios,
+         'sum_otros'=>$sum_otros,
+         'sum_feriados'=>$sum_feriados,
+         'sum_dev2'=>$sum_dev2,
+         'sum_h_ext'=>$sum_h_ext,
+         'sum_tot_hext'=>$sum_tot_hext,
+         'sum_vacs'=>$sum_vacs,
+         'sum_aguin'=>$sum_aguin,
+         'sum_acum'=>$sum_acum,
+         'sum_inss_lab'=>$sum_inss_lab,
+         'sum_prestam'=>$sum_prestam,
+         'sum_inss_pat'=>$sum_inss_pat,
+      ];
+
+      $trabajadores[]=$totales;
+
       return $trabajadores;
 
   }
