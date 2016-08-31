@@ -71,6 +71,7 @@ class PreplanillasController extends Controller
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
           $vacaciones= ($variable->vacaciones)/100;
+
           $cuje_grand= $variable->cuje_grand;
           $cuje_peq= $variable->cuje_peq;
         }
@@ -105,7 +106,7 @@ class PreplanillasController extends Controller
           $hora_trab=0;
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
-          $vacaciones= $dia*($variable->vacaciones);
+          $vacaciones=$variable->vacaciones/100;
           $cuje_grand= $variable->cuje_grand;
           $cuje_peq= $variable->cuje_peq;
           $h_ext_val= $variable->hora_ext;
@@ -126,6 +127,7 @@ class PreplanillasController extends Controller
         $prep->alimentacion =$alim;
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
+        $prep->prestamo =$arreglo['prestamos'];
 
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
@@ -169,7 +171,7 @@ class PreplanillasController extends Controller
                  }
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
-                 $prep->total_extras=$total_act_ext;//falta el total de las actividades
+                 $prep->total_extras=$total_act_ext;
 
                }
             }
@@ -178,7 +180,6 @@ class PreplanillasController extends Controller
               $ext= $arreglo['hora_ext'] * $h_ext_val;
               $prep->hora_ext = $arreglo['hora_ext'];
               $prep->total_extras=$ext;
-              $prep->tamano_cuje=3;
             }
             $sal1=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
             $sal=$sal1*2;
@@ -234,10 +235,10 @@ class PreplanillasController extends Controller
              }
           }
           else{ //Si es por Horas
+            $prep->total_actividad=$dia;
             $ext= $arreglo['hora_ext'] * $h_ext_val;
             $prep->hora_ext = $arreglo['hora_ext'];
             $prep->total_extras=$ext;
-            $prep->tamano_cuje=3;
           }
           $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
           $prep->salario_acum= $sal;

@@ -39,23 +39,28 @@
 
           <th>Nombre del trabajador</th>
           <th>Fincas</th>
-          <th>Labores</th>
+          <th>Ocupación</th>
           <th>Días trabajados</th>
-          <th>septimo</th>
-          <th>finc. Sep.</th>
           <th>Tot. Devengado</th>
           <th>Alimentación</th>
           <th>Tot. Básico</th>
+          <th>septimo</th>
+          <th>Subsidio</th>
           <th>Otros</th>
           <th>Feriados</th>
+          <th>Tot. Dev 2</th>
           <th>Horas Extra</th>
+          <th>Activ Extra</th>
+          <th>Tot H. Ext.</th>
           <th>Vacaciones</th>
           <th>Aguinaldo</th>
           <th>Tot.Acumulado</th>
           <th>INSS laboral</th>
-          <th>INSS patronal</th>
           <th>Préstamos</th>
           <th>Tot. a Recibir</th>
+          <th>INSS patronal</th>
+
+          <th>finc. Sep.</th>
 
         </tr>
       </thead>
@@ -66,22 +71,54 @@
           <td> <li data-ng-repeat="fincass in reporfincTota.fincas track by $index"><% fincass %> </td>
           <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
           <td> <% reporfincTota.dias %> </td>
-          <td> <% reporfincTota.total_septimo %> </td>
-          <td> <% reporfincTota.finca_septimo %> </td>
           <td> <% reporfincTota.total_deven %> </td>
           <td> <% reporfincTota.alim_tot %> </td>
           <td> <% reporfincTota.total_basic %> </td>
-          <td> <% reporfincTota.vacaciones %> </td>
-          <td> <% reporfincTota.aguinaldo %> </td>
-          <td> <% reporfincTota.horas_ext_tot %> </td>
+          <td> <% reporfincTota.total_septimo %> </td>
+          <td><% reporfincTota.subsidio %></td>
+          <td><% reporfincTota.otros %></td>
+          <td><% reporfincTota.feriado %></td>
+          <td><% reporfincTota.devengado2 %></td>
+          <td><% reporfincTota.cant_horas_ext%>  </td>
+          <td><% reporfincTota.cant_act_ext%>  </td>
+          <td><% reporfincTota.horas_ext_tot %></td>
           <td><% reporfincTota.vac_tot %></td>
           <td><% reporfincTota.agui_tot %></td>
           <td> <% reporfincTota.total_acum %> </td>
           <td><% reporfincTota.inss %></td>
-          <td><% reporfincTota.inss_patronal %></td>
           <td><% reporfincTota.prestamos %></td>
           <td> <% reporfincTota.salario_ %> </td>
+          <td><% reporfincTota.inss_patronal %></td>
 
+
+          <td> <% reporfincTota.finca_septimo %> </td>
+          <!-- <td> <% reporfincTota.aguinaldo %> </td>
+          <td> <% reporfincTota.vacaciones %> </td> -->
+
+        </tr>
+        <tr>
+          <td colspan="2">Total</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
       </tbody>
     </table>
