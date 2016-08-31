@@ -67,7 +67,7 @@ class LotesController extends Controller
      */
     public function show($id)
     {
-        $lote = Lote::find($id);
+        $lote = Lote::where('id_finca', $id)->get();
         return response()->json($lote);
     }
 
