@@ -569,6 +569,7 @@
 			h.post('/planilla_quincenal',s.RplillaQSendData)
 			.success(function(data) {
 				s.reporQuinc = data;
+				s.totalesQ = data[data.length - 1];
 			});
 		}
 	}]);
