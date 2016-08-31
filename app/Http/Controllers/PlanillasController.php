@@ -25,7 +25,8 @@ class PlanillasController extends Controller
     if ($funcion == 'Generar Imprimible')
     {
     $data =$this->calculo_planilla($peticion);
-    $view = \View::make('reporte_catorcenal',array('data'=>$data));
+    $totales=$this->sum_totales($data);
+    $view = \View::make('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
     $pdf = \App::make('dompdf.wrapper');
     $pdf->loadHTML($view);
     $pdf->setPaper('legal', 'landscape');
@@ -66,6 +67,7 @@ class PlanillasController extends Controller
     foreach ($planillas as $planilla) {
       $nums[]=$planilla['salario_'];
     }
+
 
     foreach ($nums as $N) {
       //recibir el total de pagos en un array
@@ -132,6 +134,70 @@ class PlanillasController extends Controller
     $todos['total_individual']=$cant_ind;
     return $todos;
   }
+  public function sum_totales($data){
+    $sum_dias_trab=0;
+    $sum_dev1=0;
+    $sum_alim=0;
+    $sum_basico=0;
+    $sum_septimos=0;
+    $sum_subsidios=0;
+    $sum_otros=0;
+    $sum_feriados=0;
+    $sum_dev2=0;
+    $sum_h_ext=0;
+    $sum_tot_hext=0;
+    $sum_vacs=0;
+    $sum_aguin=0;
+    $sum_acum=0;
+    $sum_inss_lab=0;
+    $sum_prestam=0;
+    $sum_inss_pat=0;
+    $sum_tot_recib=0;
+
+
+    foreach ($data as $trab) {
+      $sum_tot_recib +=$trab['salario_'];
+      $sum_dias_trab+=$trab['dias'];
+      $sum_dev1+=$trab['total_deven'];
+      $sum_alim+=$trab['alim_tot'];
+      $sum_basico+=$trab['total_basic'];
+      $sum_septimos+=$trab['total_septimo'];
+      $sum_subsidios+=$trab['subsidio'];
+      $sum_otros+=$trab['otros'];
+      $sum_feriados+=$trab['feriado'];
+      $sum_dev2+=$trab['devengado2'];
+      $sum_h_ext+=$trab['cant_horas_ext'];
+      $sum_tot_hext+=$trab['horas_ext_tot'];
+      $sum_vacs+=$trab['vac_tot'];
+      $sum_aguin+=$trab['agui_tot'];
+      $sum_acum+=$trab['total_acum'];
+      $sum_inss_lab+=$trab['inss'];
+      $sum_prestam+=$trab['prestamos'];
+      $sum_inss_pat+=$trab['inss_patronal'];
+
+    }
+    $totales=  [
+       "sum_tot_recib"=>$sum_tot_recib,
+       'sum_dias_trab'=>$sum_dias_trab,
+       "sum_dev1"=>$sum_dev1,
+       "sum_alim"=>$sum_alim,
+       "sum_basico"=>$sum_basico,
+       'sum_septimos'=>$sum_septimos,
+       'sum_subsidios'=>$sum_subsidios,
+       'sum_otros'=>$sum_otros,
+       'sum_feriados'=>$sum_feriados,
+       'sum_dev2'=>$sum_dev2,
+       'sum_h_ext'=>$sum_h_ext,
+       'sum_tot_hext'=>$sum_tot_hext,
+       'sum_vacs'=>$sum_vacs,
+       'sum_aguin'=>$sum_aguin,
+       'sum_acum'=>$sum_acum,
+       'sum_inss_lab'=>$sum_inss_lab,
+       'sum_prestam'=>$sum_prestam,
+       'sum_inss_pat'=>$sum_inss_pat,
+    ];
+    return $totales;
+  }
   public function calculo_planilla($peticion){
     $finca_mayor='--';
     //$fecha_ini="2016-01-01";
@@ -187,25 +253,9 @@ class PlanillasController extends Controller
            $cant_horas_ext=0;
            $cant_act_ext=0;
            $sum_tot_recib=0;
-           /****************Totales******************/
-           $sum_dias_trab=0;
-           $sum_dev1=0;
-           $sum_alim=0;
-           $sum_basico=0;
-           $sum_septimos=0;
-           $sum_subsidios=0;
-           $sum_otros=0;
-           $sum_feriados=0;
-           $sum_dev2=0;
-           $sum_h_ext=0;
-           $sum_tot_hext=0;
-           $sum_vacs=0;
-           $sum_aguin=0;
-           $sum_acum=0;
-           $sum_inss_lab=0;
-           $sum_prestam=0;
-           $sum_inss_pat=0;
            $prestamo=0;
+           /****************Totales******************/
+
            /****************Totales*****************/
 
            $trabajador=Trabajador::find($id_trab);
@@ -355,49 +405,7 @@ class PlanillasController extends Controller
           $trab=$id_trab;
         }
       }
-      foreach ($trabajadores as $trab) {
-        $sum_tot_recib +=$trab['salario_'];
-        $sum_dias_trab+=$trab['dias'];
-        $sum_dev1+=$trab['total_deven'];
-        $sum_alim+=$trab['alim_tot'];
-        $sum_basico+=$trab['total_basic'];
-        $sum_septimos+=$trab['total_septimo'];
-        $sum_subsidios+=$trab['subsidio'];
-        $sum_otros+=$trab['otros'];
-        $sum_feriados+=$trab['feriado'];
-        $sum_dev2+=$trab['devengado2'];
-        $sum_h_ext+=$trab['cant_horas_ext'];
-        $sum_tot_hext+=$trab['horas_ext_tot'];
-        $sum_vacs+=$trab['vac_tot'];
-        $sum_aguin+=$trab['agui_tot'];
-        $sum_acum+=$trab['total_acum'];
-        $sum_inss_lab+=$trab['inss'];
-        $sum_prestam+=$trab['prestamos'];
-        $sum_inss_pat+=$trab['inss_patronal'];
 
-      }
-      $totales=  [
-         "sum_tot_recib"=>$sum_tot_recib,
-         'sum_dias_trab'=>$sum_dias_trab,
-         "sum_dev1"=>$sum_dev1,
-         "sum_alim"=>$sum_alim,
-         "sum_basico"=>$sum_basico,
-         'sum_septimos'=>$sum_septimos,
-         'sum_subsidios'=>$sum_subsidios,
-         'sum_otros'=>$sum_otros,
-         'sum_feriados'=>$sum_feriados,
-         'sum_dev2'=>$sum_dev2,
-         'sum_h_ext'=>$sum_h_ext,
-         'sum_tot_hext'=>$sum_tot_hext,
-         'sum_vacs'=>$sum_vacs,
-         'sum_aguin'=>$sum_aguin,
-         'sum_acum'=>$sum_acum,
-         'sum_inss_lab'=>$sum_inss_lab,
-         'sum_prestam'=>$sum_prestam,
-         'sum_inss_pat'=>$sum_inss_pat,
-      ];
-
-      $trabajadores[]=$totales;
 
       return $trabajadores;
 
