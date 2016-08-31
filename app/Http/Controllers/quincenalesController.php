@@ -19,6 +19,7 @@ class QuincenalesController extends Controller
     }
 
     public function reporte_quincenal(Request $request){
+      //return $request->all();
       $funcion=$request['funcion'];
       if ($funcion == 'Generar Imprimible')
       {
@@ -70,23 +71,9 @@ class QuincenalesController extends Controller
       $fecha_ini=$peticion['fecha_ini'];
       $fecha_fin=$peticion['fecha_fin'];
       $tipo=$peticion['tipo'];
-
-      $sum_dev = 0;
-      $sum_dias = 0;
-      $sum_h_ext =0;
-      $sum_inatec=0;
-      $sum_inss_lab=0;
-      $sum_inss_pat=0;
-      $sum_ir=0;
-      $sum_otros=0;
-      $sum_prestamos=0;
-      $sum_salario=0;
-      $sum_subsidios=0;
-      $sum_feriados=0;
-      $sum_basico=0;
-      $sum_tot_hext=0;
-      $sum_sum_pagar=0;
-      $sum_dev=0;
+      // $tipo='servicios tecnicos';
+      // $fecha_ini='2016-06-10';
+      // $fecha_fin='2016-06-25';
       $planilla=Quincenal::where('fecha_ini','>=',$fecha_ini)
                 ->where('fecha_fin','<=',$fecha_fin)
                 //whereBetween('fecha_ini', [$fecha_ini, $fecha_fin])
@@ -110,47 +97,10 @@ class QuincenalesController extends Controller
             $planillas[]=$plan;
         }
         if (isset($planillas)){
-          foreach ($planillas as $plani) {
-            $sum_dev += $plani['devengado'];
-            $sum_dias += $plani['dias_trab'];
-            $sum_h_ext +=$plani['horas_extra'];
-            $sum_inatec+=$plani['inatec'];
-            $sum_inss_lab+=$plani['inss_laboral'];
-            $sum_inss_pat+=$plani['inss_patronal'];
-            $sum_ir+=$plani['ir'];
-            $sum_otros+=$plani['otros'];
-            $sum_prestamos+=$plani['prestamos'];
-            $sum_salario+=$plani['salario_quinc'];
-            $sum_subsidios+=$plani['subsidios'];
-            $sum_feriados+=$plani['feriados'];
-            $sum_basico+=$plani['basico'];
-            $sum_tot_hext+=$plani['tot_h_ext'];
-            $sum_sum_pagar+=$plani['total_pagar'];
-          }
-
-          $totales=  [
-            'sum_dev'=>$sum_dev,
-            'sum_dias'=>$sum_dias,
-            'sum_h_ext'=>$sum_h_ext,
-            'sum_inatec'=>$sum_inatec,
-            'sum_inss_lab'=>$sum_inss_lab,
-            'sum_inss_pat'=>$sum_inss_pat,
-            'sum_ir'=>$sum_ir,
-            'sum_otros'=>$sum_otros,
-            'sum_prestamos'=>$sum_prestamos,
-            'sum_salario'=>$sum_salario,
-            'sum_subsidios'=>$sum_subsidios,
-            'sum_feriados'=>$sum_feriados,
-            'sum_basico'=>$sum_basico,
-            'sum_tot_hext'=>$sum_tot_hext,
-            'sum_sum_pagar'=>$sum_sum_pagar,
-          ];
-          $planillas[]=$totales;
-
           return $planillas;
         }
         else {
-          return 'No hay datos';
+          return '$No hay datos';
         }
         //return response()->json($planilla);
     }
@@ -267,7 +217,6 @@ class QuincenalesController extends Controller
       $quinc_i=$devengado-$inss_lab;
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
-      $IR=0;
       if($dev_anual<=10000){
         $IR=0;
       }
