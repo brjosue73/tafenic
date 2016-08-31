@@ -19,7 +19,6 @@ class QuincenalesController extends Controller
     }
 
     public function reporte_quincenal(Request $request){
-      //return $request->all();
       $funcion=$request['funcion'];
       if ($funcion == 'Generar Imprimible')
       {
