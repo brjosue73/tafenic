@@ -132,7 +132,7 @@ class PreplanillasController extends Controller
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
           if ($feriado==0) { //feriado no trabajado
-            $tot_feriado=$dia+$alim+$vacaciones+$vacaciones;
+            $tot_feriado=round($dia+$alim+$vacaciones+$vacaciones,2);
             $prep->feriados=$tot_feriado;
             $prep->save();
             return 'Agregada con exito Feriado no trab';
@@ -147,8 +147,8 @@ class PreplanillasController extends Controller
               if($arreglo['labName']=='cuje'){//si es cuje
                  $cant_cujes=$arreglo['cant_cujes'];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
-                   $total_act=$cant_cujes * $cuje_peq;
-                   $total_act_ext=$arreglo['cuje_ext']*$cuje_peq_ext;
+                   $total_act=round($cant_cujes * $cuje_peq,2);
+                   $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
 
                  }
                  else {//cuje grande

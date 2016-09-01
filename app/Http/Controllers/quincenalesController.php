@@ -247,8 +247,8 @@ class QuincenalesController extends Controller
       $salario_dia=$salario_quinc/15;
       $planilla->basico=$salario_quinc;
       $sal_hora=$salario_dia/8;
-      $basico=$dias_trab*$salario_dia;//menos los feriados y los subsidios, porque ya hay una caja de texto
-
+      $basico2=$dias_trab*$salario_dia;//menos los feriados y los subsidios, porque ya hay una caja de texto
+      $basico=round($basico2, 2);
 
       $feriados1=$arreglo['feriado_trab'];//cuenta en los dias trab + valor del feriado
       $feriados2=$arreglo['feriado_ntrab'];//no cuenta como dia trabajado
@@ -257,20 +257,20 @@ class QuincenalesController extends Controller
       $planilla->feriados=$feriado_tot;
       $otros=$arreglo['otros'];
       $subsi=$arreglo['subsidios'];
-      $tot_sub=$subsi*$salario_dia;
+      $tot_sub2=$subsi*$salario_dia;
+      $tot_sub=round($tot_sub2, 2);
       $horas_ext=$arreglo['horas_ext'];
       $planilla->horas_extra=$horas_ext;
-      $tot_h_ext=$horas_ext*($sal_hora*2);
+      $tot_h_ext2=$horas_ext*($sal_hora*2);
+      $tot_h_ext=round($tot_h_ext2,2);
       $planilla->tot_h_ext=$tot_h_ext;
-
-      $devengado=$basico+$feriados+$otros+$subsi+$tot_h_ext;
-      //return 'basico'.$basico.'feria'.$feriados.'otros'.$otros.'subs'.$subsi.'hext'.$tot_h_ext;
+      $devengado=round($basico+$feriados+$otros+$subsi+$tot_h_ext,2);
       $planilla->devengado=$devengado;
-      $inss_lab=(($devengado-$subsi)*$inss_admin)/100;
+      $inss_lab2=(($devengado-$subsi)*$inss_admin)/100;
+      $inss_lab=round($inss_lab2,2);
       $planilla->inss_laboral=$inss_lab;
 
-      /*****************************FALTA CALCULAR IR**********************************************/
-      $quinc_i=$devengado-$inss_lab;
+      $quinc_i=round($devengado-$inss_lab,2);
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
       $IR=0;
@@ -282,34 +282,36 @@ class QuincenalesController extends Controller
         $dev_por=($dev_sobre*15)/100;
         $imp_base=0;
         $ir_anual=$dev_por+$imp_base;
-        $IR=$ir_anual/24;
+        $IR=round($ir_anual/24,2);
       }
       elseif ($dev_anual>=200000.01 && $dev_anual<=350000) {
         $dev_sobre=$dev_anual-200000;
         $dev_por=($dev_sobre*20)/100;
         $imp_base=15000;
         $ir_anual=$dev_por+$imp_base;
-        $IR=$ir_anual/24;
+        $IR=round($ir_anual/24,2);
       }
       elseif ($dev_anual>=350000.01 && $dev_anual<=500000) {
         $dev_sobre=$dev_anual-350000;
         $dev_por=($dev_sobre*25)/100;
         $imp_base=45000;
         $ir_anual=$dev_por+$imp_base;
-        $IR=$ir_anual/24;
+        $IR=round($ir_anual/24,2);
       }
       elseif ($dev_anual>=500000.01) {
         $dev_sobre=$dev_anual-500000;
         $dev_por=($dev_sobre*30)/100;
         $imp_base=82500;
         $ir_anual=$dev_por+$imp_base;
-        $IR=$ir_anual/24;
+        $IR=round($ir_anual/24,2);
       }
       $prestamo=$arreglo['prestamos'];
-      $total_pagar=$devengado-$inss_lab-$IR-$prestamo;
+      $total_pagar=round($devengado-$inss_lab-$IR-$prestamo,2);
       $planilla->ir=$IR;
-      $inss_patronal=($devengado*18)/100;
-      $inatec=(($devengado-$subsi)*2)/100;
+      $inss_patronal2=($devengado*18)/100;
+      $inss_patronal=round($inss_patronal2,2);
+      $inatec2=(($devengado-$subsi)*2)/100;
+      $inatec=round($inatec,2)
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
