@@ -61,19 +61,19 @@
           @endforeach
           <tr>
             <td colspan="4">Total</td>
-            <td> {{ totales['sum_basico'] }} </td>
-            <td> {{ totales['sum_feriados'] }} </td>
-            <td> {{ totales['sum_otros'] }} </td>
-            <td> {{ totales['sum_subsidios'] }} </td>
-            <td> {{ totales['sum_h_ext'] }} </td>
-            <td> {{ totales['sum_tot_hext'] }} </td>
-            <td> {{ totales['sum_dev'] }} </td>
-            <td> {{ totales['sum_inss_lab'] }} </td>
-            <td> {{ totales['sum_ir'] }} </td>
-            <td> {{ totales['sum_prestamos'] }} </td>
-            <td> {{ totales['sum_sum_pagar'] }} </td>
-            <td> {{ totales['sum_inss_pat'] }} </td>
-            <td> {{ totales['sum_inatec'] }} </td>
+            <td> {{ $totales['sum_basico'] }} </td>
+            <td> {{ $totales['sum_feriados'] }} </td>
+            <td> {{ $totales['sum_otros'] }} </td>
+            <td> {{ $totales['sum_subsidios'] }} </td>
+            <td> {{ $totales['sum_h_ext'] }} </td>
+            <td> {{ $totales['sum_tot_hext'] }} </td>
+            <td> {{ $totales['sum_dev'] }} </td>
+            <td> {{ $totales['sum_inss_lab'] }} </td>
+            <td> {{ $totales['sum_ir'] }} </td>
+            <td> {{ $totales['sum_prestamos'] }} </td>
+            <td> {{ $totales['sum_sum_pagar'] }} </td>
+            <td> {{ $totales['sum_inss_pat'] }} </td>
+            <td> {{ $totales['sum_inatec'] }} </td>
           </tr>
         </tbody>
       </table>

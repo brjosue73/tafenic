@@ -63,32 +63,30 @@
             <td></td>
           </tr>
           @endforeach
-          @foreach ($totales as $total)
           <tr>
             <td colspan="2">Total</td>
             <td></td>
-            <td>{{ $total['sum_dias_trab'] }}</td>
-            <td>{{ $total['sum_dev1'] }}</td>
-            <td>{{ $total['sum_alim'] }}</td>
-            <td>{{ $total['sum_basico'] }}</td>
-            <td>{{ $total['sum_septimos'] }}</td>
-            <td>{{ $total['sum_subsidios'] }}</td>
-            <td>{{ $total['sum_otros'] }}</td>
-            <td>{{ $total['sum_feriados'] }}</td>
-            <td>{{ $total['sum_dev2'] }}</td>
-            <td>{{ $total['sum_h_ext'] }}</td>
+            <td>{{ $totales['sum_dias_trab'] }}</td>
+            <td>{{ $totales['sum_dev1'] }}</td>
+            <td>{{ $totales['sum_alim'] }}</td>
+            <td>{{ $totales['sum_basico'] }}</td>
+            <td>{{ $totales['sum_septimos'] }}</td>
+            <td>{{ $totales['sum_subsidios'] }}</td>
+            <td>{{ $totales['sum_otros'] }}</td>
+            <td>{{ $totales['sum_feriados'] }}</td>
+            <td>{{ $totales['sum_dev2'] }}</td>
+            <td>{{ $totales['sum_h_ext'] }}</td>
             <td></td>
             <td></td>
-            <td>{{ $total['sum_vacs'] }}</td>
-            <td>{{ $total['sum_aguin'] }}</td>
-            <td>{{ $total['sum_acum'] }}</td>
-            <td>{{ $total['sum_inss_lab'] }}</td>
-            <td>{{ $total['sum_prestam'] }}</td>
-            <td>{{ $total['sum_tot_recib'] }}</td>
-            <td>{{ $total['sum_inss_pat'] }}</td>
+            <td>{{ $totales['sum_vacs'] }}</td>
+            <td>{{ $totales['sum_aguin'] }}</td>
+            <td>{{ $totales['sum_acum'] }}</td>
+            <td>{{ $totales['sum_inss_lab'] }}</td>
+            <td>{{ $totales['sum_prestam'] }}</td>
+            <td>{{ $totales['sum_tot_recib'] }}</td>
+            <td>{{ $totales['sum_inss_pat'] }}</td>
             <td></td>
           </tr>
-          @endforeach
         </tbody>
       </table>
     </div>
