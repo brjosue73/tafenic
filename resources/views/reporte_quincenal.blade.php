@@ -30,11 +30,7 @@
             <th>IR</th>
             <th>Prestamos</th>
             <th>total_pagar</th>
-<<<<<<< HEAD
-            <th>Recibí conforme</th>
-=======
-            <th> Recibí Conforme</th>
->>>>>>> 9446a6fcff9c9f8f0ad96c9f0cb382b5a722960d
+            <th>Recibí Conforme</th>
             <th>INSS Patronal</th>
             <th>INATEC</th>
 
@@ -63,6 +59,22 @@
             <td> {{ $dat['inatec'] }} </td>
           </tr>
           @endforeach
+          <tr>
+            <td colspan="4">Total</td>
+            <td> {{ totales['sum_basico'] }} </td>
+            <td> {{ totales['sum_feriados'] }} </td>
+            <td> {{ totales['sum_otros'] }} </td>
+            <td> {{ totales['sum_subsidios'] }} </td>
+            <td> {{ totales['sum_h_ext'] }} </td>
+            <td> {{ totales['sum_tot_hext'] }} </td>
+            <td> {{ totales['sum_dev'] }} </td>
+            <td> {{ totales['sum_inss_lab'] }} </td>
+            <td> {{ totales['sum_ir'] }} </td>
+            <td> {{ totales['sum_prestamos'] }} </td>
+            <td> {{ totales['sum_sum_pagar'] }} </td>
+            <td> {{ totales['sum_inss_pat'] }} </td>
+            <td> {{ totales['sum_inatec'] }} </td>
+          </tr>
         </tbody>
       </table>
     </div>
