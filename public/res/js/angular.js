@@ -556,7 +556,8 @@
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
 				s.reporfincTot = data;
-				console.log(data[data.length - 1]);
+			  s.totales = data[data.length - 1];
+				console.log(s.totales);
 			});
 		}
 	}]);
