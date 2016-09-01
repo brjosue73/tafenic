@@ -17,6 +17,8 @@ class PlanillasController extends Controller
     $peticion=$request->all();
     //return $peticion;
      $data =$this->calculo_planilla($peticion);
+     $totales=$this->sum_totales($data);
+     $data[]=$totales;
      return $data;
   }
   public function reporte_planilla(Request $request){

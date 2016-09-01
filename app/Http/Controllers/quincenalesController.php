@@ -15,6 +15,8 @@ class QuincenalesController extends Controller
     public function quincenal_fecha(Request $request){
       $peticion=$request->all();
        $data =$this->planilla_quincenal($peticion);
+       $totales=$this->sum_totales($data);
+       $data[]=$totales;
        return $data;
     }
 
