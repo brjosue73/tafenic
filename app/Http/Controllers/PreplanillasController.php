@@ -152,8 +152,8 @@ class PreplanillasController extends Controller
 
                  }
                  else {//cuje grande
-                   $total_act=$cant_cujes * $cuje_grand;
-                   $total_act_ext=$arreglo['cuje_ext']*$cuje_grand_ext;
+                   $total_act=round($cant_cujes * $cuje_grand,2);
+                   $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
 
                  }
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
@@ -162,7 +162,7 @@ class PreplanillasController extends Controller
                }
                else {//si es safadura
                  return $arreglo;
-                 $cant_safa=$arreglo['cant_safa'];
+                 $cant_safa=round($arreglo['cant_safa'],2);
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
                  }
