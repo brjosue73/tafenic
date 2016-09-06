@@ -39,7 +39,7 @@
         <tbody>
           @foreach ($data as $dat)
           <tr>
-            <td>  </td>
+            <td> {{ $dat['inss']}} </td>
             <td> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['cargo'] }} </td>
             <td> {{ $dat['dias_trab'] }} </td>
