@@ -337,7 +337,7 @@
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
 		s.busquedaCriteria = "";
-		s.sorting = "nombre";
+		s.sorting = "apellidos";
 		s.filtrar = "todos";
 		s.trabajadores = r.query();
 
@@ -392,7 +392,7 @@
 		}*/
 	}]);
 	/*PREPLANILLA CONTROLLERS*/
-	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource', function(s,pr,h,fr){
+	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource','loteResource', function(s,pr,h,fr,lr){
 		s.prepSendData = {
 			otros:0,
 			hora_ext:0,
@@ -430,6 +430,14 @@
 			})
 			.error(function(err){
 				console.log(err);
+			});
+			/*lr.get({id:s.prepSendData.id_finca}, function(data){
+				s.loslotes = data;
+				console.log(s.loslotes);
+			})*/
+			h.get('lotes/' + s.prepSendData.id_finca)
+			.success(function(data){
+				s.loslotes = data;
 			});
 		}
 
@@ -556,7 +564,8 @@
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
 				s.reporfincTot = data;
-				console.log(data[data.length - 1]);
+			  s.totales = data[data.length - 1];
+				console.log(s.totales);
 			});
 		}
 	}]);
@@ -568,6 +577,7 @@
 			h.post('/planilla_quincenal',s.RplillaQSendData)
 			.success(function(data) {
 				s.reporQuinc = data;
+				s.totalesQ = data[data.length - 1];
 			});
 		}
 	}]);

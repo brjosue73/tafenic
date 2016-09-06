@@ -21,6 +21,7 @@ class QuincenalesController extends Controller
     }
 
     public function reporte_quincenal(Request $request){
+      //return $request->all();
       $funcion=$request['funcion'];
       if ($funcion == 'Generar Imprimible')
       {
@@ -155,7 +156,7 @@ class QuincenalesController extends Controller
           return $planillas;
         }
         else {
-          return 'No hay datos';
+          return '$No hay datos';
         }
         //return response()->json($planilla);
     }
@@ -272,7 +273,6 @@ class QuincenalesController extends Controller
       $quinc_i=round($devengado-$inss_lab,2);
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
-      $IR=0;
       if($dev_anual<=10000){
         $IR=0;
       }
@@ -310,7 +310,7 @@ class QuincenalesController extends Controller
       $inss_patronal2=($devengado*18)/100;
       $inss_patronal=round($inss_patronal2,2);
       $inatec2=(($devengado-$subsi)*2)/100;
-      $inatec=round($inatec,2)
+      $inatec=round($inatec,2);
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
