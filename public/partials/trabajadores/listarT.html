@@ -57,7 +57,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="trabajador in trabajadores"> <!-- | orderBy:sorting" data-ng-hide="filtrar !== 'todos' || filtrar != 'quincenal' "data-ng-hide=" filtrar!='todos' || trabajador.tipo !== filtrar ">  data-ng-show="trabajador.tipo == filtrar" data-ng-hide="filtrar != 'todos'">data-ng-hide="trabajador.nombre != busqueda" -->
+        <tr data-ng-repeat="trabajador in trabajadores | orderBy:sorting"> <!-- | orderBy:sorting" data-ng-hide="filtrar !== 'todos' || filtrar != 'quincenal' "data-ng-hide=" filtrar!='todos' || trabajador.tipo !== filtrar ">  data-ng-show="trabajador.tipo == filtrar" data-ng-hide="filtrar != 'todos'">data-ng-hide="trabajador.nombre != busqueda" -->
           <td> <% trabajador.id %> </td>
           <td> <% trabajador.nombre %> </td>
           <td> <% trabajador.apellidos %> </td>

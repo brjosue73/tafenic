@@ -156,7 +156,7 @@ class QuincenalesController extends Controller
           return $planillas;
         }
         else {
-          return 'No hay datos';
+          return '$No hay datos';
         }
         //return response()->json($planilla);
     }
@@ -273,7 +273,6 @@ class QuincenalesController extends Controller
       $quinc_i=round($devengado-$inss_lab,2);
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
-      $IR=0;
       if($dev_anual<=10000){
         $IR=0;
       }
