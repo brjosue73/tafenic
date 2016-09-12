@@ -16,8 +16,8 @@ class PlanillasController extends Controller
   public function planilla_general(Request $request){
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-     $totales=$this->sum_totales($data);
-     $data[]=$totales;
+     //$totales=$this->sum_totales($data);
+     //$data[]=$totales;
      return $data;
   }
   public function reporte_planilla(Request $request){
@@ -234,7 +234,6 @@ class PlanillasController extends Controller
         if ($trab!=$id_trab) {
           $trabs= Preplanilla::where('id_trabajador',$id_trab)->whereBetween('fecha', [$fecha_ini, $fecha_fin])->get(); /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
                                     //->where('id_finca',$id_finca)
-
            $dias= $trabs->count();
            $salario_tot=0;
            $alim_tot=0;
@@ -253,8 +252,7 @@ class PlanillasController extends Controller
            $cant_act_ext=0;
            $sum_tot_recib=0;
            $prestamo=0;
-           $inss_camp=0;
-           $inss_patronal=0;
+
            /****************Totales******************/
 
            /****************Totales*****************/
@@ -277,7 +275,8 @@ class PlanillasController extends Controller
            /*-------------CALCULO DEL SEPTIMO*/
            /*-------------CALCULO DEL SEPTIMO*/
              foreach ($trabs as $trab) {
-                 $inss_camp=$trab->inss_campo;
+                 $inss_camp=$trab['inss_campo'];
+
                  $inss_patronal=$trab->inss_patron;
                  $otros+=$trab->otros;
                  $salario=$trab->salario_acum;
@@ -323,7 +322,9 @@ class PlanillasController extends Controller
 
                 //  return $tot_inss;
                  $inss= ($tot_inss*$inss_camp)/100;
+                 //return ($tot_inss." ". $inss_camp);
                  $inss_pat=($tot_inss*$inss_patronal)/100;
+                 //return $inss;
 
                  //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
 

@@ -246,9 +246,9 @@ class PreplanillasController extends Controller
           $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
           $prep->salario_acum= $sal;
           $subsidio=0;
-          //$prep->inss_lab=$arreglo['inss_campo'];
-          //$prep->inss_admin=$arreglo['inss_admin'];
-          //$prep->inss_patron=$arreglo['inss_patron'];
+          $prep->inss_campo=$inss_lab;
+          $prep->inss_admin=$inss_admin;
+          $prep->inss_patron=$inss_patron;
           $prep->save();
           $subs=0;
           return "Agregada! supuestamente normal";
