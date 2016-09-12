@@ -118,6 +118,9 @@ class PreplanillasController extends Controller
           $safa_grand=$variable->safa_grand;
           $safa_peq_ext=$safa_peq*2;
           $safa_grand_ext=$safa_grand*2;
+          $inss_lab=$variable->inss_campo;
+          $inss_admin=$variable->inss_admin;
+          $inss_patron=$variable->inss_patron;
         }
 
         $prep= new Preplanilla($arreglo);
@@ -243,6 +246,9 @@ class PreplanillasController extends Controller
           $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
           $prep->salario_acum= $sal;
           $subsidio=0;
+          //$prep->inss_lab=$arreglo['inss_campo'];
+          //$prep->inss_admin=$arreglo['inss_admin'];
+          //$prep->inss_patron=$arreglo['inss_patron'];
           $prep->save();
           $subs=0;
           return "Agregada! supuestamente normal";
