@@ -311,7 +311,7 @@ class QuincenalesController extends Controller
       $inss_patronal2=($devengado*18)/100;
       $inss_patronal=round($inss_patronal2,2);
       $inatec2=(($devengado-$subsi)*2)/100;
-      $inatec=round($inatec,2);
+      $inatec=round($inatec2,2);
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
