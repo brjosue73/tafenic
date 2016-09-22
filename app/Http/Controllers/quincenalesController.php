@@ -247,13 +247,18 @@ class QuincenalesController extends Controller
       $salario_dia=$salario_quinc/15;
       $planilla->basico=$salario_quinc;
       $sal_hora=$salario_dia/8;
-      $basico2=$dias_trab*$salario_dia;//menos los feriados y los subsidios, porque ya hay una caja de texto
-      $basico=round($basico2, 2);
 
       $feriados1=$arreglo['feriado_trab'];//cuenta en los dias trab + valor del feriado
       $feriados2=$arreglo['feriado_ntrab'];//no cuenta como dia trabajado
       $feriados=$feriados1+$feriados2;
       $feriado_tot=$feriados*$salario_dia;
+      $dias_menosfer=$dias_trab-$feriados;
+
+
+      $basico2=$dias_menosfer*$salario_dia;//menos los feriados y los subsidios, porque ya hay una caja de texto
+      $basico=round($basico2, 2);
+
+
       $planilla->feriados=$feriado_tot;
       $otros=$arreglo['otros'];
       $subsi=$arreglo['subsidios'];
