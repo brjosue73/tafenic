@@ -323,12 +323,8 @@ class QuincenalesController extends Controller
       $planilla->save();
 
       return $planilla;
-      return "Planilla Almacenada";
     }
-    public function calculo_ir($devengado){
 
-      return $IR;
-    }
     // public function sobres_quincenal(Request $request){
     //   $peticion=$request->all();
     //   $data =$this->planilla_quincenal($peticion);
