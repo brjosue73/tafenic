@@ -235,6 +235,7 @@ class QuincenalesController extends Controller
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_admin=$variable->inss_admin;
+        $inss_patron=$variable->inss_patron;
       }
       $peticion = $request->all();
       $arreglo = $peticion;
@@ -244,19 +245,30 @@ class QuincenalesController extends Controller
       $salario_quinc=$arreglo['salario_quinc'];
       $finca=$arreglo['id_finc'];
       $planilla->id_finc=$finca;
-      $salario_dia=$salario_quinc/15;
-      $planilla->basico=$salario_quinc;
+      $salario_dia2=$salario_quinc/15;
+      $salario_dia=round($salario_dia2,4);
+      $planilla->basico=$salario_quinc; //Salario Quincenal
       $sal_hora=$salario_dia/8;
 
       $feriados1=$arreglo['feriado_trab'];//cuenta en los dias trab + valor del feriado
       $feriados2=$arreglo['feriado_ntrab'];//no cuenta como dia trabajado
       $feriados=$feriados1+$feriados2;
-      $feriado_tot=$feriados*$salario_dia;
+      $feriados_n_trab=$feriados2*$salario_dia;
+      $feriados_trab=($feriados1*$salario_dia)*2;
+      $feriado_tot2=$feriados_n_trab+$feriados_trab;
+      $feriado_tot=round($feriado_tot2,2);
+
       $dias_menosfer=$dias_trab-$feriados;
+
 
 
       $basico2=$dias_menosfer*$salario_dia;//menos los feriados y los subsidios, porque ya hay una caja de texto
       $basico=round($basico2, 2);
+
+
+      $planilla->basico_real=$basico; //total de dias por salario por dias_trab
+
+      $prueb=$basico+$feriado_tot;
 
 
       $planilla->feriados=$feriado_tot;
@@ -269,7 +281,8 @@ class QuincenalesController extends Controller
       $tot_h_ext2=$horas_ext*($sal_hora*2);
       $tot_h_ext=round($tot_h_ext2,2);
       $planilla->tot_h_ext=$tot_h_ext;
-      $devengado=round($basico+$feriados+$otros+$subsi+$tot_h_ext,2);
+      $devengado=round($basico+$feriado_tot+$otros+$subsi+$tot_h_ext,2);
+
       $planilla->devengado=$devengado;
       $inss_lab2=(($devengado-$subsi)*$inss_admin)/100;
       $inss_lab=round($inss_lab2,2);
@@ -313,13 +326,18 @@ class QuincenalesController extends Controller
       $prestamo=$arreglo['prestamos'];
       $total_pagar=round($devengado-$inss_lab-$IR-$prestamo,2);
       $planilla->ir=$IR;
-      $inss_patronal2=($devengado*18)/100;
+      $inss_patronal2=($devengado*$inss_patron)/100;
+
+
+
       $inss_patronal=round($inss_patronal2,2);
       $inatec2=(($devengado-$subsi)*2)/100;
       $inatec=round($inatec2,2);
       $planilla->total_pagar=$total_pagar;
       $planilla->inss_patronal=$inss_patronal;
       $planilla->inatec=$inatec;
+
+
       $planilla->save();
 
       return $planilla;
