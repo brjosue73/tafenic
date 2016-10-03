@@ -178,6 +178,7 @@ public function datos_fincas()
 
     $tot[]=$generales;
     unset($activ);
+    $activ=array();
     unset($activ_tot);
     //unset($lab_tot);
 
