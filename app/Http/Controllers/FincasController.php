@@ -11,6 +11,7 @@ use App\Preplanilla;
 use App\Trabajador;
 use App\Labor;
 use App\Variable;
+use App\Actividad;
 
 
 class FincasController extends Controller
@@ -122,17 +123,38 @@ class FincasController extends Controller
         }
       }
       return $trabajadores;
-
-
-
-//pegar aca
-            //return $array_tot;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+/************JSON para fincas, labores y actividades*************/
+public function datos_fincas()
+{
+  $fincas = Finca::all();
+  $labores = array();
+  $i = 0;
+
+  foreach ($fincas as $finca) {
+    $actividades = Actividad::where("id_finca",$finca->id)->get();
+    $fincas[$i]->actividades = $actividades;
+    $i++;
+    /*foreach ($fincas[$i]->actividades[$i] as $actividad) {
+      $labores = Labor::where("id_actividad",$actividad->id)->get();
+      $fincas[$i]->actividades[$i]->labores = $labores;
+    }*/
+  }
+
+  /*foreach ($fincas->$actividades as $actividad) {
+    $labores = Labor::where("id_actividad",$actividad->id)->get();
+    //$fincas->$actividades[$i]->labores = $labores;
+    $labores[$i] = $labores;
+    $i++;
+  }*/
+  return $fincas;
+}
+
+/************JSON para fincas, labores y actividades*************/
+
+
+
     public function index()
     {
         $finca = Finca::all();
