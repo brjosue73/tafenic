@@ -224,7 +224,9 @@ public function datos_fincas()
         $finca = new Finca($arreglo);
         $finca->estado=1;
         $finca->save();
-        return "Finca Agregada!";
+        $id = Finca::all()->max('id');
+        $query = Finca::find($id);
+        return $query;
     }
 
     /**

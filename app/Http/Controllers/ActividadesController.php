@@ -60,7 +60,9 @@ class ActividadesController extends Controller
 
         $actividad = new Actividad($arreglo);
         $actividad->save();
-        return "Actividad Agregada!";
+        $id = Actividad::all()->max('id');
+        $query = Actividad::find($id);
+        return $query;
     }
 
     /**
