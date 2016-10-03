@@ -118,6 +118,9 @@ class PreplanillasController extends Controller
           $safa_grand=$variable->safa_grand;
           $safa_peq_ext=$safa_peq*2;
           $safa_grand_ext=$safa_grand*2;
+          $inss_lab=$variable->inss_campo;
+          $inss_admin=$variable->inss_admin;
+          $inss_patron=$variable->inss_patron;
         }
 
         $prep= new Preplanilla($arreglo);
@@ -152,8 +155,8 @@ class PreplanillasController extends Controller
 
                  }
                  else {//cuje grande
-                   $total_act=$cant_cujes * $cuje_grand;
-                   $total_act_ext=$arreglo['cuje_ext']*$cuje_grand_ext;
+                   $total_act=round($cant_cujes * $cuje_grand,2);
+                   $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
 
                  }
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
@@ -162,7 +165,7 @@ class PreplanillasController extends Controller
                }
                else {//si es safadura
                  return $arreglo;
-                 $cant_safa=$arreglo['cant_safa'];
+                 $cant_safa=round($arreglo['cant_safa'],2);
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
                  }
@@ -243,6 +246,9 @@ class PreplanillasController extends Controller
           $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
           $prep->salario_acum= $sal;
           $subsidio=0;
+          $prep->inss_campo=$inss_lab;
+          $prep->inss_admin=$inss_admin;
+          $prep->inss_patron=$inss_patron;
           $prep->save();
           $subs=0;
           return "Agregada! supuestamente normal";

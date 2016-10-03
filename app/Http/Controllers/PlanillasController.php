@@ -15,10 +15,9 @@ class PlanillasController extends Controller
 {
   public function planilla_general(Request $request){
     $peticion=$request->all();
-    //return $peticion;
      $data =$this->calculo_planilla($peticion);
-     $totales=$this->sum_totales($data);
-     $data[]=$totales;
+     //$totales=$this->sum_totales($data);
+     //$data[]=$totales;
      return $data;
   }
   public function reporte_planilla(Request $request){
@@ -212,14 +211,12 @@ class PlanillasController extends Controller
 
     $variables=Variable::all();
     foreach ($variables as $variable) {
-      $inss_camp=$variable->inss_campo;
       $alim_var=$variable->alimentacion;
       $valor_dia= $variable->sal_diario;
       $cuje_grand= $variable->cuje_grand;
       $cuje_peq= $variable->cuje_peq;
       $vacaciones= ($variable->vacaciones)/100;
       $pago_dia=$variable->sal_diario;
-      $inss_patronal=12;
     }
 
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
@@ -237,7 +234,6 @@ class PlanillasController extends Controller
         if ($trab!=$id_trab) {
           $trabs= Preplanilla::where('id_trabajador',$id_trab)->whereBetween('fecha', [$fecha_ini, $fecha_fin])->get(); /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
                                     //->where('id_finca',$id_finca)
-
            $dias= $trabs->count();
            $salario_tot=0;
            $alim_tot=0;
@@ -256,6 +252,7 @@ class PlanillasController extends Controller
            $cant_act_ext=0;
            $sum_tot_recib=0;
            $prestamo=0;
+
            /****************Totales******************/
 
            /****************Totales*****************/
@@ -278,6 +275,9 @@ class PlanillasController extends Controller
            /*-------------CALCULO DEL SEPTIMO*/
            /*-------------CALCULO DEL SEPTIMO*/
              foreach ($trabs as $trab) {
+                 $inss_camp=$trab['inss_campo'];
+
+                 $inss_patronal=$trab->inss_patron;
                  $otros+=$trab->otros;
                  $salario=$trab->salario_acum;
                  $salario_tot += $salario;
@@ -316,15 +316,23 @@ class PlanillasController extends Controller
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev2=$tot_basic + $tot_sept + $otros + $feriados;
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
-                 $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
+                 $total_acum=round($total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs,2);
 
-                 $tot_inss=$total_acum-$agui_tot;
+                 $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
+
+                //  return $tot_inss;
                  $inss= ($tot_inss*$inss_camp)/100;
-                 $inss_pat=(($total_acum-$agui_tot)*$inss_patronal)/100;
+                 //return ($tot_inss." ". $inss_camp);
+                 $inss_pat=($tot_inss*$inss_patronal)/100;
+                 //return $inss;
+
+                 //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
+
                  $tot_recib=$total_acum - $inss;
                  $f=0;
                  $c=0;
              }
+             //return ($inss_patronal." ".$inss_camp);
 
                /**************SEPTIMO**************/
                //dias trabs en una Finca
@@ -375,8 +383,8 @@ class PlanillasController extends Controller
                "alim_tot"=>round($alim_tot,2),
                "vac_tot"=>round($tot_a_vacs,2),
                "agui_tot"=>round($tot_a_vacs,2),
-               "nombre"=>($nombre),
-               "labores"=>($labores),
+               "nombre"=>$nombre,
+               "labores"=>$labores,
                "total_deven"=>round($tot_dev,2),
                "total_basic"=>round($tot_basic,2),
                "horas_ext_tot"=>round($extra_tot,2),
@@ -386,9 +394,9 @@ class PlanillasController extends Controller
                "total_acum"=>round($total_acum,2),
                "inss"=>round($inss,2),
                "salario_"=>round($tot_recib,2),
-               "fincas"=>($fincas),
+               "fincas"=>$fincas,
                "total_septimo"=>round($tot_sept,2),
-               "finca_septimo"=>round($finca_mayor,2),
+               "finca_septimo"=>$finca_mayor,
                "inss_patronal"=>round($inss_pat,2),
                "fecha_ini"=>round($fecha_ini,2),
                "fecha_fin"=>round($fecha_fin,2),
