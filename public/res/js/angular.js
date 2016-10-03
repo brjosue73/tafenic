@@ -151,6 +151,11 @@
 			templateUrl: "partials/reportes/RplanillasQ.html",
 			controller: "RplanillaQController"
 		})
+		.state('/quincenal-editar', {
+			url:"/quincenal-editar/:id",
+			templateUrl:"partials/planillas/planilla.html",
+			controller:"quincenalEditar"
+		})
 		.state('/planillaq',{
 			url:"/planilla_quincenal",
 			templateUrl: "partials/planillas/planilla.html",
@@ -161,19 +166,29 @@
 		Create and append a new cotrollers for your exist module in use
 	\*******************************************************************************************************************/
 	//Finca Controller
-	app.controller("fincaController",['$scope','$http','fincaResource','actividadResource','laborResource','loteResource', function(s,h,fr,ar,lr,ltr){
+	app.controller("fincaController",['$scope','$http','fincaResource','actividadResource','laborResource','loteResource','$location', function(s,h,fr,ar,lr,ltr,l){
 
 		var $btnFAceptar = $('#fincAceptar') ;
 
-		s.fincas = fr.query();
-		s.lasactividades = ar.query();
+		/***************************************/
+		h.get('/datos_fincas')
+		.success(function(data){
+			console.log(data);
+			s.nuevas_Fincas = data;
+		})
+		.error(function(err){
+			console.log(err);
+		});
+		/***************************************/
+		/*s.fincas = fr.query();
+		s.lasactividades = ar.query();*/
 
 		s.fincaSaveData = {};
 		s.actividadSaveData = {};
 		s.laborSaveData = {tipo_lab:"hora"};
 		s.loteSaveData = {};
 
-		s.getActividade = function(){
+		/*s.getActividade = function(){
 			h.post('actividad_finca',{id_finca:s.actividadSaveData.id_finca})
 			.success(function(data){
 				s.actividades = data;
@@ -181,7 +196,7 @@
 			.error(function(err){
 				console.log(err);
 			});
-		}
+		}*/
 		s.loteSave = function() {
 			console.log(s.loteSaveData);
 			$('#loteSpinner').css("display", "inline-block");
@@ -203,7 +218,6 @@
 				},3000)
 			});
 		}
-
 	  s.fincaSave = function(){
 	  	console.log(s.fincaSaveData);
 
@@ -211,6 +225,7 @@
 
 			fr.save({data:s.fincaSaveData}, function(res) {
 				console.log(res);
+				s.nuevas_Fincas.push(res)
 				$('#fincaSpinner').css("display", "none");
 				$('#exitofinca').css("display","inline");
 				setTimeout(function(){
@@ -226,11 +241,15 @@
 				},3000)
 			});
 	  }
-		s.actividadSave = function(){
+		s.actividadSave = function(idfinca){
+			s.actividadSaveData.id_finca = idfinca;
 			console.log(s.actividadSaveData);
+			//console.log(parametro);
 			$('#actSpinner').css("display", "inline-block");
 			ar.save({data:s.actividadSaveData}, function(res) {
 				console.log(res);
+				//l.path('/fincas');
+				s.nuevas_Fincas[idfinca-1].actividades.push(res);
 				$('#actSpinner').css("display", "none");
 				$('#exitoact').css("display","inline");
 				setTimeout(function(){
@@ -246,11 +265,22 @@
 				},3000)
 			});
 		}
-		s.laborSave = function(){
+		s.laborSave = function(idactividad, idfinca){
+			s.laborSaveData.id_actividad = idactividad;
+			if($('.chklabor').is(':checked')){
+				s.laborSaveData.tipo_lab = "prod"
+				console.log(s.laborSaveData.tipo_lab);
+			} else {
+				s.laborSaveData.tipo_lab = "hora";
+				//console.log(s.laborSaveData.tipo_lab);
+			}
 			console.log(s.laborSaveData);
+			//console.log(idfinca);
+			//console.log(s.nuevas_Fincas);
 			$('#laborSpinner').css("display", "inline-block");
 			lr.save({data:s.laborSaveData}, function(res) {
 				console.log(res);
+				s.nuevas_Fincas[idfinca-1].actividades[idactividad].labores.push(res);
 				$('#laborSpinner').css("display", "none");
 				$('#exitolabor').css("display","inline");
 				setTimeout(function(){
@@ -584,7 +614,7 @@
 	app.controller('planillaQController',['$scope','$http','fincaResource', function(s,h,fr){
 		s.pqSendData = {};
 		s.pqFincas = fr.query();
-
+		s.qButton = "Guardar";
 		h.get('trab_quinc').success(function(data){
 			s.trabQ = data;
 			console.log(data);
@@ -611,6 +641,21 @@
 					$('#errorPlaQ').css("display","none");
 				},3000);
 			});
+		}
+	}]);
+	app.controller('quincenalEditar',['$scope','$http', function(s,h){
+		s.qButton = "editar";
+
+		h.post('editar_quince/:id',{id:sp.id})
+		.success(function(data){
+			s.regQince = data;
+		})
+		.error(function(err){
+			console.log(err);
+		});
+
+		s.pqSave = function() {
+			console.log(s.regQince);
 		}
 	}]);
 }());

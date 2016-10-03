@@ -56,7 +56,11 @@ class LotesController extends Controller
 
         $lote = new Lote($arreglo);
         $lote->save();
-        return "agregado";
+        /*enviar ultimo valor de Lotes*/
+        $id = Lote::all()->max('id');
+        $query = Lote::find($id);
+        return $query;
+        //
     }
 
     /**

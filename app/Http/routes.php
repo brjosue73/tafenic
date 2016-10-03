@@ -35,6 +35,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('reporte_catorcenal','PlanillasController@reporte_planilla');
     Route::post('sobres_catorcenal','PlanillasController@sobres_catorcenal');
 
+    Route::get('inss_catorce','PlanillasController@inss_catorcenal');
 
     Route::get('listero',"TrabajadoresController@listero");
     Route::get('resp_finca',"TrabajadoresController@resp_finca");
@@ -52,7 +53,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('reporte_quincenal','quincenalesController@reporte_quincenal');
 
     Route::post('billetes_quince','quincenalesController@billetes');
-
+    Route::post('editar_quince','quincenalesController@editar_quince');
+    Route::get('datos_fincas',"FincasController@datos_fincas");
     // Route::get('pdf2', function(){
     //   $a[]='hola';
     //   $pdf = PDF::loadView('pdf',['user'=>$a]);

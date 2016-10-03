@@ -20,6 +20,34 @@ class PlanillasController extends Controller
      //$data[]=$totales;
      return $data;
   }
+  public function inss_catorcenal(Request $request){
+    $peticion=$request->all();
+    $tot=array();
+    $peticion=[
+      "fecha_ini"=>'2016-01-01',
+      'fecha_fin'=>'2017-01-01',
+    ];
+    $datas =$this->calculo_planilla($peticion);
+    foreach ($datas as $data) {
+      $id=$data['id_trab'];
+      $trabajador= Trabajador::find($id);
+      $sep_nombre=explode(' ', $trabajador->nombre);
+      $sep_ape=explode(' ', $trabajador->apellidos);
+      $nombre="'".$sep_nombre[0];
+      $apellido="'".$sep_ape[0];
+
+      $array=[
+        "nss"=>$trabajador->nss,
+        "pnombre"=>$nombre,
+        "papellido"=>$apellido,
+        "t_devengado"=>$data['salario_'],
+
+      ];
+      $tot[]=$array;
+    }
+    return $tot;
+  }
+
   public function reporte_planilla(Request $request){
     $peticion=$request->all();
     $funcion=$peticion['funcion'];
@@ -420,6 +448,8 @@ class PlanillasController extends Controller
       return $trabajadores;
 
   }
+
+
 
 
 }

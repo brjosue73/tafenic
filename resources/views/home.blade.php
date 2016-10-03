@@ -144,5 +144,8 @@
   <script src="res/dependencies/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="res/js/angular.js"></script>
   <script src="res/js/scripts.min.js"></script>
+  <script>
+    $('[data-toggle="tooltip"]').tooltip();
+  </script>
 </body>
 </html>

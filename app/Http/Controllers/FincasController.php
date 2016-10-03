@@ -11,6 +11,8 @@ use App\Preplanilla;
 use App\Trabajador;
 use App\Labor;
 use App\Variable;
+use App\Actividad;
+use App\Lote;
 
 
 class FincasController extends Controller
@@ -122,17 +124,74 @@ class FincasController extends Controller
         }
       }
       return $trabajadores;
-
-
-
-//pegar aca
-            //return $array_tot;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+/************JSON para fincas, labores y actividades*************/
+public function datos_fincas()
+{
+  $i=0;
+  $fincas_todo=array();
+  $fincas = Finca::all();
+  $fincas->actividades = array();
+  $generales=array();
+  $labores=array();
+  $lab_tot=array();
+  $activ_tot=array();
+  $activ=array();
+  $lote_tot=array();
+  $tot = array();
+  foreach ($fincas as $finca) {
+    $generales=[
+      "id_finca"=>$finca->id,
+      "nombre"=>$finca->nombre
+    ];
+    $id_finca=$finca->id;
+    $actividades=Actividad::where('id_finca',$id_finca)->get();
+    foreach ($actividades as $actividad) {
+      $activ_tot=[
+        "id_actividad"=>$actividad->id,
+        "nombre_actividad"=>$actividad->nombre,
+      ];
+
+      $labores=Labor::where('id_actividad',$actividad->id)->get();
+      foreach ($labores as $lab) {
+        $lab_tot[]=$lab;
+      }
+      $activ_tot+=[
+        "labores"=>$lab_tot,
+      ];
+      $activ[]=$activ_tot;
+      unset($lab_tot);
+      $lab_tot=array();
+
+    }
+    $generales+=[
+      "actividades"=>$activ,
+    ];
+    unset($activ);
+
+    $lotes=Lote::where('id_finca',$finca->id)->get();
+    foreach ($lotes as $lote) {
+      $lote_tot[]=$lote;
+    }
+    $generales+=[
+      "lotes"=>$lote_tot,
+    ];
+
+    $tot[]=$generales;
+    unset($activ);
+    $activ=array();
+    unset($activ_tot);
+    //unset($lab_tot);
+
+  }
+  return response()->json($tot);
+}
+
+/************JSON para fincas, labores y actividades*************/
+
+
+
     public function index()
     {
         $finca = Finca::all();
@@ -167,7 +226,14 @@ class FincasController extends Controller
         $finca = new Finca($arreglo);
         $finca->estado=1;
         $finca->save();
-        return "Finca Agregada!";
+        $id = Finca::all()->max('id');
+        $query = Finca::find($id);
+        $ultimo=[
+          "nombre"=>$query->nombre,
+          "id_finca"=>$query->id,
+          "actividades"=>[]
+        ];
+        return $ultimo;
     }
 
     /**
