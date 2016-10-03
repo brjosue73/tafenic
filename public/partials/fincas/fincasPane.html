@@ -31,16 +31,9 @@
     </div>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-wrapper">
-    <!--<h1  class="col-lg-12 col-md-12 col-sm-12">FINCAS</h1>
-     <div data-ng-repeat="finca in fincas" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-      <a href="" class="thumbnail" data-ui-sref="/fincas.ver({id:<% finca.id %>})">
-        <img src="res/img/campoTabaco.jpg" alt="ranko">
-      </a>
-      <h3><% finca.nombre %></h3>
-    </div> -->
     <div class="panel panel-primary" data-ng-repeat="nfincas in nuevas_Fincas">
       <div class="panel-heading">
-        <h4 class="panel-title"> <% nfincas.id_finca %><% nfincas.nombre_finca %> </h4>
+        <h4 class="panel-title"> <% nfincas.nombre%> </h4>
       </div>
       <div class="panel-body">
 
@@ -61,9 +54,9 @@
       </ul>
 
        <ul class="list-group col-sm-3 col-md-3" data-ng-repeat="listas in nfincas.actividades track by $index">
-         <li class="list-group-item active"> <% nfincas.id_finca %> <% listas.id_actividad %> <% listas.nombre_actividad %> </li>
+         <li class="list-group-item active"> <% listas.id_actividad %> - <% listas.nombre_actividad %> </li>
          <li class="list-group-item" data-ng-repeat="lavar in listas.labores track by $index">
-           <% nfincas.id_finca %> <% listas.id_actividad %> <% lavar.nombre_labor %>
+           <% lavar.nombre %>
            <span class="badge badge-danger"> <i class="glyphicon glyphicon-minus"></i> </span>
          </li>
          <li class="list-group-item">
@@ -77,20 +70,6 @@
                <input class="chklabor" type="checkbox">
              </span>
             <div class="input-group-btn">
-              <!-- Button and dropdown menu -->
-              <!-- <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
-              <ul class="dropdown-menu dropdown-menu-right" data-ng-model="laborSaveData.tipo_lab">
-                <li><a href="#">Action</a></li>
-                <li><a href="#">Another action</a></li>
-                <li><a href="#">Something else here</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#">Separated link</a></li>
-              </ul>
-              <select class="form-control input-sm">
-                <option value="hora">hora</option>
-                <option value=""></option>
-                <option value=""></option>
-              </select>-->
               <button class="btn btn-default btn-sm" type="button" data-ng-click="laborSave(listas.id_actividad, nfincas.id_finca)"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
           </div>

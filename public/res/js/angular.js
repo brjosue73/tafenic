@@ -166,7 +166,7 @@
 		var $btnFAceptar = $('#fincAceptar') ;
 
 		/***************************************/
-		h.get('res/js/fincas.json')
+		h.get('/datos_fincas')
 		.success(function(data){
 			console.log(data);
 			s.nuevas_Fincas = data;
