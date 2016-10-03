@@ -63,8 +63,11 @@ class LaboresController extends Controller
 
         $labor->tipo_labor=$tipo_lab;
         $labor->save();
+
+
         $id = Labor::all()->max('id');
         $query = Labor::find($id);
+
         return $query;
     }
 
