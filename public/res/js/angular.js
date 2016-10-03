@@ -151,6 +151,11 @@
 			templateUrl: "partials/reportes/RplanillasQ.html",
 			controller: "RplanillaQController"
 		})
+		.state('/quincenal-editar', {
+			url:"/quincenal-editar/:id",
+			templateUrl:"partials/planillas/planilla.html",
+			controller:"quincenalEditar"
+		})
 		.state('/planillaq',{
 			url:"/planilla_quincenal",
 			templateUrl: "partials/planillas/planilla.html",
@@ -609,7 +614,7 @@
 	app.controller('planillaQController',['$scope','$http','fincaResource', function(s,h,fr){
 		s.pqSendData = {};
 		s.pqFincas = fr.query();
-
+		s.qButton = "Guardar";
 		h.get('trab_quinc').success(function(data){
 			s.trabQ = data;
 			console.log(data);
@@ -637,5 +642,8 @@
 				},3000);
 			});
 		}
+	}]);
+	app.controller('quincenalEditar',['$scope', function(s){
+		s.qButton = "editar";
 	}]);
 }());
