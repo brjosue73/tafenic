@@ -50,6 +50,35 @@ class QuincenalesController extends Controller
         return $pdf->stream('invoice');
         return $pdf->stream();
       }
+      elseif ($funcion == 'reporte_inss') {
+        $peticion=$request->all();
+        $tot=array();
+        // $peticion=[
+        //   "fecha_ini"=>'2016-01-01',
+        //   'fecha_fin'=>'2017-01-01',
+        // ];
+        $datas=$this->planilla_quincenal($peticion);
+        foreach ($datas as $data) {
+          $id=$data['id_trabajador'];
+          $trabajador= Trabajador::find($id);
+          $sep_nombre=explode(' ', $trabajador->nombre);
+          $sep_ape=explode(' ', $trabajador->apellidos);
+          $nombre="'".$sep_nombre[0];
+          $apellido="'".$sep_ape[0];
+
+          $array=[
+            "nss"=>$trabajador->nss,
+            "pnombre"=>$nombre,
+            "papellido"=>$apellido,
+            "t_devengado"=>$data['total_pagar'],
+
+          ];
+          $tot[]=$array;
+        }
+        return view('inss_quincenal')->with('data',$tot);
+        return $tot;
+
+      }
     }
     public function billetes(Request $request){
       $peticion=$request->all();
