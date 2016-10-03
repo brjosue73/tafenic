@@ -1,0 +1,174 @@
+[
+  {
+    "id_finca" : "1",
+    "nombre_finca" : "la lilia",
+    "actividades" : [
+      {
+        "id_actividad": "1",
+        "nombre_actividad": "tabaco sol",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      },
+      {
+        "id_actividad": "2",
+        "nombre_actividad": "tabaco tapado",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      },
+      {
+        "id_actividad": "3",
+        "nombre_actividad": "safadura",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      }
+    ],
+    "lotes": [
+      {
+        "lote": "1"
+      },
+      {
+        "lote": "2"
+      },
+      {
+        "lote": "3"
+      },
+      {
+        "lote": "4"
+      },
+      {
+        "lote": "5"
+      }
+    ]
+  },
+  {
+    "id_finca" : "2",
+    "nombre_finca" : "La Soledad",
+    "actividades" : [
+      {
+        "id_actividad": "1",
+        "nombre_actividad": "tabaco sol",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      },
+      {
+        "id_actividad": "2",
+        "nombre_actividad": "tabaco tapado",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      },
+      {
+        "id_actividad": "3",
+        "nombre_actividad": "safadura",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      }
+    ],
+    "lotes": [1, 2, 3, 4, 5]
+  },
+  {
+    "id_finca" : "3",
+    "nombre_finca" : "San Lotano",
+    "actividades" : [
+      {
+        "id_actividad": "1",
+        "nombre_actividad": "tabaco sol",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      },
+      {
+        "id_actividad": "2",
+        "nombre_actividad": "tabaco tapado",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      },
+      {
+        "id_actividad": "3",
+        "nombre_actividad": "safadura",
+        "labores" : [
+          {
+            "nombre_labor" : "siembra"
+          },
+          {
+            "nombre_labor" : "riego_minado"
+          },
+          {
+            "nombre_labor" : "abono"
+          }
+        ]
+      }
+    ],
+    "lotes": [1, 2, 3, 4, 5]
+  }
+]
