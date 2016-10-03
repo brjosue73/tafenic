@@ -12,6 +12,7 @@ use App\Trabajador;
 use App\Labor;
 use App\Variable;
 use App\Actividad;
+use App\Lote;
 
 
 class FincasController extends Controller
@@ -136,6 +137,7 @@ public function datos_fincas()
   $lab_tot=array();
   $activ_tot=array();
   $activ=array();
+  $lote_tot=array();
   foreach ($fincas as $finca) {
     $generales=[
       "id_finca"=>$finca->id,
@@ -165,10 +167,15 @@ public function datos_fincas()
       "actividades"=>$activ,
     ];
     unset($activ);
-    /*
 
-    Pegar Aqui
-    */
+    $lotes=Lote::where('id_finca',$finca->id)->get();
+    foreach ($lotes as $lote) {
+      $lote_tot[]=$lote;
+    }
+    $generales+=[
+      "lotes"=>$lote_tot,
+    ];
+
     $tot[]=$generales;
     unset($activ);
     unset($activ_tot);
