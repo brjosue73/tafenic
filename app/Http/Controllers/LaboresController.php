@@ -67,11 +67,8 @@ class LaboresController extends Controller
 
         $id = Labor::all()->max('id');
         $query = Labor::find($id);
-        $ultimo=[
-          "nombre_labor"=>$query->nombre,
-          "id_labor"=>$query->id,
-        ];
-        return $ultimo;
+
+        return $query;
     }
 
     /**
