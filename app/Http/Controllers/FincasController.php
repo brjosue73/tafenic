@@ -226,7 +226,11 @@ public function datos_fincas()
         $finca->save();
         $id = Finca::all()->max('id');
         $query = Finca::find($id);
-        return $query;
+        $ultimo=[
+          "nombre"=>$query->nombre,
+          "id_finca"=>$query->id,
+        ];
+        return $ultimo;
     }
 
     /**
