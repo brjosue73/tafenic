@@ -646,7 +646,7 @@
 	app.controller('quincenalEditar',['$scope','$http', function(s,h){
 		s.qButton = "editar";
 
-		h.post('editar_quince/:id',{id:$id})
+		h.post('editar_quince/:id',{id:sp.id})
 		.success(function(data){
 			s.regQince = data;
 		})
