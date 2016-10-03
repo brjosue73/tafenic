@@ -166,7 +166,7 @@
 		Create and append a new cotrollers for your exist module in use
 	\*******************************************************************************************************************/
 	//Finca Controller
-	app.controller("fincaController",['$scope','$http','fincaResource','actividadResource','laborResource','loteResource','$location', function(s,h,fr,ar,lr,ltr,l){
+	app.controller("fincaController",['$scope','$http','fincaResource','actividadResource','laborResource','loteResource','$location','$stateParams', function(s,h,fr,ar,lr,ltr,l,sp){
 
 		var $btnFAceptar = $('#fincAceptar') ;
 
@@ -226,6 +226,7 @@
 			fr.save({data:s.fincaSaveData}, function(res) {
 				console.log(res);
 				s.nuevas_Fincas.push(res)
+				$('#registro-finca')[0].reset();
 				$('#fincaSpinner').css("display", "none");
 				$('#exitofinca').css("display","inline");
 				setTimeout(function(){
@@ -249,6 +250,7 @@
 			ar.save({data:s.actividadSaveData}, function(res) {
 				console.log(res);
 				//l.path('/fincas');
+				$('.form-control').val('');
 				s.nuevas_Fincas[idfinca-1].actividades.push(res);
 				$('#actSpinner').css("display", "none");
 				$('#exitoact').css("display","inline");
@@ -265,22 +267,24 @@
 				},3000)
 			});
 		}
-		s.laborSave = function(idactividad, idfinca){
+		s.laborSave = function(idactividad, idfinca, indice){
 			s.laborSaveData.id_actividad = idactividad;
 			if($('.chklabor').is(':checked')){
 				s.laborSaveData.tipo_lab = "prod"
 				console.log(s.laborSaveData.tipo_lab);
 			} else {
 				s.laborSaveData.tipo_lab = "hora";
-				//console.log(s.laborSaveData.tipo_lab);
 			}
 			console.log(s.laborSaveData);
+			console.log(indice);
 			//console.log(idfinca);
 			//console.log(s.nuevas_Fincas);
 			$('#laborSpinner').css("display", "inline-block");
 			lr.save({data:s.laborSaveData}, function(res) {
 				console.log(res);
-				s.nuevas_Fincas[idfinca-1].actividades[idactividad].labores.push(res);
+				$('.form-control').val('');
+				$('.chklabor').prop('checked', false);
+				s.nuevas_Fincas[idfinca-1].actividades[indice].labores.push(res);
 				$('#laborSpinner').css("display", "none");
 				$('#exitolabor').css("display","inline");
 				setTimeout(function(){
@@ -295,6 +299,13 @@
 				},3000)
 			});
 		}
+		s.delLab = function(id) {
+			console.log(id);
+			lr.delete({id:id}, function(res){
+				console.log(res);
+			})
+		}
+
 	}]);
 	app.controller('fincaOneController', ['$scope','fincaResource','$stateParams','laborResource','actividadResource', function(s,fr,sp,lr,ar){
 		s.unaFinca = fr.get({id:sp.id}, function(data){

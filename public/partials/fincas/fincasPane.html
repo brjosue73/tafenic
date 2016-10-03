@@ -16,7 +16,7 @@
       <h1 class="text-center">FINCAS</h1>
     </div>
     <div class="panel-body">
-      <form>
+      <form id="registro-finca">
         <div class="form-group">
           <label for="">Nueva Finca</label>
           <input type="text" class="form-control" data-ng-model="fincaSaveData.nombre" placeholder="Nombre de la finca">
@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-wrapper">
-    <div class="panel panel-primary" data-ng-repeat="nfincas in nuevas_Fincas">
+    <div class="panel panel-primary" data-ng-repeat="nfincas in nuevas_Fincas | orderBy: '-id_finca'">
       <div class="panel-heading">
         <h4 class="panel-title"> <% nfincas.id_finca %> - <% nfincas.nombre%> </h4>
       </div>
@@ -54,10 +54,10 @@
       </ul>
 
        <ul class="list-group col-sm-3 col-md-3" data-ng-repeat="listas in nfincas.actividades track by $index">
-         <li class="list-group-item active"> <% listas.id_actividad %> - <% listas.nombre_actividad %> </li>
+         <li class="list-group-item active"> <% listas.id_actividad %> - <% listas.nombre_actividad %> - <% $index %> </li>
          <li class="list-group-item" data-ng-repeat="lavar in listas.labores track by $index">
            <% lavar.nombre %> - <% lavar.tipo_labor %>
-           <span class="badge badge-danger"> <i class="glyphicon glyphicon-minus"></i> </span>
+           <span class="badge badge-danger" data-ng-click="delLab(lavar.id)"> <i class="glyphicon glyphicon-minus"></i> </span>
          </li>
          <li class="list-group-item">
 
@@ -70,7 +70,7 @@
                <input class="chklabor" type="checkbox">
              </span>
             <div class="input-group-btn">
-              <button class="btn btn-default btn-sm" type="button" data-ng-click="laborSave(listas.id_actividad, nfincas.id_finca)"><i class="glyphicon glyphicon-plus"></i></button>
+              <button class="btn btn-default btn-sm" type="button" data-ng-click="laborSave(listas.id_actividad, nfincas.id_finca, $index )"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
           </div>
          </li>
