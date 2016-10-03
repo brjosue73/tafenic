@@ -65,6 +65,7 @@ class ActividadesController extends Controller
         $ultimo=[
           "nombre_actividad"=>$query->nombre,
           "id_actividad"=>$query->id,
+          "labores"=>[]
         ];
         return $ultimo;
     }
