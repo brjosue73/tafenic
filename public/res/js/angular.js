@@ -643,7 +643,19 @@
 			});
 		}
 	}]);
-	app.controller('quincenalEditar',['$scope', function(s){
+	app.controller('quincenalEditar',['$scope','$http', function(s,h){
 		s.qButton = "editar";
+
+		h.post('editar_quince/:id',{id:$id})
+		.success(function(data){
+			s.regQince = data;
+		})
+		.error(function(err){
+			console.log(err);
+		});
+
+		s.pqSave = function() {
+			console.log(s.regQince);
+		}
 	}]);
 }());
