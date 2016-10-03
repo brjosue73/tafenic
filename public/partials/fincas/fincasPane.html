@@ -57,7 +57,7 @@
          <li class="list-group-item active"> <% listas.id_actividad %> - <% listas.nombre_actividad %> - <% $index %> </li>
          <li class="list-group-item" data-ng-repeat="lavar in listas.labores track by $index">
            <% lavar.nombre %> - <% lavar.tipo_labor %>
-           <span class="badge badge-danger" data-ng-click="delLab(lavar.id)"> <i class="glyphicon glyphicon-minus"></i> </span>
+           <span class="badge badge-danger" data-ng-click="delLab(nfincas.id_finca,$parent.$index ,$index, lavar.id)"> <i class="glyphicon glyphicon-minus"></i> </span>
          </li>
          <li class="list-group-item">
 
@@ -77,7 +77,10 @@
        </ul>
 
         <ul class="list-group col-sm-3 col-md-3">
-          <li class="list-group-item active">Lotes</li>
+          <li class="list-group-item active">
+            Lotes
+            <span class="badge badge-danger" data-ng-click="loteSave(nfincas.id_finca)"> <i class="glyphicon glyphicon-plus"></i>
+          </li>
           <li class="list-group-item" data-ng-repeat="lotes in nfincas.lotes track by $index"> <% lotes.lote %> </li>
         </ul>
 

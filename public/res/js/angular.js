@@ -197,25 +197,30 @@
 				console.log(err);
 			});
 		}*/
-		s.loteSave = function() {
+		s.loteSave = function(fincIndex) {
+			s.loteSaveData.lote = s.nuevas_Fincas[fincIndex-1].lotes.length+1;
+			s.loteSaveData.id_finca = fincIndex;
+			//console.log(s.nuevas_Fincas[fincIndex-1].lotes.length);
+			//console.log(fincIndex);
 			console.log(s.loteSaveData);
-			$('#loteSpinner').css("display", "inline-block");
+			//$('#loteSpinner').css("display", "inline-block");
 
 			ltr.save({data:s.loteSaveData}, function(res) {
 				console.log(res);
-				$('#loteSpinner').css("display", "none");
+				s.nuevas_Fincas[fincIndex-1].lotes.push(res);
+				/*$('#loteSpinner').css("display", "none");
 				$('#exitolote').css("display","inline");
 				setTimeout(function(){
 					$('#exitolote').css("display","none");
-				},3000);
+				},3000);*/
 				//s.fincas = fr.query();
 			},function(err){
-				console.log(err.status);
+				/*console.log(err.status);
 				$('#loteSpinner').css("display", "none");
 				$('#errorlote').css("display","inline");
 				setTimeout(function(){
 					$('#errorlote').css("display","none");
-				},3000)
+				},3000)*/
 			});
 		}
 	  s.fincaSave = function(){
@@ -299,11 +304,14 @@
 				},3000)
 			});
 		}
-		s.delLab = function(id) {
-			console.log(id);
-			lr.delete({id:id}, function(res){
+		s.delLab = function(fincId, actId, id, labId) {
+			console.log(fincId, actId, id, labId);
+			lr.delete({id:labId}, function(res){
 				console.log(res);
-			})
+				s.nuevas_Fincas[fincId-1].actividades[actId].labores.splice(id, 1);
+			}, function(err){
+				console.log(err);
+			});
 		}
 
 	}]);
