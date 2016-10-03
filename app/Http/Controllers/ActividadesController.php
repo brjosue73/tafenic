@@ -62,8 +62,13 @@ class ActividadesController extends Controller
         $actividad->save();
         $id = Actividad::all()->max('id');
         $query = Actividad::find($id);
-        return $query;
+        $ultimo=[
+          "nombre_actividad"=>$query->nombre,
+          "id_actividad"=>$query->id,
+        ];
+        return $ultimo;
     }
+
 
     /**
      * Display the specified resource.

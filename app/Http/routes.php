@@ -35,6 +35,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('reporte_catorcenal','PlanillasController@reporte_planilla');
     Route::post('sobres_catorcenal','PlanillasController@sobres_catorcenal');
 
+    Route::get('test','ActividadesController@test');
 
     Route::get('listero',"TrabajadoresController@listero");
     Route::get('resp_finca',"TrabajadoresController@resp_finca");
