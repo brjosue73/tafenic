@@ -128,27 +128,54 @@ class FincasController extends Controller
 /************JSON para fincas, labores y actividades*************/
 public function datos_fincas()
 {
+  $i=0;
+  $fincas_todo=array();
   $fincas = Finca::all();
-  $labores = array();
-  $i = 0;
-
+  $generales=array();
+  $labores=array();
+  $lab_tot=array();
+  $activ_tot=array();
+  $activ=array();
   foreach ($fincas as $finca) {
-    $actividades = Actividad::where("id_finca",$finca->id)->get();
-    $fincas[$i]->actividades = $actividades;
-    $i++;
-    /*foreach ($fincas[$i]->actividades[$i] as $actividad) {
-      $labores = Labor::where("id_actividad",$actividad->id)->get();
-      $fincas[$i]->actividades[$i]->labores = $labores;
-    }*/
-  }
+    $generales=[
+      "id_finca"=>$finca->id,
+      "nombre"=>$finca->nombre,
+    ];
+    $id_finca=$finca->id;
+    $actividades=Actividad::where('id_finca',$id_finca)->get();
+    foreach ($actividades as $actividad) {
+      $activ_tot=[
+        "id_actividad"=>$actividad->id,
+        "nombre_actividad"=>$actividad->nombre,
+      ];
 
-  /*foreach ($fincas->$actividades as $actividad) {
-    $labores = Labor::where("id_actividad",$actividad->id)->get();
-    //$fincas->$actividades[$i]->labores = $labores;
-    $labores[$i] = $labores;
-    $i++;
-  }*/
-  return $fincas;
+      $labores=Labor::where('id_actividad',$actividad->id)->get();
+      foreach ($labores as $lab) {
+        $lab_tot[]=$lab;
+      }
+      $activ_tot+=[
+        "labores"=>$lab_tot,
+      ];
+      $activ[]=$activ_tot;
+      unset($lab_tot);
+      $lab_tot=array();
+
+    }
+    $generales+=[
+      "actividades"=>$activ,
+    ];
+    unset($activ);
+    /*
+
+    Pegar Aqui
+    */
+    $tot[]=$generales;
+    unset($activ);
+    unset($activ_tot);
+    //unset($lab_tot);
+
+  }
+  return response()->json($tot);
 }
 
 /************JSON para fincas, labores y actividades*************/
