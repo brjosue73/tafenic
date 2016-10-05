@@ -187,6 +187,7 @@ class QuincenalesController extends Controller
       return $todos;
     }
     public function g_quincenal(Request $request){
+      $IR = 0;
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_admin=$variable->inss_admin;
