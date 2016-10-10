@@ -21,7 +21,8 @@ class QuincenalesController extends Controller
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
-        $view = \View::make('reporte_quincenal',array('data'=>$data)); // recuerden que data es la variable del arreglo
+        $totales=$this->sum_totales($data);
+        $view = \View::make('reporte_quincenal',array('data'=>$data,'totales'=>$totales)); // recuerden que data es la variable del arreglo
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         $pdf->setPaper('legal', 'landscape');
@@ -42,15 +43,15 @@ class QuincenalesController extends Controller
       }
       elseif($funcion == 'Billetes'){
         $peticion=$request->all();
-        //$data =$this->billetes($peticion);
-        $planillas=$this->planilla_quincenal($peticion);
-        $data =$this->calcular_billetes($planillas);
-        $view = \View::make('billetes_quincenal',array('data'=>$data));
-        $pdf = \App::make('dompdf.wrapper');
-        $pdf->loadHTML($view);
-        $pdf->setPaper('a4', 'landscape');
-        return $pdf->stream('invoice');
-        return $pdf->stream();
+          //$data =$this->billetes($peticion);
+          $planillas=$this->planilla_quincenal($peticion);
+          $data =$this->calcular_billetes($planillas);
+          $view = \View::make('billetes_quincenal',array('data'=>$data));
+          $pdf = \App::make('dompdf.wrapper');
+          $pdf->loadHTML($view);
+          $pdf->setPaper('a4', 'landscape');
+          return $pdf->stream('invoice');
+          return $pdf->stream();
       }
       elseif ($funcion == 'reporte_inss') {
         $peticion=$request->all();
