@@ -641,12 +641,14 @@
 		}
 	}]);
 	app.controller('planillaQController',['$scope','$http','fincaResource', function(s,h,fr){
-		s.pqSendData = {};
-		s.pqFincas = fr.query();
 		s.qButton = "Guardar";
+
+		s.pqSendData = {};
+
+		s.pqFincas = fr.query();
 		h.get('trab_quinc').success(function(data){
 			s.trabQ = data;
-			console.log(data);
+			//console.log(data);
 		}).error(function(err){
 			console.log(err);
 		});
