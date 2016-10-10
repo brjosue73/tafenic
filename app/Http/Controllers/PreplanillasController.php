@@ -135,7 +135,7 @@ class PreplanillasController extends Controller
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
           if ($feriado==0) { //feriado no trabajado
-            $tot_feriado=round($dia+$alim+$vacaciones+$vacaciones,2);
+            $tot_feriado=round($dia,2);
             $prep->feriados=$tot_feriado;
             $prep->save();
             return 'Agregada con exito Feriado no trab';

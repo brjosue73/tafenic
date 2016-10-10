@@ -296,7 +296,7 @@ class PlanillasController extends Controller
           $cant_septimos=0;
            if($dias>=6){ //merece por lo menos 1 septimo
              $cant_septimos=1;
-             if($dias>12){//merece 2 septimos
+             if($dias>=12){//merece 2 septimos
                $cant_septimos=2;
              }
            }
@@ -341,7 +341,12 @@ class PlanillasController extends Controller
                 //  else {//si es por horas
                 //    $tot_dev=$dias * $pago_dia;
                 //  }
-
+                if($feriados>0 && $feriados<=$dia){// si tiene un feriado
+                  $dias=$dias-1;
+                }
+                elseif ($feriados>=($dia*2)) {
+                  $dias=$dias-2;
+                }
 
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;

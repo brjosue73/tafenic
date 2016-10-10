@@ -42,8 +42,11 @@
           <td>{{ $dat['5'] }}</td>
           <td>{{ $dat['1'] }}</td>
         </tr>
-        {{$data["total_individual"][0]}}
         @endforeach
+        @foreach($totales as $tota)
+                <p>aqui</p> {{ $tota["0"]}}
+        @endforeach
+
       </tbody>
     </table>
 
