@@ -275,6 +275,7 @@ class PlanillasController extends Controller
            $septimo=0;
            $otros=0;
            $feriados=0;
+           $feriado_tot=0;
            $tot_dev=0;
            $subsidios=0;
            $cant_horas_ext=0;
@@ -327,7 +328,8 @@ class PlanillasController extends Controller
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
                  $tot_dev +=$trab['total_actividad'];
-                 $feriados=$trab->feriados;
+                 $feriados+=$trab->feriados;
+                 //$feriado_tot+=$feriados;
                  $subsidios += $trab['subsidios'];
                  $fin_query= Finca::find($trab->id_finca);
                  $finca=$fin_query->nombre;
