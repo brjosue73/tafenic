@@ -341,12 +341,7 @@ class PlanillasController extends Controller
                 //  else {//si es por horas
                 //    $tot_dev=$dias * $pago_dia;
                 //  }
-                if($feriados>0 && $feriados<=$dias){// si tiene un feriado
-                  $dias=$dias-1;
-                }
-                elseif ($feriados>=($dias*2)) {
-                  $dias=$dias-2;
-                }
+
 
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
@@ -412,7 +407,12 @@ class PlanillasController extends Controller
                  $finca_mayor=$fin_mayor_query->nombre;
               }
 
-
+              if($feriados>0 && $feriados<=$dias){// si tiene un feriado
+                $dias=$dias-1;
+              }
+              elseif ($feriados>=($dias*2)) {
+                $dias=$dias-2;
+              }
              $array = [
                "id_trab"=>round($id_trab,2),
                "dias"=>round($dias,2),
