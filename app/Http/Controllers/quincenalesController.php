@@ -119,7 +119,7 @@ class QuincenalesController extends Controller
        $sum_salario+=$plani['salario_quinc'];
        $sum_subsidios+=$plani['subsidios'];
        $sum_feriados+=$plani['feriados'];
-       $sum_basico+=$plani['basico'];
+       $sum_basico+=$plani['basico_real'];
        $sum_tot_hext+=$plani['tot_h_ext'];
        $sum_sum_pagar+=$plani['total_pagar'];
      }
