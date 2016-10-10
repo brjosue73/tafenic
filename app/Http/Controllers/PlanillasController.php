@@ -379,12 +379,12 @@ class PlanillasController extends Controller
              }
 
              if($feriados>0 && $feriados<=$dias){// si tiene un feriado
-              $alim_tot=$alim_tot-$alim_var;
+              //$alim_tot=$alim_tot-$alim_var;
               //  $tot_dev=$tot_dev-$feriados;
              }
              elseif ($feriados>=($dias*2)) {
-               $dias=$dias-2;
-              $alim_tot=$alim_tot-($alim_var*2);
+               //$dias=$dias-2;
+              //$alim_tot=$alim_tot-($alim_var*2);
               //  $tot_dev=$tot_dev-$feriados;
              }
 
