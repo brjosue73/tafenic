@@ -344,7 +344,7 @@ class PlanillasController extends Controller
                 if($feriados>0 && $feriados<=$dias){// si tiene un feriado
                   $dias=$dias-1;
                 }
-                elseif ($feriados>=($dia*2)) {
+                elseif ($feriados>=($dias*2)) {
                   $dias=$dias-2;
                 }
 
