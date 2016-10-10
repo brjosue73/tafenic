@@ -300,9 +300,20 @@ class PlanillasController extends Controller
              }
            }
 
+
            $tot_sept=$cant_septimos*$valor_dia;
            /*-------------CALCULO DEL SEPTIMO*/
            /*-------------CALCULO DEL SEPTIMO*/
+           if($feriados>0 && $feriados<=$dias){// si tiene un feriado
+             $dias=$dias-1;
+            //  $alim_tot=$alim_tot-$alim_var;
+            //  $tot_dev=$tot_dev-$feriados;
+           }
+           elseif ($feriados>=($dias*2)) {
+             $dias=$dias-2;
+            //  $alim_tot=$alim_tot-($alim_var*2);
+            //  $tot_dev=$tot_dev-$feriados;
+           }
              foreach ($trabs as $trab) {
                  $inss_camp=$trab['inss_campo'];
 
@@ -342,26 +353,9 @@ class PlanillasController extends Controller
                 //  }
 
 
-                 $tot_dev=$dias * $pago_dia;
-                 $tot_basic=$tot_dev+$alim_tot;
-                 $total_dev2=$tot_basic + $tot_sept + $otros + $feriados;
-                 $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
-                 $total_acum=round($total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs,2);
 
-                 $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
-
-                //  return $tot_inss;
-                 $inss= ($tot_inss*$inss_camp)/100;
-                 //return ($tot_inss." ". $inss_camp);
-                 $inss_pat=($tot_inss*$inss_patronal)/100;
-                 //return $inss;
-
-                 //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
-
-                 $tot_recib=$total_acum - $inss;
-                 $f=0;
-                 $c=0;
              }
+
              //return ($inss_patronal." ".$inss_camp);
 
                /**************SEPTIMO**************/
@@ -406,16 +400,7 @@ class PlanillasController extends Controller
                  $finca_mayor=$fin_mayor_query->nombre;
               }
 
-              if($feriados>0 && $feriados<=$dias){// si tiene un feriado
-                $dias=$dias-1;
-                $alim_tot=$alim_tot-$alim_var;
-                $tot_dev=$tot_dev-$feriados;
-              }
-              elseif ($feriados>=($dias*2)) {
-                $dias=$dias-2;
-                $alim_tot=$alim_tot-($alim_var*2);
-                $tot_dev=$tot_dev-$feriados;
-              }
+
              $array = [
                "id_trab"=>round($id_trab,2),
                "dias"=>round($dias,2),
