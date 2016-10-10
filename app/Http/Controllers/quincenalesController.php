@@ -10,8 +10,10 @@ class QuincenalesController extends Controller
 {
     public function quincenal_fecha(Request $request){
       $peticion=$request->all();
-       $data =$this->planilla_quincenal($peticion);
-       return $data;
+            $data =$this->planilla_quincenal($peticion);
+            $totales=$this->sum_totales($data);
+            $data[]=$totales;
+            return $data;
     }
     public function reporte_quincenal(Request $request){
       $funcion=$request['funcion'];
@@ -86,6 +88,59 @@ class QuincenalesController extends Controller
       $data =$this->calcular_billetes($planillas);
       return $data;
     }
+    public function sum_totales($data){
+     $sum_dev = 0;
+     $sum_dias = 0;
+     $sum_h_ext =0;
+     $sum_inatec=0;
+     $sum_inss_lab=0;
+     $sum_inss_pat=0;
+     $sum_ir=0;
+     $sum_otros=0;
+     $sum_prestamos=0;
+     $sum_salario=0;
+     $sum_subsidios=0;
+     $sum_feriados=0;
+     $sum_basico=0;
+     $sum_tot_hext=0;
+     $sum_sum_pagar=0;
+     $sum_dev=0;
+     foreach ($data as $plani) {
+       $sum_dev += $plani['devengado'];
+       $sum_dias += $plani['dias_trab'];
+       $sum_h_ext +=$plani['horas_extra'];
+       $sum_inatec+=$plani['inatec'];
+       $sum_inss_lab+=$plani['inss_laboral'];
+       $sum_inss_pat+=$plani['inss_patronal'];
+       $sum_ir+=$plani['ir'];
+       $sum_otros+=$plani['otros'];
+       $sum_prestamos+=$plani['prestamos'];
+       $sum_salario+=$plani['salario_quinc'];
+       $sum_subsidios+=$plani['subsidios'];
+       $sum_feriados+=$plani['feriados'];
+       $sum_basico+=$plani['basico'];
+       $sum_tot_hext+=$plani['tot_h_ext'];
+       $sum_sum_pagar+=$plani['total_pagar'];
+     }
+     $totales=  [
+       'sum_dev'=>$sum_dev,
+       'sum_dias'=>$sum_dias,
+       'sum_h_ext'=>$sum_h_ext,
+       'sum_inatec'=>$sum_inatec,
+       'sum_inss_lab'=>$sum_inss_lab,
+       'sum_inss_pat'=>$sum_inss_pat,
+       'sum_ir'=>$sum_ir,
+       'sum_otros'=>$sum_otros,
+       'sum_prestamos'=>$sum_prestamos,
+       'sum_salario'=>$sum_salario,
+       'sum_subsidios'=>$sum_subsidios,
+       'sum_feriados'=>$sum_feriados,
+       'sum_basico'=>$sum_basico,
+       'sum_tot_hext'=>$sum_tot_hext,
+       'sum_sum_pagar'=>$sum_sum_pagar,
+     ];
+     return $totales;
+   }
     public function planilla_quincenal($peticion){
       //RETOR$NAR la planilla de quincenales
       // $peticion = $request->all();
