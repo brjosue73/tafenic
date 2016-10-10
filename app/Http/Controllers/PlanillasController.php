@@ -353,7 +353,25 @@ class PlanillasController extends Controller
                 //  }
 
 
+                 $tot_dev=$dias * $pago_dia;
+                 $tot_basic=$tot_dev+$alim_tot;
+                 $total_dev2=$tot_basic + $tot_sept + $otros + $feriados;
+                 $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
+                 $total_acum=round($total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs,2);
 
+                 $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
+
+                //  return $tot_inss;
+                 $inss= ($tot_inss*$inss_camp)/100;
+                 //return ($tot_inss." ". $inss_camp);
+                 $inss_pat=($tot_inss*$inss_patronal)/100;
+                 //return $inss;
+
+                 //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
+
+                 $tot_recib=$total_acum - $inss;
+                 $f=0;
+                 $c=0;
              }
 
              //return ($inss_patronal." ".$inss_camp);
