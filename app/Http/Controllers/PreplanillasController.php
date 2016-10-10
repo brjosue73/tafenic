@@ -151,6 +151,7 @@ class PreplanillasController extends Controller
                  $cant_cujes=$arreglo['cant_cujes'];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
                    $total_act=round($cant_cujes * $cuje_peq,2);
+                   $total_act=$dia;
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
 
                  }
@@ -159,6 +160,7 @@ class PreplanillasController extends Controller
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
 
                  }
+                 $total_act=$dia;
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                  $prep->tamano_cuje=$arreglo['tamano_cuje'];
                  $prep->total_extras=$total_act_ext;
@@ -179,18 +181,19 @@ class PreplanillasController extends Controller
                }
             }
             else{ //Si es por Horas
+              $total_act=$dia;
               $prep->total_actividad=$dia;
               $ext= $arreglo['hora_ext'] * $h_ext_val;
               $prep->hora_ext = $arreglo['hora_ext'];
               $prep->total_extras=$ext;
             }
+            $prep->total_actividad=$dia;
             $sal1=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
             $sal=$sal1*2;
             $prep->salario_acum= $sal;
             $subsidio=0;
 
             $prep->save();
-            $subs=0;
             return "Agregada! 333";
           }
         }
