@@ -326,7 +326,7 @@ class PlanillasController extends Controller
                  $salario=$trab->salario_acum;
                  $salario_tot += $salario;
                  $alim=$trab->alimentacion;
-                 $alim_tot += $alim;
+                 $alim_tot += $dias*$alim;
                  $vac= $trab->vacaciones;
                  $prestamo+= $trab->prestamo;
                 //  $vac_tot += $vac;
