@@ -341,7 +341,7 @@ class PlanillasController extends Controller
                 //  else {//si es por horas
                 //    $tot_dev=$dias * $pago_dia;
                 //  }
-                if($feriados>0 && $feriados<=$dia){// si tiene un feriado
+                if($feriados>0 && $feriados<=$dias){// si tiene un feriado
                   $dias=$dias-1;
                 }
                 elseif ($feriados>=($dia*2)) {
