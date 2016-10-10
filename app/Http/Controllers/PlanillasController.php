@@ -204,7 +204,6 @@ class PlanillasController extends Controller
       $sum_inss_lab+=$trab['inss'];
       $sum_prestam+=$trab['prestamos'];
       $sum_inss_pat+=$trab['inss_patronal'];
-
     }
     $totales=  [
        "sum_tot_recib"=>round($sum_tot_recib,2),
@@ -409,9 +408,11 @@ class PlanillasController extends Controller
 
               if($feriados>0 && $feriados<=$dias){// si tiene un feriado
                 $dias=$dias-1;
+                $alim_tot=$alim_tot-$alim_var;
               }
               elseif ($feriados>=($dias*2)) {
                 $dias=$dias-2;
+                $alim_tot=$alim_tot-($alim_var*2);
               }
              $array = [
                "id_trab"=>round($id_trab,2),
