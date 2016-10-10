@@ -21,31 +21,7 @@ class PlanillasController extends Controller
      return $data;
   }
   public function inss_catorcenal(Request $request){
-    $peticion=$request->all();
-    $tot=array();
-    $peticion=[
-      "fecha_ini"=>'2016-01-01',
-      'fecha_fin'=>'2017-01-01',
-    ];
-    $datas =$this->calculo_planilla($peticion);
-    foreach ($datas as $data) {
-      $id=$data['id_trab'];
-      $trabajador= Trabajador::find($id);
-      $sep_nombre=explode(' ', $trabajador->nombre);
-      $sep_ape=explode(' ', $trabajador->apellidos);
-      $nombre="'".$sep_nombre[0];
-      $apellido="'".$sep_ape[0];
 
-      $array=[
-        "nss"=>$trabajador->nss,
-        "pnombre"=>$nombre,
-        "papellido"=>$apellido,
-        "t_devengado"=>$data['salario_'],
-
-      ];
-      $tot[]=$array;
-    }
-    return $tot;
   }
 
   public function reporte_planilla(Request $request){
@@ -84,6 +60,31 @@ class PlanillasController extends Controller
       $pdf->setPaper('a4', 'landscape');
       return $pdf->stream('invoice');
       return $pdf->stream();
+    }
+    elseif ($funcion == 'reporte_inss') {
+      $peticion=$request->all();
+      $tot=array();
+      $datas =$this->calculo_planilla($peticion);
+      foreach ($datas as $data) {
+        $id=$data['id_trab'];
+        $trabajador= Trabajador::find($id);
+        $sep_nombre=explode(' ', $trabajador->nombre);
+        $sep_ape=explode(' ', $trabajador->apellidos);
+        $nombre="'".$sep_nombre[0];
+        $apellido="'".$sep_ape[0];
+
+        $array=[
+          "nss"=>$trabajador->nss,
+          "pnombre"=>$nombre,
+          "papellido"=>$apellido,
+          "t_devengado"=>$data['salario_'],
+
+        ];
+        $tot[]=$array;
+      }
+      return view('inss_catorcenal')->with('data',$tot);
+      return $tot;
+
     }
   }
   public function billetes(Request $request){
@@ -243,7 +244,7 @@ class PlanillasController extends Controller
       $valor_dia= $variable->sal_diario;
       $cuje_grand= $variable->cuje_grand;
       $cuje_peq= $variable->cuje_peq;
-      $vacaciones= ($variable->vacaciones)/100;
+      $vacaciones=$variable->vacaciones/100;
       $pago_dia=$variable->sal_diario;
     }
 
