@@ -3,14 +3,6 @@
 -->
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
 
-  <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
-    <h1>Listado de Fincas</h1>
-    <form>
-      <div class="form-group">
-        <a href="" data-ui-sref="/fincas.nueva" class="btn btn-default btn-primary">Nueva</a>
-      </div>
-    </form>
-  </div> -->
   <div class="panel panel-primary">
     <div class="panel-heading">
       <h1 class="text-center">FINCAS</h1>
@@ -31,7 +23,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-wrapper">
-    <div class="panel panel-primary" data-ng-repeat="nfincas in nuevas_Fincas | orderBy: '-id_finca'">
+    <div class="panel panel-primary" data-ng-repeat="nfincas in nuevas_Fincas"><!-- | orderBy: '-id_finca'-->
       <div class="panel-heading">
         <h4 class="panel-title"> <% nfincas.id_finca %> - <% nfincas.nombre%> </h4>
       </div>
@@ -41,48 +33,43 @@
         <form class="list-group-item">
           <div class="form-group">
             <label for="actividad" class="control-label">Nueva Actividad</label>
-            <!-- <input type="hidden" class="form-control"  data-ng-model="actividadSaveData.id_finca" data-ng-value="<% nfincas.id_finca %>" ng-init="actividadSaveData.id_finca = nfincas.id_finca"> -->
-            <input type="text" class="form-control"  data-ng-model="actividadSaveData.nombre">
+            <input type="text" class="form-control form-act">
           </div>
           <div class="fom-group">
             <button class="btn btn-default btn-primary" data-ng-click="actividadSave(nfincas.id_finca)">registrar</button>
-            <i id="actSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
-            <span id="exitoact" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
-            <span id="erroract" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
+            <i id="actSpinner" class="fa fa-spinner fa-pulse fa-lg actSpinner" style="color:blue; display:none;"></i>
+            <span class="exitoact" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
+            <span class="erroract" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
           </div>
         </form>
       </ul>
 
-       <ul class="list-group col-sm-3 col-md-3" data-ng-repeat="listas in nfincas.actividades track by $index">
-         <li class="list-group-item active"> <% listas.id_actividad %> - <% listas.nombre_actividad %> - <% $index %> </li>
-         <li class="list-group-item" data-ng-repeat="lavar in listas.labores track by $index">
-           <% lavar.nombre %> - <% lavar.tipo_labor %>
-           <span class="badge badge-danger" data-ng-click="delLab(nfincas.id_finca,$parent.$index ,$index, lavar.id)"> <i class="glyphicon glyphicon-minus"></i> </span>
-         </li>
-         <li class="list-group-item">
-
-           <div class="input-group">
-             <!-- <input type="hidden" data-ng-model="laborSaveData.id_finca" data-ng-value="nfincas.id_finca" data-ng-init="laborSaveData.id_finca = nfincas.id_finca"> -->
-             <!-- <input type="hidden" data-ng-model="laborSaveData.id_actividad" data-ng-value="listas.id_actividad" data-ng-init="laborSaveData.id_actividad = listas.id_actividad"> -->
-             <input class="form-control input-sm"  data-ng-model="laborSaveData.nombre" placeholder="registrar labor"></input>
-
-             <span class="input-group-addon"  data-toggle="tooltip" data-placement="bottom" title="marcar si es labor de produccion | desmarcar si es labor por hora">
-               <input class="chklabor" type="checkbox">
-             </span>
+      <ul class="list-group col-sm-3 col-md-3" data-ng-repeat="listas in nfincas.actividades track by $index">
+        <li class="list-group-item active"> <% listas.nombre_actividad %> </li>
+        <li class="list-group-item" data-ng-repeat="lavar in listas.labores track by $index">
+          <% lavar.nombre %> - <% lavar.tipo_labor %>
+          <span class="badge badge-danger" data-ng-click="delLab(nfincas.id_finca,$parent.$index ,$index, lavar.id)"> <i class="glyphicon glyphicon-minus"></i> </span>
+        </li>
+        <li class="list-group-item">
+          <div class="input-group">
+            <input class="form-control input-sm"  data-ng-model="laborSaveData.nombre" placeholder="registrar labor"></input>
+            <span class="input-group-addon"  data-toggle="tooltip" data-placement="bottom" title="marcar si es labor de produccion | desmarcar si es labor por hora">
+              <input class="chklabor" type="checkbox">
+            </span>
             <div class="input-group-btn">
               <button class="btn btn-default btn-sm" type="button" data-ng-click="laborSave(listas.id_actividad, nfincas.id_finca, $index )"><i class="glyphicon glyphicon-plus"></i></button>
             </div>
           </div>
-         </li>
-       </ul>
+        </li>
+      </ul>
 
-        <ul class="list-group col-sm-3 col-md-3">
-          <li class="list-group-item active">
-            Lotes
-            <span class="badge badge-danger" data-ng-click="loteSave(nfincas.id_finca)"> <i class="glyphicon glyphicon-plus"></i>
-          </li>
-          <li class="list-group-item" data-ng-repeat="lotes in nfincas.lotes track by $index"> <% lotes.lote %> </li>
-        </ul>
+      <ul class="list-group col-sm-3 col-md-3">
+        <li class="list-group-item active">
+          Lotes
+          <span class="badge badge-danger" data-ng-click="loteSave(nfincas.id_finca)"> <i class="glyphicon glyphicon-plus"></i>
+        </li>
+        <li class="list-group-item" data-ng-repeat="lotes in nfincas.lotes track by $index"> <% lotes.lote %> </li>
+      </ul>
 
       </div>
     </div>

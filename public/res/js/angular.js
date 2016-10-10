@@ -224,7 +224,7 @@
 			});
 		}
 	  s.fincaSave = function(){
-	  	console.log(s.fincaSaveData);
+	  	//console.log(s.fincaSaveData);
 
 			$('#fincaSpinner').css("display", "inline-block");
 
@@ -248,29 +248,39 @@
 			});
 	  }
 		s.actividadSave = function(idfinca){
+			var $formAct = $(".form-act");
+
 			s.actividadSaveData.id_finca = idfinca;
-			console.log(s.actividadSaveData);
-			//console.log(parametro);
-			$('#actSpinner').css("display", "inline-block");
-			ar.save({data:s.actividadSaveData}, function(res) {
-				console.log(res);
-				//l.path('/fincas');
-				$('.form-control').val('');
-				s.nuevas_Fincas[idfinca-1].actividades.push(res);
-				$('#actSpinner').css("display", "none");
-				$('#exitoact').css("display","inline");
-				setTimeout(function(){
-					$('#exitoact').css("display","none");
-				},3000);
-				s.lasactividades = ar.query();
-			},function(err){
-				console.log(err.status);
-				$('#actSpinner').css("display", "none");
-				$('#erroract').css("display","block");
-				setTimeout(function(){
-					$('#erroract').css("display","none");
-				},3000)
-			});
+			s.actividadSaveData.nombre = $formAct[idfinca-1].value;
+
+			if(s.actividadSaveData.nombre == "" || s.actividadSaveData.nombre.length == 0){
+				$formAct[idfinca-1].parentNode.className += " has-error";
+				//console.log($formAct[idfinca-1].parentNode);
+			} else {
+				$(".form-group").removeClass(" has-error");
+				var spinners = document.getElementsByClassName('actSpinner');
+				var successAlert = document.getElementsByClassName('exitoact');
+				var errorAlert = document.getElementsByClassName('erroract');
+
+				spinners[idfinca-1].style.display = "inline-block";
+
+				ar.save({data:s.actividadSaveData}, function(res) {
+					$('.form-control').val('');
+					s.nuevas_Fincas[idfinca-1].actividades.push(res);
+					spinners[idfinca-1].style.display = "none";
+					successAlert[idfinca-1].style.display = "inline";
+					setTimeout(function(){
+						successAlert[idfinca-1].style.display = "none";
+					},3000);
+				},function(err){
+					console.log(err.status);
+					spinners[idfinca-1].style.display = "none";
+					errorAlert[idfinca-1].style.display = "block";
+					setTimeout(function(){
+						errorAlert[idfinca-1].style.display = "none";
+					},3000)
+				});
+			}
 		}
 		s.laborSave = function(idactividad, idfinca, indice){
 			s.laborSaveData.id_actividad = idactividad;
