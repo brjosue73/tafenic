@@ -318,6 +318,7 @@ class PlanillasController extends Controller
             //  $alim_tot=$alim_tot-($alim_var*2);
             //  $tot_dev=$tot_dev-$feriados;
            }
+           $feriados=0;
              foreach ($trabs as $trab) {
                  $inss_camp=$trab['inss_campo'];
 
