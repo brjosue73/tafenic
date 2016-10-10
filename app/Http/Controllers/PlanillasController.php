@@ -299,6 +299,10 @@ class PlanillasController extends Controller
                $cant_septimos=2;
              }
            }
+           foreach ($trabs as $trab) {
+             $feriados+=$trab->feriados;
+
+           }
 
 
            $tot_sept=$cant_septimos*$valor_dia;
