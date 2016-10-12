@@ -630,6 +630,16 @@
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.RplillaQSendData = {};
+		s.delQuince = function(id){
+			console.log(id);
+			h.post('/eliminar_quincenal', id)
+			.success(function(data) {
+				console.log(data);
+			})
+			.error(function(err){
+				console.log(err);
+			})
+		}
 		s.getPlanillaRQ = function() {
 			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
 			//plr.query();

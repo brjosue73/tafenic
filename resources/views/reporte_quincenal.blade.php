@@ -37,6 +37,7 @@
           </tr>
         </thead>
         <tbody>
+
           @foreach ($data as $dat)
           <tr>
             <td> {{ $dat['inss']}} </td>
