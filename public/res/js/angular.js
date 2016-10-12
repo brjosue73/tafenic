@@ -630,16 +630,6 @@
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.RplillaQSendData = {};
-		s.delQuince = function(id){
-			console.log(id);
-			h.post('/eliminar_quincenal',{id:id} )
-			.success(function(data) {
-				console.log(data);
-			})
-			.error(function(err){
-				console.log(err);
-			})
-		}
 		s.getPlanillaRQ = function() {
 			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
 			//plr.query();
@@ -648,6 +638,20 @@
 				s.reporQuinc = data;
 				s.totalesQ = data[data.length - 1];
 			});
+		}
+		s.delQuince = function(id, index, reporteQ){
+			//console.log(id, index);
+			//s.reporQuinc.splice(index, 1);
+			h.post('/eliminar_quincenal',{id:id} )
+			.success(function(data) {
+				console.log(data);
+				s.reporQuinc = s.reporQuinc.filter(function(element){
+					return element.id !== reporteQ.id;
+				});
+			});
+			.error(function(err){
+				console.log(err);
+			})
 		}
 	}]);
 	app.controller('planillaQController',['$scope','$http','fincaResource', function(s,h,fr){
