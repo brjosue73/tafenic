@@ -46,8 +46,8 @@ class QuincenalesController extends Controller
           //$data =$this->billetes($peticion);
           $planillas=$this->planilla_quincenal($peticion);
           $data =$this->calcular_billetes($planillas);
-          // return $data["total_individual"];
-          $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$data['total_individual']));
+          $totales=$data['total_individual'];
+          $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view);
           $pdf->setPaper('a4', 'landscape');

@@ -29,6 +29,7 @@
       </thead>
       <tbody>
 
+
         @foreach($data as $dat)
 
         <tr>
@@ -43,9 +44,7 @@
           <td>{{ $dat['1'] }}</td>
         </tr>
         @endforeach
-        @foreach($totales as $tota)
-                <p>aqui</p> {{ $tota["0"]}}
-        @endforeach
+
 
       </tbody>
     </table>
