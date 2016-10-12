@@ -183,8 +183,8 @@ class QuincenalesController extends Controller
         //return response()->json($planilla);
     }
 
-    public function eliminar($id){
-      $quincenal = Quincenal::find($id);
+    public function eliminar(Request $request){
+      $quincenal = Quincenal::find($request['id']);
       $quincenal->delete();
       return 'Eliminada';
     }
