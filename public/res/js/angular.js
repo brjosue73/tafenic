@@ -648,7 +648,7 @@
 				s.reporQuinc = s.reporQuinc.filter(function(element){
 					return element.id !== reporteQ.id;
 				});
-			});
+			})
 			.error(function(err){
 				console.log(err);
 			})
