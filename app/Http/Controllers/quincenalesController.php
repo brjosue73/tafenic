@@ -264,7 +264,7 @@ class QuincenalesController extends Controller
       $feriados2=$arreglo['feriado_ntrab'];//no cuenta como dia trabajado
       $feriados=$feriados1+$feriados2;
       $feriados_n_trab=$feriados2*$salario_dia;
-      $feriados_trab=($feriados1*$salario_dia)*2;
+      $feriados_trab=($feriados1*$salario_dia);
       $feriado_tot2=$feriados_n_trab+$feriados_trab;
       $feriado_tot=round($feriado_tot2,2);
       $dias_menosfer=$dias_trab;
