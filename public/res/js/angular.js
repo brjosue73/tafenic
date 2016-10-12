@@ -632,7 +632,7 @@
 		s.RplillaQSendData = {};
 		s.delQuince = function(id){
 			console.log(id);
-			h.post('/eliminar_quincenal', id)
+			h.post('/eliminar_quincenal',{id:id} )
 			.success(function(data) {
 				console.log(data);
 			})
