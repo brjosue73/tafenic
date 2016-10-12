@@ -53,6 +53,7 @@ Route::group(['middleware' => 'web'], function () {
 
     Route::post('sobres_quincenal','quincenalesController@sobres_quincenal');
     Route::post('reporte_quincenal','quincenalesController@reporte_quincenal');
+    Route::post('eliminar_quincenal','quincenalesController@eliminar');
 
     Route::post('billetes_quince','quincenalesController@billetes');
     Route::post('editar_quince','quincenalesController@editar_quince');

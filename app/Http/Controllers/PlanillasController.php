@@ -70,8 +70,9 @@ class PlanillasController extends Controller
         $trabajador= Trabajador::find($id);
         $sep_nombre=explode(' ', $trabajador->nombre);
         $sep_ape=explode(' ', $trabajador->apellidos);
-        $nombre="'".$sep_nombre[0];
-        $apellido="'".$sep_ape[0];
+        $nombre=strtoupper("'".$sep_nombre[0]);
+        $apellido=strtoupper("'".$sep_ape[0]);
+
         $fecha=explode('-',$data['fecha_ini']);
         $fecha_act=$fecha[0].'-'.$fecha[1];
         $array=[

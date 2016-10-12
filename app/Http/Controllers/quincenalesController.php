@@ -182,6 +182,14 @@ class QuincenalesController extends Controller
         }
         //return response()->json($planilla);
     }
+
+    public function eliminar($id){
+      $quincenal = Quincenal::find($id);
+      $quincenal->delete();
+      return 'Eliminada';
+    }
+
+
     public function calcular_billetes($planillas){
       foreach ($planillas as $planilla) {
         $nums[]=$planilla['total_pagar'];
