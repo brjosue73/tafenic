@@ -16,8 +16,8 @@ class PlanillasController extends Controller
   public function planilla_general(Request $request){
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-     //$totales=$this->sum_totales($data);
-     //$data[]=$totales;
+     $totales=$this->sum_totales($data);
+     $data[]=$totales;
      return $data;
   }
   public function inss_catorcenal(Request $request){
@@ -70,14 +70,17 @@ class PlanillasController extends Controller
         $trabajador= Trabajador::find($id);
         $sep_nombre=explode(' ', $trabajador->nombre);
         $sep_ape=explode(' ', $trabajador->apellidos);
-        $nombre="'".$sep_nombre[0];
-        $apellido="'".$sep_ape[0];
+        $nombre=strtoupper("'".$sep_nombre[0]);
+        $apellido=strtoupper("'".$sep_ape[0]);
 
+        $fecha=explode('-',$data['fecha_ini']);
+        $fecha_act=$fecha[0].'-'.$fecha[1];
         $array=[
           "nss"=>$trabajador->nss,
           "pnombre"=>$nombre,
           "papellido"=>$apellido,
           "t_devengado"=>$data['salario_'],
+          "fecha_ini"=>$fecha_act,
 
         ];
         $tot[]=$array;
@@ -204,7 +207,6 @@ class PlanillasController extends Controller
       $sum_inss_lab+=$trab['inss'];
       $sum_prestam+=$trab['prestamos'];
       $sum_inss_pat+=$trab['inss_patronal'];
-
     }
     $totales=  [
        "sum_tot_recib"=>round($sum_tot_recib,2),
@@ -275,6 +277,7 @@ class PlanillasController extends Controller
            $septimo=0;
            $otros=0;
            $feriados=0;
+           $feriado_tot=0;
            $tot_dev=0;
            $subsidios=0;
            $cant_horas_ext=0;
@@ -295,14 +298,30 @@ class PlanillasController extends Controller
           $cant_septimos=0;
            if($dias>=6){ //merece por lo menos 1 septimo
              $cant_septimos=1;
-             if($dias>12){//merece 2 septimos
+             if($dias>=12){//merece 2 septimos
                $cant_septimos=2;
              }
            }
+           foreach ($trabs as $trab) {
+             $feriados+=$trab->feriados;
+
+           }
+
 
            $tot_sept=$cant_septimos*$valor_dia;
            /*-------------CALCULO DEL SEPTIMO*/
            /*-------------CALCULO DEL SEPTIMO*/
+           if($feriados>0 && $feriados<=$dias){// si tiene un feriado
+             $dias=$dias-1;
+            //  $alim_tot=$alim_tot-$alim_var;
+            //  $tot_dev=$tot_dev-$feriados;
+           }
+           elseif ($feriados>=($dias*2)) {
+             $dias=$dias-2;
+            //  $alim_tot=$alim_tot-($alim_var*2);
+            //  $tot_dev=$tot_dev-$feriados;
+           }
+           $feriados=0;
              foreach ($trabs as $trab) {
                  $inss_camp=$trab['inss_campo'];
 
@@ -311,7 +330,7 @@ class PlanillasController extends Controller
                  $salario=$trab->salario_acum;
                  $salario_tot += $salario;
                  $alim=$trab->alimentacion;
-                 $alim_tot += $alim;
+                 $alim_tot = $dias*$alim;
                  $vac= $trab->vacaciones;
                  $prestamo+= $trab->prestamo;
                 //  $vac_tot += $vac;
@@ -327,7 +346,8 @@ class PlanillasController extends Controller
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
                  $tot_dev +=$trab['total_actividad'];
-                 $feriados=$trab->feriados;
+                 $feriados+=$trab->feriados;
+                 //$feriado_tot+=$feriados;
                  $subsidios += $trab['subsidios'];
                  $fin_query= Finca::find($trab->id_finca);
                  $finca=$fin_query->nombre;
@@ -344,7 +364,9 @@ class PlanillasController extends Controller
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev2=$tot_basic + $tot_sept + $otros + $feriados;
+
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
+                 //return $vac;
                  $total_acum=round($total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs,2);
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
@@ -361,6 +383,17 @@ class PlanillasController extends Controller
                  $f=0;
                  $c=0;
              }
+
+             if($feriados>0 && $feriados<=$dias){// si tiene un feriado
+              //$alim_tot=$alim_tot-$alim_var;
+              //  $tot_dev=$tot_dev-$feriados;
+             }
+             elseif ($feriados>=($dias*2)) {
+               //$dias=$dias-2;
+              //$alim_tot=$alim_tot-($alim_var*2);
+              //  $tot_dev=$tot_dev-$feriados;
+             }
+
              //return ($inss_patronal." ".$inss_camp);
 
                /**************SEPTIMO**************/
@@ -427,8 +460,8 @@ class PlanillasController extends Controller
                "total_septimo"=>round($tot_sept,2),
                "finca_septimo"=>$finca_mayor,
                "inss_patronal"=>round($inss_pat,2),
-               "fecha_ini"=>round($fecha_ini,2),
-               "fecha_fin"=>round($fecha_fin,2),
+               "fecha_ini"=>$fecha_ini,
+               "fecha_fin"=>($fecha_fin),
                "subsidio"=>round($subsidios,2),
                "otros"=>round($otros,2),
                "feriado"=>round($feriados,2),

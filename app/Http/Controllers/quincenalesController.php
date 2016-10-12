@@ -46,7 +46,8 @@ class QuincenalesController extends Controller
           //$data =$this->billetes($peticion);
           $planillas=$this->planilla_quincenal($peticion);
           $data =$this->calcular_billetes($planillas);
-          $view = \View::make('billetes_quincenal',array('data'=>$data));
+          $totales=$data['total_individual'];
+          $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view);
           $pdf->setPaper('a4', 'landscape');
@@ -181,6 +182,14 @@ class QuincenalesController extends Controller
         }
         //return response()->json($planilla);
     }
+
+    public function eliminar($id){
+      $quincenal = Quincenal::find($id);
+      $quincenal->delete();
+      return 'Eliminada';
+    }
+
+
     public function calcular_billetes($planillas){
       foreach ($planillas as $planilla) {
         $nums[]=$planilla['total_pagar'];
@@ -263,7 +272,7 @@ class QuincenalesController extends Controller
       $feriados2=$arreglo['feriado_ntrab'];//no cuenta como dia trabajado
       $feriados=$feriados1+$feriados2;
       $feriados_n_trab=$feriados2*$salario_dia;
-      $feriados_trab=($feriados1*$salario_dia)*2;
+      $feriados_trab=($feriados1*$salario_dia);
       $feriado_tot2=$feriados_n_trab+$feriados_trab;
       $feriado_tot=round($feriado_tot2,2);
       $dias_menosfer=$dias_trab;

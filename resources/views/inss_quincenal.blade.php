@@ -35,7 +35,7 @@
             <td>{{$dat['pnombre']}}</td>
             <td>{{$dat['papellido']}}</td>
             <td>{{$dat['t_devengado']}}</td>
-            <td></td>
+            <td>03</td>
             <td></td>
             <td></td>
             <td></td>

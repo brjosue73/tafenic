@@ -28,7 +28,10 @@
         </tr>
       </thead>
       <tbody>
+
+
         @foreach($data as $dat)
+
         <tr>
           <td>{{ $dat['0'] }}</td>
           <td class="danger">{{ $dat['500'] }}</td>
@@ -42,6 +45,85 @@
         </tr>
         @endforeach
 
+
+      </tbody>
+    </table>
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr>
+          <th>
+            Denominación
+          </th>
+          <th>
+            Cantidad
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>
+            500
+          </th>
+          <th>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            200
+          </th>
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <th>
+            100
+          </th>
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <th>
+            50
+          </th>
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <th>
+            20
+          </th>
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <th>
+            10
+          </th>
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <th>
+            5
+          </th>
+          <th>
+
+          </th>
+        </tr>
+        <tr>
+          <th>
+            1
+          </th>
+          <th>
+
+          </th>
+        </tr>
       </tbody>
     </table>
   </div>
