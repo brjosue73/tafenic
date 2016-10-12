@@ -16,8 +16,8 @@ class PlanillasController extends Controller
   public function planilla_general(Request $request){
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-     //$totales=$this->sum_totales($data);
-     //$data[]=$totales;
+     $totales=$this->sum_totales($data);
+     $data[]=$totales;
      return $data;
   }
   public function inss_catorcenal(Request $request){
@@ -72,12 +72,14 @@ class PlanillasController extends Controller
         $sep_ape=explode(' ', $trabajador->apellidos);
         $nombre="'".$sep_nombre[0];
         $apellido="'".$sep_ape[0];
-
+        $fecha=explode('-',$data['fecha_ini']);
+        $fecha_act=$fecha[0].'-'.$fecha[1];
         $array=[
           "nss"=>$trabajador->nss,
           "pnombre"=>$nombre,
           "papellido"=>$apellido,
           "t_devengado"=>$data['salario_'],
+          "fecha_ini"=>$fecha_act,
 
         ];
         $tot[]=$array;
@@ -361,7 +363,9 @@ class PlanillasController extends Controller
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev2=$tot_basic + $tot_sept + $otros + $feriados;
+
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
+                 //return $vac;
                  $total_acum=round($total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs,2);
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
@@ -455,8 +459,8 @@ class PlanillasController extends Controller
                "total_septimo"=>round($tot_sept,2),
                "finca_septimo"=>$finca_mayor,
                "inss_patronal"=>round($inss_pat,2),
-               "fecha_ini"=>round($fecha_ini,2),
-               "fecha_fin"=>round($fecha_fin,2),
+               "fecha_ini"=>$fecha_ini,
+               "fecha_fin"=>($fecha_fin),
                "subsidio"=>round($subsidios,2),
                "otros"=>round($otros,2),
                "feriado"=>round($feriados,2),

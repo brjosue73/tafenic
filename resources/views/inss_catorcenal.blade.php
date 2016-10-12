@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -34,16 +34,16 @@
             <td>{{$dat['nss']}}</td>
             <td>{{$dat['pnombre']}}</td>
             <td>{{$dat['papellido']}}</td>
+            <td>2</td>
+            <td>03</td>
+            <td>{{$dat['fecha_ini']}}-01 </td>
             <td>{{$dat['t_devengado']}}</td>
+            <td>{{$dat['t_devengado']}}</td>
+            <td>0</td>
             <td></td>
+            <td>0</td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{$dat['nss']}};{{$dat['pnombre']}};{{$dat['papellido']}};2;3;</td>
           </tr>
           @endforeach
 
