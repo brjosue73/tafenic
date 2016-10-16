@@ -630,6 +630,7 @@
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.RplillaQSendData = {};
+		s.contador = 0;
 		s.getPlanillaRQ = function() {
 			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
 			//plr.query();
@@ -656,7 +657,6 @@
 	}]);
 	app.controller('planillaQController',['$scope','$http','fincaResource', function(s,h,fr){
 		s.qButton = "Guardar";
-
 		s.pqSendData = {};
 
 		s.pqFincas = fr.query();

@@ -51,7 +51,7 @@
       <table class="table table-striped table-bordered table-hover table-condensed">
         <thead>
           <tr class="active">
-
+            <th>N°</th>
             <th>N° INSS</th>
             <th>Nombre de Trab.</th>
             <th>cargo</th>
@@ -74,7 +74,7 @@
         </thead>
         <tbody>
           <tr data-ng-repeat="reporteQ in reporQuinc | orderBy: 'nombre' ">
-
+            <td> <% $index + 1 %></td>
             <td> <% reporteQ.inss %> </td>
             <td> <% reporteQ.nombre %> </td>
             <td> <% reporteQ.cargo %> </td>
@@ -110,6 +110,8 @@
             <td> <% totalesQ.sum_sum_pagar %> </td>
             <td> <% totalesQ.sum_inss_pat %> </td>
             <td> <% totalesQ.sum_inatec %> </td>
+            <td> INATEC </td>
+            <td> ACCION </td>
           </tr>
         </tbody>
       </table>
