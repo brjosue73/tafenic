@@ -13,8 +13,11 @@ class QuincenalesController extends Controller
             $data =$this->planilla_quincenal($peticion);
             $totales=$this->sum_totales($data);
             $data[]=$totales;
+
             return $data;
+
     }
+
     public function reporte_quincenal(Request $request){
       $funcion=$request['funcion'];
       if ($funcion == 'Generar Imprimible')
@@ -22,6 +25,8 @@ class QuincenalesController extends Controller
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
         $totales=$this->sum_totales($data);
+
+
         $view = \View::make('reporte_quincenal',array('data'=>$data,'totales'=>$totales)); // recuerden que data es la variable del arreglo
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
