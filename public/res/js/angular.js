@@ -624,13 +624,31 @@
 			.success(function(data) {
 				s.reporfincTot = data;
 			  s.totales = data[data.length - 1];
-				console.log(s.totales);
+				//console.log(s.totales);
+			});
+		}
+
+		s.delCatorce = function(id, index, fechaini, fechafin) {
+			s.reporTrab = {
+				id_trab: id,
+				fecha_ini: fechaini,
+				fecha_fin: fechafin
+			}
+			s.nombre14 = "";
+			//console.log(id, index, fechaini, fechafin);
+			h.post('prep_trab',s.reporTrab)
+			.success(function(data){
+				s.trab14 = data;
+				console.log(data);
+				s.nombre14 = s.trab14[s.trab14.length-1].nombre;
+			})
+			.error(function(err){
+				console.log(err);
 			});
 		}
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.RplillaQSendData = {};
-		s.contador = 0;
 		s.getPlanillaRQ = function() {
 			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
 			//plr.query();
