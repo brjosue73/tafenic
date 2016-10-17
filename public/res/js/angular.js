@@ -622,13 +622,16 @@
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
-				s.reporfincTot = data;
+				s.reporfincTot = [];
+				for (var i = 0; i < data.length - 1; i++) {
+					s.reporfincTot.push(data[i]);
+				}
 			  s.totales = data[data.length - 1];
 				//console.log(s.totales);
 			});
 		}
 
-		s.delCatorce = function(id, index, fechaini, fechafin) {
+		s.revision = function(id, index, fechaini, fechafin) {
 			s.reporTrab = {
 				id_trab: id,
 				fecha_ini: fechaini,
@@ -638,13 +641,26 @@
 			//console.log(id, index, fechaini, fechafin);
 			h.post('prep_trab',s.reporTrab)
 			.success(function(data){
-				s.trab14 = data;
-				console.log(data);
-				s.nombre14 = s.trab14[s.trab14.length-1].nombre;
+				s.trab14data = data;
+				s.trab14 = [];
+				for (var i = 0; i < s.trab14data.length - 1; i++) {
+					s.trab14.push(s.trab14data[i]);
+				}
+				s.nombre14 = data[data.length-1].nombre;
 			})
 			.error(function(err){
 				console.log(err);
 			});
+		}
+		s.delCatorce = function (id, index){
+			//console.log(id_trab, index);
+			h.delete('preplanilla/'+id)
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(err){
+				console.log(err);
+			})
 		}
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){

@@ -13,19 +13,19 @@
         <label for="" class="control-label">Hasta: </label>
         <input name="fecha_fin" type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2 col-md-offset-1">
         <br>
         <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanilla()" value="Generar">
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Generar Imprimible">
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Generar sobres">
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Billetes">
       </div>
@@ -98,13 +98,14 @@
 
 
           <td> <% reporfincTota.finca_septimo %> </td>
-          <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="delCatorce(reporfincTota.id_trab, $index, reporfincTota.fecha_ini, reporfincTota.fecha_fin)">Revisar</a></td>
+          <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="revision(reporfincTota.id_trab, $index, reporfincTota.fecha_ini, reporfincTota.fecha_fin)">Revisar</a></td>
           <!-- <td> <% reporfincTota.aguinaldo %> </td>
           <td> <% reporfincTota.vacaciones %> </td> -->
 
         </tr>
         <tr>
           <td colspan="2">Total</td>
+          <td></td>
           <td></td>
           <td><% totales.sum_dias_trab %></td>
           <td><% totales.sum_dev1 %></td>
@@ -169,7 +170,7 @@
                 <td> <% rTrab14.hora_ext %> </td>
                 <td> <% rTrab14.otros %> </td>
                 <td> <% rTrab14.prestamo %> </td>
-                <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="delCatorce(rTrab14.id_trab, $index, rTrab14.fecha_ini, rTrab14.fecha_fin)">eliminar</a></td>
+                <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="delCatorce(rTrab14.id, $index)">eliminar</a></td>
               </tr>
             </tbody>
           </table>
