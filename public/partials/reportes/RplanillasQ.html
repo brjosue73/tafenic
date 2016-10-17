@@ -102,22 +102,21 @@
           <tr>
             <td colspan="4">Total</td>
 
-            
+
             <td> <% totalesQ.sum_dias %> </td>
-            <td> <% totalesQ.sum_basico %> </td>
-            <td> <% totalesQ.sum_feriados %> </td>
-            <td> <% totalesQ.sum_otros %> </td>
-            <td> <% totalesQ.sum_subsidios %> </td>
+            <td> <% totalesQ.sum_basico | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_feriados | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_otros | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_subsidios | currency: 'C$' %> </td>
             <td> <% totalesQ.sum_h_ext %> </td>
-            <td> <% totalesQ.sum_tot_hext %> </td>
-            <td> <% totalesQ.sum_dev %> </td>
-            <td> <% totalesQ.sum_inss_lab %> </td>
-            <td> <% totalesQ.sum_ir %> </td>
-            <td> <% totalesQ.sum_prestamos %> </td>
-            <td> <% totalesQ.sum_sum_pagar %> </td>
-            <td> <% totalesQ.sum_inss_pat %> </td>
-            <td> <% totalesQ.sum_inatec %> </td>
-            <td>  </td>
+            <td> <% totalesQ.sum_tot_hext | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_dev | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_inss_lab | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_ir | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_prestamos | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_sum_pagar | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_inss_pat | currency: 'C$' %> </td>
+            <td> <% totalesQ.sum_inatec | currency: 'C$' %> </td>
             <td>  </td>
           </tr>
         </tbody>
