@@ -156,7 +156,7 @@ class QuincenalesController extends Controller
        'sum_inatec'=>$sum_inatec,
        'sum_inss_lab'=>$sum_inss_lab,
        'sum_inss_pat'=>$sum_inss_pat,
-       'sum_ir'=>$sum_ir,
+       'sum_ir'=>round($sum_ir,2),
        'sum_otros'=>$sum_otros,
        'sum_prestamos'=>$sum_prestamos,
        'sum_salario'=>$sum_salario,
