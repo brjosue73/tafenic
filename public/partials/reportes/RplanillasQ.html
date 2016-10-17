@@ -83,19 +83,19 @@
             <td> <% reporteQ.nombre %> </td>
             <td> <% reporteQ.cargo %> </td>
             <td> <% reporteQ.dias_trab %> </td>
-            <td> <% reporteQ.basico_real | currency %> </td>
-            <td> <% reporteQ.feriados | currency %> </td>
-            <td> <% reporteQ.otros | currency %> </td>
-            <td> <% reporteQ.subsidios | currency %> </td>
+            <td> <% reporteQ.basico_real | currency: ' ' %> </td>
+            <td> <% reporteQ.feriados | currency: ' ' %> </td>
+            <td> <% reporteQ.otros | currency: ' ' %> </td>
+            <td> <% reporteQ.subsidios | currency: ' ' %> </td>
             <td> <% reporteQ.horas_extra %> </td>
-            <td> <% reporteQ.tot_h_ext | currency %> </td>
-            <td> <% reporteQ.devengado | currency %> </td>
-            <td> <% reporteQ.inss_laboral | currency %></td>
-            <td> <% reporteQ.ir | currency %></td>
-            <td> <% reporteQ.prestamos | currency %> </td>
-            <td> <% reporteQ.total_pagar | currency %></td>
-            <td> <% reporteQ.inss_patronal | currency %> </td>
-            <td> <% reporteQ.inatec | currency %> </td>
+            <td> <% reporteQ.tot_h_ext | currency: ' ' %> </td>
+            <td> <% reporteQ.devengado | currency: ' ' %> </td>
+            <td> <% reporteQ.inss_laboral | currency: ' ' %></td>
+            <td> <% reporteQ.ir | currency: ' ' %></td>
+            <td> <% reporteQ.prestamos | currency: ' ' %> </td>
+            <td> <% reporteQ.total_pagar | currency: ' ' %></td>
+            <td> <% reporteQ.inss_patronal | currency: ' ' %> </td>
+            <td> <% reporteQ.inatec | currency: ' ' %> </td>
             <td><a href="" data-ng-click="delQuince(reporteQ.id, $index, reporteQ)">Eliminar</a></td>
 
           </tr>
@@ -104,19 +104,19 @@
 
 
             <td> <% totalesQ.sum_dias %> </td>
-            <td> <% totalesQ.sum_basico | currency %> </td>
-            <td> <% totalesQ.sum_feriados | currency %> </td>
-            <td> <% totalesQ.sum_otros | currency %> </td>
-            <td> <% totalesQ.sum_subsidios | currency %> </td>
+            <td> <% totalesQ.sum_basico | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_feriados | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_otros | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_subsidios | currency: ' ' %> </td>
             <td> <% totalesQ.sum_h_ext %> </td>
-            <td> <% totalesQ.sum_tot_hext | currency %> </td>
-            <td> <% totalesQ.sum_dev | currency %> </td>
-            <td> <% totalesQ.sum_inss_lab | currency %> </td>
-            <td> <% totalesQ.sum_ir | currency %> </td>
-            <td> <% totalesQ.sum_prestamos | currency %> </td>
-            <td> <% totalesQ.sum_sum_pagar | currency %> </td>
-            <td> <% totalesQ.sum_inss_pat | currency %> </td>
-            <td> <% totalesQ.sum_inatec | currency %> </td>
+            <td> <% totalesQ.sum_tot_hext | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_dev | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_inss_lab | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_ir | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_prestamos | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_sum_pagar | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_inss_pat | currency: ' ' %> </td>
+            <td> <% totalesQ.sum_inatec | currency: ' ' %> </td>
             <td>  </td>
           </tr>
         </tbody>
