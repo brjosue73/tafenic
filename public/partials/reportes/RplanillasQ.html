@@ -44,6 +44,10 @@
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Billetes">
       </div>
 
+      <div class="form-group col-md-2">
+        <br>
+        <input type="submit" class="btn btn-default btn-primary" name="funcion" value="reporte_inss">
+      </div>
     </form>
   </div>
 
@@ -86,13 +90,13 @@
             <td> <% reporteQ.horas_extra %> </td>
             <td> <% reporteQ.tot_h_ext %> </td>
             <td> <% reporteQ.devengado %> </td>
-            <td><% reporteQ.inss_laboral %></td>
-            <td><% reporteQ.ir %></td>
+            <td> <% reporteQ.inss_laboral %></td>
+            <td> <% reporteQ.ir %></td>
             <td> <% reporteQ.prestamos %> </td>
-            <td><% reporteQ.total_pagar %></td>
+            <td> <% reporteQ.total_pagar %></td>
             <td> <% reporteQ.inss_patronal %> </td>
             <td> <% reporteQ.inatec %> </td>
-            <td><a href="" data-ng-click="delQuince(reporteQ.id, $index, reporteQ)">eliminar</a></td>
+            <td><a href="" data-ng-click="delQuince(reporteQ.id, $index, reporteQ)">REVISAR</a></td>
 
           </tr>
           <tr>
