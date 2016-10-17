@@ -670,7 +670,10 @@
 			//plr.query();
 			h.post('/planilla_quincenal',s.RplillaQSendData)
 			.success(function(data) {
-				s.reporQuinc = data;
+				s.reporQuinc = [];
+				for (var i = 0; i < data.length - 1; i++) {
+					s.reporQuinc.push(data[i]);
+				}
 				s.totalesQ = data[data.length - 1];
 			});
 		}
