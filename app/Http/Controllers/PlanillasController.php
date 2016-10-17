@@ -17,7 +17,12 @@ class PlanillasController extends Controller
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
      $totales=$this->sum_totales($data);
+     usort($data, function($a, $b) {
+       return strcmp($a["nombre"], $b["nombre"]);
+         return $a['order'] < $b['order']?1:-1;
+     });
      $data[]=$totales;
+
      return $data;
   }
   public function inss_catorcenal(Request $request){
@@ -30,6 +35,10 @@ class PlanillasController extends Controller
     if ($funcion == 'Generar Imprimible')
     {
     $data =$this->calculo_planilla($peticion);
+    usort($data, function($a, $b) {
+      return strcmp($a["nombre"], $b["nombre"]);
+        return $a['order'] < $b['order']?1:-1;
+    });
     $totales=$this->sum_totales($data);
     $view = \View::make('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
     $pdf = \App::make('dompdf.wrapper');
@@ -41,6 +50,10 @@ class PlanillasController extends Controller
     elseif ($funcion == 'Generar sobres')
     {
       $data =$this->calculo_planilla($peticion);
+      usort($data, function($a, $b) {
+        return strcmp($a["nombre"], $b["nombre"]);
+          return $a['order'] < $b['order']?1:-1;
+      });
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
@@ -53,6 +66,10 @@ class PlanillasController extends Controller
       $peticion=$request->all();
       //$data =$this->billetes($peticion);
       $planillas=$this->calculo_planilla($peticion);
+      usort($planillas, function($a, $b) {
+        return strcmp($a["nombre"], $b["nombre"]);
+          return $a['order'] < $b['order']?1:-1;
+      });
       $data =$this->calcular_billetes($planillas);
       $view = \View::make('billetes_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
@@ -65,6 +82,10 @@ class PlanillasController extends Controller
       $peticion=$request->all();
       $tot=array();
       $datas =$this->calculo_planilla($peticion);
+      usort($data, function($a, $b) {
+        return strcmp($a["nombre"], $b["nombre"]);
+          return $a['order'] < $b['order']?1:-1;
+      });
       foreach ($datas as $data) {
         $id=$data['id_trab'];
         $trabajador= Trabajador::find($id);
@@ -477,10 +498,13 @@ class PlanillasController extends Controller
           $trab=$id_trab;
         }
       }
-
-
       return $trabajadores;
+  }
 
+  public function eliminar(Request $request){
+    $catorcenal = Preplanilla::find($request['id']);
+    $catorcenal->delete();
+    return 'Eliminada';
   }
 
 
