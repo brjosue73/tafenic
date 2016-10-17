@@ -43,6 +43,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('resp_finca',"TrabajadoresController@resp_finca");
     Route::get('campo',"TrabajadoresController@campo");
     Route::get('trab_quinc',"TrabajadoresController@quincenal");
+    Route::post('eliminar_catorcenal','PlanillasController@eliminar');
 
     Route::resource('acumulados','AcumuladosController');
 
