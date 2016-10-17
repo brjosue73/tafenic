@@ -2,7 +2,7 @@
   REPORTE PLANILLA QUINCENAL
 -->
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta gris m-top_dow">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
     <h1>Planilla Quincenal</h1>
     <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12" method="post" action="reporte_quincenal">
 
@@ -24,26 +24,30 @@
         </select>
       </div>
 
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2 col-md-offset-1">
         <br>
         <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanillaRQ()" value="Generar">
       </div>
 
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Generar Imprimible">
       </div>
 
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Generar sobres">
       </div>
 
-      <div class="form-group col-md-3">
+      <div class="form-group col-md-2">
         <br>
         <input type="submit" class="btn btn-default btn-primary" name="funcion" value="Billetes">
       </div>
 
+      <div class="form-group col-md-2">
+        <br>
+        <input type="submit" class="btn btn-default btn-primary" name="funcion" value="reporte_inss">
+      </div>
     </form>
   </div>
 
@@ -51,7 +55,7 @@
       <table class="table table-striped table-bordered table-hover table-condensed">
         <thead>
           <tr class="active">
-
+            <th>N°</th>
             <th>N° INSS</th>
             <th>Nombre de Trab.</th>
             <th>cargo</th>
@@ -69,12 +73,12 @@
             <th>total_pagar</th>
             <th>INSS Patronal</th>
             <th>INATEC</th>
-
+            <th>acción</th>
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-repeat="reporteQ in reporQuinc | orderBy:nombres">
-
+          <tr data-ng-repeat="reporteQ in reporQuinc | orderBy: 'nombre' ">
+            <td> <% $index + 1 %></td>
             <td> <% reporteQ.inss %> </td>
             <td> <% reporteQ.nombre %> </td>
             <td> <% reporteQ.cargo %> </td>
@@ -86,12 +90,13 @@
             <td> <% reporteQ.horas_extra %> </td>
             <td> <% reporteQ.tot_h_ext %> </td>
             <td> <% reporteQ.devengado %> </td>
-            <td><% reporteQ.inss_laboral %></td>
-            <td><% reporteQ.ir %></td>
+            <td> <% reporteQ.inss_laboral %></td>
+            <td> <% reporteQ.ir %></td>
             <td> <% reporteQ.prestamos %> </td>
-            <td><% reporteQ.total_pagar %></td>
+            <td> <% reporteQ.total_pagar %></td>
             <td> <% reporteQ.inss_patronal %> </td>
             <td> <% reporteQ.inatec %> </td>
+            <td><a href="" data-ng-click="delQuince(reporteQ.id, $index, reporteQ)">REVISAR</a></td>
 
           </tr>
           <tr>
@@ -109,6 +114,8 @@
             <td> <% totalesQ.sum_sum_pagar %> </td>
             <td> <% totalesQ.sum_inss_pat %> </td>
             <td> <% totalesQ.sum_inatec %> </td>
+            <td> INATEC </td>
+            <td> ACCION </td>
           </tr>
         </tbody>
       </table>

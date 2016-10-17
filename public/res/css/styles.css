@@ -38,9 +38,9 @@ li {
 .table-wrapper {
   padding: 0; }
 
-.view_body {
-  overflow: scroll; }
-
+/*.view_body {
+  overflow: scroll;
+}*/
 #fincabanner {
   height: 150px;
   background-color: black;
@@ -49,6 +49,12 @@ li {
   background: url("/res/img/campoTabaco.jpg") no-repeat;
   background-size: 100%;
   background-position: 0 0; }
+
+#uncatorcenal .modal-dialog {
+  width: 80%; }
+
+#uncatorcenal .modal-body {
+  overflow: scroll; }
 
 .loggin-wrapper {
   background-image: url(../img/campoTabaco.jpg);

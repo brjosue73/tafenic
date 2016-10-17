@@ -622,10 +622,45 @@
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
-				s.reporfincTot = data;
+				s.reporfincTot = [];
+				for (var i = 0; i < data.length - 1; i++) {
+					s.reporfincTot.push(data[i]);
+				}
 			  s.totales = data[data.length - 1];
-				console.log(s.totales);
+				//console.log(s.totales);
 			});
+		}
+
+		s.revision = function(id, index, fechaini, fechafin) {
+			s.reporTrab = {
+				id_trab: id,
+				fecha_ini: fechaini,
+				fecha_fin: fechafin
+			}
+			s.nombre14 = "";
+			//console.log(id, index, fechaini, fechafin);
+			h.post('prep_trab',s.reporTrab)
+			.success(function(data){
+				s.trab14data = data;
+				s.trab14 = [];
+				for (var i = 0; i < s.trab14data.length - 1; i++) {
+					s.trab14.push(s.trab14data[i]);
+				}
+				s.nombre14 = data[data.length-1].nombre;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
+		s.delCatorce = function (id, index){
+			//console.log(id_trab, index);
+			h.delete('preplanilla/'+id)
+			.success(function(data){
+				console.log(data);
+			})
+			.error(function(err){
+				console.log(err);
+			})
 		}
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
@@ -639,10 +674,23 @@
 				s.totalesQ = data[data.length - 1];
 			});
 		}
+		s.delQuince = function(id, index, reporteQ){
+			//console.log(id, index);
+			//s.reporQuinc.splice(index, 1);
+			h.post('/eliminar_quincenal',{id:id} )
+			.success(function(data) {
+				console.log(data);
+				s.reporQuinc = s.reporQuinc.filter(function(element){
+					return element.id !== reporteQ.id;
+				});
+			})
+			.error(function(err){
+				console.log(err);
+			})
+		}
 	}]);
 	app.controller('planillaQController',['$scope','$http','fincaResource', function(s,h,fr){
 		s.qButton = "Guardar";
-
 		s.pqSendData = {};
 
 		s.pqFincas = fr.query();
