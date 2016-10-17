@@ -12,15 +12,27 @@ class QuincenalesController extends Controller
       $peticion=$request->all();
             $data =$this->planilla_quincenal($peticion);
             $totales=$this->sum_totales($data);
+            usort($data, function($a, $b) {
+              return strcmp($a["nombre"], $b["nombre"]);
+                return $a['order'] < $b['order']?1:-1;
+            });
             $data[]=$totales;
+
             return $data;
+
     }
+
     public function reporte_quincenal(Request $request){
       $funcion=$request['funcion'];
       if ($funcion == 'Generar Imprimible')
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
+        usort($data, function($a, $b) {
+          return strcmp($a["nombre"], $b["nombre"]);
+            return $a['order'] < $b['order']?1:-1;
+        });
+
         $totales=$this->sum_totales($data);
         $view = \View::make('reporte_quincenal',array('data'=>$data,'totales'=>$totales)); // recuerden que data es la variable del arreglo
         $pdf = \App::make('dompdf.wrapper');
@@ -32,6 +44,10 @@ class QuincenalesController extends Controller
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
+        usort($data, function($a, $b) {
+          return strcmp($a["nombre"], $b["nombre"]);
+            return $a['order'] < $b['order']?1:-1;
+        });
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
@@ -46,6 +62,10 @@ class QuincenalesController extends Controller
           //$data =$this->billetes($peticion);
           $planillas=$this->planilla_quincenal($peticion);
           $data =$this->calcular_billetes($planillas);
+          usort($data, function($a, $b) {
+            return strcmp($a["nombre"], $b["nombre"]);
+              return $a['order'] < $b['order']?1:-1;
+          });
           $totales=$data['total_individual'];
           $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
           $pdf = \App::make('dompdf.wrapper');
@@ -62,6 +82,10 @@ class QuincenalesController extends Controller
         //   'fecha_fin'=>'2017-01-01',
         // ];
         $datas=$this->planilla_quincenal($peticion);
+        usort($datas, function($a, $b) {
+          return strcmp($a["nombre"], $b["nombre"]);
+            return $a['order'] < $b['order']?1:-1;
+        });
         foreach ($datas as $data) {
           $id=$data['id_trabajador'];
           $trabajador= Trabajador::find($id);
@@ -136,8 +160,8 @@ class QuincenalesController extends Controller
        'sum_prestamos'=>$sum_prestamos,
        'sum_salario'=>$sum_salario,
        'sum_subsidios'=>$sum_subsidios,
-       'sum_feriados'=>$sum_feriados,
-       'sum_basico'=>$sum_basico,
+       'sum_feriados'=>round($sum_feriados,2),
+       'sum_basico'=>round($sum_basico,2),
        'sum_tot_hext'=>$sum_tot_hext,
        'sum_sum_pagar'=>$sum_sum_pagar,
      ];
@@ -281,7 +305,7 @@ class QuincenalesController extends Controller
       $basico=round($basico2, 2);
       $planilla->basico_real=$basico; //total de dias por salario por dias_trab
       $prueb=$basico+$feriado_tot;
-      $planilla->feriados=$feriado_tot;
+      $planilla->feriados=round($feriado_tot,2);
       $otros=$arreglo['otros'];
       $subsi=$arreglo['subsidios'];
       $tot_sub2=$subsi*$salario_dia;
