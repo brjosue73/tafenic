@@ -62,11 +62,12 @@ class QuincenalesController extends Controller
           //$data =$this->billetes($peticion);
           $planillas=$this->planilla_quincenal($peticion);
           $data =$this->calcular_billetes($planillas);
-          usort($data, function($a, $b) {
-            return strcmp($a["nombre"], $b["nombre"]);
-              return $a['order'] < $b['order']?1:-1;
-          });
+          // usort($planillas, function($a, $b) {
+          //   return strcmp($a["nombre"], $b["nombre"]);
+          //     return $a['order'] < $b['order']?1:-1;
+          // });
           $totales=$data['total_individual'];
+          //return view('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
           $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view);
@@ -131,23 +132,23 @@ class QuincenalesController extends Controller
      $sum_tot_hext=0;
      $sum_sum_pagar=0;
      $sum_dev=0;
-     foreach ($data as $plani) {
-       $sum_dev += $plani['devengado'];
-       $sum_dias += $plani['dias_trab'];
-       $sum_h_ext +=$plani['horas_extra'];
-       $sum_inatec+=$plani['inatec'];
-       $sum_inss_lab+=$plani['inss_laboral'];
-       $sum_inss_pat+=$plani['inss_patronal'];
-       $sum_ir+=$plani['ir'];
-       $sum_otros+=$plani['otros'];
-       $sum_prestamos+=$plani['prestamos'];
-       $sum_salario+=$plani['salario_quinc'];
-       $sum_subsidios+=$plani['subsidios'];
-       $sum_feriados+=$plani['feriados'];
-       $sum_basico+=$plani['basico_real'];
-       $sum_tot_hext+=$plani['tot_h_ext'];
-       $sum_sum_pagar+=$plani['total_pagar'];
-     }
+       foreach ($data as $plani) {
+         $sum_dev += $plani['devengado'];
+         $sum_dias += $plani['dias_trab'];
+         $sum_h_ext +=$plani['horas_extra'];
+         $sum_inatec+=$plani['inatec'];
+         $sum_inss_lab+=$plani['inss_laboral'];
+         $sum_inss_pat+=$plani['inss_patronal'];
+         $sum_ir+=$plani['ir'];
+         $sum_otros+=$plani['otros'];
+         $sum_prestamos+=$plani['prestamos'];
+         $sum_salario+=$plani['salario_quinc'];
+         $sum_subsidios+=$plani['subsidios'];
+         $sum_feriados+=$plani['feriados'];
+         $sum_basico+=$plani['basico_real'];
+         $sum_tot_hext+=$plani['tot_h_ext'];
+         $sum_sum_pagar+=$plani['total_pagar'];
+       }
      $totales=  [
        'sum_dev'=>$sum_dev,
        'sum_dias'=>$sum_dias,
@@ -155,7 +156,7 @@ class QuincenalesController extends Controller
        'sum_inatec'=>$sum_inatec,
        'sum_inss_lab'=>$sum_inss_lab,
        'sum_inss_pat'=>$sum_inss_pat,
-       'sum_ir'=>$sum_ir,
+       'sum_ir'=>round($sum_ir,2),
        'sum_otros'=>$sum_otros,
        'sum_prestamos'=>$sum_prestamos,
        'sum_salario'=>$sum_salario,
@@ -355,6 +356,7 @@ class QuincenalesController extends Controller
         $ir_anual=$dev_por+$imp_base;
         $IR=$ir_anual/24;
       }
+      $IR=round($IR,2);
       $prestamo=$arreglo['prestamos'];
         $total_pagar=round($devengado-$inss_lab-$IR-$prestamo,2);
         $planilla->ir=$IR;

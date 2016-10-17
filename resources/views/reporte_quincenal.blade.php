@@ -44,37 +44,38 @@
             <td> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['cargo'] }} </td>
             <td> {{ $dat['dias_trab'] }} </td>
-            <td> {{ $dat['basico'] }} </td>
-            <td> {{ $dat['feriados'] }} </td>
-            <td> {{ $dat['otros'] }} </td>
-            <td> {{ $dat['subsidios'] }} </td>
-            <td> {{ $dat['horas_extra'] }} </td>
-            <td> {{ $dat['tot_h_ext'] }} </td>
-            <td> {{ $dat['devengado'] }} </td>
-            <td> {{ $dat['inss_laboral'] }}</td>
-            <td> {{ $dat['ir'] }}</td>
-            <td> {{ $dat['prestamos'] }} </td>
-            <td> {{ $dat['total_pagar'] }}</td>
+            <td> {{number_format( $dat['basico'] ,2 )}} </td>
+            <td> {{number_format( $dat['feriados'] ,2 )}} </td>
+            <td> {{number_format( $dat['otros'],2 ) }} </td>
+            <td> {{number_format( $dat['subsidios'] ,2 )}} </td>
+            <td> {{$dat['horas_extra']}} </td>
+            <td> {{number_format( $dat['tot_h_ext'] ,2 )}} </td>
+            <td> {{number_format( $dat['devengado'],2 ) }} </td>
+            <td> {{ number_format($dat['inss_laboral'] ,2 )}}</td>
+            <td> {{number_format( $dat['ir'] ,2 )}}</td>
+            <td> {{number_format( $dat['prestamos'] ,2 )}} </td>
+            <td> {{number_format( $dat['total_pagar'],2 )}}</td>
             <td></td>
-            <td> {{ $dat['inss_patronal'] }} </td>
-            <td> {{ $dat['inatec'] }} </td>
+            <td> {{number_format( $dat['inss_patronal'] ,2 )}} </td>
+            <td> {{number_format( $dat['inatec'] ,2 )}} </td>
           </tr>
           @endforeach
           <tr>
             <td colspan="4">Total</td>
-            <td> {{ $totales['sum_basico'] }} </td>
-            <td> {{ $totales['sum_feriados'] }} </td>
-            <td> {{ $totales['sum_otros'] }} </td>
-            <td> {{ $totales['sum_subsidios'] }} </td>
-            <td> {{ $totales['sum_h_ext'] }} </td>
-            <td> {{ $totales['sum_tot_hext'] }} </td>
-            <td> {{ $totales['sum_dev'] }} </td>
-            <td> {{ $totales['sum_inss_lab'] }} </td>
-            <td> {{ $totales['sum_ir'] }} </td>
-            <td> {{ $totales['sum_prestamos'] }} </td>
-            <td> {{ $totales['sum_sum_pagar'] }} </td>
-            <td> {{ $totales['sum_inss_pat'] }} </td>
-            <td> {{ $totales['sum_inatec'] }} </td>
+            <td> {{ number_format($totales['sum_basico'],2 ) }} </td>
+            <td> {{ number_format($totales['sum_feriados'],2 ) }} </td>
+            <td> {{number_format( $totales['sum_otros'] ,2 )}} </td>
+            <td> {{ number_format($totales['sum_subsidios'] ,2 )}} </td>
+            <td> {{$totales['sum_h_ext'] }} </td>
+            <td> {{number_format( $totales['sum_tot_hext'] ,2 )}} </td>
+            <td> {{number_format( $totales['sum_dev'] ,2 )}} </td>
+            <td> {{number_format( $totales['sum_inss_lab'] ,2 )}} </td>
+            <td> {{number_format( $totales['sum_ir'] ,2 )}} </td>
+            <td> {{number_format( $totales['sum_prestamos'] ,2 )}} </td>
+            <td> {{number_format( $totales['sum_sum_pagar'] ,2 )}} </td>
+            <td></td>
+            <td> {{number_format( $totales['sum_inss_pat'],2 ) }} </td>
+            <td> {{number_format( $totales['sum_inatec'] ,2 )}} </td>
           </tr>
         </tbody>
       </table>
