@@ -38,9 +38,9 @@ li {
 .table-wrapper {
   padding: 0; }
 
-.view_body {
-  overflow: scroll; }
-
+/*.view_body {
+  overflow: scroll;
+}*/
 #fincabanner {
   height: 150px;
   background-color: black;
