@@ -145,7 +145,17 @@ public function datos_fincas()
       "id_finca"=>$finca->id,
       "nombre"=>$finca->nombre
     ];
+
     $id_finca=$finca->id;
+    $lote_tot=array();
+    $lotes=Lote::where('id_finca',$id_finca)->get();
+    foreach ($lotes as $lote) {
+      $lote_tot[]=$lote;
+    }
+    $generales+=[
+      "lotes"=>$lote_tot,
+    ];
+    unset($lote_tot);
     $actividades=Actividad::where('id_finca',$id_finca)->get();
     foreach ($actividades as $actividad) {
       $activ_tot=[
@@ -170,13 +180,7 @@ public function datos_fincas()
     ];
     unset($activ);
 
-    $lotes=Lote::where('id_finca',$finca->id)->get();
-    foreach ($lotes as $lote) {
-      $lote_tot[]=$lote;
-    }
-    $generales+=[
-      "lotes"=>$lote_tot,
-    ];
+
 
     $tot[]=$generales;
     unset($activ);
