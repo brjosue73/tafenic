@@ -41,7 +41,7 @@
           @foreach ($data as $dat)
           <tr>
             <td> {{ $dat['inss']}} </td>
-            <td class="width-content"> {{ $dat['nombre'] }} </td>
+            <td> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['cargo'] }} </td>
             <td> {{ $dat['dias_trab'] }} </td>
             <td> {{number_format( $dat['basico'] ,2 )}} </td>
