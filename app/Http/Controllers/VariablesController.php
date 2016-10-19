@@ -94,6 +94,7 @@ class VariablesController extends Controller
       $variable->hora_ext = $arreglo['hora_ext'];
       $variable->septimo = $arreglo['septimo'];
       $variable->inss_patron = $arreglo['inss_patron'];
+      $variable->inss_patron_catorce = $arreglo['inss_patron_catorce'];
       $variable->safa_grand = $arreglo['safa_grand'];
       $variable->safa_peq = $arreglo['safa_peq'];
       $variable->save();

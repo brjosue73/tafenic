@@ -93,8 +93,12 @@
               <input type="text" class="form-control" placeholder="INSS Trabajador Administrativo" name="inssA" data-ng-model="valoresSaveData.inss_admin">
             </div>
             <div class="form-group col-sm-6 col-md-6 col-lg-6">
-              <label for="inssP">INSS Patronal: </label>
-              <input type="text" class="form-control" placeholder="INSS Patronal" name="inssp" data-ng-model="valoresSaveData.inss_patron">
+              <label for="inssP">INSS Patronal 15nal: </label>
+              <input type="text" class="form-control" placeholder="INSS Patronal Quincenal" name="inssp" data-ng-model="valoresSaveData.inss_patron">
+            </div>
+            <div class="form-group col-sm-6 col-md-6 col-lg-6">
+              <label for="inssP">INSS Patronal 14nal: </label>
+              <input type="text" class="form-control" placeholder="INSS Patronal Catorcenal" name="inssp" data-ng-model="valoresSaveData.inss_patron_catorce">
             </div>
             <div class="form-group col-sm-6 col-md-6 col-lg-6">
               <label for="cujeG">Cuje Grande: </label>
