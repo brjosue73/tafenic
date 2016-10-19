@@ -332,16 +332,16 @@ class PlanillasController extends Controller
            $tot_sept=$cant_septimos*$valor_dia;
            /*-------------CALCULO DEL SEPTIMO*/
            /*-------------CALCULO DEL SEPTIMO*/
-           if($feriados>0 && $feriados<=$dias){// si tiene un feriado
-             $dias=$dias-1;
-            //  $alim_tot=$alim_tot-$alim_var;
-            //  $tot_dev=$tot_dev-$feriados;
-           }
-           elseif ($feriados>=($dias*2)) {
-             $dias=$dias-2;
-            //  $alim_tot=$alim_tot-($alim_var*2);
-            //  $tot_dev=$tot_dev-$feriados;
-           }
+          //  if($feriados>0 && $feriados<=$dias){// si tiene un feriado
+          //    $dias=$dias-1;
+          //   //  $alim_tot=$alim_tot-$alim_var;
+          //   //  $tot_dev=$tot_dev-$feriados;
+          //  }
+          //  elseif ($feriados>=($dias*2)) {
+          //    $dias=$dias-2;
+          //   //  $alim_tot=$alim_tot-($alim_var*2);
+          //   //  $tot_dev=$tot_dev-$feriados;
+          //  }
            $feriados=0;
              foreach ($trabs as $trab) {
                  $inss_camp=$trab['inss_campo'];
@@ -505,7 +505,7 @@ class PlanillasController extends Controller
     $catorcenal = Preplanilla::find($request['id']);
     $catorcenal->delete();
     return 'Eliminada';
-    
+
   }
 
 
