@@ -47,8 +47,8 @@
             <th>Feriados</th>
             <th>Otros</th>
             <th>Subsidio</th>
-            <th>Cant. H. Ext.</th>
-            <th>Tot. H. Ext.</th>
+            <th>Cant.<br>H.Ext.</th>
+            <th>Tot.<br>H.Ext.</th>
             <th>Devengado</th>
             <th>INSS lab.</th>
             <th>IR</th>
