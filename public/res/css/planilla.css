@@ -1,4 +1,4 @@
-table {
+/*table {
   border: 1px solid black;
 }
 h4,h5 {
@@ -19,4 +19,15 @@ td hr{
   width: 33%;
   display: inline-block;
   float: left;
+}*/
+table {
+    font-size: 11px;
+}
+td {
+  border: 1px solid black;
+  margin: 0 !important;
+}
+.width-content {
+  width: content;
+  background-color: cyan;
 }

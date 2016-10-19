@@ -395,7 +395,7 @@
 	}]);
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
-		s.busquedaCriteria = "";
+		//s.busquedaCriteria = "";
 		s.sorting = "apellidos";
 		s.filtrar = "todos";
 		s.trabajadores = r.query();
