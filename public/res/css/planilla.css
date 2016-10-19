@@ -25,7 +25,14 @@ table {
     font-size: 11px;
     margin-bottom: 3.3rem;
 }
+th {
+  padding: 3px;
+  background-color: #ddd;
+}
 td,th {
   border: 1px solid black;
   margin: 0 !important;
+}
+.firma {
+   padding: 15px;
 }
