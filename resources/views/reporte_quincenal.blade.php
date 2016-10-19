@@ -90,6 +90,7 @@
           @endforeach
           <tr>
             <td colspan="4">Total</td>
+            <td>{{ number_format($totales['sum_dias'],2 ) }}            </td>
             <td> {{ number_format($totales['sum_basico'],2 ) }} </td>
             <td> {{ number_format($totales['sum_feriados'],2 ) }} </td>
             <td> {{number_format( $totales['sum_otros'] ,2 )}} </td>
