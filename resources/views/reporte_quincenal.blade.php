@@ -26,6 +26,7 @@
   elseif ($data[0]->tipo=='administrativo') {
     $tipo="Administracion";
   }
+  $i=0;
    ?>
   <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5>PLANILLA Quincenal</h5>
@@ -37,7 +38,7 @@
       <table class="table table-striped table-bordered table-hover table-condensed">
         <thead>
           <tr class="active">
-
+            <th>No.</th>
             <th>N° INSS</th>
             <th>Nombre de Trab.</th>
             <th>cargo</th>
@@ -63,6 +64,10 @@
 
           @foreach ($data as $dat)
           <tr>
+            <?php
+            $i++;
+             ?>
+            <td> {{$i}}  </td>
             <td> {{ $dat['inss']}} </td>
             <td> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['cargo'] }} </td>
