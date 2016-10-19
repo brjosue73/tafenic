@@ -72,7 +72,7 @@
             <td> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['cargo'] }} </td>
             <td> {{ $dat['dias_trab'] }} </td>
-            <td> {{number_format( $dat['basico'] ,2 )}} </td>
+            <td> {{number_format( $dat['basico_real'] ,2 )}} </td>
             <td> {{number_format( $dat['feriados'] ,2 )}} </td>
             <td> {{number_format( $dat['otros'],2 ) }} </td>
             <td> {{number_format( $dat['subsidios'] ,2 )}} </td>
