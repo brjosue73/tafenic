@@ -7,8 +7,31 @@
   <!-- <link rel="stylesheet" href="res/css/bootstrapTable.css"> -->
 </head>
 <body>
+  <?php
+  setlocale(LC_ALL,"es_ES");
+  $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+  $fecha_ini=$data['0']->fecha_ini;
+  $fecha_fin=$data['0']->fecha_fin;
+  $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+  $dia_ini=date("d", strtotime($fecha_1));
+  $mes_ini=date("m", strtotime($fecha_1));
+  $ano=date("Y", strtotime($fecha_1));
+
+  $fecha_2=date("d-F-Y", strtotime("$fecha_fin - 1 days"));
+  $dia_fin=date("d", strtotime($fecha_2));
+  $mes_fin=date("m", strtotime($fecha_2));
+  if($data[0]->tipo=='servicios tecnicos'){
+    $tipo="Servicios Técnicos";
+  }
+  elseif ($data[0]->tipo=='administrativo') {
+    $tipo="Administracion";
+  }
+   ?>
   <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5>PLANILLA Quincenal</h5>
+  <h5> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
+  <h5>{{$tipo}}</h5>
+
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover table-condensed">
@@ -55,7 +78,7 @@
             <td> {{number_format( $dat['ir'] ,2 )}}</td>
             <td> {{number_format( $dat['prestamos'] ,2 )}} </td>
             <td> {{number_format( $dat['total_pagar'],2 )}}</td>
-            <td></td>
+            <td class="firma"></td>
             <td> {{number_format( $dat['inss_patronal'] ,2 )}} </td>
             <td> {{number_format( $dat['inatec'] ,2 )}} </td>
           </tr>

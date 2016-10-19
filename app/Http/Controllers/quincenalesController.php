@@ -200,6 +200,7 @@ class QuincenalesController extends Controller
             $f_fin=$fecha_fin;
             $plan->fecha_ini=date("d-m-Y", strtotime($fecha_ini));
             $plan->fecha_fin=date("d-m-Y", strtotime($f_fin));
+            $plan->tipo=$tipo;
             $planillas[]=$plan;
 
         }
