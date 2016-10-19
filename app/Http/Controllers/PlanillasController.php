@@ -505,6 +505,7 @@ class PlanillasController extends Controller
     $catorcenal = Preplanilla::find($request['id']);
     $catorcenal->delete();
     return 'Eliminada';
+    
   }
 
 

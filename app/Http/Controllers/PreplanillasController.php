@@ -121,6 +121,7 @@ class PreplanillasController extends Controller
           $inss_lab=$variable->inss_campo;
           $inss_admin=$variable->inss_admin;
           $inss_patron=$variable->inss_patron;
+          $inss_patron_catorce=$variable->inss_patron_catorce;
         }
 
         $prep= new Preplanilla($arreglo);
@@ -251,7 +252,7 @@ class PreplanillasController extends Controller
           $subsidio=0;
           $prep->inss_campo=$inss_lab;
           $prep->inss_admin=$inss_admin;
-          $prep->inss_patron=$inss_patron;
+          $prep->inss_patron=$inss_patron_catorce;
           $prep->save();
           $subs=0;
           return "Agregada! supuestamente normal";
