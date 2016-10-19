@@ -47,8 +47,8 @@
             <th>Feriados</th>
             <th>Otros</th>
             <th>Subsidio</th>
-            <th>Cant. H. Ext.</th>
-            <th>Tot. H. Ext.</th>
+            <th>Cant.<br>H.Ext.</th>
+            <th>Tot.<br>H.Ext.</th>
             <th>Devengado</th>
             <th>INSS lab.</th>
             <th>IR</th>
@@ -72,7 +72,7 @@
             <td> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['cargo'] }} </td>
             <td> {{ $dat['dias_trab'] }} </td>
-            <td> {{number_format( $dat['basico'] ,2 )}} </td>
+            <td> {{number_format( $dat['basico_real'] ,2 )}} </td>
             <td> {{number_format( $dat['feriados'] ,2 )}} </td>
             <td> {{number_format( $dat['otros'],2 ) }} </td>
             <td> {{number_format( $dat['subsidios'] ,2 )}} </td>
