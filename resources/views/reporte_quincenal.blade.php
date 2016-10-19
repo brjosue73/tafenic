@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Document</title>
   <link rel="stylesheet" href="res/css/planilla.css">
-  <link rel="stylesheet" href="res/css/bootstrapTable.css">
+  <!-- <link rel="stylesheet" href="res/css/bootstrapTable.css"> -->
 </head>
 <body>
   <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>

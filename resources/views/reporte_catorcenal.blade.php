@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Document</title>
   <link rel="stylesheet" href="res/css/planilla.css">
-  <link rel="stylesheet" href="res/css/bootstrapTable.css">
+  <!-- <link rel="stylesheet" href="res/css/bootstrapTable.css"> -->
 </head>
 <body>
   <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
@@ -42,50 +42,46 @@
           @foreach ($data as $dat)
           <tr>
             <td> {{ $dat['nombre'] }} </td>
-            <td> @foreach ( $dat['fincas'] as $fincass) <li>{{ $fincass }} </li><hr>  @endforeach</td>
-            <td> @foreach ( $dat['labores'] as $labour)<li>{{ $labour }} </li><hr> @endforeach</td>
+            <td><!-- @foreach ( $dat['fincas'] as $fincass) <li>{{ $fincass }} </li><hr>  @endforeach --></td>
+            <td><!-- @foreach ( $dat['labores'] as $labour)<li>{{ $labour }} </li><hr> @endforeach --></td>
             <td> {{ $dat['dias'] }} </td>
-            <td> {{ $dat['total_septimo'] }} </td>
+            <td> {{number_format( $dat['total_septimo'] ,2 )}} </td>
             <td> {{ $dat['finca_septimo'] }} </td>
-            <td> {{ $dat['total_deven'] }} </td>
-            <td> {{ $dat['alim_tot'] }} </td>
-            <td> {{ $dat['total_basic'] }} </td>
+            <td> {{number_format( $dat['total_deven'] ,2 )}} </td>
+            <td> {{ number_format($dat['alim_tot'] ,2 )}} </td>
+            <td> {{ number_format($dat['total_basic'] ,2 )}} </td>
             <td></td>
             <td></td>
-            <td> {{ $dat['horas_ext_tot'] }} </td>
-            <td> {{ $dat['vac_tot'] }} </td>
-            <td>{{ $dat['agui_tot'] }}</td>
-            <td> {{ $dat['total_acum'] }} </td>
-            <td>{{ $dat['inss'] }}</td>
+            <td> {{number_format( $dat['horas_ext_tot'] ,2 )}} </td>
+            <td> {{number_format( $dat['vac_tot'] ,2 )}} </td>
+            <td>{{number_format( $dat['agui_tot'] ,2 )}}</td>
+            <td> {{number_format( $dat['total_acum'] ,2 )}} </td>
+            <td>{{number_format( $dat['inss'] ,2 )}}</td>
             <td></td>
-            <td> {{ $dat['salario_'] }} </td>
+            <td> {{number_format( $dat['salario_'] ,2 )}} </td>
             <td></td>
             <td></td>
           </tr>
           @endforeach
           <tr>
-            <td colspan="2">Total</td>
+            <td colspan="3">Total</td>
+            <td>{{number_format( $totales['sum_dias_trab'] ,2 )}}</td>
+            <td>{{number_format( $totales['sum_septimos'],2 ) }}</td>
             <td></td>
-            <td>{{ $totales['sum_dias_trab'] }}</td>
-            <td>{{ $totales['sum_dev1'] }}</td>
-            <td>{{ $totales['sum_alim'] }}</td>
-            <td>{{ $totales['sum_basico'] }}</td>
-            <td>{{ $totales['sum_septimos'] }}</td>
-            <td>{{ $totales['sum_subsidios'] }}</td>
-            <td>{{ $totales['sum_otros'] }}</td>
-            <td>{{ $totales['sum_feriados'] }}</td>
-            <td>{{ $totales['sum_dev2'] }}</td>
-            <td>{{ $totales['sum_h_ext'] }}</td>
+            <td>{{number_format( $totales['sum_dev1'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_alim'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_basico'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_otros'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_feriados'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_h_ext'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_vacs'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_aguin'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_acum'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_inss_lab'],2 ) }}</td>
             <td></td>
+            <td>{{number_format( $totales['sum_tot_recib'],2 ) }}</td>
             <td></td>
-            <td>{{ $totales['sum_vacs'] }}</td>
-            <td>{{ $totales['sum_aguin'] }}</td>
-            <td>{{ $totales['sum_acum'] }}</td>
-            <td>{{ $totales['sum_inss_lab'] }}</td>
-            <td>{{ $totales['sum_prestam'] }}</td>
-            <td>{{ $totales['sum_tot_recib'] }}</td>
-            <td>{{ $totales['sum_inss_pat'] }}</td>
-            <td></td>
+            <td>{{number_format( $totales['sum_inss_pat'],2 ) }}</td>
           </tr>
         </tbody>
       </table>

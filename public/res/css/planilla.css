@@ -1,8 +1,9 @@
-table {
-  border: 1px solid black;
-}
+
 h4,h5 {
   text-align: center;
+}
+/*table {
+  border: 1px solid black;
 }
 th, td{
   font-family: sans-serif;
@@ -14,9 +15,17 @@ td li{
 td hr{
   margin: 0;
 }
-
+*/
 .firmas {
   width: 33%;
   display: inline-block;
   float: left;
+}
+table {
+    font-size: 11px;
+    margin-bottom: 3.3rem;
+}
+td,th {
+  border: 1px solid black;
+  margin: 0 !important;
 }

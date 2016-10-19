@@ -5,6 +5,12 @@
 li {
   list-style-type: none; }
 
+th {
+  cursor: pointer; }
+
+th:hover {
+  background-color: #ddd !important; }
+
 .gris {
   background-color: #e9ebee; }
 

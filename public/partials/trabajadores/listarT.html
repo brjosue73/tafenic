@@ -7,17 +7,16 @@
     <form>
 
       <div class="form-group col-sm-3 col-md-3 col-lg-3">
-        <label for="">Buscar por <% busquedaCriteria %> </label>
+        <label for="">Buscar por Nombre: </label> <!--<% busquedaCriteria %>-->
         <input type="text" class="form-control" data-ng-model="busqueda">
       </div>
-      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+      <!-- <div class="form-group col-sm-3 col-md-3 col-lg-3">
         <label class="label-control">Criterio de Búsqueda: </label>
-        <!-- <input type="text" class="form-control" data-ng-model="busquedaCriteria"> -->
         <select class="form-control" data-ng-model="busquedaCriteria">
           <option value="nombre">Nombre</option>
           <option value="apellido">Apellido</option>
         </select>
-      </div>
+      </div> -->
       <div class="form-group col-sm-3 col-md-3 col-lg-3">
         <label class="label-control">Filtrar por: <% filtrar %></label>
         <select class="form-control" data-ng-model="filtrar">
@@ -57,8 +56,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="trabajador in trabajadores | orderBy:sorting"> <!-- | orderBy:sorting" data-ng-hide="filtrar !== 'todos' || filtrar != 'quincenal' "data-ng-hide=" filtrar!='todos' || trabajador.tipo !== filtrar ">  data-ng-show="trabajador.tipo == filtrar" data-ng-hide="filtrar != 'todos'">data-ng-hide="trabajador.nombre != busqueda" -->
-          <td> <% trabajador.id %> </td>
+        <tr data-ng-repeat="trabajador in trabajadores | orderBy:sorting | filter:busqueda as results"> <!-- | orderBy:sorting" data-ng-hide="filtrar !== 'todos' || filtrar != 'quincenal' "data-ng-hide=" filtrar!='todos' || trabajador.tipo !== filtrar ">  data-ng-show="trabajador.tipo == filtrar" data-ng-hide="filtrar != 'todos'">data-ng-hide="trabajador.nombre != busqueda" -->
+          <td> <% $index + 1 %> </td>
           <td> <% trabajador.nombre %> </td>
           <td> <% trabajador.apellidos %> </td>
           <td> <% trabajador.nss %> </td>
