@@ -197,10 +197,10 @@ class QuincenalesController extends Controller
             $plan->inss=$inss;
             $plan->cargo=$cargo;
             $plan->nombre=$nombre;
-            $f_ini=$fecha_ini;
             $f_fin=$fecha_fin;
-            $plan->fecha_ini=date("d-m-Y", strtotime($f_ini));
+            $plan->fecha_ini=date("d-m-Y", strtotime($fecha_ini));
             $plan->fecha_fin=date("d-m-Y", strtotime($f_fin));
+            $plan->tipo=$tipo;
             $planillas[]=$plan;
 
         }
