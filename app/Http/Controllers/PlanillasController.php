@@ -284,7 +284,11 @@ class PlanillasController extends Controller
         $id_trab=$planillas[$i]->id_trabajador;
 
         if ($trab!=$id_trab) {
-          $trabs= Preplanilla::where('id_trabajador',$id_trab)->whereBetween('fecha', [$fecha_ini, $fecha_fin])->get(); /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+          $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+          ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+          // ->where('fecha',<=,$fecha_ini)
+          // ->where('fecha',>=,$fecha_fin)
+          ->get();
                                     //->where('id_finca',$id_finca)
            $dias= $trabs->count();
            $salario_tot=0;
@@ -489,6 +493,8 @@ class PlanillasController extends Controller
                "devengado2"=>round($total_dev2,2),
                "sum_tot_recib"=>round($sum_tot_recib,2),
                "prestamos"=>round($prestamo,2),
+               "fecha_ini"=>$fecha_ini,
+               "fecha_fin"=>$fecha_fin,
              ];
           $trabajadores[]=$array;
 
