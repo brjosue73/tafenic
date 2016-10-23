@@ -48,12 +48,12 @@ class QuincenalesController extends Controller
         //   return strcmp($a["nombre"], $b["nombre"]);
         //     return $a['order'] < $b['order']?1:-1;
         // });
-        return 'hola';
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
         $paper_size = array(0,0,360,360);
         $pdf->setPaper($paper_size,'landscape');
+        return 'hola';
         return $pdf->stream('Reporte_Billetes');
       }
       elseif($funcion == 'Billetes'){
