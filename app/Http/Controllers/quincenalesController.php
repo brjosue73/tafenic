@@ -51,7 +51,7 @@ class QuincenalesController extends Controller
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        $paper_size = array(0,0,360,360);
+        $paper_size = array(0,0,278.9291,540);
         $pdf->setPaper($paper_size,'landscape');
         return $pdf->stream('Reporte_Billetes');
       }
@@ -64,8 +64,9 @@ class QuincenalesController extends Controller
           //   return strcmp($a["nombre"], $b["nombre"]);
           //     return $a['order'] < $b['order']?1:-1;
           // });
+          /*****************AQUI ---corregir array revisar en la vista como se ve el array o hacer otra funcion q solo devuelva los nombres*****************/
           $totales=$data['total_individual'];
-          //return view('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
+
           $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view);
@@ -222,7 +223,9 @@ class QuincenalesController extends Controller
     public function calcular_billetes($planillas){
       foreach ($planillas as $planilla) {
         $nums[]=$planilla['total_pagar'];
+        $nombres[]=$planilla['nombre'];
       }
+
       foreach ($nums as $N) {
         //recibir el total de pagos en un array
         //recibe el nombre de la gente
@@ -256,6 +259,7 @@ class QuincenalesController extends Controller
         $num[2]=$billete;
         $todos[]=$num;
       }
+
       $tot_500=0;$tot_200=0;$tot_100=0;$tot_50=0;$tot_20=0;$tot_10=0;$tot_5=0;$tot_1=0;$tot_billetes=0;
       foreach ($todos as $key) {
         $tot_500=$key[500]+$tot_500;
@@ -278,6 +282,7 @@ class QuincenalesController extends Controller
       $todos['cantidad_multiplicada']=$tot_mul;
       $todos['total_billetes']=$tot_billetes;
       $todos['total_individual']=$cant_ind;
+      $todos['nombres']=$nombres;
       return $todos;
     }
     public function g_quincenal(Request $request){
