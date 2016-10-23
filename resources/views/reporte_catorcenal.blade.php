@@ -9,6 +9,15 @@
 <body>
   <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5>PLANILLA GENERAL</h5>
+  <?php
+  setlocale(LC_ALL,"es_ES");
+  $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+
+
+
+  $i=0;
+   ?>
+
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover table-condensed">
@@ -40,10 +49,12 @@
         </thead>
         <tbody>
           @foreach ($data as $dat)
-          <tr>
+          <tr> <?php   $fecha_ini=$dat['fecha_ini'];
+            $fecha_fin=$dat['fecha_fin']; ?>
+
             <td> {{ $dat['nombre'] }} </td>
-            <td><!-- @foreach ( $dat['fincas'] as $fincass) <li>{{ $fincass }} </li><hr>  @endforeach --></td>
-            <td><!-- @foreach ( $dat['labores'] as $labour)<li>{{ $labour }} </li><hr> @endforeach --></td>
+            <td> @foreach ( $dat['fincas'] as $fincass) <li>{{ $fincass }} </li><hr>  @endforeach </td>
+            <td> @foreach ( $dat['labores'] as $labour)<li>{{ $labour }} </li><hr> @endforeach </td>
             <td> {{ $dat['dias'] }} </td>
             <td> {{number_format( $dat['total_septimo'] ,2 )}} </td>
             <td> {{ $dat['finca_septimo'] }} </td>
@@ -60,7 +71,7 @@
             <td></td>
             <td> {{number_format( $dat['salario_'] ,2 )}} </td>
             <td></td>
-            <td></td>
+            <td>{{number_format( $dat['inss_patronal'] ,2 )}}</td>
           </tr>
           @endforeach
           <tr>

@@ -44,10 +44,10 @@ class QuincenalesController extends Controller
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
-        usort($data, function($a, $b) {
-          return strcmp($a["nombre"], $b["nombre"]);
-            return $a['order'] < $b['order']?1:-1;
-        });
+        // usort($data, function($a, $b) {
+        //   return strcmp($a["nombre"], $b["nombre"]);
+        //     return $a['order'] < $b['order']?1:-1;
+        // });
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
