@@ -62,6 +62,13 @@ th:hover {
 #uncatorcenal .modal-body {
   overflow: scroll; }
 
+.blue-anchor {
+  color: #e74c3c;
+  cursor: pointer; }
+
+.blue-anchor:hover {
+  text-decoration: underline; }
+
 .loggin-wrapper {
   background-image: url(../img/campoTabaco.jpg);
   background-position: 0 0;

@@ -652,15 +652,21 @@
 				console.log(err);
 			});
 		}
-		s.delCatorce = function (id, index){
-			//console.log(id_trab, index);
-			h.delete('preplanilla/'+id)
-			.success(function(data){
-				console.log(data);
-			})
-			.error(function(err){
-				console.log(err);
-			})
+		s.delCatorce = function (id, index, fecha){
+			var decision = prompt("¿esta seguro que desea eliminar este registro?", fecha);
+			//console.log(decision);
+			if (decision || decision == "") {
+				h.delete('preplanilla/'+id)
+				.success(function(data){
+					console.log(data);
+					s.getPlanilla();
+				})
+				.error(function(err){
+					console.log(err);
+				})
+			} else {
+				console.log("cancelado");
+			}
 		}
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
