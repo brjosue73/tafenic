@@ -9,9 +9,11 @@
       border: 1px solid black;
       margin: 0;
     }
-    hr{
-      margin-top: 0;
-      margin-bottom: 8cm;
+    table{
+      margin: 10cm;
+    }
+    table tbody tr td{
+      font-size: 8px !important;
     }
     .cien{
       width: 100%;
@@ -35,7 +37,7 @@
   <h5 class="text-centro">FINCA</h5>
   <h5 class="text-centro">PLANILLA DE PAGO DEL {{$dat['fecha_ini']}} al {{$dat['fecha_fin']}}</h5>
   <table class="centrado">
-      <tr><th>{{$dat['nombre']}}</th></tr>
+      <tr><th colspan="4">{{$dat['nombre']}}</th></tr>
       <tr>
           <th>INGRESOS</th><th>-------</th>
           <th>DEDUCCIONES</th><th>-------</th>
