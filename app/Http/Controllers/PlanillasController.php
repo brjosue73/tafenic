@@ -66,12 +66,14 @@ class PlanillasController extends Controller
       $peticion=$request->all();
       //$data =$this->billetes($peticion);
       $planillas=$this->calculo_planilla($peticion);
+
       usort($planillas, function($a, $b) {
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
       $data =$this->calcular_billetes($planillas);
-      $view = \View::make('billetes_catorcenal',array('data'=>$data));
+      $nombres=$this->nombres_billetes($planillas);
+      $view = \View::make('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
       $pdf->setPaper('a4', 'landscape');
@@ -82,10 +84,10 @@ class PlanillasController extends Controller
       $peticion=$request->all();
       $tot=array();
       $datas =$this->calculo_planilla($peticion);
-      usort($data, function($a, $b) {
-        return strcmp($a["nombre"], $b["nombre"]);
-          return $a['order'] < $b['order']?1:-1;
-      });
+      // usort($data, function($a, $b) {
+      //   return strcmp($a["nombre"], $b["nombre"]);
+      //     return $a['order'] < $b['order']?1:-1;
+      // });
       foreach ($datas as $data) {
         $id=$data['id_trab'];
         $trabajador= Trabajador::find($id);
@@ -117,12 +119,18 @@ class PlanillasController extends Controller
     $data =$this->calcular_billetes($planillas);
     return $data;
   }
+  public function nombres_billetes($planillas){
+    foreach ($planillas as $planilla) {
+      $nombres[]=$planilla['nombre'];
+    }
+    return $nombres;
+  }
   public function calcular_billetes($planillas){
     foreach ($planillas as $planilla) {
       $nums[]=$planilla['salario_'];
     }
 
-
+    $i=0;
     foreach ($nums as $N) {
       //recibir el total de pagos en un array
       //recibe el nombre de la gente
@@ -162,6 +170,7 @@ class PlanillasController extends Controller
       $num[1]=$numero_de_billetes_1;
       $num[2]=$billete;
       $todos[]=$num;
+      $i++;
     }
     $tot_500=0;$tot_200=0;$tot_100=0;$tot_50=0;$tot_20=0;$tot_10=0;$tot_5=0;$tot_1=0;$tot_billetes=0;
     foreach ($todos as $key) {

@@ -41,6 +41,7 @@
           <th>DEDUCCIONES</th><th>-------</th>
       </tr>
     <tbody>
+      {{--Aqui--}}
       <tr>
         <td> BASICO </td>
         <td> {{$dat['total_basic']}} </td>
@@ -67,7 +68,7 @@
       </tr>
       <tr>
         <td> HORAS EXTRAS </td>
-        <td> {{$dat['extra_tot']}} </td>
+        <td> {{$dat['cant_horas_ext']}} </td>
         <td>  </td>
         <td>  </td>
       </tr>
@@ -101,6 +102,8 @@
         <td> TOTAL A PAGAR </td>
         <td> {{$dat['salario_']}} </td>
       </tr>
+      {{--Aqui--}}
+
     </tbody>
   </table>
 <hr>

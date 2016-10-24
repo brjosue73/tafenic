@@ -11,11 +11,13 @@
   </style>
 </head>
 <body>
+  <?php $var=-4; ?>
   <h5 class="text-centro">DISTRIBUCION DE BILLETES</h5>
   <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover table-condensed">
       <thead>
         <tr class="active">
+          <th>Nombre</th>
           <th>SALARIO</th>
           <th class="danger">C$ 500</th>
           <th>C$ 200</th>
@@ -30,21 +32,27 @@
       <tbody>
 
 
-        @foreach($data as $dat)
+        <?php
+        $tamano=sizeof($data);
+         ?>
 
-        <tr>
-          <td>{{ $dat['0'] }}</td>
-          <td class="danger">{{ $dat['500'] }}</td>
-          <td>{{ $dat['200'] }}</td>
-          <td class="info">{{ $dat['100'] }}</td>
-          <td class="primary">{{ $dat['50'] }}</td>
-          <td class="warning">{{ $dat['20'] }}</td>
-          <td class="success">{{ $dat['10'] }}</td>
-          <td>{{ $dat['5'] }}</td>
-          <td>{{ $dat['1'] }}</td>
-        </tr>
 
-        @endforeach
+         @for($j=0;$j<$tamano-4;$j++)
+         <?php $var+=1; ?>
+         <tr>
+           <td>{{$nombres[$j]}}</td>
+           <td>{{$data[$j]['0']}}</td>
+           <td class="danger">{{ $data[$j]['500'] }}</td>
+           <td>{{ $data[$j]['200'] }}</td>
+           <td class="info">{{ $data[$j]['100'] }}</td>
+           <td class="primary">{{ $data[$j]['50'] }}</td>
+           <td class="warning">{{ $data[$j]['20'] }}</td>
+           <td class="success">{{ $data[$j]['10'] }}</td>
+           <td>{{ $data[$j]['5'] }}</td>
+           <td>{{ $data[$j]['1'] }}</td>
+         </tr>
+         @endfor
+
         <?php
         foreach ($data as $dat) {
           $data500=$dat['500'];
@@ -154,10 +162,8 @@
           <th>
             1
           </th>
-          <th>
-            {{$dat['1']}}
-
-          </th>
+          <th>{{$dat['1']}}</th>
+          <th>{{$dat['1']}}</th>
         </tr>
       </tbody>
     </table>
