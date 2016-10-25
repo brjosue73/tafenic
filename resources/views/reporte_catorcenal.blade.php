@@ -24,18 +24,18 @@
         <thead>
           <tr class="active">
 
-            <th>Nombre del trabajador</th>
+            <th>Nombre</th>
             <th>Fincas</th>
             <th>Labores</th>
             <th>Días trab.</th>
-            <th>septimo</th>
-            <th>finc. Sep.</th>
-            <th>Tot. Devengado</th>
-            <th>Alimentación</th>
+            <th>Septimo</th>
+            <th>Finc. Sep.</th>
+            <th>Tot. Deven</th>
+            <th>Alim.</th>
             <th>Tot. Básico</th>
             <th>Otros</th>
             <th>Feriados</th>
-            <th>Horas Extra</th>
+            <th>H. Extra</th>
             <th>Vacaciones</th>
             <th>Aguinaldo</th>
             <th>Tot.Acumulado</th>

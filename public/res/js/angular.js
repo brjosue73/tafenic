@@ -404,6 +404,7 @@
 		s.boton = "Guardar";
 		s.sendData = {};
 		s.save = function(){
+			$('#save-trab').attr("disabled","disabled");
 			$('#trabSpinner').css("display", "inline-block");
 			r.save({data:s.sendData},function(data){
 					$('#trabSpinner').css("display", "none");
@@ -411,19 +412,16 @@
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
+						$('#save-trab').removeAttr("disabled");
 					},3000);
-					//console.log(data);
-					console.log(s.trabajadores);
 					s.trabajadores.push(data);
-					console.log(s.trabajadores);
-					//s.$apply();
-					//s.$digest();
 				},function(err){
 					console.log(err.status);
 					$('#trabSpinner').css("display", "none");
 					$('#errortrab').css("display","block");
 					setTimeout(function(){
 						$('#errortrab').css("display","none");
+						$('#save-trab').removeAttr("disabled");
 					},3000);
 			});
 		}
@@ -519,6 +517,7 @@
 		 });*/
 		s.prepTrab = function() {
 			s.prepSendData.subsidio = $('#chkSub').prop('checked');
+			$('#save-preplanilla').attr("disabled", "disabled");
 			$('#prepSpinner').css("display", "inline-block");
 			console.log(s.prepSendData);
 			//$('#chkSub').prop('checked',false);
@@ -530,6 +529,7 @@
 								$('#exitoprep').css("display","none");
 								$("#clean")[0].reset();
 								$('#chkSub').prop('checked',false);
+								$('#save-preplanilla').removeAttr("disabled");
 								//s.prepSendData.subsidio = false;
 							},3000);
 						},function(err){
@@ -538,6 +538,7 @@
 							$('#errorprep').css("display","block");
 							setTimeout(function(){
 								$('#errorprep').css("display","none");
+								$('#save-preplanilla').removeAttr("disabled");
 							},3000);
 			});
 		}
@@ -652,15 +653,21 @@
 				console.log(err);
 			});
 		}
-		s.delCatorce = function (id, index){
-			//console.log(id_trab, index);
-			h.delete('preplanilla/'+id)
-			.success(function(data){
-				console.log(data);
-			})
-			.error(function(err){
-				console.log(err);
-			})
+		s.delCatorce = function (id, index, fecha){
+			var decision = prompt("¿esta seguro que desea eliminar este registro?", fecha);
+			//console.log(decision);
+			if (decision || decision == "") {
+				h.delete('preplanilla/'+id)
+				.success(function(data){
+					console.log(data);
+					s.getPlanilla();
+				})
+				.error(function(err){
+					console.log(err);
+				})
+			} else {
+				console.log("cancelado");
+			}
 		}
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
@@ -705,6 +712,7 @@
 		});
 
 		s.pqSave = function(){
+			$('#save-planilla').attr("disabled", "disabled");
 			$('#PlaQSpinner').css("display", "inline-block");
 			h.post('guardar_quincenal',s.pqSendData)
 			.success(function(data){
@@ -712,6 +720,7 @@
 				$('#exitoPlaQ').css("display","inline");
 				setTimeout(function(){
 					$('#exitoPlaQ').css("display","none");
+					$('#save-planilla').removeAttr("disabled");
 				},3000);
 				$('#formQuince')[0].reset();
 			})
@@ -721,6 +730,7 @@
 				$('#errorPlaQ').css("display","block");
 				setTimeout(function(){
 					$('#errorPlaQ').css("display","none");
+					$('#save-planilla').removeAttr("disabled");
 				},3000);
 			});
 		}

@@ -12,6 +12,9 @@
     table{
       margin: 10cm;
     }
+    table tbody tr td{
+      font-size: 8px !important;
+    }
     .cien{
       width: 100%;
     }
@@ -31,10 +34,9 @@
 <body>
   @foreach($data as $dat)
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-  <h5 class="text-centro">FINCA</h5>
   <h5 class="text-centro">PLANILLA DE PAGO DEL {{$dat['fecha_ini']}} al {{$dat['fecha_fin']}}</h5>
   <table class="centrado">
-      <tr><th>{{$dat['nombre']}}</th></tr>
+      <tr><th colspan="4">{{$dat['nombre']}}</th></tr>
       <tr>
           <th>INGRESOS</th><th>-------</th>
           <th>DEDUCCIONES</th><th>-------</th>

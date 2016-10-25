@@ -44,14 +44,14 @@ class QuincenalesController extends Controller
       {
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
-        // usort($data, function($a, $b) {
-        //   return strcmp($a["nombre"], $b["nombre"]);
-        //     return $a['order'] < $b['order']?1:-1;
-        // });
+        usort($data, function($a, $b) {
+          return strcmp($a["nombre"], $b["nombre"]);
+            return $a['order'] < $b['order']?1:-1;
+        });
         $view = \View::make('sobres_quincenal',array('data'=>$data));
         $pdf = \App::make('dompdf.wrapper');
         $pdf->loadHTML($view);
-        $paper_size = array(0,0,360,360);
+        $paper_size = array(0,0,278.9291,540);
         $pdf->setPaper($paper_size,'landscape');
         return $pdf->stream('Reporte_Billetes');
       }
@@ -59,32 +59,98 @@ class QuincenalesController extends Controller
         $peticion=$request->all();
           //$data =$this->billetes($peticion);
           $planillas=$this->planilla_quincenal($peticion);
+          usort($planillas, function($a, $b) {
+            return strcmp($a["nombre"], $b["nombre"]);
+              return $a['order'] < $b['order']?1:-1;
+          });
           $data =$this->calcular_billetes($planillas);
-          // usort($planillas, function($a, $b) {
-          //   return strcmp($a["nombre"], $b["nombre"]);
-          //     return $a['order'] < $b['order']?1:-1;
-          // });
-          $totales=$data['total_individual'];
-          //return view('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
-          $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$totales));
+          $nombres=$this->nombres_billetes($planillas);
+
+          $view = \View::make('billetes_quincenal',array('data'=>$data,'totales'=>$data['total_individual'],'nombres'=>$nombres));
           $pdf = \App::make('dompdf.wrapper');
           $pdf->loadHTML($view);
           $pdf->setPaper('a4', 'landscape');
           return $pdf->stream('invoice');
           return $pdf->stream();
       }
-      elseif ($funcion == 'reporte_inss') {
+      elseif ($funcion == 'Reporte INSS') {
         $peticion=$request->all();
         $tot=array();
-        // $peticion=[
-        //   "fecha_ini"=>'2016-01-01',
-        //   'fecha_fin'=>'2017-01-01',
-        // ];
+
         $datas=$this->planilla_quincenal($peticion);
         usort($datas, function($a, $b) {
           return strcmp($a["nombre"], $b["nombre"]);
             return $a['order'] < $b['order']?1:-1;
         });
+
+        $arreglo=$datas;
+        $dobles=array();
+        $unicos=array();
+
+        foreach ($arreglo as $item){
+
+          $dato=$item;
+
+          for ($i = 0; $i < sizeof($arreglo); $i++){
+            if($dato['nombre'] == $arreglo[$i]->nombre){
+              $dobles[] = $arreglo[$i];
+              unset($arreglo[$i]);
+              /*return $arreglo;*/
+            }
+
+          }
+          return $arreglo;
+        }
+
+        return $dobles;
+
+
+
+
+        // $valor=in_array($dato['id_trabajador'], (array)$arreglo);//si ya existe la finca en el arreglo
+        // $converted_res = ($valor) ? 'true' : 'false';
+        // return $converted_res;
+
+
+
+        // $id=-4654;
+        // $sal=-4654;
+        // $sinrep=array();
+        // $rep=array();
+        // $datas2=$datas;
+        // $i=-1;
+
+
+
+
+        // foreach ($datas as $data) {
+        //   $i++;
+        //   unset($datas2[$i]);
+        //   $valor=in_array($data, (array)$datas2);//si ya existe la finca en el arreglo
+        //   $converted_res = ($valor) ? 'true' : 'false';
+        //   $valor2=in_array($data, (array)$rep);
+        //   $rep_check = ($valor) ? 'true' : 'false';
+        //    if ($converted_res=='true'|| $rep_check=='true'){
+        //      $rep[]=$data;
+        //    }
+        //    else {
+        //      $sinrep[]=$data;
+        //    }
+        //  }
+        //  return $sinrep;
+
+
+
+        foreach ($datas as $data) {
+          if ($id==$data['id_trabajador']) { /*Esta repetido*/
+            $sal_tot=$data['total_pagar']+$salario;
+
+          }
+          else {//Si solo hay uno
+            $id=$data['id_trabajador'];
+            $salario=$data['total_pagar'];
+          }
+        }
         foreach ($datas as $data) {
           $id=$data['id_trabajador'];
           $trabajador= Trabajador::find($id);
@@ -98,7 +164,6 @@ class QuincenalesController extends Controller
             "pnombre"=>$nombre,
             "papellido"=>$apellido,
             "t_devengado"=>$data['total_pagar'],
-
           ];
           $tot[]=$array;
         }
@@ -218,11 +283,19 @@ class QuincenalesController extends Controller
       return 'Eliminada';
     }
 
+    public function nombres_billetes($planillas){
+      foreach ($planillas as $planilla) {
+        $nombres[]=$planilla['nombre'];
+      }
+      return $nombres;
+    }
 
     public function calcular_billetes($planillas){
       foreach ($planillas as $planilla) {
         $nums[]=$planilla['total_pagar'];
+        $nombres[]=$planilla['nombre'];
       }
+      $i=0;
       foreach ($nums as $N) {
         //recibir el total de pagos en un array
         //recibe el nombre de la gente
@@ -254,8 +327,11 @@ class QuincenalesController extends Controller
         $num[5]=$numero_de_billetes_5;
         $num[1]=$numero_de_billetes_1;
         $num[2]=$billete;
+        $num['nombre']=$nombres[$i];
         $todos[]=$num;
+        $i++;
       }
+
       $tot_500=0;$tot_200=0;$tot_100=0;$tot_50=0;$tot_20=0;$tot_10=0;$tot_5=0;$tot_1=0;$tot_billetes=0;
       foreach ($todos as $key) {
         $tot_500=$key[500]+$tot_500;
@@ -278,6 +354,7 @@ class QuincenalesController extends Controller
       $todos['cantidad_multiplicada']=$tot_mul;
       $todos['total_billetes']=$tot_billetes;
       $todos['total_individual']=$cant_ind;
+
       return $todos;
     }
     public function g_quincenal(Request $request){
