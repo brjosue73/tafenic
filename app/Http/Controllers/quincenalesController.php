@@ -171,6 +171,9 @@ class QuincenalesController extends Controller
         return $tot;
 
       }
+      elseif ($funcion == 'reporte_dgi') {
+        # code...
+      }
     }
     public function billetes(Request $request){
       $peticion=$request->all();
@@ -402,7 +405,7 @@ class QuincenalesController extends Controller
       $inss_lab2=(($devengado-$subsi)*$inss_admin)/100;
       $inss_lab=round($inss_lab2,2);
       $planilla->inss_laboral=$inss_lab;
-      $quinc_i=round($devengado-$inss_lab,2);
+      $quinc_i=round($basico,2);
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
       $IR=0;

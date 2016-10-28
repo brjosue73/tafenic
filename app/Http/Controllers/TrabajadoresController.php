@@ -18,7 +18,11 @@ class TrabajadoresController extends Controller
      * @return \Illuminate\Http\Response
      */
      public function quincenal(){
-       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('tipo','quincenal')->get();
+       $trabajadores = DB::table('trabajadores')
+       //->orderBy('nombre', 'desc')
+       ->orderBy('created_at', 'desc')
+       ->orderBy('estado', 'desc')
+       ->where('tipo','quincenal')->get();
        return response()->json($trabajadores);
      }
      public function resp_finca(){
@@ -26,11 +30,16 @@ class TrabajadoresController extends Controller
        return response()->json($trabajadores);
      }
      public function listero(){
-       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->where('cargo','listero')->get();
+       $trabajadores = DB::table('trabajadores')
+       ->orderBy('created_at', 'desc')->orderBy('estado', 'desc')
+       ->where('cargo','listero')->get();
        return response()->json($trabajadores);
      }
      public function campo(){
-       $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')
+       $trabajadores = DB::table('trabajadores')
+       ->orderBy('created_at', 'desc')
+       ->orderBy('estado', 'desc')
+       //->orderBy('nombre', 'asc')
        ->where('cargo','tcampo')
        ->orWhere('cargo','guardia')->get();
        return response()->json($trabajadores);
@@ -39,7 +48,9 @@ class TrabajadoresController extends Controller
     public function index()
     {
 
-        $trabajadores = DB::table('trabajadores')->orderBy('created_at', 'desc')->orderBy('estado', 'desc')->get();
+        $trabajadores = DB::table('trabajadores')
+        ->orderBy('created_at', 'desc')
+        ->orderBy('estado', 'desc')->get();
       return response()->json($trabajadores);
     }
 
