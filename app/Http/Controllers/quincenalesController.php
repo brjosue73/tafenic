@@ -88,7 +88,6 @@ class QuincenalesController extends Controller
         $unicos=array();
 
         foreach ($arreglo as $item){
-
           $dato=$item;
 
           for ($i = 0; $i < sizeof($arreglo); $i++){
@@ -96,6 +95,7 @@ class QuincenalesController extends Controller
               $dobles[] = $arreglo[$i];
               unset($arreglo[$i]);
               /*return $arreglo;*/
+
             }
 
           }
