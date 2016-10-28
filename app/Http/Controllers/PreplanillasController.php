@@ -96,11 +96,19 @@ class PreplanillasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
 
-        $peticion = $request->all();
-        $arreglo = $peticion["data"];
+    public function store(Request $request){
+      $peticion = $request->all();
+      $arreglo = $peticion["data"];
+      $prep=new Preplanilla($arreglo);
+      $guardar=$this->guardar_act($prep, $arreglo);
+      return $guardar;
+    }
+
+    public function guardar_act($prep, $arreglo)
+    {
+        //$peticion = $request->all();
+        //$arreglo = $peticion["data"];
         $variables=Variable::all();//
         foreach ($variables as $variable) {//Toma los datos de la tabla variables
           $hora_trab=0;
@@ -124,7 +132,7 @@ class PreplanillasController extends Controller
           $inss_patron_catorce=$variable->inss_patron_catorce;
         }
 
-        $prep= new Preplanilla($arreglo);
+        //$prep= new Preplanilla($arreglo);
         $subsidio=$arreglo['subsidio'];
 
         $prep->salario_dev =$dia;
@@ -281,7 +289,8 @@ class PreplanillasController extends Controller
      */
     public function edit($id)
     {
-        //
+      $preplanilla = Preplanilla::find($id);
+      return $preplanilla;
     }
 
     /**
@@ -293,29 +302,11 @@ class PreplanillasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $peticion = $request->all();
-        $arreglo = $peticion["data"];
-
-        $preplanilla = Preplanilla::find($id);
-
-        $preplanilla->id_trabajador = $arreglo['id_trabajador'];
-        $preplanilla->id_finca = $arreglo['id_finca'];
-        $preplanilla->id_actividad = $arreglo['id_actividad'];
-        $preplanilla->id_labor = $arreglo['id_labor'];
-        $preplanilla->fecha = $arreglo['fecha'];
-        $preplanilla->lote = $arreglo['lote'];
-        $preplanilla->id_listero = $arreglo['id_listero'];
-        $preplanilla->id_respFinca = $arreglo['id_respFinca'];
-        $preplanilla->cantidad = $arreglo['cantidad'];
-        $preplanilla->hora_ext = $arreglo['hora_ext'];
-        $preplanilla->actividad_ext = $arreglo['actividad_ext'];
-        $preplanilla->salario_dev = $arreglo['salario_dev'];
-        $preplanilla->alimentacion = $arreglo['alimentacion'];
-        $preplanilla->vacaciones = $arreglo['vacaciones'];
-        $preplanilla->aguinaldo = $arreglo['aguinaldo'];
-        $preplanilla->salario_acum = $arreglo['salario_acum'];
-        $preplanilla->save();
-        return "Done!";
+      $peticion = $request->all();
+      $arreglo = $peticion["data"];
+      $prep = Preplanilla::find($id);
+      $guardar=$this->guardar_act($prep, $arreglo);
+      return $guardar;
     }
 
     /**
