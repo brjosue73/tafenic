@@ -89,20 +89,16 @@ class QuincenalesController extends Controller
         $unicos=array();
         $i = 0;
 
-        //return $arreglo[4];
         foreach ($arreglo as $item){
-          return key($arreglo);
           $dato=$item;
           unset($arreglo[$i]);
+
           $j = 1;
           foreach ($arreglo as $elemento){
             if($dato['nombre'] == $elemento['nombre']){
               $dobles[] = $dato;
               $dobles[] = $elemento;
               unset($arreglo[$j]);
-              //return $arreglo;
-              //$j+=2;
-              //return $dobles;
             } else {
               return key($elemento);
               $unicos = $dato;
@@ -180,6 +176,9 @@ class QuincenalesController extends Controller
         return view('inss_quincenal')->with('data',$tot);
         return $tot;
 
+      }
+      elseif ($funcion == 'reporte_dgi') {
+        # code...
       }
     }
     public function billetes(Request $request){
@@ -412,7 +411,7 @@ class QuincenalesController extends Controller
       $inss_lab2=(($devengado-$subsi)*$inss_admin)/100;
       $inss_lab=round($inss_lab2,2);
       $planilla->inss_laboral=$inss_lab;
-      $quinc_i=round($devengado-$inss_lab,2);
+      $quinc_i=round($basico,2);
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
       $IR=0;
