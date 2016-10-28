@@ -185,6 +185,12 @@ class QuincenalesController extends Controller
       $data =$this->calcular_billetes($planillas);
       return $data;
     }
+    public function edit($id)
+    {
+      $planilla = Planilla::find($id);
+      return $planilla;
+    }
+
     public function sum_totales($data){
      $sum_dev = 0;
      $sum_dias = 0;
@@ -365,14 +371,21 @@ class QuincenalesController extends Controller
       return $todos;
     }
     public function g_quincenal(Request $request){
+      $peticion = $request->all();
+      $arreglo = $peticion;
+      $planilla = new Quincenal($arreglo);
+      $guardar=$this->g_act_quinc($arreglo, $planilla);
+      return $guardar;
+    }
+    public function g_act_quinc($arreglo, $planilla){
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_admin=$variable->inss_admin;
         $inss_patron=$variable->inss_patron;
       }
-      $peticion = $request->all();
-      $arreglo = $peticion;
-      $planilla = new Quincenal($arreglo);
+      // $peticion = $request->all();
+      // $arreglo = $peticion;
+      // $planilla = new Quincenal($arreglo);
       $dias_trab=$arreglo['dias_trab'];
       $salario_quinc=$arreglo['salario_quinc'];
       $finca=$arreglo['id_finc'];
