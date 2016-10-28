@@ -73,7 +73,7 @@ class QuincenalesController extends Controller
           return $pdf->stream('invoice');
           return $pdf->stream();
       }
-      elseif ($funcion == 'reporte_inss') {
+      elseif ($funcion == 'Reporte INSS') {
         $peticion=$request->all();
         $tot=array();
 
@@ -84,10 +84,8 @@ class QuincenalesController extends Controller
         });
 
         $arreglo=$datas;
-
         $dobles=array();
         $unicos=array();
-        $i = 0;
 
         foreach ($arreglo as $item){
           $dato=$item;
@@ -103,9 +101,9 @@ class QuincenalesController extends Controller
               return key($elemento);
               $unicos = $dato;
             }
-            $j+=2;
+
           }
-          $i+=2;
+          return $arreglo;
         }
 
         return $dobles;
