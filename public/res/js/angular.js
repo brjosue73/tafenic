@@ -668,6 +668,10 @@
 				console.log("cancelado");
 			}
 		}
+
+		s.updCatorce = function(idcatreg) {
+			h.get('/preplanilla/'+idcatreg+'/edit');
+		}
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.RplillaQSendData = {};
