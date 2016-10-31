@@ -323,7 +323,6 @@
 				console.log(err);
 			});
 		}
-
 	}]);
 	app.controller('fincaOneController', ['$scope','fincaResource','$stateParams','laborResource','actividadResource', function(s,fr,sp,lr,ar){
 		s.unaFinca = fr.get({id:sp.id}, function(data){

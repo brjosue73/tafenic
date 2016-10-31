@@ -22,6 +22,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('/constantes','PreplanillasController@constantes');
     Route::post('/prep_fecha', 'PreplanillasController@preplanilla_fecha');
 
+    Route::post('/actualizar_prep','PreplanillasController@actualizar');
+
     Route::post('labor_act','LaboresController@labor_por_actividad');
     Route::post('lotes_finca','LotesController@lotes_por_finca');
     Route::post('actividad_finca', 'ActividadesController@actividad_por_finca');
@@ -51,6 +53,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('planilla_quincenal','quincenalesController@quincenal_fecha');
     Route::post('guardar_quincenal','quincenalesController@g_quincenal');
     Route::get('actualizar_quincenal','quincenalesController@a_quincenal');
+    Route::get('quincen_edit','quincenalesController@edit');
+    Route::post('quincen_update','quincenalesController@update');
 
     Route::post('sobres_quincenal','quincenalesController@sobres_quincenal');
     Route::post('reporte_quincenal','quincenalesController@reporte_quincenal');

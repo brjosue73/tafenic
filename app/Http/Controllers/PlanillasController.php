@@ -39,6 +39,7 @@ class PlanillasController extends Controller
       return strcmp($a["nombre"], $b["nombre"]);
         return $a['order'] < $b['order']?1:-1;
     });
+    return $data;
     $totales=$this->sum_totales($data);
     $view = \View::make('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
     $pdf = \App::make('dompdf.wrapper');
@@ -79,6 +80,29 @@ class PlanillasController extends Controller
       $pdf->setPaper('a4', 'landscape');
       return $pdf->stream('invoice');
       return $pdf->stream();
+    }
+    elseif($funcion == 'Reporte DGI'){
+      $peticion=$request->all();
+      $tot=array();
+      $datas =$this->calculo_planilla($peticion);
+      // usort($data, function($a, $b) {
+      //   return strcmp($a["nombre"], $b["nombre"]);
+      //     return $a['order'] < $b['order']?1:-1;
+      // });
+      foreach ($datas as $data) {
+        $id=$data['id_trab'];
+        $trabajador= Trabajador::find($id);
+        $fecha=explode('-',$data['fecha_ini']);
+        $fecha_act=$fecha[0].'-'.$fecha[1];
+        $array=[
+          "ruc"=>$trabajador->cedula,
+          "nombres"=>$trabajador->nombre.' '.$trabajador->apellidos,
+          "t_devengado"=>$data['salario_'],
+        ];
+        $tot[]=$array;
+      }
+      return view('dgi_catorcenal')->with('data',$tot);
+      return $tot;
     }
     elseif ($funcion == 'reporte_inss') {
       $peticion=$request->all();
