@@ -116,6 +116,11 @@
 			templateUrl: "partials/preplanillas/prepReport.html",
 			controller:"preplanilla"
 		})
+		.state('/preplanilla.editar',{
+			url: "/editar/:id",
+			templateUrl: "partials/preplanillas/prepEdit.html",
+			controller: "catorcenalEditar"
+		})
 		.state('/prepxtrab', {
 			url: "/preplanilla_trabajador",
 			templateUrl: "partials/preplanillas/prepxTrab.html",
@@ -752,5 +757,9 @@
 		s.pqSave = function() {
 			console.log(s.regQince);
 		}
+	}]);
+	app.controller('catorcenalEditar', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
+		s.prepReg = pr.get('/planilla/:id/editar',{id:sp.id})
+		console.log(s.prepReg);		
 	}]);
 }());
