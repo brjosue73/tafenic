@@ -83,26 +83,30 @@ class QuincenalesController extends Controller
             return $a['order'] < $b['order']?1:-1;
         });
 
-        $arreglo=$datas;
-        $dobles=array();
-        $unicos=array();
-
-        foreach ($arreglo as $item){
-          $dato=$item;
-
-          for ($i = 0; $i < sizeof($arreglo); $i++){
-            if($dato['nombre'] == $arreglo[$i]->nombre){
-              $dobles[] = $arreglo[$i];
-              unset($arreglo[$i]);
-              /*return $arreglo;*/
-
-            }
-
-          }
-          return $arreglo;
-        }
-
-        return $dobles;
+        // $arreglo=$datas;
+        // $dobles=array();
+        // $unicos=array();
+        //
+        // foreach ($arreglo as $item){
+        //   $dato=$item;
+        //   unset($arreglo[$i]);
+        //
+        //   $j = 1;
+        //   foreach ($arreglo as $elemento){
+        //     if($dato['nombre'] == $elemento['nombre']){
+        //       $dobles[] = $dato;
+        //       $dobles[] = $elemento;
+        //       unset($arreglo[$j]);
+        //     } else {
+        //       return key($elemento);
+        //       $unicos = $dato;
+        //     }
+        //
+        //   }
+        //   return $arreglo;
+        // }
+        //
+        // return $dobles;
 
 
 
@@ -113,31 +117,75 @@ class QuincenalesController extends Controller
 
 
 
-        // $id=-4654;
-        // $sal=-4654;
-        // $sinrep=array();
-        // $rep=array();
-        // $datas2=$datas;
-        // $i=-1;
+        $id=-4654;
+        $sal=-4654;
+        $sinrep=array();
+        $sinrep_tot=array();
+        $rep_tot=array();
+        $rep2=[
+          'id_trabajador'=>-1,
+          'nombre'=>'',
+        ];
+        $rep3=[
+          'id_trabajador'=>-1,
+          'nombre'=>'',
+        ];
+        $reps[]=$rep2;
+        $reps[]=$rep3;
 
 
-
-
-        // foreach ($datas as $data) {
-        //   $i++;
-        //   unset($datas2[$i]);
-        //   $valor=in_array($data, (array)$datas2);//si ya existe la finca en el arreglo
-        //   $converted_res = ($valor) ? 'true' : 'false';
-        //   $valor2=in_array($data, (array)$rep);
-        //   $rep_check = ($valor) ? 'true' : 'false';
-        //    if ($converted_res=='true'|| $rep_check=='true'){
-        //      $rep[]=$data;
-        //    }
-        //    else {
-        //      $sinrep[]=$data;
-        //    }
-        //  }
-        //  return $sinrep;
+        $datas2=$datas;
+        $i=-1;
+        foreach ($datas as $data) {
+          $i++;
+          unset($datas2[$i]);
+          $valor_data2=0;
+          $valor_rep=0;
+          foreach ($datas2 as $data2) {/*Saber si esta en el arreglo de duplicados que se elimino*/
+            //return $datas2;
+            if($data->id_trabajador==$data2->id_trabajador){
+              $valor_data2+=1;
+            }
+          }
+          foreach ($reps as $rep) {/*Saber si esta en el arreglo de duplicados que se elimino*/
+            //return $rep['id_trabajador'];
+            if($data->id_trabajador==$rep['id_trabajador']){
+              $valor_rep+=1;
+            }
+          }
+          // return $valor_rep;
+          //
+          // $valor=in_array($data, (array)$datas2);//si ya existe la finca en el arreglo
+          // $converted_res = ($valor) ? 'true' : 'false';
+          // $valor2=in_array($data, (array)$rep);
+          // $rep_check = ($valor) ? 'true' : 'false';
+          //return $valor_rep.'Valor2 '. $valor_data2;
+           if ($valor_data2==1|| $valor_rep==0){
+             $rep[]=$data;
+             //return $rep;
+           }
+           else {
+             $sinrep[]=$data;
+           }
+           $valor_data2=0;
+           $valor_rep=0;
+           $rep_tot[]=$rep;
+           $sinrep_tot=$sinrep;
+           unset($rep);
+           unset($sinrep);
+           $sinrep=array();
+           $rep2=[
+             'id_trabajador'=>-1,
+             'nombre'=>'',
+           ];
+           $rep3=[
+             'id_trabajador'=>-1,
+             'nombre'=>'',
+           ];
+           $reps[]=$rep2;
+           $reps[]=$rep3;
+         }
+         return $rep_tot;
 
 
 
@@ -181,6 +229,8 @@ class QuincenalesController extends Controller
       $data =$this->calcular_billetes($planillas);
       return $data;
     }
+
+
     public function sum_totales($data){
      $sum_dev = 0;
      $sum_dias = 0;
@@ -361,14 +411,36 @@ class QuincenalesController extends Controller
       return $todos;
     }
     public function g_quincenal(Request $request){
+      $peticion = $request->all();
+      $arreglo = $peticion;
+      $planilla = new Quincenal($arreglo);
+      $guardar=$this->g_act_quinc($arreglo, $planilla);
+      return $guardar;
+    }
+    public function edit($id)
+    {
+      $planilla = Quincenal::find($id);
+      return $planilla;
+    }
+
+    public function update(Request $request, $id)
+    {
+      $peticion = $request->all();
+      $arreglo = $peticion["data"];
+      $planilla = Quincenal::find($id);
+      $guardar=$this->g_act_quinc($planilla, $arreglo);
+      return $guardar;
+
+    }
+    public function g_act_quinc($arreglo, $planilla){
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $inss_admin=$variable->inss_admin;
         $inss_patron=$variable->inss_patron;
       }
-      $peticion = $request->all();
-      $arreglo = $peticion;
-      $planilla = new Quincenal($arreglo);
+      // $peticion = $request->all();
+      // $arreglo = $peticion;
+      // $planilla = new Quincenal($arreglo);
       $dias_trab=$arreglo['dias_trab'];
       $salario_quinc=$arreglo['salario_quinc'];
       $finca=$arreglo['id_finc'];

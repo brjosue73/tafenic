@@ -39,7 +39,6 @@ class PlanillasController extends Controller
       return strcmp($a["nombre"], $b["nombre"]);
         return $a['order'] < $b['order']?1:-1;
     });
-    return $data;
     $totales=$this->sum_totales($data);
     $view = \View::make('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
     $pdf = \App::make('dompdf.wrapper');
@@ -48,8 +47,7 @@ class PlanillasController extends Controller
     return $pdf->stream('invoice');
     return $pdf->stream();
     }
-    elseif ($funcion == 'Generar sobres')
-    {
+    elseif ($funcion == 'Generar sobres'){
       $data =$this->calculo_planilla($peticion);
       usort($data, function($a, $b) {
         return strcmp($a["nombre"], $b["nombre"]);
@@ -286,14 +284,9 @@ class PlanillasController extends Controller
   }
   public function calculo_planilla($peticion){
     $finca_mayor='--';
-    //$fecha_ini="2016-01-01";
-    //$fecha_fin="2017-01-01";
     $cargo='tcampo';
-
     $fecha_ini=$peticion['fecha_ini'];
     $fecha_fin=$peticion['fecha_fin'];
-    //$cargo=$peticion['cargo'];
-
     $variables=Variable::all();
     foreach ($variables as $variable) {
       $alim_var=$variable->alimentacion;
@@ -303,20 +296,20 @@ class PlanillasController extends Controller
       $vacaciones=$variable->vacaciones/100;
       $pago_dia=$variable->sal_diario;
     }
-
-      $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
+    $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->get();
 
-    //foreach ($planillas as $planilla) {
-      //solo hay 3 tipos administrativo, campo y serv_tecn
     $tamano = sizeof($planillas);
     $trabajadores=array();
+    $identif=array();
     $trab=0;
-
-      for ($i=0; $i < $tamano; $i++) {
-        $id_trab=$planillas[$i]->id_trabajador;
-
-        if ($trab!=$id_trab) {
+    $count=0;
+      for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
+        $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
+        $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
+        $converted_res = ($valor) ? 'true' : 'false';
+        if ($converted_res=='false') { //Sino esta repetido
+          $identif[]=$id_trab;
           $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
           ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
           // ->where('fecha',<=,$fecha_ini)
@@ -534,11 +527,12 @@ class PlanillasController extends Controller
           unset($labores);
           unset($fincas);
           unset($fincas_sinRep);
-          $trab=$id_trab;
-        }
-      }
+        }/*Fin Si no esta repetido*/
+      }//Fin For de recorrer toda la planilla
+
       return $trabajadores;
-  }
+
+  }//E
 
   public function eliminar(Request $request){
     $catorcenal = Preplanilla::find($request['id']);
