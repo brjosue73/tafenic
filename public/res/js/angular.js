@@ -460,7 +460,8 @@
 			prestamos:0,
 			labName: "",
 			safa_ext: 0,
-			cuje_ext: 0
+			cuje_ext: 0,
+			septimo: 0
 		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
@@ -760,6 +761,6 @@
 	}]);
 	app.controller('catorcenalEditar', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
 		s.prepReg = pr.get('/planilla/:id/editar',{id:sp.id})
-		console.log(s.prepReg);		
+		console.log(s.prepReg);
 	}]);
 }());
