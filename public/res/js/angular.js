@@ -116,6 +116,11 @@
 			templateUrl: "partials/preplanillas/prepReport.html",
 			controller:"preplanilla"
 		})
+		.state('/preplanilla.editar',{
+			url: "/editar/:id",
+			templateUrl: "partials/preplanillas/prepEdit.html",
+			controller: "catorcenalEditar"
+		})
 		.state('/prepxtrab', {
 			url: "/preplanilla_trabajador",
 			templateUrl: "partials/preplanillas/prepxTrab.html",
@@ -455,7 +460,8 @@
 			prestamos:0,
 			labName: "",
 			safa_ext: 0,
-			cuje_ext: 0
+			cuje_ext: 0,
+			septimo: 0
 		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
@@ -668,6 +674,10 @@
 				console.log("cancelado");
 			}
 		}
+
+		s.updCatorce = function(idcatreg) {
+			h.get('/preplanilla/'+idcatreg+'/edit');
+		}
 	}]);
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.RplillaQSendData = {};
@@ -748,5 +758,9 @@
 		s.pqSave = function() {
 			console.log(s.regQince);
 		}
+	}]);
+	app.controller('catorcenalEditar', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
+		s.prepReg = pr.get('/planilla/:id/editar',{id:sp.id})
+		console.log(s.prepReg);
 	}]);
 }());

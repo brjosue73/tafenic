@@ -67,7 +67,6 @@
           <th>Préstamos</th>
           <th>Tot. a Recibir</th>
           <th>INSS patronal</th>
-
           <th>finc. Sep.</th>
           <th>Acción</th>
 
@@ -160,7 +159,7 @@
                 <th>Horas Ext.</th>
                 <th>Otros</th>
                 <th>Prestamos</th>
-                <th>Acción</th>
+                <th class="text-center" colspan="2">Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -174,6 +173,8 @@
                 <td> <% rTrab14.hora_ext %> </td>
                 <td> <% rTrab14.otros %> </td>
                 <td> <% rTrab14.prestamo %> </td>
+                <!-- <td><span class="blue-anchor" data-ng-click="updCatorce(rTrab14.id)">update</span></td> -->
+                <td><a href="" data-ui-sref="/preplanilla.editar({id: <% rTrab14.id %>})">update</a></td>
                 <td><span class="blue-anchor" data-ng-click="delCatorce(rTrab14.id, $index, rTrab14.fecha)">eliminar</span></td>
               </tr>
             </tbody>
