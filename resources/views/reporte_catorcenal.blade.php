@@ -26,7 +26,7 @@
 
             <th> N° </th>
             <th>Nombre</th>
-            <th>Días trab.</th>
+            <th>Días trab</th>
             <th>Tot. Deven</th>
             <th>Alim.</th>
             <th>Tot. Básico</th>
@@ -35,13 +35,14 @@
             <th>Otros</th>
             <th>Feriados</th>
             <th>Tot. Deven</th>
-            <th>H. Extra</th>
-            <th>T. H. Ext. </th>
-            <th>Vac.</th>
-            <th>Aguin.</th>
-            <th>Tot.Acumu.</th>
+            <th>H. Ext</th>
+            <th>Act. Ext</th>
+            <th>T. Extras</th>
+            <th>Vac</th>
+            <th>Aguin</th>
+            <th>Tot.Acumu</th>
             <th>INSS laboral</th>
-            <th>Présta.</th>
+            <th>Présta</th>
             <th>Tot. a Recibir</th>
             <th>Recibí Conforme</th>
             <th>INSS Patronal</th>
@@ -49,7 +50,7 @@
 
           </tr>
         </thead>
-        <tbody>
+        <tbody> 
           @foreach ($data as $dat)
           <tr> <?php   $fecha_ini=$dat['fecha_ini'];
             $fecha_fin=$dat['fecha_fin']; ?>
