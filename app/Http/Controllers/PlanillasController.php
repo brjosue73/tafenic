@@ -32,8 +32,7 @@ class PlanillasController extends Controller
   public function reporte_planilla(Request $request){
     $peticion=$request->all();
     $funcion=$peticion['funcion'];
-    if ($funcion == 'Generar Imprimible')
-    {
+    if ($funcion == 'Generar Imprimible'){
     $data =$this->calculo_planilla($peticion);
     usort($data, function($a, $b) {
       return strcmp($a["nombre"], $b["nombre"]);
@@ -56,9 +55,9 @@ class PlanillasController extends Controller
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
-      $paper_size = array(0,0,360,360);
+      $paper_size = array(0,0,278.9291,540);
       $pdf->setPaper($paper_size, 'landscape');
-      return $pdf->stream('invoice');
+      return $pdf->stream('Sobre.pdf');
       return $pdf->stream();
     }
     elseif($funcion == 'Billetes'){
@@ -72,11 +71,12 @@ class PlanillasController extends Controller
       });
       $data =$this->calcular_billetes($planillas);
       $nombres=$this->nombres_billetes($planillas);
+      // return $data;
       $view = \View::make('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
       $pdf->setPaper('a4', 'landscape');
-      return $pdf->stream('invoice');
+      return $pdf->stream('Billetes.pdf');
       return $pdf->stream();
     }
     elseif($funcion == 'Reporte DGI'){
@@ -102,7 +102,7 @@ class PlanillasController extends Controller
       return view('dgi_catorcenal')->with('data',$tot);
       return $tot;
     }
-    elseif ($funcion == 'reporte_inss') {
+    elseif ($funcion == 'Reporte INSS') {
       $peticion=$request->all();
       $tot=array();
       $datas =$this->calculo_planilla($peticion);
@@ -126,10 +126,10 @@ class PlanillasController extends Controller
           "papellido"=>$apellido,
           "t_devengado"=>$data['salario_'],
           "fecha_ini"=>$fecha_act,
-
         ];
         $tot[]=$array;
       }
+
       return view('inss_catorcenal')->with('data',$tot);
       return $tot;
 
@@ -360,22 +360,11 @@ class PlanillasController extends Controller
 
 
            $tot_sept=$cant_septimos*$valor_dia;
-           /*-------------CALCULO DEL SEPTIMO*/
-           /*-------------CALCULO DEL SEPTIMO*/
-          //  if($feriados>0 && $feriados<=$dias){// si tiene un feriado
-          //    $dias=$dias-1;
-          //   //  $alim_tot=$alim_tot-$alim_var;
-          //   //  $tot_dev=$tot_dev-$feriados;
-          //  }
-          //  elseif ($feriados>=($dias*2)) {
-          //    $dias=$dias-2;
-          //   //  $alim_tot=$alim_tot-($alim_var*2);
-          //   //  $tot_dev=$tot_dev-$feriados;
-          //  }
+
            $feriados=0;
              foreach ($trabs as $trab) {
                  $inss_camp=$trab['inss_campo'];
-
+                 $tot_sept+=$trab['septimo'];
                  $inss_patronal=$trab->inss_patron;
                  $otros+=$trab->otros;
                  $salario=$trab->salario_acum;
