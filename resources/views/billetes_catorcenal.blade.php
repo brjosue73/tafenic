@@ -23,6 +23,8 @@
     $data1=$dat['1'];
   }
   $tot500=$data500*500;
+  $tot_gen=$data500*500+$data200*200+$data100*100+$data50*50+$data20*20+$data10*10+$data5*5+$data1;
+
   ?>
   <h5 class="text-centro">DISTRIBUCION DE BILLETES</h5>
   <div class="table-responsive">
@@ -153,6 +155,11 @@
           <th>1</th>
           <th>{{$dat['1']}}</th>
           <th>{{$dat['1']}}</th>
+        </tr>
+        <tr>
+        <th></th>
+        <th>Total:</th>
+        <th>{{$tot_gen}}</th>
         </tr>
       </tbody>
     </table>

@@ -33,7 +33,7 @@
           <tr class="active">
 
             <th> N° </th>
-            <th>Nombre</th>
+            <th>Nombre &nbsp</th>
             <th>Días trab</th>
             <th>Tot. Deven</th>
             <th>Alim.</th>
