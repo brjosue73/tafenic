@@ -158,7 +158,7 @@
         </tr>
         <tr>
           <th></th>
-          <th>Diferencia</th>
+          <th></th>
           <th>{{$data['diferencia']}}</th>
         </tr>
         <tr>
