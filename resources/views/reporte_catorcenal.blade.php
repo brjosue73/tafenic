@@ -7,17 +7,25 @@
   <!-- <link rel="stylesheet" href="res/css/bootstrapTable.css"> -->
 </head>
 <body>
-  <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-  <h5>PLANILLA GENERAL</h5>
   <?php
   setlocale(LC_ALL,"es_ES");
   $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+  $fecha_ini=$data['0']['fecha_ini'];
+  $fecha_fin=$data['0']['fecha_fin'];
 
+  $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+  $dia_ini=date("d", strtotime($fecha_1));
+  $mes_ini=date("m", strtotime($fecha_1));
+  $ano=date("Y", strtotime($fecha_1));
 
-
+  $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
+  $dia_fin=date("d", strtotime($fecha_2));
+  $mes_fin=date("m", strtotime($fecha_2));
   $i=0;
    ?>
-
+  <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+  <h5>PLANILLA GENERAL</h5>
+  <h5> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
 
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover table-condensed">
@@ -50,7 +58,7 @@
 
           </tr>
         </thead>
-        <tbody> 
+        <tbody>
           @foreach ($data as $dat)
           <tr> <?php   $fecha_ini=$dat['fecha_ini'];
             $fecha_fin=$dat['fecha_fin']; ?>
@@ -66,6 +74,7 @@
             <td> {{number_format( $dat['feriado'] ,2 )}} </td>
             <td>  {{number_format( $dat['devengado2'] ,2 )}}</td>
             <td>  {{ $dat['cant_horas_ext'] }}</td>
+            <td>0</td>
             <td> {{number_format( $dat['horas_ext_tot'] ,2 )}} </td>
             <td> {{number_format( $dat['vac_tot'] ,2 )}} </td>
             <td>{{number_format( $dat['agui_tot'] ,2 )}}</td>
@@ -90,6 +99,7 @@
             <td>{{number_format( $totales['sum_feriados'],2 ) }}</td>
             <td>{{number_format( $totales['sum_dev2'],2 ) }}</td>
             <td>{{number_format( $totales['sum_h_ext'],2 ) }}</td>
+            <td>0</td>
             <td>{{number_format( $totales['sum_tot_hext'],2 ) }}</td>
             <td>{{number_format( $totales['sum_vacs'],2 ) }}</td>
             <td>{{number_format( $totales['sum_aguin'],2 ) }}</td>
