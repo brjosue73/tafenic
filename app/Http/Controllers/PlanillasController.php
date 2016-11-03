@@ -57,7 +57,7 @@ class PlanillasController extends Controller
       $pdf->loadHTML($view);
       $paper_size = array(0,0,278.9291,540);
       $pdf->setPaper($paper_size, 'landscape');
-      return $pdf->stream('invoice');
+      return $pdf->stream('Sobre.pdf');
       return $pdf->stream();
     }
     elseif($funcion == 'Billetes'){
@@ -76,7 +76,7 @@ class PlanillasController extends Controller
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
       $pdf->setPaper('a4', 'landscape');
-      return $pdf->stream('invoice');
+      return $pdf->stream('Billetes.pdf');
       return $pdf->stream();
     }
     elseif($funcion == 'Reporte DGI'){
@@ -102,7 +102,7 @@ class PlanillasController extends Controller
       return view('dgi_catorcenal')->with('data',$tot);
       return $tot;
     }
-    elseif ($funcion == 'reporte_inss') {
+    elseif ($funcion == 'Reporte INSS') {
       $peticion=$request->all();
       $tot=array();
       $datas =$this->calculo_planilla($peticion);
@@ -126,10 +126,10 @@ class PlanillasController extends Controller
           "papellido"=>$apellido,
           "t_devengado"=>$data['salario_'],
           "fecha_ini"=>$fecha_act,
-
         ];
         $tot[]=$array;
       }
+
       return view('inss_catorcenal')->with('data',$tot);
       return $tot;
 

@@ -53,7 +53,7 @@ class QuincenalesController extends Controller
         $pdf->loadHTML($view);
         $paper_size = array(0,0,278.9291,540);
         $pdf->setPaper($paper_size,'landscape');
-        return $pdf->stream('Reporte_Billetes');
+        return $pdf->stream('Sobres.pdf');
       }
       elseif($funcion == 'Billetes'){
         $peticion=$request->all();
