@@ -72,6 +72,7 @@ class PlanillasController extends Controller
       });
       $data =$this->calcular_billetes($planillas);
       $nombres=$this->nombres_billetes($planillas);
+      // return $data;
       $view = \View::make('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);

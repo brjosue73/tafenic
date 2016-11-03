@@ -157,9 +157,14 @@
           <th>{{$dat['1']}}</th>
         </tr>
         <tr>
-        <th></th>
-        <th>Total:</th>
-        <th>{{$tot_gen}}</th>
+          <th></th>
+          <th>Diferencia</th>
+          <th>{{$data['diferencia']}}</th>
+        </tr>
+        <tr>
+          <th></th>
+          <th>Total:</th>
+          <th>{{$tot_gen+$data['diferencia']}}</th>
         </tr>
       </tbody>
     </table>
