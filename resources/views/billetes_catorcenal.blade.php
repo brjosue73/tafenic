@@ -30,45 +30,6 @@
   <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover table-condensed">
       <thead>
-        <tr class="active">
-          <th>Nombre</th>
-          <th>SALARIO</th>
-          <th class="danger">C$ 500</th>
-          <th>C$ 200</th>
-          <th class="info">C$ 100</th>
-          <th class="primary">C$ 50</th>
-          <th class="warning">C$ 20</th>
-          <th class="success">C$ 10</th>
-          <th>C$ 5</th>
-          <th>C$ 1</th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <?php
-        $tamano=sizeof($data);
-         ?>
-         @for($j=0;$j<$tamano-4;$j++)
-         <tr>
-           <td>{{$nombres[$j]}}</td>
-           <td>{{$data[$j]['0']}}</td>
-           <td class="danger">{{ $data[$j]['500'] }}</td>
-           <td>{{ $data[$j]['200'] }}</td>
-           <td class="info">{{ $data[$j]['100'] }}</td>
-           <td class="primary">{{ $data[$j]['50'] }}</td>
-           <td class="warning">{{ $data[$j]['20'] }}</td>
-           <td class="success">{{ $data[$j]['10'] }}</td>
-           <td>{{ $data[$j]['5'] }}</td>
-           <td>{{ $data[$j]['1'] }}</td>
-         </tr>
-         @endfor
-        <tr>
-      </tbody>
-    </table>
-
-
-    <table class="table table-striped table-bordered table-hover table-condensed">
-      <thead>
         <tr>
           <th>
             Denominación
@@ -168,6 +129,47 @@
         </tr>
       </tbody>
     </table>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+
+
+    <table class="table table-striped table-bordered table-hover table-condensed">
+      <thead>
+        <tr class="active">
+          <th>Nombre</th>
+          <th>SALARIO</th>
+          <th class="danger">C$ 500</th>
+          <th>C$ 200</th>
+          <th class="info">C$ 100</th>
+          <th class="primary">C$ 50</th>
+          <th class="warning">C$ 20</th>
+          <th class="success">C$ 10</th>
+          <th>C$ 5</th>
+          <th>C$ 1</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <?php
+        $tamano=sizeof($data);
+         ?>
+         @for($j=0;$j<$tamano-4;$j++)
+         <tr>
+           <td>{{$nombres[$j]}}</td>
+           <td>{{$data[$j]['0']}}</td>
+           <td class="danger">{{ $data[$j]['500'] }}</td>
+           <td>{{ $data[$j]['200'] }}</td>
+           <td class="info">{{ $data[$j]['100'] }}</td>
+           <td class="primary">{{ $data[$j]['50'] }}</td>
+           <td class="warning">{{ $data[$j]['20'] }}</td>
+           <td class="success">{{ $data[$j]['10'] }}</td>
+           <td>{{ $data[$j]['5'] }}</td>
+           <td>{{ $data[$j]['1'] }}</td>
+         </tr>
+         @endfor
+        <tr>
+      </tbody>
+    </table>
+
 
   </div>
 </body>
