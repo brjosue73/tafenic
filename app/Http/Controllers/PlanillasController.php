@@ -32,8 +32,7 @@ class PlanillasController extends Controller
   public function reporte_planilla(Request $request){
     $peticion=$request->all();
     $funcion=$peticion['funcion'];
-    if ($funcion == 'Generar Imprimible')
-    {
+    if ($funcion == 'Generar Imprimible'){
     $data =$this->calculo_planilla($peticion);
     usort($data, function($a, $b) {
       return strcmp($a["nombre"], $b["nombre"]);
@@ -56,7 +55,7 @@ class PlanillasController extends Controller
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
-      $paper_size = array(0,0,360,360);
+      $paper_size = array(0,0,278.9291,540);
       $pdf->setPaper($paper_size, 'landscape');
       return $pdf->stream('invoice');
       return $pdf->stream();
