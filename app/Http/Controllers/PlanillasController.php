@@ -43,7 +43,7 @@ class PlanillasController extends Controller
     $pdf = \App::make('dompdf.wrapper');
     $pdf->loadHTML($view);
     $pdf->setPaper('legal', 'landscape');
-    return $pdf->stream('invoice');
+    return $pdf->stream('Planilla_general.pdf');
     return $pdf->stream();
     }
     elseif ($funcion == 'Generar sobres'){
