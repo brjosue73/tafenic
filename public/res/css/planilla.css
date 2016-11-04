@@ -24,6 +24,10 @@ td hr{
 table {
     font-size: 10px;
     margin-bottom: 3.3rem;
+    border-collapse: collapse;
+}
+tbody>tr:nth-child(even) {
+  background-color: #ddd;
 }
 th {
   padding: 3px;
