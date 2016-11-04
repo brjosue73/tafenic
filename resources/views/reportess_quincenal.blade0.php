@@ -5,6 +5,24 @@
   <title>Document</title>
   <link rel="stylesheet" href="res/css/planilla.css">
   <link rel="stylesheet" href="res/css/bootstrapTable.css">
+  <style>
+    @page { margin: 50px; }
+    #header {
+      position: fixed;
+      top: -50px;
+      left: 0px;
+      right: 0px;
+      height: 50px;
+      padding: .5em;
+      text-align: center;
+    }
+    @page{
+       margin: 50px;
+    }
+    body{
+      padding-top: 35px;
+    }
+  </style>
 </head>
 <body>
   <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
