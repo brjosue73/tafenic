@@ -10,7 +10,8 @@
       margin: 0;
     }
     table{
-      margin: 10cm;
+      /*margin: 10cm;*/
+      width: 75%;
     }
     table tbody tr td{
       font-size: 8px !important;
@@ -108,7 +109,6 @@
 
     </tbody>
   </table>
-<hr>
   @endforeach
 </body>
 </html>

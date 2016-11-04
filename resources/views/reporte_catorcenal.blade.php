@@ -26,7 +26,7 @@
   <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5>PLANILLA GENERAL</h5>
   <h5> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
-  
+
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover table-condensed">
         <thead>
@@ -113,18 +113,13 @@
         </tbody>
       </table>
     </div>
-
-    <div>
-      <div class="firmas">
-        Elaborado Por:____________________________
-      </div>
-      <div class="firmas">
-        Revisado Por:____________________________
-      </div>
-      <div class="firmas">
-        Autorizado Por:____________________________
-      </div>
+    <div class="firmas">
+      Revisado Por:____________________________
     </div>
+    <div class="firmas">
+      Autorizado Por:____________________________
+    </div>
+  </div>
 
 </body>
 </html>
