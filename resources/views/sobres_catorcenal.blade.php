@@ -7,21 +7,17 @@
   <style>
     table,th,td,tr{
       border: 1px solid black;
-      margin: 0;
-    }
-    table{
-      /*margin: 10cm;*/
-      width: 75%;
+      /*margin: 0;*/
     }
     table tbody tr td{
       font-size: 8px !important;
-    }
+    }/*
     .cien{
       width: 100%;
     }
     .cincuenta{
       width: 50%;
-    }
+    }*/
     .text-centro{
       text-align: center;
       margin-top: 0;
@@ -29,6 +25,12 @@
     }
     .centrado{
       margin: 0 auto;
+    }
+    table{
+      width: 75%;
+    }
+    h4 {
+      margin-top: 1rem !important;
     }
   </style>
 </head>

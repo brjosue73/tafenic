@@ -7,20 +7,17 @@
   <style>
     table,th,td,tr{
       border: 1px solid black;
-      margin: 0;
-    }
-    table{
-      margin: 10cm;
+      /*margin: 0;*/
     }
     table tbody tr td{
       font-size: 8px !important;
-    }
+    }/*
     .cien{
       width: 100%;
     }
     .cincuenta{
       width: 50%;
-    }
+    }*/
     .text-centro{
       text-align: center;
       margin-top: 0;
@@ -29,12 +26,19 @@
     .centrado{
       margin: 0 auto;
     }
+    table{
+      width: 75%;
+    }
+    h4 {
+      margin-top: 1rem !important;
+    }
   </style>
 </head>
 <body>
   @foreach($data as $dat)
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">PLANILLA DE PAGO DEL {{$dat['fecha_ini']}} al {{$dat['fecha_fin']}}</h5>
+  <h5 class="text-centro">SOBRE DE PAGO</h5>
   <table class="centrado">
       <tr><th colspan="4">{{$dat['nombre']}}</th></tr>
       <tr>
