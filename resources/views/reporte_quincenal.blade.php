@@ -16,11 +16,9 @@
       padding: .5em;
       text-align: center;
     }
-    @page{
-       margin: 50px;
-    }
+
     body{
-      padding-top: 35px;
+      padding-top: 50px;
     }
   </style>
 </head>
