@@ -166,6 +166,10 @@
 			templateUrl: "partials/planillas/planilla.html",
 			controller: "planillaQController"
 		})
+		.state('/reportes', {
+			url:"/reportes",
+			templateUrl: "partials/reportes/reportesPanel.html"
+		})
 	});
 	/*******************************************************************************************************************\
 		Create and append a new cotrollers for your exist module in use
