@@ -1,6 +1,7 @@
 
 h4,h5 {
   text-align: center;
+  margin: 5px;
 }
 /*table {
   border: 1px solid black;
@@ -24,6 +25,11 @@ td hr{
 table {
     font-size: 10px;
     margin-bottom: 3.3rem;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+}
+tbody>tr:nth-child(even) {
+  background-color: #ddd;
 }
 th {
   padding: 3px;

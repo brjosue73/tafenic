@@ -30,7 +30,7 @@
             <td>{{$dat['ruc']}}</td>
             <td>{{$dat['nombres']}}</td>
             <td>{{$dat['t_devengado']}}</td>
-            <td></td>
+            <td>{{$dat['t_devengado']*0.0425}}</td>
             <td></td>
             <td></td>
             <td></td>

@@ -5,6 +5,24 @@
   <title>Document</title>
   <link rel="stylesheet" href="res/css/planilla.css">
   <!-- <link rel="stylesheet" href="res/css/bootstrapTable.css"> -->
+  <style>
+    @page { margin: 50px; }
+    #header {
+      position: fixed;
+      top: -50px;
+      left: 0px;
+      right: 0px;
+      height: 50px;
+      padding: .5em;
+      text-align: center;
+    }
+    @page{
+       margin: 50px;
+    }
+    body{
+      padding-top: 35px;
+    }
+  </style>
 </head>
 <body>
   <?php
@@ -23,10 +41,12 @@
   $mes_fin=date("m", strtotime($fecha_2));
   $i=0;
    ?>
-  <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-  <h5>PLANILLA GENERAL</h5>
-  <h5> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
-  
+   <div id="header">
+     <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+     <h5>PLANILLA GENERAL</h5>
+     <h5> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
+   </div>
+
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover table-condensed">
         <thead>
@@ -113,18 +133,13 @@
         </tbody>
       </table>
     </div>
-
-    <div>
-      <div class="firmas">
-        Elaborado Por:____________________________
-      </div>
-      <div class="firmas">
-        Revisado Por:____________________________
-      </div>
-      <div class="firmas">
-        Autorizado Por:____________________________
-      </div>
+    <div class="firmas">
+      Revisado Por:____________________________
     </div>
+    <div class="firmas">
+      Autorizado Por:____________________________
+    </div>
+  </div>
 
 </body>
 </html>
