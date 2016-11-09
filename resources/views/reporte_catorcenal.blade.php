@@ -9,7 +9,7 @@
     @page { margin: 50px; }
     #header {
       position: fixed;
-      top: -50px;
+      top: -40px;
       left: 0px;
       right: 0px;
       height: 50px;
@@ -20,7 +20,7 @@
        margin: 50px;
     }
     body{
-      padding-top: 35px;
+      padding-top: 42px;
     }
   </style>
 </head>
