@@ -24,8 +24,7 @@ class QuincenalesController extends Controller
 
     public function reporte_quincenal(Request $request){
       $funcion=$request['funcion'];
-      if ($funcion == 'Generar Imprimible')
-      {
+      if ($funcion == 'Generar Imprimible'){
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
         usort($data, function($a, $b) {
@@ -40,8 +39,7 @@ class QuincenalesController extends Controller
         $pdf->setPaper('legal', 'landscape');
         return $pdf->stream('invoice');
       }
-      elseif ($funcion == 'Generar sobres')
-      {
+      elseif ($funcion == 'Generar sobres'){
         $peticion=$request->all();
         $data =$this->planilla_quincenal($peticion);
         usort($data, function($a, $b) {
@@ -82,61 +80,35 @@ class QuincenalesController extends Controller
           return strcmp($a["nombre"], $b["nombre"]);
             return $a['order'] < $b['order']?1:-1;
         });
-
-        // $arreglo=$datas;
-        // $dobles=array();
-        // $unicos=array();
-        //
-        // foreach ($arreglo as $item){
-        //   $dato=$item;
-        //   unset($arreglo[$i]);
-        //
-        //   $j = 1;
-        //   foreach ($arreglo as $elemento){
-        //     if($dato['nombre'] == $elemento['nombre']){
-        //       $dobles[] = $dato;
-        //       $dobles[] = $elemento;
-        //       unset($arreglo[$j]);
-        //     } else {
-        //       return key($elemento);
-        //       $unicos = $dato;
-        //     }
-        //
-        //   }
-        //   return $arreglo;
-        // }
-        //
-        // return $dobles;
-
-
-
-
-        // $valor=in_array($dato['id_trabajador'], (array)$arreglo);//si ya existe la finca en el arreglo
-        // $converted_res = ($valor) ? 'true' : 'false';
-        // return $converted_res;
-
-
-
         $id=-4654;
         $sal=-4654;
         $sinrep=array();
         $sinrep_tot=array();
         $rep_tot=array();
-        $rep2=[
-          'id_trabajador'=>-1,
-          'nombre'=>'',
-        ];
-        $rep3=[
-          'id_trabajador'=>-1,
-          'nombre'=>'',
-        ];
-        $reps[]=$rep2;
-        $reps[]=$rep3;
+        $reps=array();
+        // $rep3=[
+        //   'id_trabajador'=>-1,
+        //   'nombre'=>'',
+        // ];
+        // $rep2=[
+        //     "id_trabajador"=> 2,
+        //     "nombre"=> "Bismar Antonio Altamirano Gonzalez"
+        // ];
+        // $reps[]=$rep2;
+        // $reps[]=$rep3;
+        // return $reps;
+
+
 
 
         $datas2=$datas;
         $i=-1;
         foreach ($datas as $data) {
+          if( sizeof($reps) == 0 ){
+            $reps[]=$data;
+            $reps[0]['id_trabajador']=-1;
+          }
+
           $i++;
           unset($datas2[$i]);
           $valor_data2=0;
@@ -147,26 +119,23 @@ class QuincenalesController extends Controller
               $valor_data2+=1;
             }
           }
+          $sum_rep=array();
           foreach ($reps as $rep) {/*Saber si esta en el arreglo de duplicados que se elimino*/
-            //return $rep['id_trabajador'];
-            if($data->id_trabajador==$rep['id_trabajador']){
+            //return $rep['id_trabajador'].' '.$data->id_trabajador;
+            if($data->id_trabajador==$rep['id_trabajador']){ //Si es igual que sume uno
               $valor_rep+=1;
             }
+            $sum_rep[]=$rep['id_trabajador'];
           }
-          // return $valor_rep;
-          //
-          // $valor=in_array($data, (array)$datas2);//si ya existe la finca en el arreglo
-          // $converted_res = ($valor) ? 'true' : 'false';
-          // $valor2=in_array($data, (array)$rep);
-          // $rep_check = ($valor) ? 'true' : 'false';
-          //return $valor_rep.'Valor2 '. $valor_data2;
-           if ($valor_data2==1|| $valor_rep==0){
+
+           if ($valor_data2==1 || $valor_rep==0){
              $rep[]=$data;
              //return $rep;
            }
            else {
              $sinrep[]=$data;
            }
+           return $rep;
            $valor_data2=0;
            $valor_rep=0;
            $rep_tot[]=$rep;
@@ -174,17 +143,9 @@ class QuincenalesController extends Controller
            unset($rep);
            unset($sinrep);
            $sinrep=array();
-           $rep2=[
-             'id_trabajador'=>-1,
-             'nombre'=>'',
-           ];
-           $rep3=[
-             'id_trabajador'=>-1,
-             'nombre'=>'',
-           ];
-           $reps[]=$rep2;
-           $reps[]=$rep3;
+
          }
+         return $rep_tot;
          return $rep_tot;
 
 
