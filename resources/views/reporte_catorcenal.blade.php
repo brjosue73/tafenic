@@ -7,7 +7,7 @@
   <!-- <link rel="stylesheet" href="res/css/bootstrapTable.css"> -->
   <style>
     @page { margin: 50px; }
-    #header {
+    .heade {
       position: fixed;
       top: -40px;
       left: 0px;
@@ -41,19 +41,19 @@
   $mes_fin=date("m", strtotime($fecha_2));
   $i=0;
    ?>
-   <div id="header">
+   <div class="heade">
      <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
      <h5>PLANILLA GENERAL</h5>
      <h5> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
    </div>
 
     <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover table-condensed">
+      <table class="table table-striped table-bordered table-hover table-condensed centrado">
         <thead>
           <tr class="active">
 
             <th> N° </th>
-            <th>Nombre &</th>
+            <th>Nombre</th>
             <th>Días trab</th>
             <th>Tot. Deven</th>
             <th>Alim.</th>
@@ -133,16 +133,18 @@
         </tbody>
       </table>
     </div>
-    <div class="firmas">
-      Revisado Por:____________________________
+
+    <div class="firm">
+      <div class="firmas">
+        Revisado Por:____________________________
+      </div>
+      <div class="firmas">
+        Autorizado Por:____________________________
+      </div>
+      <div class="firmas">
+        Elaborado Por:____________________________
+      </div>
     </div>
-    <div class="firmas">
-      Autorizado Por:____________________________
-    </div>
-    <div class="firmas">
-      Elaborado Por:____________________________
-    </div>
-  </div>
 
 </body>
 </html>
