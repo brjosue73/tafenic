@@ -23,10 +23,10 @@ td hr{
   float: left;
 }
 table {
-    font-size: 10px;
-    margin-bottom: 3.3rem;
-    border-collapse: collapse;
-    margin-top: 1.5rem;
+  font-size: 10px;
+  margin-bottom: 3.3rem;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
 }
 tbody>tr:nth-child(even) {
   background-color: #ddd;
