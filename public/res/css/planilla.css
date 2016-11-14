@@ -23,7 +23,7 @@ td hr{
   float: left;
 }
 table {
-  font-size: 10px;
+  font-size: 11px;
   margin-bottom: 3.3rem;
   border-collapse: collapse;
   margin-top: 1.5rem;
@@ -39,6 +39,10 @@ td,th {
   border: 1px solid black;
   margin: 0 !important;
 }
-.firma {
-   padding: 10px 70px;
+.firm {
+   /*padding: 10px 70px;*/
+   margin-top: 3.3rem;
+}
+.centrado {
+  margin: 0 auto;
 }
