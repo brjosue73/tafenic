@@ -439,6 +439,7 @@ class QuincenalesController extends Controller
       $inss_lab=round($inss_lab2,2);
       $planilla->inss_laboral=$inss_lab;
       $quinc_i=round($basico,2);
+      $quinc_i=$quinc_i-$inss_lab;
       $devengado_mensual=$quinc_i*2;
       $dev_anual=$devengado_mensual*12;
       $IR=0;
@@ -446,11 +447,12 @@ class QuincenalesController extends Controller
         $IR=0;
       }
       elseif ($dev_anual>=100000.01 && $dev_anual<=200000) {
-        $dev_sobre=$dev_anual-100000;
-        $dev_por=($dev_sobre*15)/100;
+        $dev_sobre=$dev_anual-100000; //anual 144000 - dev sobre: 44000----35000
+        $dev_por=($dev_sobre*15)/100; //6600-- 5250
         $imp_base=0;
-        $ir_anual=$dev_por+$imp_base;
-        $IR=$ir_anual/24;
+        $ir_anual=$dev_por+$imp_base;//6600
+        $IR=$ir_anual/24; //6600/24 = 275---wrong! ----
+
       }
       elseif ($dev_anual>=200000.01 && $dev_anual<=350000) {
         $dev_sobre=$dev_anual-200000;
