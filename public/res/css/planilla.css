@@ -24,7 +24,7 @@ td hr{
 }
 table {
   font-size: 11px;
-  margin-bottom: 3.3rem;
+  /*margin-bottom: 3.3rem;*/
   border-collapse: collapse;
   margin-top: 1.5rem;
 }
@@ -32,10 +32,10 @@ tbody>tr:nth-child(even) {
   background-color: #ddd;
 }
 th {
-  padding: 3px;
   background-color: #ddd;
 }
 td,th {
+  padding: 5px 2px;
   border: 1px solid black;
   margin: 0 !important;
 }
