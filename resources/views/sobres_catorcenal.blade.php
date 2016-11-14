@@ -32,6 +32,10 @@
     h4 {
       margin-top: 1rem !important;
     }
+    th,td {
+      font-size: 12px;
+      padding: 1px;
+    }
   </style>
 </head>
 <body>
