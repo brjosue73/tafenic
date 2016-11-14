@@ -27,7 +27,7 @@
         <label for="">Trabajador: </label>
         <select name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="pqSendData.id_trabajador" form="formQuince">
           <optgroup label="trabajadores">
-            <option data-ng-repeat="trabajador in trabQ" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
+            <option data-ng-repeat="trabajador in trabQ  | orderBy: 'nombre'" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
           </optgroup>
         </select>
       </div>
