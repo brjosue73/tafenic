@@ -7,8 +7,8 @@
     <form id="clean"></form>
     <form id="prepResetForm" class="col-lg-12 col-md-12 col-sm-12">
       <div class="form-group col-sm-3 col-md-3 col-lg-3">
-        <label for="finca">Finca:</label>
-        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()">
+        <label for="finca"><% soprano %></label>
+        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()" data-ng-init="soprano = prepReg.aguinaldo ">
           <optgroup label="Fincas">
             <option data-ng-repeat="finca in lasfincas" value="<% finca.id %>"><% finca.nombre %></option>
           </optgroup>
@@ -59,7 +59,7 @@
         <select form="clean" name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="prepSendData.id_trabajador">
           <optgroup label="trabajadores">
             <option selected></option>
-            <option data-ng-repeat="trabajador in trabCampo | orderBy: 'nombre'" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
+            <option data-ng-repeat="trabajador in trabCampo" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
           </optgroup>
         </select>
       </div>
@@ -87,7 +87,7 @@
       </div>-->
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
         <label for="">horas trabajadas: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_trab">
+        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_trab" value="prepReg.aguinaldo">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
         <label for="">horas extra: </label>

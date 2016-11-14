@@ -51,11 +51,11 @@ module.exports = function(grunt) {
 					]
 			    },
         	options: {
-        			proxy:'<%= php.dev.options.hostname %>:<%= php.dev.options.port %>',
-					//port:8000,
+        		proxy:'<%= php.dev.options.hostname %>:<%= php.dev.options.port %>',
+						port:3000,
 					//baseDir:'res',
-          			watchTask: true,
-        			open: true
+          	watchTask: true,
+        		open: true
 				}
 			}
 		},

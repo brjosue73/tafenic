@@ -6,38 +6,38 @@
 	angular.module('moduleName',["ngRoute","ngResource","ui.router"], function($interpolateProvider) {
         $interpolateProvider.startSymbol('<%');
         $interpolateProvider.endSymbol('%>');
-  }).filter("tipoCuje",function(){
-			return function(tipo){
-				if(tipo==0){
-					return "Pequeño";
-				}else if (tipo==1) {
-					return "Grande";
-				}
+	}).filter("tipoCuje",function(){
+		return function(tipo){
+			if(tipo==0){
+				return "Pequeño";
+			}else if (tipo==1) {
+				return "Grande";
 			}
+		}
 	}).filter("tipoTrab",function(){
-			return function(tipo){
-				if(tipo==0){
-					return "Catorcenal";
-				}else if (tipo==1) {
-					return "Quincenal";
-				}
+		return function(tipo){
+			if(tipo==0){
+				return "Catorcenal";
+			}else if (tipo==1) {
+				return "Quincenal";
 			}
+		}
 	}).filter("estadoTrab",function(){
-			return function(tipo){
-				if(tipo==0){
-					return "Inactivo";
-				}else if (tipo==1) {
-					return "Activo";
-				}
+		return function(tipo){
+			if(tipo==0){
+				return "Inactivo";
+			}else if (tipo==1) {
+				return "Activo";
 			}
+		}
 	}).filter("labelState",function(){
-			return function(tipo){
-				if(tipo==0){
-					return "label-danger";
-				}else if (tipo==1) {
-					return "label-success";
-				}
+		return function(tipo){
+			if(tipo==0){
+				return "label-danger";
+			}else if (tipo==1) {
+				return "label-success";
 			}
+		}
 	});
 	/*******************************************************************************************************************\
 		Use an exist Angular Module
@@ -50,16 +50,16 @@
 		return r('trabajadores/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
 	app.factory('fincaResource', ['$resource', function(r){
-	  return r('fincas/:id',{id:"@id"},{update:{method:"PUT"}});
+	 	return r('fincas/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
 	app.factory('actividadResource', ['$resource', function(r){
-	  return r('actividad/:id',{id:"@id"},{update:{method:"PUT"}});
+	 	return r('actividad/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
 	app.factory('laborResource', ['$resource', function(r){
-	  return r('labor/:id',{id:"@id"},{update:{method:"PUT"}});
+	 	return r('labor/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
 	app.factory('loteResource', ['$resource', function(r){
-	  return r('lotes/:id',{id:"@id"},{update:{method:"PUT"}});
+	 	return r('lotes/:id',{id:"@id"},{update:{method:"PUT"}});
 	}]);
 	app.factory('prepResource', ['$resource', function(r){
 		return r('preplanilla/:id',{id:"@id"},{update:{method:"PUT"}});
@@ -169,7 +169,7 @@
 		.state('/reportes', {
 			url:"/reportes",
 			templateUrl: "partials/reportes/reportesPanel.html"
-		})
+		});
 	});
 	/*******************************************************************************************************************\
 		Create and append a new cotrollers for your exist module in use
@@ -764,7 +764,8 @@
 		}
 	}]);
 	app.controller('catorcenalEditar', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
-		s.prepReg = pr.get('/planilla/:id/editar',{id:sp.id})
-		console.log(s.prepReg);
+		s.prepReg = {};
+		s.prepReg = pr.get('/planilla/:id/editar',{id:sp.id});
+		console.log(s.soprano);
 	}]);
 }());
