@@ -35,9 +35,22 @@
   </style>
 </head>
 <body>
+  <?php
+  setlocale(LC_ALL,"es_ES");
+  $fecha1='';
+  $fecha2='21';
+  $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+  $fecha_ini=$data['0']->fecha_ini;
+  $fecha_fin=$data['0']->fecha_fin;
+  $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+
+  $fecha_2=date("d-m-Y", strtotime("$fecha_fin - 1 days"));
+
+  $i=0;
+   ?>
   @foreach($data as $dat)
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-  <h5 class="text-centro">PLANILLA DE PAGO DEL {{$dat['fecha_ini']}} al {{$dat['fecha_fin']}}</h5>
+  <h5 class="text-centro">PLANILLA DE PAGO DEL {{$fecha_1}} al {{$fecha_2}}</h5>
   <h5 class="text-centro">SOBRE DE PAGO</h5>
   <table class="centrado">
       <tr><th colspan="4">{{$dat['nombre']}}</th></tr>
