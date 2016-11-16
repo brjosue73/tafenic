@@ -22,6 +22,9 @@
     body{
       padding-top: 42px;
     }
+    .relleno {
+      padding: 0.25rem 1rem;
+    }
   </style>
 </head>
 <body>
@@ -72,7 +75,7 @@
             <th>INSS <br> laboral</th>
             <th>Présta</th>
             <th>Tot. <br> Recibir</th>
-            <th>Recibí Conforme</th>
+            <th class="relleno">Recibí Conforme</th>
             <th>INSS <br> Patronal</th>
             <!-- <th>Finc. Sep.</th> -->
 
