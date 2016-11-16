@@ -22,6 +22,9 @@
     body{
       padding-top: 42px;
     }
+    .relleno {
+      padding: 0.25rem 1rem;
+    }
   </style>
 </head>
 <body>
@@ -54,26 +57,26 @@
 
             <th> N° </th>
             <th>Nombre</th>
-            <th>Días trab</th>
-            <th>Tot. Deven</th>
+            <th>Días <br>  trab</th>
+            <th>Tot. <br> Deven</th>
             <th>Alim.</th>
-            <th>Tot. Básico</th>
+            <th>Tot. <br> Básico</th>
             <th>Septimo</th>
             <th>subsidio</th>
             <th>Otros</th>
             <th>Feriados</th>
-            <th>Tot. Deven</th>
+            <th>Tot.<br> Deven</th>
             <th>H. Ext</th>
             <th>Act. Ext</th>
-            <th>T. Extras</th>
+            <th>T. <br> Extras</th>
             <th>Vac</th>
             <th>Aguin</th>
-            <th>Tot.Acumu</th>
-            <th>INSS laboral</th>
+            <th>Tot. <br> Acumu</th>
+            <th>INSS <br> laboral</th>
             <th>Présta</th>
-            <th>Tot. a Recibir</th>
-            <th>Recibí Conforme</th>
-            <th>INSS Patronal</th>
+            <th>Tot. <br> Recibir</th>
+            <th class="relleno">Recibí Conforme</th>
+            <th>INSS <br> Patronal</th>
             <!-- <th>Finc. Sep.</th> -->
 
           </tr>
