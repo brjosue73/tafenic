@@ -58,8 +58,6 @@ class PlanillasController extends Controller
       $pdf->loadHTML($view);
       $paper_size = array(0,0,278.9291,540);
       $pdf->setPaper($paper_size, 'landscape');
-      return view('sobres_catorcenal',array('data'=>$data));
-
       return $pdf->stream('Sobre.pdf');
     }
     elseif($funcion == 'Billetes'){
