@@ -47,20 +47,46 @@ class PlanillasController extends Controller
     return $pdf->stream();
     }
     elseif ($funcion == 'Generar sobres'){
-      $data =$this->calculo_planilla($peticion);
-      usort($data, function($a, $b) {
+      $datas =$this->calculo_planilla($peticion);
+      usort($datas, function($a, $b) {
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
       ini_set("memory_limit", "452M");
       ini_set("max_execution_time", "600");
+    //  return $datas;
+    $data=array();
+      foreach ($datas as $dat) {
+        $array_1=array();
+        $array_1['nombre']=$dat['nombre'];
+        $array_1['total_septimo']=$dat["total_septimo"];
+        $array_1['total_basic']=$dat["total_basic"];
+        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+        $array_1['cant_horas_ext']=$dat["cant_horas_ext"];
+        $array_1['vac_tot']=$dat["vac_tot"];
+        $array_1['agui_tot']=$dat["agui_tot"];
+        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+        $array_1['total_deven']=$dat["total_deven"];
+        $array_1['salario_']=$dat["salario_"];
+        $array_1['inss']=$dat["inss"];
+        $array_1['fecha_ini']=$dat["fecha_ini"];
+        $array_1['fecha_fin']=$dat["fecha_fin"];
+
+        $data[]=$array_1;
+      }
+
+
+      // return view('sobres_catorcenal',array('data'=>$data));
+      // return $data;
+
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
+
       $pdf->loadHTML($view);
       $paper_size = array(0,0,278.9291,540);
       $pdf->setPaper($paper_size, 'landscape');
-      return $pdf->stream('Sobre.pdf');
-      return $pdf->stream();
+
+      return $pdf->download('Sobre.pdf');
     }
     elseif($funcion == 'Billetes'){
       $peticion=$request->all();
@@ -275,9 +301,9 @@ class PlanillasController extends Controller
        'sum_dev2'=>round($sum_dev2,2),
        'sum_h_ext'=>round($sum_h_ext,2),
        'sum_tot_hext'=>round($sum_tot_hext,2),
-       'sum_vacs'=>round($sum_vacs,2),
-       'sum_aguin'=>round($sum_aguin,2),
-       'sum_acum'=>round($sum_acum,2),
+       'sum_vacs'=>$sum_vacs,
+       'sum_aguin'=>$sum_aguin,
+       'sum_acum'=>$sum_acum,
        'sum_inss_lab'=>round($sum_inss_lab,2),
        'sum_prestam'=>round($sum_prestam,2),
        'sum_inss_pat'=>round($sum_inss_pat,2),
@@ -338,9 +364,6 @@ class PlanillasController extends Controller
            $sum_tot_recib=0;
            $prestamo=0;
 
-           /****************Totales******************/
-
-           /****************Totales*****************/
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -405,11 +428,16 @@ class PlanillasController extends Controller
 
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
-                 $total_dev2=$tot_basic + $tot_sept + $otros + $feriados;
+                 $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
+                 $total_dev2=round($total_dev3,2);
+                 $tot_sept=round($tot_sept,2);
 
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
+                 $tot_a_vacs=round($tot_a_vacs,2);
                  //return $vac;
-                 $total_acum=round($total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs,2);
+                 $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
+                //  return $total_acum;
+                //  return $total_dev2.' Vacaciones: '.$tot_a_vacs;
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
 
