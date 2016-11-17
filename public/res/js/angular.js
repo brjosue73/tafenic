@@ -586,15 +586,21 @@
 		s.getPrepxfinc = function(){
 			h.post('planilla_finca',s.reporfinca)
 			.success(function(data){
-				s.reporfincTot = data;
-				console.log(data);
+				s.reporfincTot = [];
+				for (var i = 0; i < data.length - 1; i++) {
+					s.reporfincTot.push(data[i]);
+				}
+				s.totales = data[data.length - 1];
+
+				/*s.reporfincTot = data;
+				s.totales = data[data.length-1];
+				console.log(data);*/
 			})
 			.error(function(err){
 				console.log(err);
 			});
 		}
-		s.getActividades = function(){
-			console.log("ni con los yankees");
+		s.getActividad = function(){
 			h.post('actividad_finca',{id_finca:s.reporfinca.id_finca})
 			.success(function(data){
 				s.lasactividades = data;
