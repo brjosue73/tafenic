@@ -52,8 +52,8 @@ class PlanillasController extends Controller
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
-      ini_set("memory_limit", "999M");
-      ini_set("max_execution_time", "999");
+      ini_set("memory_limit", "500M");
+      ini_set("max_execution_time", "600");
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
 
