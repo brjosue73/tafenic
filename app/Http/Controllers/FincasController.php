@@ -81,25 +81,17 @@ class FincasController extends Controller
              $nombre="$nombres   $apellido";
              /********************Saber si tiene septimos****************/
              /********************Contar los dias trabajados*****************/
-            $cant_septimos=0;
-             if($dias>=6){ //merece por lo menos 1 septimo
-               $cant_septimos=1;
-               if($dias>=12){//merece 2 septimos
-                 $cant_septimos=2;
-               }
-             }
-             foreach ($trabs as $trab) {
-               $feriados+=$trab->feriados;
+             $tot_sept=0;
 
-             }
+             $cant_septimos=0;
 
-
-             $tot_sept=$cant_septimos*$valor_dia;
 
              $feriados=0;
              $dias=0;
+             foreach ($trabs as $trab) {
+                $dias+=1;
+            }
                foreach ($trabs as $trab) {
-                  $dias+=1;
                    $inss_camp=$trab['inss_campo'];
                    $tot_sept+=$trab['septimo'];
                    $inss_patronal=$trab->inss_patron;
@@ -140,6 +132,18 @@ class FincasController extends Controller
                   /**************SEPTIMO**************/
                   //dias trabs en una Finca
                   //saber las fincas unicas en las que trabajo
+                   if($dias>=6){ //merece por lo menos 1 septimo
+                     $cant_septimos=1;
+                     if($dias>=12){//merece 2 septimos
+                       $cant_septimos=2;
+                     }
+                   }
+                   $tot_sept=$cant_septimos*$valor_dia;
+
+                   foreach ($trabs as $trab) {
+                     $feriados+=$trab->feriados;
+
+                   }
                   $f=0;
                   $c=0;
                   if($tot_sept>0){
@@ -182,7 +186,7 @@ class FincasController extends Controller
                     $nombre_finca_quer=Finca::find($id_finca);
                     $nombre_finca=$nombre_finca_quer->nombre;
 
-                    if($finca_mayor==$nombre_finca){
+                    if($finca_mayor!=$nombre_finca){
                      $tot_sept=0;
                     }
 
