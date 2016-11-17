@@ -27,7 +27,8 @@
       margin: 0 auto;
     }
     table{
-      width: 75%;
+      width: 85%;
+      margin: 1.8em auto !important;
     }
     h4 {
       margin-top: 1rem !important;
@@ -43,7 +44,7 @@
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">FINCA</h5>
   <h5 class="text-centro">PLANILLA DE PAGO DEL {{$dat['fecha_ini']}} al {{$dat['fecha_fin']}}</h5>
-  <table class="centrado">
+  <table>
       <tr><th colspan="4">{{$dat['nombre']}}</th></tr>
       <tr>
           <th>INGRESOS</th><th>-------</th>
@@ -63,7 +64,7 @@
         <td> PRESTAMOS </td>
         <td> </td>
       </tr>
-      <tr>
+      <!-- <tr>
         <td> IR </td>
         <td>  </td>
         <td>  </td>
@@ -74,7 +75,7 @@
         <td> {{$dat['horas_ext_tot']}} </td>
         <td>  </td>
         <td>  </td>
-      </tr>
+      </tr>-->
       <tr>
         <td> HORAS EXTRAS </td>
         <td> {{$dat['cant_horas_ext']}} </td>

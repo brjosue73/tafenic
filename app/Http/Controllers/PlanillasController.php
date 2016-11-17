@@ -52,6 +52,8 @@ class PlanillasController extends Controller
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
+      ini_set("memory_limit", "452M");
+      ini_set("max_execution_time", "600");
     //  return $datas;
     $data=array();
       foreach ($datas as $dat) {
