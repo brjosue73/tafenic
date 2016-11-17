@@ -593,7 +593,19 @@
 				console.log(err);
 			});
 		}
+		s.getActividades = function(){
+			console.log("ni con los yankees");
+			h.post('actividad_finca',{id_finca:s.reporfinca.id_finca})
+			.success(function(data){
+				s.lasactividades = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+		}
 	}]);
+
+
 	app.controller('valoresController',['$scope','variablesResource', function(s, vr){
 		s.valoresSaveData;
 		vr.query(function(data){
