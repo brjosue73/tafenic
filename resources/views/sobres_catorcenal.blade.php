@@ -28,13 +28,13 @@
     }
     table{
       width: 85%;
-      margin: 1.8em auto !important;
+      margin: 1.5em auto !important;
     }
     h4 {
       margin-top: 1rem !important;
     }
-    th,td {
-      font-size: 12px;
+    th,td, tr>dt {
+      font-size: 16px !important;
       padding: 1px;
     }
   </style>
@@ -51,8 +51,8 @@
           <th>DEDUCCIONES</th><th>-------</th>
       </tr>
     <tbody>
-      {{--Aqui--}}
       <tr>
+      {{--Aqui--}}
         <td> BASICO </td>
         <td> {{$dat['total_basic']}} </td>
         <td> INSS </td>
