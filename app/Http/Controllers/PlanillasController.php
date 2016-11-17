@@ -47,20 +47,46 @@ class PlanillasController extends Controller
     return $pdf->stream();
     }
     elseif ($funcion == 'Generar sobres'){
-      $data =$this->calculo_planilla($peticion);
-      usort($data, function($a, $b) {
+      $datas =$this->calculo_planilla($peticion);
+      usort($datas, function($a, $b) {
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
       ini_set("memory_limit", "452M");
       ini_set("max_execution_time", "600");
+    //  return $datas;
+    $data=array();
+      foreach ($datas as $dat) {
+        $array_1=array();
+        $array_1['nombre']=$dat['nombre'];
+        $array_1['total_septimo']=$dat["total_septimo"];
+        $array_1['total_basic']=$dat["total_basic"];
+        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+        $array_1['cant_horas_ext']=$dat["cant_horas_ext"];
+        $array_1['vac_tot']=$dat["vac_tot"];
+        $array_1['agui_tot']=$dat["agui_tot"];
+        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+        $array_1['total_deven']=$dat["total_deven"];
+        $array_1['salario_']=$dat["salario_"];
+        $array_1['inss']=$dat["inss"];
+        $array_1['fecha_ini']=$dat["fecha_ini"];
+        $array_1['fecha_fin']=$dat["fecha_fin"];
+
+        $data[]=$array_1;
+      }
+
+
+      // return view('sobres_catorcenal',array('data'=>$data));
+      // return $data;
+
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
 
       $pdf->loadHTML($view);
       $paper_size = array(0,0,278.9291,540);
       $pdf->setPaper($paper_size, 'landscape');
-      return $pdf->stream('Sobre.pdf');
+
+      return $pdf->download('Sobre.pdf');
     }
     elseif($funcion == 'Billetes'){
       $peticion=$request->all();
