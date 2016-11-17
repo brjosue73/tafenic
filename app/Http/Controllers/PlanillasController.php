@@ -71,12 +71,10 @@ class PlanillasController extends Controller
         $array_1['inss']=$dat["inss"];
         $array_1['fecha_ini']=$dat["fecha_ini"];
         $array_1['fecha_fin']=$dat["fecha_fin"];
-
         $data[]=$array_1;
       }
+      //return $data[0]['fecha_ini'];
 
-
-      // return view('sobres_catorcenal',array('data'=>$data));
       // return $data;
 
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
@@ -86,7 +84,7 @@ class PlanillasController extends Controller
       $paper_size = array(0,0,278.9291,540);
       $pdf->setPaper($paper_size, 'landscape');
 
-      return $pdf->download('Sobre.pdf');
+      return $pdf->stream('Sobre.pdf');
     }
     elseif($funcion == 'Billetes'){
       $peticion=$request->all();
@@ -506,6 +504,9 @@ class PlanillasController extends Controller
                  }
                  $fin_mayor_query= Finca::find($id_mayor);
                  $finca_mayor=$fin_mayor_query->nombre;
+              }
+              else {
+                $finca_mayor='---';
               }
 
 

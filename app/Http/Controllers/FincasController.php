@@ -91,6 +91,20 @@ class FincasController extends Controller
              foreach ($trabs as $trab) {
                 $dias+=1;
             }
+            $trabs_sept= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+            ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+            ->get();
+            $dias_sept=0;
+            foreach ($trabs_sept as $t_sept) {
+              $dias_sept+=1;
+            }
+            if($dias_sept>=6){ //merece por lo menos 1 septimo
+              $cant_septimos=1;
+              if($dias_sept>=12){//merece 2 septimos
+                $cant_septimos=2;
+              }
+            }
+            $tot_sept=$cant_septimos*$valor_dia;
                foreach ($trabs as $trab) {
                    $inss_camp=$trab['inss_campo'];
                    $tot_sept+=$trab['septimo'];
@@ -132,13 +146,14 @@ class FincasController extends Controller
                   /**************SEPTIMO**************/
                   //dias trabs en una Finca
                   //saber las fincas unicas en las que trabajo
-                   if($dias>=6){ //merece por lo menos 1 septimo
-                     $cant_septimos=1;
-                     if($dias>=12){//merece 2 septimos
-                       $cant_septimos=2;
-                     }
-                   }
-                   $tot_sept=$cant_septimos*$valor_dia;
+
+                  //  if($dias>=6){ //merece por lo menos 1 septimo
+                  //    $cant_septimos=1;
+                  //    if($dias>=12){//merece 2 septimos
+                  //      $cant_septimos=2;
+                  //    }
+                  //  }
+                  //  $tot_sept=$cant_septimos*$valor_dia;
 
                    foreach ($trabs as $trab) {
                      $feriados+=$trab->feriados;
@@ -146,7 +161,7 @@ class FincasController extends Controller
                    }
                   $f=0;
                   $c=0;
-                  if($tot_sept>0){
+                  if($tot_sept>0 && $dias>=6){
                   $cant_fincas_todas = sizeof($fincas);
                   $fincas_sinRep=array();
 
@@ -191,7 +206,15 @@ class FincasController extends Controller
                     }
 
                   }
-
+                  else {
+                    $finca_mayor='--';
+                    $tot_sept=0;
+                  }
+                  $nombre_finca_quer=Finca::find($id_finca);
+                  $nombre_finca=$nombre_finca_quer->nombre;
+                  if($finca_mayor!=$nombre_finca){
+                   $tot_sept=0;
+                  }
 
 
 

@@ -40,10 +40,21 @@
   </style>
 </head>
 <body>
+  <?php
+  setlocale(LC_ALL,"es_ES");
+  $fecha_1='';
+  $fecha2='21';
+  $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+  $fecha_ini=$data[0]['fecha_ini'];;
+  $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+
+
+  $i=0;
+   ?>
   @foreach($data as $dat)
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">FINCA</h5>
-  <h5 class="text-centro">PLANILLA DE PAGO DEL {{$dat['fecha_ini']}} al {{$dat['fecha_fin']}}</h5>
+  <h5 class="text-centro">PLANILLA DE PAGO DEL {{$fecha_1}} al {{$dat['fecha_fin']}}</h5>
   <table>
       <tr><th colspan="4">{{$dat['nombre']}}</th></tr>
       <tr>
