@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Finca;
@@ -13,16 +10,13 @@ use App\Labor;
 use App\Variable;
 use App\Actividad;
 use App\Lote;
-
-
 class FincasController extends Controller
 {
-
     public function planilla_finca(Request $request){
       $cargo='tcampo';
       $fecha_ini=$request['fecha_ini'];
       $fecha_fin=$request['fecha_fin'];
-      $id_finca=$request['id_finca'];
+      $id_finca_req=$request['id_finca'];
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $alim_var=$variable->alimentacion;
@@ -32,11 +26,9 @@ class FincasController extends Controller
         $vacaciones=$variable->vacaciones/100;
         $pago_dia=$variable->sal_diario;
       }
-
-      $planillas= Preplanilla::where('id_finca',$id_finca) /***********Buscar en preplanilla segun la finca y segun el rango de fecha*************/
+      $planillas= Preplanilla::where('id_finca',$id_finca_req) /***********Buscar en preplanilla segun la finca y segun el rango de fecha*************/
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();
-
       $tamano = sizeof($planillas);
       $trabajadores=array();
       $identif=array();
@@ -51,10 +43,9 @@ class FincasController extends Controller
             $identif[]=$id_trab;
             $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
             ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-            ->where('id_finca',$id_finca)
+            ->where('id_finca',$id_finca_req)
             ->get();
-                                      //->where('id_finca',$id_finca)
-
+                                      //->where('id_finca_req',$id_finca_req)
              $salario_tot=0;
              $alim_tot=0;
              $vac_tot=0;
@@ -73,8 +64,6 @@ class FincasController extends Controller
              $cant_act_ext=0;
              $sum_tot_recib=0;
              $prestamo=0;
-
-
              $trabajador=Trabajador::find($id_trab);
              $nombres=$trabajador->nombre;
              $apellido=$trabajador->apellidos;
@@ -82,10 +71,7 @@ class FincasController extends Controller
              /********************Saber si tiene septimos****************/
              /********************Contar los dias trabajados*****************/
              $tot_sept=0;
-
              $cant_septimos=0;
-
-
              $feriados=0;
              $dias=0;
              foreach ($trabs as $trab) {
@@ -97,6 +83,9 @@ class FincasController extends Controller
             $dias_sept=0;
             foreach ($trabs_sept as $t_sept) {
               $dias_sept+=1;
+              $fin_query2= Finca::find($t_sept->id_finca);
+              $finca2=$fin_query2->nombre;
+              $fincas2[]=$finca2;
             }
             if($dias_sept>=6){ //merece por lo menos 1 septimo
               $cant_septimos=1;
@@ -142,30 +131,17 @@ class FincasController extends Controller
                   //  else {//si es por horas
                   //    $tot_dev=$dias * $pago_dia;
                   //  }
-
-                  /**************SEPTIMO**************/
-                  //dias trabs en una Finca
-                  //saber las fincas unicas en las que trabajo
-
-                  //  if($dias>=6){ //merece por lo menos 1 septimo
-                  //    $cant_septimos=1;
-                  //    if($dias>=12){//merece 2 septimos
-                  //      $cant_septimos=2;
-                  //    }
-                  //  }
-                  //  $tot_sept=$cant_septimos*$valor_dia;
-
                    foreach ($trabs as $trab) {
                      $feriados+=$trab->feriados;
-
                    }
                   $f=0;
                   $c=0;
-                  if($tot_sept>0 && $dias>=6){
+                  $finca_mayor='';
+                  unset($fincas_sinRep);
+                  if($tot_sept>0){
                   $cant_fincas_todas = sizeof($fincas);
                   $fincas_sinRep=array();
-
-                   foreach ($fincas as $fin) {
+                   foreach ($fincas2 as $fin) {
                       $valor=in_array($fin, (array)$fincas_sinRep);//si ya existe la finca en el arreglo
                      $converted_res = ($valor) ? 'true' : 'false';
                       //si la nueva finca es = a cualquiera del arreglo marcado con bandera entonces no agregar
@@ -173,79 +149,60 @@ class FincasController extends Controller
                         $fincas_sinRep[]=$fin;
                       }
                     }
-
                     foreach ($fincas_sinRep as $finca_nombre) {//recorro las fincas sin repeticion
-
-                      $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca
+                      $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca\
                       $id_finca=$finca_id_search->id;//id
                       $dias_finca=Preplanilla::where('id_trabajador',$id_trab) //buscar los dias q trabajo ese trabajador en esa finca en ese rango de fecha
                       ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                       ->where('id_finca', $id_finca)
                       ->get();
                       $cont_finc=$dias_finca->count();
-
                       $dias_tot_fincas[$f]=$cont_finc;//agregarlo al arreglo
                       $nomb_tot_fincas[$f]=$id_finca;
                       $f+=1;
                     }
+                    $var=Finca::find(6);
+                    $var=$dias_tot_fincas;
                     $mayor=0;
                     foreach ($dias_tot_fincas as $dias_tot_finc) {
                       if($dias_tot_finc>$mayor){
                         $mayor=$dias_tot_finc;
                         $id_mayor=$nomb_tot_fincas[$c];
                       }
+                      // unset($dias_tot_fincas);
+                      // unset($nomb_tot_fincas);
                       $c+=1;
                     }
                     $fin_mayor_query= Finca::find($id_mayor);
                     $finca_mayor=$fin_mayor_query->nombre;
-                    $nombre_finca_quer=Finca::find($id_finca);
-                    $nombre_finca=$nombre_finca_quer->nombre;
-
-                    if($finca_mayor!=$nombre_finca){
-                     $tot_sept=0;
-                    }
-
                   }
-                  else {
-                    $finca_mayor='--';
-                    $tot_sept=0;
-                  }
-                  $nombre_finca_quer=Finca::find($id_finca);
+
+                  $nombre_finca_quer=Finca::find($id_finca_req);
                   $nombre_finca=$nombre_finca_quer->nombre;
                   if($finca_mayor!=$nombre_finca){
                    $tot_sept=0;
                   }
-
-
-
+                  //return $finca_mayor;
                    $tot_dev=$dias * $pago_dia;
                    $tot_basic=$tot_dev+$alim_tot;
                    $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
                    $total_dev2=round($total_dev3,2);
                    $tot_sept=round($tot_sept,2);
-
                    $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
                    $tot_a_vacs=round($tot_a_vacs,2);
                    //return $vac;
                    $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
-                  //  return $total_acum;
-                  //  return $total_dev2.' Vacaciones: '.$tot_a_vacs;
-
                    $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
-
-                  //  return $tot_inss;
                    $inss= ($tot_inss*$inss_camp)/100;
-                   //return ($tot_inss." ". $inss_camp);
                    $inss_pat=($tot_inss*$inss_patronal)/100;
-                   //return $inss;
-
-                   //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
-
                    $tot_recib=$total_acum - $inss;
+                   //return 'finc_act '.$nombre_finca.' Mayor: '.$finca_mayor.' tot_sept: '.$tot_sept;
 
                }
-
                $array = [
+                 'aaFinca_mayor'=>$finca_mayor,
+                 'aaNombre_finca'=>$nombre_finca,
+                 'aaVar'=>$var,
                  "id_trab"=>round($id_trab,2),
                  "dias"=>round($dias,2),
                  "alim_tot"=>round($alim_tot,2),
@@ -262,7 +219,7 @@ class FincasController extends Controller
                  "total_acum"=>round($total_acum,2),
                  "inss"=>round($inss,2),
                  "salario_"=>round($tot_recib,2),
-                 "fincas"=>$fincas,
+                 "fincas"=>$fincas2,
                  "total_septimo"=>round($tot_sept,2),
                  "inss_patronal"=>round($inss_pat,2),
                  "fecha_ini"=>$fecha_ini,
@@ -277,9 +234,9 @@ class FincasController extends Controller
                  "fecha_fin"=>$fecha_fin,
                ];
             $trabajadores[]=$array;
-
             unset($labores);
             unset($fincas);
+            unset($fincas2);
             unset($fincas_sinRep);
           }/*Fin Si no esta repetido*/
         }//Fin For de recorrer toda la planilla
@@ -288,9 +245,7 @@ class FincasController extends Controller
             return $a['order'] < $b['order']?1:-1;
         });
         $totales=$this->sum_totales($trabajadores);
-
         $trabajadores[]=$totales;
-
         return $trabajadores;
     }
     /**********Mostrar el reporte de planilla por finca y fecha************/
@@ -313,8 +268,6 @@ class FincasController extends Controller
       $sum_prestam=0;
       $sum_inss_pat=0;
       $sum_tot_recib=0;
-
-
       foreach ($data as $trab) {
         $sum_tot_recib +=$trab['salario_'];
         $sum_dias_trab+=$trab['dias'];
@@ -357,81 +310,68 @@ class FincasController extends Controller
       ];
       return $totales;
     }
-
 /************JSON para fincas, labores y actividades*************/
-public function datos_fincas(){
-  $i=0;
-  $fincas_todo=array();
-  $fincas = Finca::all();
-  $fincas->actividades = array();
-  $generales=array();
-  $labores=array();
-  $lab_tot=array();
-  $activ_tot=array();
-  $activ=array();
-  $lote_tot=array();
-  $tot = array();
-  foreach ($fincas as $finca) {
-    $generales=[
-      "id_finca"=>$finca->id,
-      "nombre"=>$finca->nombre
-    ];
-
-    $id_finca=$finca->id;
-    $lote_tot=array();
-    $lotes=Lote::where('id_finca',$id_finca)->get();
-    foreach ($lotes as $lote) {
-      $lote_tot[]=$lote;
-    }
-    $generales+=[
-      "lotes"=>$lote_tot,
-    ];
-    unset($lote_tot);
-    $actividades=Actividad::where('id_finca',$id_finca)->get();
-    foreach ($actividades as $actividad) {
-      $activ_tot=[
-        "id_actividad"=>$actividad->id,
-        "nombre_actividad"=>$actividad->nombre,
-      ];
-
-      $labores=Labor::where('id_actividad',$actividad->id)->get();
-      foreach ($labores as $lab) {
-        $lab_tot[]=$lab;
-      }
-      $activ_tot+=[
-        "labores"=>$lab_tot,
-      ];
-      $activ[]=$activ_tot;
-      unset($lab_tot);
+    public function datos_fincas(){
+      $i=0;
+      $fincas_todo=array();
+      $fincas = Finca::all();
+      $fincas->actividades = array();
+      $generales=array();
+      $labores=array();
       $lab_tot=array();
-
+      $activ_tot=array();
+      $activ=array();
+      $lote_tot=array();
+      $tot = array();
+      foreach ($fincas as $finca) {
+        $generales=[
+          "id_finca"=>$finca->id,
+          "nombre"=>$finca->nombre
+        ];
+        $id_finca=$finca->id;
+        $lote_tot=array();
+        $lotes=Lote::where('id_finca',$id_finca)->get();
+        foreach ($lotes as $lote) {
+          $lote_tot[]=$lote;
+        }
+        $generales+=[
+          "lotes"=>$lote_tot,
+        ];
+        unset($lote_tot);
+        $actividades=Actividad::where('id_finca',$id_finca)->get();
+        foreach ($actividades as $actividad) {
+          $activ_tot=[
+            "id_actividad"=>$actividad->id,
+            "nombre_actividad"=>$actividad->nombre,
+          ];
+          $labores=Labor::where('id_actividad',$actividad->id)->get();
+          foreach ($labores as $lab) {
+            $lab_tot[]=$lab;
+          }
+          $activ_tot+=[
+            "labores"=>$lab_tot,
+          ];
+          $activ[]=$activ_tot;
+          unset($lab_tot);
+          $lab_tot=array();
+        }
+        $generales+=[
+          "actividades"=>$activ,
+        ];
+        unset($activ);
+        $tot[]=$generales;
+        unset($activ);
+        $activ=array();
+        unset($activ_tot);
+        //unset($lab_tot);
+      }
+      return response()->json($tot);
     }
-    $generales+=[
-      "actividades"=>$activ,
-    ];
-    unset($activ);
-
-
-
-    $tot[]=$generales;
-    unset($activ);
-    $activ=array();
-    unset($activ_tot);
-    //unset($lab_tot);
-
-  }
-  return response()->json($tot);
-}
 /************JSON para fincas, labores y actividades*************/
-
-
-
     public function index() {
         $finca = Finca::all();
         return response()->json($finca);
     }
-
-
     public function create()
     {
         /*enviar ultimo valor de Fincas*/
@@ -440,13 +380,10 @@ public function datos_fincas(){
         return $query;
         //
     }
-
-
     public function store(Request $request)
     {
         $peticion = $request->all();
         $arreglo = $peticion["data"];
-
         $finca = new Finca($arreglo);
         $finca->estado=1;
         $finca->save();
@@ -459,33 +396,24 @@ public function datos_fincas(){
         ];
         return $ultimo;
     }
-
-
     public function show($id)
     {
         $finca = Finca::find($id);
         return response()->json($finca);
     }
-
     public function edit($id)
     {
-
     }
-
     public function update(Request $request, $id)
     {
         $peticion = $request->all();
         $arreglo = $peticion["data"];
-
         $finca = Finca::find($id);
-
         $finca->nombre = $arreglo['nombre'];
         $finca->estado = $arreglo['estado'];
-
         $finca->save();
         return "Done!";
     }
-
     public function destroy($id)
     {
         $finca = Finca::find($id);

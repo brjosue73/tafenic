@@ -47,6 +47,7 @@
   $fecha_ini=$data['0']->fecha_ini;
   $fecha_fin=$data['0']->fecha_fin;
   $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+  $mes=$fecha_1=date("m");
 
   $fecha_2=date("d-m-Y", strtotime("$fecha_fin - 1 days"));
 
