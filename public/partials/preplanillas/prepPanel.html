@@ -16,7 +16,7 @@
       </div>
       <div class="form-group col-sm-3 col-md-3 col-lg-3">
         <label for="lotes">Lote:</label>
-        <select form="clean" name="lotes" id="lotes" class="form-control" data-ng-model="prepSendData.id_lote">
+        <select name="lotes" id="lotes" class="form-control" data-ng-model="prepSendData.id_lote">
           <optgroup label="Lotes">
             <option data-ng-repeat="lotes in loslotes" value="<% lotes.id %>"><% lotes.lote %></option>
           </optgroup>
