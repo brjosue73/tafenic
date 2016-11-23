@@ -6,7 +6,7 @@
     <h1>Registro de Preplanilla</h1>
     <form id="clean"></form>
     <form id="prepResetForm" class="col-lg-12 col-md-12 col-sm-12">
-      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+      <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="finca">Finca:</label>
         <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()">
           <optgroup label="Fincas">
@@ -14,7 +14,20 @@
           </optgroup>
         </select>
       </div>
-      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+      <div class="form-group col-md-2 col-sm-2 col-lg-2">
+        <label for="centroCosto">Centro de Costos: </label>
+        <select name="centroCosto" class="form-control" data-ng-model="reporfinca.centro_costo">
+          <!-- <optgroup label="actividades">
+            <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
+          </optgroup> -->
+          <option value="1">Tabaco Sol</option>
+          <option value="2">Tabaco Tapado</option>
+          <option value="3">Semillero</option>
+          <option value="4">Ensarte</option>
+          <option value="5">Safadura</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="lotes">Lote:</label>
         <select name="lotes" id="lotes" class="form-control" data-ng-model="prepSendData.id_lote">
           <optgroup label="Lotes">
