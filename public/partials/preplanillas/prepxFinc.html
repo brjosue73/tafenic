@@ -5,19 +5,22 @@
 
   <div class="form-group col-md-3 col-sm-3 col-lg-3">
     <label for="">Finca </label>
-    <select name="finca" id="fincaSelect" class="form-control" data-ng-model="reporfinca.id_finca"  data-ng-change="getActividad()">
-      <optgroup label="fincas">
-        <option data-ng-repeat="finc in fincs" value="<% finc.id %>"><% finc.nombre %></option>
-      </optgroup>
+    <select name="finca"class="form-control" data-ng-model="reporfinca.id_finca">
+      <option data-ng-repeat="finc in fincs" value="<% finc.id %>"><% finc.nombre %></option>
     </select>
   </div>
 
   <div class="form-group col-md-3 col-sm-3 col-lg-3">
-    <label for="">Actividad: </label>
-    <select name="Actividad" id="actividadSelect" class="form-control" data-ng-model="reporfinca.id_actividad">
-      <optgroup label="actividades">
+    <label for="centroCosto">Centro de Costos: </label>
+    <select name="centroCosto" class="form-control" data-ng-model="reporfinca.centro_costo">
+      <!-- <optgroup label="actividades">
         <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
-      </optgroup>
+      </optgroup> -->
+      <option value="1">Tabaco Sol</option>
+      <option value="2">Tabaco Tapado</option>
+      <option value="3">Semillero</option>
+      <option value="4">Ensarte</option>
+      <option value="5">Safadura</option>
     </select>
   </div>
 
