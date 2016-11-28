@@ -9,9 +9,9 @@
       border: 1px solid black;
       /*margin: 0;*/
     }
-    table tbody tr td{
+    /*table tbody tr td{
       font-size: 8px !important;
-    }/*
+    }*//*
     .cien{
       width: 100%;
     }
@@ -33,8 +33,8 @@
     h4 {
       margin-top: 1rem !important;
     }
-    th,td, tr>dt {
-      font-size: 16px !important;
+    td, tr>td {
+      font-size: 25px !important;
       padding: 1px;
     }
   </style>
