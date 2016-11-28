@@ -465,7 +465,8 @@
 			labName: "",
 			safa_ext: 0,
 			cuje_ext: 0,
-			septimo: 0
+			septimo: 0,
+			centro_costo: 0
 		};
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();

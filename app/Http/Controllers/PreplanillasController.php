@@ -265,6 +265,7 @@ class PreplanillasController extends Controller
           $prep->centro_costo=$arreglo['centro_costo'];
           $prep->save();
           $subs=0;
+          return $prep;
           return "Agregada! supuestamente normal";
         }
 

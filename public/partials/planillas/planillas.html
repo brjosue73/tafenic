@@ -45,6 +45,7 @@
       <thead>
         <tr class="active">
           <th>N°</th>
+          <th>#INSS</th>
           <th>Nombre del trabajador</th>
           <th>Fincas</th>
           <th>Ocupación</th>
@@ -76,6 +77,7 @@
         <tr data-ng-repeat="reporfincTota in reporfincTot">
 
           <td> <% $index + 1 %></td>
+          <td>#INSS</td>
           <td> <% reporfincTota.nombre %> </td>
           <td> <li data-ng-repeat="fincass in reporfincTota.fincas track by $index"><% fincass %> </td>
           <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
