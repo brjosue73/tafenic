@@ -31,7 +31,13 @@
   $tot_gen=$data500*500+$data200*200+$data100*100+$data50*50+$data20*20+$data10*10+$data5*5+$data1;
 
   ?>
+  <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">DISTRIBUCION DE BILLETES</h5>
+<h5 class="text-centro">Esteli, Nicaragua		</h5>
+<h5 class="text-centro">Telefono: 2773-9100, 2773-9101  Telefax 2773-9109		</h5>
+
+<h5 class="text-centro">PLANILLA   ADMINISTRACION</h5>
+
   <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover table-condensed">
       <thead>
@@ -53,90 +59,76 @@
             500
           </th>
           <th>
-            {{$data500}}
+            {{number_format( $data500 ,2 )}}
           </th>
-          <th>{{$data500*500}}</th>
+          <th>            {{number_format( $data500*500 ,2 )}}</th>
         </tr>
         <tr>
           <th>
             200
           </th>
-          <th>
-            {{$dat['200']}}
-          </th>
-          <th>{{$data200*200}}</th>
+          <th>{{number_format( $data200 ,2 )}}</th>
+          <th>{{number_format( $data200*200 ,2 )}}</th>
 
         </tr>
         <tr>
           <th>
             100
           </th>
-          <th>
-            {{$dat['100']}}
-
-          </th>
-          <th>{{$data100*100}}</th>
+          <th>{{number_format( $data100 ,2 )}}</th>
+          <th>{{number_format( $data100*100 ,2 )}}</th>
 
         </tr>
         <tr>
           <th>
             50
           </th>
-          <th>
-            {{$dat['50']}}
-
-          </th>
-          <th>{{$data50*50}}</th>
+          <th>{{number_format( $data50 ,2 )}}</th>
+          <th>{{number_format( $data50*50 ,2 )}}</th>
 
         </tr>
         <tr>
           <th>
             20
           </th>
-          <th>
-            {{$dat['20']}}
-
-          </th>
-          <th>{{$data20*20}}</th>
+          <th>{{number_format( $data20 ,2 )}}</th>
+          <th>{{number_format( $data20*20 ,2 )}}</th>
 
         </tr>
         <tr>
           <th>
             10
           </th>
-          <th>
-            {{$dat['10']}}
-
-          </th>
-          <th>{{$data10*10}}</th>
+          <th>{{number_format( $data10 ,2 )}}</th>
+          <th>{{number_format( $data10*10 ,2 )}}</th>
 
         </tr>
         <tr>
           <th>5</th>
-          <th>{{$dat['5']}}</th>
-          <th>{{$data5*5}}</th>
+          <th>{{number_format( $data5 ,2 )}}</th>
+          <th>{{number_format( $data5*5 ,2 )}}</th>
 
         </tr>
         <tr>
           <th>1</th>
-          <th>{{$dat['1']}}</th>
-          <th>{{$dat['1']}}</th>
+          <th>{{number_format( $data1 ,2 )}}</th>
+          <th>{{number_format( $data1*1 ,2 )}}</th>
         </tr>
         <tr>
           <th></th>
           <th></th>
-          <th>{{$data['diferencia']}}</th>
+          <th>{{number_format( $data['diferencia'],2 )}}</th>
         </tr>
         <tr>
           <th></th>
           <th>Total:</th>
-          <th>{{$tot_gen+$data['diferencia']}}</th>
+          <th>{{number_format( $tot_gen+$data['diferencia'],2 )}}</th>
+
         </tr>
       </tbody>
     </table>
   </div>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-    <br><br><br><br>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
   <div class="table-responsive">
 
