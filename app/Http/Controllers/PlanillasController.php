@@ -42,7 +42,7 @@ class PlanillasController extends Controller
 
     //return \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales))->setPaper('a4')->setOrientation('landscape')->download('planilla_catorcenal.pdf');
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
-    $pdf->setPaper('a4')->setOrientation('landscape');
+    $pdf->setPaper('legal')->setOrientation('landscape');
     return $pdf->inline('Planilla_catorcenal.pdf');
     //PDF::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf')
 
