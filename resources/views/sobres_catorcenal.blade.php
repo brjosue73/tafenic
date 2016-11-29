@@ -4,7 +4,59 @@
   <meta charset="UTF-8">
   <title>Document</title>
   <link rel="stylesheet" href="res/css/planilla.css">
+
   <style>
+
+  h4,h5 {
+    text-align: center;
+    margin: 5px;
+  }
+  /*table {
+    border: 1px solid black;
+  }
+  th, td{
+    font-family: sans-serif;
+    font-size: 11px;
+  }
+  td li{
+    list-style-type: none;
+  }
+  td hr{
+    margin: 0;
+  }
+  */
+  .firmas {
+    width: 33%;
+    display: inline-block;
+    float: left;
+  }
+  table {
+    /*font-size: 11px;*/
+    /*margin-bottom: 3.3rem;*/
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+  }
+  tbody>tr:nth-child(even) {
+    background-color: #ddd;
+  }
+  th {
+    background-color: #ddd;
+  }
+  td,th {
+    padding: 5px 2px;
+    border: 1px solid black;
+    margin: 0 !important;
+  }
+  .firm {
+     /*padding: 10px 70px;*/
+     margin-top: 3.3rem;
+  }
+  .centrado {
+    margin: 0 auto;
+  }
+
+
+
     table,th,td,tr{
       border: 1px solid black;
       /*margin: 0;*/

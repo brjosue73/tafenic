@@ -39,70 +39,11 @@
   <title>Document</title>
 </head>
 <body>
-  @foreach($data as $dat)
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">FINCA</h5>
   <h5 class="text-centro">PLANILLA DE PAGO DEL inic al fin</h5>
   <table class="centrado">
-    <tr><th colspan="4">{{$dat['nombre']}}</th></tr>
-    <tr>
-        <th>INGRESOS</th><th>-------</th>
-        <th>DEDUCCIONES</th><th>-------</th>
-    </tr>
-    <tbody>
-      {{--Aqui--}}
-      <tr>
-        <td> BASICO </td>
-        <td> {{$dat['total_basic']}} </td>
-        <td> INSS </td>
-        <td> {{$dat['inss']}} </td>
-      </tr>
-      <tr>
-        <td> SEPTIMO </td>
-        <td> {{$dat['total_septimo']}} </td>
-        <td> PRESTAMOS </td>
-        <td> </td>
-      </tr>
-      <tr>
-        <td> N° HORAS EXTRAS </td>
-        <td> {{$dat['horas_ext_tot']}} </td>
-        <td>  </td>
-        <td>  </td>
-      </tr>
-      <tr>
-        <td> HORAS EXTRAS </td>
-        <td> {{$dat['cant_horas_ext']}} </td>
-        <td>  </td>
-        <td>  </td>
-      </tr>
-      <tr>
-        <td> VACACIONES </td>
-        <td> {{$dat['vac_tot']}} </td>
-        <td>  </td>
-        <td>  </td>
-      </tr>
-      <tr>
-        <td> AGUINALDO </td>
-        <td> {{$dat['agui_tot']}} </td>
-        <td>  </td>
-        <td>  </td>
-      </tr>
-      <tr>
-        <td> OTROS </td>
-        <td>  </td>
-        <td> TOTAL DEDUCCIONES </td>
-        <td>  </td>
-      </tr>
-      <tr>
-      <tr>
-        <td> DEVENGADO </td>
-        <td> {{$dat['total_deven']}} </td>
-        <td> TOTAL A PAGAR </td>
-        <td> {{$dat['salario_']}} </td>
-      </tr>
-    </tbody>
-  </table>
-  @endforeach
+
 
 </body>
 </html>

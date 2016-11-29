@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Document</title>
-  <link rel="stylesheet" href="res/css/planilla.css">
+  <title>Planilla General</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="/res/css/planilla.css">
+  <link type="text/css" media="all" rel="stylesheet" href="{{ public_path('res/css/planilla.css') }}">
+
+
+
   <!-- <link rel="stylesheet" href="res/css/bootstrapTable.css"> -->
   <style>
-    @page { margin: 50px; }
+
+
+
     .heade {
       position: fixed;
       top: -40px;
@@ -18,13 +25,17 @@
     }
     @page{
        margin: 50px;
-    }
+     }
     body{
       padding-top: 42px;
     }
     .relleno {
       padding: 0.25rem 1rem;
     }
+    table, tr, td, th, tbody, thead, tfoot {
+        page-break-inside: avoid !important;
+    }
+
   </style>
 </head>
 <body>
