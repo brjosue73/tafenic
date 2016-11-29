@@ -39,12 +39,20 @@ class PlanillasController extends Controller
         return $a['order'] < $b['order']?1:-1;
     });
     $totales=$this->sum_totales($data);
-    $view = \View::make('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
-    $pdf = \App::make('dompdf.wrapper');
-    $pdf->loadHTML($view);
-    $pdf->setPaper('legal', 'landscape');
-    return $pdf->stream('Planilla_general.pdf');
-    return $pdf->stream();
+    // $view = \View::make('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
+    // $pdf = \App::make('dompdf.wrapper');
+    // $pdf->loadHTML($view);
+    // $pdf->setPaper('legal', 'landscape');
+
+    //return \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales))->setPaper('a4')->setOrientation('landscape')->download('planilla_catorcenal.pdf');
+    $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
+    $pdf->setPaper('a4')->setOrientation('landscape');
+    return $pdf->inline('Planilla_catorcenal.pdf');
+    //PDF::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf')
+
+
+    return view('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
+    //return $pdf->download('Planilla_general.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
       $datas =$this->calculo_planilla($peticion);
@@ -76,6 +84,13 @@ class PlanillasController extends Controller
       //return $data[0]['fecha_ini'];
 
       // return $data;
+
+      $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
+      $paper_size = array(0,0,278.9291,540);
+      $pdf->setOrientation('landscape');
+      $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm');
+      return $pdf->inline('sobres_catorcenal.pdf');
+
 
       $view = \View::make('sobres_catorcenal',array('data'=>$data));
       $pdf = \App::make('dompdf.wrapper');
