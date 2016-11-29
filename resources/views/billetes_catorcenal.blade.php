@@ -4,9 +4,14 @@
   <meta charset="UTF-8">
   <title>Distribucion de Billetes</title>
   <link rel="stylesheet" href="res/css/bootstrapTable.css">
+  <link type="text/css" media="all" rel="stylesheet" href="{{ public_path('res/css/bootstrapTable.css') }}">
+
   <style>
     .text-centro{
       text-align: center;
+    }
+    table, tr, td, th, tbody, thead, tfoot {
+        page-break-inside: avoid !important;
     }
   </style>
 </head>
@@ -129,8 +134,11 @@
         </tr>
       </tbody>
     </table>
-    <br><br><br><br><br><br><br><br><br><br><br><br>
+  </div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <br><br><br><br>
 
+  <div class="table-responsive">
 
     <table class="table table-striped table-bordered table-hover table-condensed">
       <thead>
