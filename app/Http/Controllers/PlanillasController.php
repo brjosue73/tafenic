@@ -40,7 +40,6 @@ class PlanillasController extends Controller
     });
     $totales=$this->sum_totales($data);
 
-    //return \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales))->setPaper('a4')->setOrientation('landscape')->download('planilla_catorcenal.pdf');
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     $pdf->setPaper('legal')->setOrientation('landscape');
     return $pdf->inline('Planilla_catorcenal.pdf');
@@ -82,7 +81,6 @@ class PlanillasController extends Controller
       // return $data;
 
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
-      $paper_size = array(0,0,278.9291,540);
       $pdf->setOrientation('landscape');
       $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm');
       return $pdf->inline('sobres_catorcenal.pdf');
@@ -109,6 +107,10 @@ class PlanillasController extends Controller
       $data =$this->calcular_billetes($planillas);
       $nombres=$this->nombres_billetes($planillas);
       // return $data;
+      $pdf = \PDF::loadView('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
+      $pdf->setPaper('a4')->setOrientation('landscape');
+      return $pdf->inline('Billetes_catorcenal.pdf');
+
       $view = \View::make('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf = \App::make('dompdf.wrapper');
       $pdf->loadHTML($view);
