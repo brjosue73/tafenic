@@ -39,10 +39,6 @@ class PlanillasController extends Controller
         return $a['order'] < $b['order']?1:-1;
     });
     $totales=$this->sum_totales($data);
-    // $view = \View::make('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
-    // $pdf = \App::make('dompdf.wrapper');
-    // $pdf->loadHTML($view);
-    // $pdf->setPaper('legal', 'landscape');
 
     //return \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales))->setPaper('a4')->setOrientation('landscape')->download('planilla_catorcenal.pdf');
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
