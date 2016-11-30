@@ -42,7 +42,7 @@ class PlanillasController extends Controller
 
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 3)->setOption('margin-bottom', 3);
-    //$pdf->setOption('header-html', public_path('res/header_14nal.html'))
+    $pdf->setOption('header-html', public_path('res/header_14nal.html'));
     //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     return $pdf->inline('Planilla_catorcenal.pdf');
 
