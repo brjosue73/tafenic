@@ -86,7 +86,7 @@
       margin-top: 1rem !important;
     }
     td, tr>td {
-      font-size: 25px !important;
+      font-size: 13px !important;
       padding: 1px;
     }
   </style>
