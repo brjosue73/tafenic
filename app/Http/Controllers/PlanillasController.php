@@ -42,11 +42,11 @@ class PlanillasController extends Controller
 
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     $pdf->setPaper('legal')->setOrientation('landscape');
+    //$pdf->setOption('header-html', public_path('res/header_14nal.html'))
+    //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     return $pdf->inline('Planilla_catorcenal.pdf');
-    //PDF::loadHTML($html)->setPaper('a4')->setOrientation('landscape')->setOption('margin-bottom', 0)->save('myfile.pdf')
 
 
-    return view('reporte_catorcenal',array('data'=>$data,'totales'=>$totales));
     //return $pdf->download('Planilla_general.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
@@ -104,19 +104,12 @@ class PlanillasController extends Controller
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
+      $pdf='';
       $data =$this->calcular_billetes($planillas);
       $nombres=$this->nombres_billetes($planillas);
-      // return $data;
       $pdf = \PDF::loadView('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf->setPaper('a4')->setOrientation('landscape');
       return $pdf->inline('Billetes_catorcenal.pdf');
-
-      $view = \View::make('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
-      $pdf = \App::make('dompdf.wrapper');
-      $pdf->loadHTML($view);
-      $pdf->setPaper('a4', 'landscape');
-      return $pdf->stream('Billetes.pdf');
-      return $pdf->stream();
     }
     elseif($funcion == 'Reporte DGI'){
       $peticion=$request->all();
@@ -301,7 +294,7 @@ class PlanillasController extends Controller
     }
     $totales=  [
        "sum_tot_recib"=>round($sum_tot_recib,2),
-       'sum_dias_trab'=>round($sum_dias_trab,2),
+       'sum_dias_trab'=>$sum_dias_trab,
        "sum_dev1"=>round($sum_dev1,2),
        "sum_alim"=>round($sum_alim,2),
        "sum_basico"=>round($sum_basico,2),
