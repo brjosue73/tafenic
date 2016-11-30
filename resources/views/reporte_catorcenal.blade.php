@@ -14,17 +14,8 @@
 
 
 
-    .heade {
-      position: fixed;
-      top: -40px;
-      left: 0px;
-      right: 0px;
-      height: 50px;
-      padding: .5em;
-      text-align: center;
-    }
     @page{
-       margin: 50px;
+       margin: 60px;
      }
     body{
       padding-top: 42px;
@@ -36,6 +27,20 @@
         page-break-inside: avoid !important;
     }
 
+    .table-responsive{
+      margin: 0;
+    }
+        .heade {
+          position: fixed !important;
+          top: -40px;
+          left: 0px;
+          right: 0px;
+          height: 70px;
+          padding: .5em;
+          text-align: center;
+          font-size: 18px;
+          background-color: #999;
+        }
   </style>
 </head>
 <body>
@@ -77,8 +82,8 @@
             <th>Otros</th>
             <th>Feriados</th>
             <th>Tot.<br> Deven</th>
-            <th>H. Ext</th>
-            <th>Act. Ext</th>
+            <th>H.<br> Ext</th>
+            <th>Act.<br> Ext</th>
             <th>T. <br> Extras</th>
             <th>Vac</th>
             <th>Aguin</th>
@@ -123,9 +128,9 @@
           @endforeach
           <tr>
             <td colspan="2">Total</td>
-            <td>{{number_format( $totales['sum_dias_trab'] ,2 )}}</td>
+            <td>{{ round($totales['sum_dias_trab'] ,2)}}</td>
             <td>{{number_format( $totales['sum_dev1'],2 ) }}</td>
-            <td>{{number_format( $totales['sum_alim'],2 ) }}</td>
+            <td>{{round($totales['sum_alim'],2) }}</td>
             <td>{{number_format( $totales['sum_basico'],2 ) }}</td>
             <td>{{number_format( $totales['sum_septimos'],2 ) }}</td>
             <td>{{number_format( $totales['sum_subsidios'],2 ) }}</td>
