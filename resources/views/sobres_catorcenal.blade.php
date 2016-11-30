@@ -10,31 +10,17 @@
   h4,h5 {
     text-align: center;
     margin: 5px;
+    font-size: 13px;
   }
-  /*table {
-    border: 1px solid black;
-  }
-  th, td{
-    font-family: sans-serif;
-    font-size: 11px;
-  }
-  td li{
-    list-style-type: none;
-  }
-  td hr{
-    margin: 0;
-  }
-  */
   .firmas {
     width: 33%;
     display: inline-block;
     float: left;
   }
   table {
-    /*font-size: 11px;*/
-    /*margin-bottom: 3.3rem;*/
     border-collapse: collapse;
     margin-top: 1.5rem;
+    margin-bottom: 12px;
   }
   tbody>tr:nth-child(even) {
     background-color: #ddd;
@@ -86,7 +72,7 @@
       margin-top: 1rem !important;
     }
     td, tr>td {
-      font-size: 25px !important;
+      font-size: 12px !important;
       padding: 1px;
     }
   </style>
