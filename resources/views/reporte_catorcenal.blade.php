@@ -18,7 +18,7 @@
        margin: 60px;
      }
     body{
-      padding-top: 42px;
+      padding-top: 80px;
     }
     .relleno {
       padding: 0.25rem 1rem;
@@ -32,7 +32,7 @@
     }
         .heade {
           position: fixed !important;
-          top: -40px;
+          top: -10px;
           left: 0px;
           right: 0px;
           height: 70px;
@@ -42,7 +42,7 @@
           background-color: #999;
         }
         td,th{
-          font-size: 11px;
+          font-size: 10px;
         }
   </style>
 </head>
@@ -75,7 +75,7 @@
           <tr class="active">
 
             <th> N° </th>
-            <th>________________Nombre_______________________</th>
+            <th>________________Nombre________________</th>
             <th>Días <br>  trab</th>
             <th>Tot. <br> Deven</th>
             <th>Alim.</th>
