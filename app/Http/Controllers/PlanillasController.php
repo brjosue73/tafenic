@@ -64,9 +64,11 @@ class PlanillasController extends Controller
             .cabecera {
                 text-align: center;
                 /*margin-bottom: 20px;*/
-                height: 45px;
-                /*margin-bottom: 10px;*/
+                height: 70px;
+                padding:0;
+                margin-bottom: 0;
                 opacity: 1;
+                font-size:13px;
             }
             h4{
               padding: 2px;
@@ -88,7 +90,7 @@ class PlanillasController extends Controller
 
     </html>';
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
-    $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 15)->setOption('margin-bottom', 3);
+    $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
     $pdf->setOption('header-html', $encabezado);
     //$pdf->setOption('header-spacing','150');
 
