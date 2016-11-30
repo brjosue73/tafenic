@@ -75,7 +75,7 @@
           <tr class="active">
 
             <th> N° </th>
-            <th>&nbspNombre &nbsp&nbsp</th>
+            <th>________________Nombre_______________________</th>
             <th>Días <br>  trab</th>
             <th>Tot. <br> Deven</th>
             <th>Alim.</th>
