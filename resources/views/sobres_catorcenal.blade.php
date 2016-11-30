@@ -20,6 +20,7 @@
   table {
     border-collapse: collapse;
     margin-top: 1.5rem;
+    margin-bottom: 8px;
   }
   tbody>tr:nth-child(even) {
     background-color: #ddd;

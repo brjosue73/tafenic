@@ -82,7 +82,7 @@ class PlanillasController extends Controller
 
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
-      $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm')->setOption('margin-top', 3)->setOption('margin-bottom', 3);
+      $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm')->setOption('margin-top', 4)->setOption('margin-bottom', 3);
       return $pdf->inline('sobres_catorcenal.pdf');
 
 
