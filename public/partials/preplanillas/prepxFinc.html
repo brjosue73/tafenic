@@ -1,11 +1,11 @@
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body">
 <h1 class="col-lg-12 col-md-12 col-sm-12">Planilla por Fincas</h1>
-<form class="col-lg-12 col-md-12 col-sm-12 tarjeta blanco m-top_dow">
+<form class="col-lg-12 col-md-12 col-sm-12 tarjeta blanco m-top_dow" method="POST" action="finca_pdf">
 
   <div class="form-group col-md-3 col-sm-3 col-lg-3">
-    <label for="">Finca </label>
-    <select name="finca"class="form-control" data-ng-model="reporfinca.id_finca">
+    <label for="finca">Finca </label>
+    <select name="finca" class="form-control" data-ng-model="reporfinca.id_finca">
       <option data-ng-repeat="finc in fincs" value="<% finc.id %>"><% finc.nombre %></option>
     </select>
   </div>
@@ -25,17 +25,20 @@
   </div>
 
   <div class="form-group col-md-3 col-sm-3 col-lg-3">
-    <label for="">Fecha inicio</label>
-    <input type="date" class="form-control" data-ng-model="reporfinca.fecha_ini">
+    <label for="fecha_ini">Fecha inicio</label>
+    <input name="fecha_ini" type="date" class="form-control" data-ng-model="reporfinca.fecha_ini">
   </div>
   <div class="form-group col-md-3 col-sm-3 col-lg-3">
-    <label for="">Fecha fin</label>
-    <input type="date" class="form-control" data-ng-model="reporfinca.fecha_fin">
+    <label for="fecha_fin">Fecha fin</label>
+    <input name="fecha_fin" type="date" class="form-control" data-ng-model="reporfinca.fecha_fin">
   </div>
   <div class="form-group">
     <button class="btn btn-default btn-primary" ng-click="getPrepxfinc()">
       Generar
     </button>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="imprimir" class="btn btn-default btn-primary">
   </div>
 </form>
 
