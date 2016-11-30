@@ -41,8 +41,8 @@
           font-size: 18px;
           background-color: #999;
         }
-        .letra{
-          font-size: 10px;
+        td{
+          font-size: 11px;
         }
   </style>
 </head>
