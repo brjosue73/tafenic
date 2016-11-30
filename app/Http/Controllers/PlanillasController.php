@@ -41,8 +41,10 @@ class PlanillasController extends Controller
     $totales=$this->sum_totales($data);
 
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
-    $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 5)->setOption('margin-bottom', 3);
-    //$pdf->setOption('header-html', public_path('res/header_14nal.html'));
+    $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 15)->setOption('margin-bottom', 3);
+    $pdf->setOption('header-html', public_path('res/header_14nal.html'));
+    //$pdf->setOption('header-spacing','150');
+
     //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     return $pdf->inline('Planilla_catorcenal.pdf');
 

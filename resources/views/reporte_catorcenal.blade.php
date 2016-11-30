@@ -16,6 +16,7 @@
 
     @page{
        margin: 60px;
+       margin-top: 800px !important;
      }
     body{
       padding-top: 80px;
@@ -43,6 +44,7 @@
         td,th{
           font-size: 10px;
         }
+
   </style>
 </head>
 <body>
@@ -63,9 +65,10 @@
   $i=0;
    ?>
    <div class="heade">
-     <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-     <h5>PLANILLA GENERAL</h5>
-     <h5> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
+     <!-- <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+     <h5>PLANILLA GENERAL</h5> -->
+     <h5>.</h5>
+     <h5 class="subir"> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
    </div>
 
     <div class="table-responsive">
