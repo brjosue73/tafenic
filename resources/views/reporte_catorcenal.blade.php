@@ -38,8 +38,7 @@
           height: 70px;
           padding: .5em;
           text-align: center;
-          font-size: 18px;
-          background-color: #999;
+          font-size: 15px;
         }
         td,th{
           font-size: 10px;
