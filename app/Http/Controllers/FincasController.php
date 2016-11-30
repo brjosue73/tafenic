@@ -17,6 +17,8 @@ class FincasController extends Controller
       $fecha_ini=$request['fecha_ini'];
       $fecha_fin=$request['fecha_fin'];
       $id_finca_req=$request['id_finca'];
+      $centro_costo=$request['centro_costo'];
+
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $alim_var=$variable->alimentacion;
@@ -28,6 +30,7 @@ class FincasController extends Controller
       }
       $planillas= Preplanilla::where('id_finca',$id_finca_req) /***********Buscar en preplanilla segun la finca y segun el rango de fecha*************/
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                                ->where('centro_costo',$centro_costo)
                                 ->get();
       $tamano = sizeof($planillas);
       $trabajadores=array();
@@ -44,6 +47,8 @@ class FincasController extends Controller
             $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
             ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
             ->where('id_finca',$id_finca_req)
+            ->where('centro_costo',$centro_costo)
+
             ->get();
                                       //->where('id_finca_req',$id_finca_req)
              $salario_tot=0;
