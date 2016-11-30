@@ -41,6 +41,9 @@
           font-size: 18px;
           background-color: #999;
         }
+        .letra{
+          font-size: 10px;
+        }
   </style>
 </head>
 <body>
@@ -102,7 +105,7 @@
           <tr> <?php   $fecha_ini=$dat['fecha_ini'];
             $fecha_fin=$dat['fecha_fin']; ?>
             <td> {{ ++$i }}</td>
-            <td> {{ $dat['nombre'] }} </td>
+            <td class="letra"> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['dias'] }} </td>
             <td> {{number_format( $dat['total_deven'] ,2 )}} </td>
             <td> {{ number_format($dat['alim_tot'] ,2 )}} </td>
