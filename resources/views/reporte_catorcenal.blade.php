@@ -80,7 +80,7 @@
             <th>Septimo</th>
             <th>subsidio</th>
             <th>Otros</th>
-            <th>Feriados</th>
+            <th>Fer.</th>
             <th>Tot.<br> Deven</th>
             <th>H.<br> Ext</th>
             <th>Act.<br> Ext</th>
