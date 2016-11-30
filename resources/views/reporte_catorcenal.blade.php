@@ -67,8 +67,7 @@
    <div class="heade">
      <!-- <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
      <h5>PLANILLA GENERAL</h5> -->
-     <h5>.</h5>
-     <h5 class="subir"> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5>
+    <!-- <h5 class="subir"> Planilla de pago del {{$dia_ini}} de {{$meses[$mes_ini-1]}} al {{$dia_fin}} de {{$meses[$mes_fin-1]}} del {{$ano}}</h5> -->
    </div>
 
     <div class="table-responsive">

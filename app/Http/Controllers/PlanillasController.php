@@ -39,10 +39,57 @@ class PlanillasController extends Controller
         return $a['order'] < $b['order']?1:-1;
     });
     $totales=$this->sum_totales($data);
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    $fecha_ini=$data['0']['fecha_ini'];
+    $fecha_fin=$data['0']['fecha_fin'];
 
+    $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+    $dia_ini=date("d", strtotime($fecha_1));
+    $mes_ini=date("m", strtotime($fecha_1));
+    $ano=date("Y", strtotime($fecha_1));
+
+    $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
+    $dia_fin=date("d", strtotime($fecha_2));
+    $mes_fin=date("m", strtotime($fecha_2));
+    $i=0;
+    $encabezado='<!DOCTYPE html>
+    <html>
+
+    <head>
+        <style type="text/css">
+            /*(bootstrap source)*/
+        </style>
+
+        <style type="text/css">
+            .cabecera {
+                text-align: center;
+                /*margin-bottom: 20px;*/
+                height: 45px;
+                /*margin-bottom: 10px;*/
+                opacity: 1;
+            }
+            h4{
+              padding: 2px;
+              margin: 1px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="cabecera">
+          <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+          <h4>PLANILLA GENERAL</h4>
+          <h4>Planilla de pago del '
+           .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
+          '</h4>
+
+        </div>
+    </body>
+
+    </html>';
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
-    $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
-    $pdf->setOption('header-html', public_path('res/header_14nal.html'));
+    $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 15)->setOption('margin-bottom', 3);
+    $pdf->setOption('header-html', $encabezado);
     //$pdf->setOption('header-spacing','150');
 
     //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
