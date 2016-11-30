@@ -41,7 +41,7 @@
           font-size: 18px;
           background-color: #999;
         }
-        td{
+        td,th{
           font-size: 11px;
         }
   </style>
