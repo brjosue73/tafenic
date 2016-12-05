@@ -89,8 +89,9 @@ class FincasController extends Controller
                'plani_trab'=>$trab_septimo,
              ];
              $cant_septimos=$this->calcular_septimos($calculo_septimo);
-             return $trabs;
-             return $cant_septimos;
+            return $cant_septimos;
+
+            //  return $cant_septimos;
 
              $trabajador=Trabajador::find($id_trab);
              $nombres=$trabajador->nombre;
@@ -293,16 +294,60 @@ class FincasController extends Controller
       $centro_act=$request['centro_act'];
 
       $dias_sept= $trabs->count();
-      return $trabs;
-
       $cant_septimos=0;
+      foreach ($trabs as $trab) {
+        $fin_query= Finca::find($trab->id_finca);
+        $finca=$fin_query->nombre;
+        $fincas[]=$finca;
+      }
+
        if($dias_sept>=6){ //merece por lo menos 1 septimo
          $cant_septimos=1;
          if($dias_sept>=12){//merece 2 septimos
            $cant_septimos=2;
          }
        }
-       return $cant_septimos;
+       if($cant_septimos>0){ //si merece por lo menos 1 septimo
+         $cant_fincas_todas = sizeof($fincas);
+         $fincas_sinRep=array();
+         foreach ($fincas as $fin) {
+            $valor=in_array($fin, (array)$fincas_sinRep);//si ya existe la finca en el arreglo
+           $converted_res = ($valor) ? 'true' : 'false';
+            //si la nueva finca es = a cualquiera del arreglo marcado con bandera entonces no agregar
+            if ($converted_res=='false'){
+              $fincas_sinRep[]=$fin;
+            }
+          }
+          foreach ($fincas_sinRep as $finca_nombre) {//recorro las fincas sin repeticion
+            $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca
+            $id_finca=$finca_id_search->id;//id
+            $dias_finca=Preplanilla::where('id_trabajador',$id_trab) //buscar los dias q trabajo ese trabajador en esa finca en ese rango de fecha
+            ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+            ->where('id_finca', $id_finca)
+            ->get();
+            $cont_finc=$dias_finca->count();
+
+            $dias_tot_fincas[$f]=$cont_finc;//agregarlo al arreglo
+            $nomb_tot_fincas[$f]=$id_finca;
+            $f+=1;
+          }
+          $mayor=0;
+          foreach ($dias_tot_fincas as $dias_tot_finc) {
+            if($dias_tot_finc>$mayor){
+              $mayor=$dias_tot_finc;
+              $id_mayor=$nomb_tot_fincas[$c];
+            }
+            $c+=1;
+          }
+          $fin_mayor_query= Finca::find($id_mayor);
+          $finca_mayor=$fin_mayor_query->nombre;
+       }
+       else {//sino merece ni un septimo
+         $finca_mayor='---';
+
+         # Inicializar las variables q envio en 0
+       }
+       return $finca_mayor;
     }
 
     /**********Mostrar el reporte de planilla por finca y fecha************/
