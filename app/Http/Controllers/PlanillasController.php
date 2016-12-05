@@ -93,7 +93,6 @@ class PlanillasController extends Controller
     $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
     $pdf->setOption('header-html', $encabezado);
     //$pdf->setOption('header-spacing','150');
-
     //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     return $pdf->inline('Planilla_catorcenal.pdf');
 

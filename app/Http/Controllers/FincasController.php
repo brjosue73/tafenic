@@ -12,13 +12,25 @@ use App\Actividad;
 use App\Lote;
 class FincasController extends Controller
 {
-    public function planilla_finca(Request $request){
-      $cargo='tcampo';
-      $fecha_ini=$request['fecha_ini'];
-      $fecha_fin=$request['fecha_fin'];
-      $id_finca_req=$request['id_finca'];
-      $centro_costo=$request['centro_costo'];
+  public function planilla_finca(Request $request){
+    $data =$this->calculo_finca($request);
+    return $data;
+  }
+  public function calculo_pdf(Request $request){
+    $data =$this->calculo_finca($request);
+    $pdf = \PDF::loadView('prep_finca',array('data'=>$data));
+    $pdf->setPaper('a4')->setOrientation('landscape');
+    return $pdf->inline('Billetes_catorcenal.pdf');
+  }
+    public function calculo_finca($request){
+      $peticion=$request->all();
+      $finca_mayor='--';
 
+      $cargo='tcampo';
+      $fecha_ini=$peticion['fecha_ini'];
+      $fecha_fin=$peticion['fecha_fin'];
+      $id_finca=$peticion['id_finca'];
+      $centro_costo=$peticion['centro_costo'];
       $variables=Variable::all();
       foreach ($variables as $variable) {
         $alim_var=$variable->alimentacion;
@@ -28,29 +40,34 @@ class FincasController extends Controller
         $vacaciones=$variable->vacaciones/100;
         $pago_dia=$variable->sal_diario;
       }
-      $planillas= Preplanilla::where('id_finca',$id_finca_req) /***********Buscar en preplanilla segun la finca y segun el rango de fecha*************/
-                                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-                                ->where('centro_costo',$centro_costo)
+      $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
+                              ->where('id_finca',$id_finca)
+                              ->where('centro_costo',$centro_costo)
                                 ->get();
+
+
       $tamano = sizeof($planillas);
       $trabajadores=array();
       $identif=array();
       $trab=0;
       $count=0;
-      $dias=0;
         for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
           $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
           $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
           $converted_res = ($valor) ? 'true' : 'false';
           if ($converted_res=='false') { //Sino esta repetido
             $identif[]=$id_trab;
-            $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
-            ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-            ->where('id_finca',$id_finca_req)
-            ->where('centro_costo',$centro_costo)
+            $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                    ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                    ->where('id_finca',$id_finca)
+                    ->where('centro_costo',$centro_costo)
+                    ->get();
+            $trab_septimo= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+                    ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                    ->get();
 
-            ->get();
-                                      //->where('id_finca_req',$id_finca_req)
+             $dias= $trabs->count();
+             $dias_sept=$trab_septimo->count();
              $salario_tot=0;
              $alim_tot=0;
              $vac_tot=0;
@@ -69,36 +86,38 @@ class FincasController extends Controller
              $cant_act_ext=0;
              $sum_tot_recib=0;
              $prestamo=0;
+             $calculo_septimo=[
+               'id_finAct'=>$peticion['id_finca'],
+               'centro_act'=>$peticion['centro_costo'],
+               'plani_trab'=>$trab_septimo,
+               'fecha_fin'=>$fecha_fin,
+               'fecha_ini'=>$fecha_ini,
+               'id_trab'=>$id_trab,
+               'valor_dia'=>$valor_dia,
+               'id_finca'=>$id_finca,
+
+             ];
+             $calculo_septimo=$this->calcular_septimos($calculo_septimo);
+             //return $calculo_septimo;
+             $cant_septimos=$calculo_septimo['dias_sept'];
+
              $trabajador=Trabajador::find($id_trab);
              $nombres=$trabajador->nombre;
              $apellido=$trabajador->apellidos;
              $nombre="$nombres   $apellido";
              /********************Saber si tiene septimos****************/
-             /********************Contar los dias trabajados*****************/
-             $tot_sept=0;
-             $cant_septimos=0;
-             $feriados=0;
-             $dias=0;
+            // $cant_septimos=0;
+            //  if($dias_sept>=6){ //merece por lo menos 1 septimo
+            //    $cant_septimos=1;
+            //    if($dias_sept>=12){//merece 2 septimos
+            //      $cant_septimos=2;
+            //    }
+            //  }
              foreach ($trabs as $trab) {
-                $dias+=1;
-            }
-            $trabs_sept= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
-            ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-            ->get();
-            $dias_sept=0;
-            foreach ($trabs_sept as $t_sept) {
-              $dias_sept+=1;
-              $fin_query2= Finca::find($t_sept->id_finca);
-              $finca2=$fin_query2->nombre;
-              $fincas2[]=$finca2;
-            }
-            if($dias_sept>=6){ //merece por lo menos 1 septimo
-              $cant_septimos=1;
-              if($dias_sept>=12){//merece 2 septimos
-                $cant_septimos=2;
-              }
-            }
-            $tot_sept=$cant_septimos*$valor_dia;
+               $feriados+=$trab->feriados;
+             }
+             $tot_sept=$calculo_septimo['tot_sept'];
+             $feriados=0;
                foreach ($trabs as $trab) {
                    $inss_camp=$trab['inss_campo'];
                    $tot_sept+=$trab['septimo'];
@@ -136,79 +155,91 @@ class FincasController extends Controller
                   //  else {//si es por horas
                   //    $tot_dev=$dias * $pago_dia;
                   //  }
-                   foreach ($trabs as $trab) {
-                     $feriados+=$trab->feriados;
-                   }
-                  $f=0;
-                  $c=0;
-                  $finca_mayor='';
-                  unset($fincas_sinRep);
-                  if($tot_sept>0){
-                  $cant_fincas_todas = sizeof($fincas);
-                  $fincas_sinRep=array();
-                   foreach ($fincas2 as $fin) {
-                      $valor=in_array($fin, (array)$fincas_sinRep);//si ya existe la finca en el arreglo
-                     $converted_res = ($valor) ? 'true' : 'false';
-                      //si la nueva finca es = a cualquiera del arreglo marcado con bandera entonces no agregar
-                      if ($converted_res=='false'){
-                        $fincas_sinRep[]=$fin;
-                      }
-                    }
-                    foreach ($fincas_sinRep as $finca_nombre) {//recorro las fincas sin repeticion
-                      $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca\
-                      $id_finca=$finca_id_search->id;//id
-                      $dias_finca=Preplanilla::where('id_trabajador',$id_trab) //buscar los dias q trabajo ese trabajador en esa finca en ese rango de fecha
-                      ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-                      ->where('id_finca', $id_finca)
-                      ->get();
-                      $cont_finc=$dias_finca->count();
-                      $dias_tot_fincas[$f]=$cont_finc;//agregarlo al arreglo
-                      $nomb_tot_fincas[$f]=$id_finca;
-                      $f+=1;
-                    }
-                    $var=Finca::find(6);
-                    $var=$dias_tot_fincas;
-                    $mayor=0;
-                    foreach ($dias_tot_fincas as $dias_tot_finc) {
-                      if($dias_tot_finc>$mayor){
-                        $mayor=$dias_tot_finc;
-                        $id_mayor=$nomb_tot_fincas[$c];
-                      }
-                      // unset($dias_tot_fincas);
-                      // unset($nomb_tot_fincas);
-                      $c+=1;
-                    }
-                    $fin_mayor_query= Finca::find($id_mayor);
-                    $finca_mayor=$fin_mayor_query->nombre;
-                  }
 
-                  $nombre_finca_quer=Finca::find($id_finca_req);
-                  $nombre_finca=$nombre_finca_quer->nombre;
-                  if($finca_mayor!=$nombre_finca){
-                   $tot_sept=0;
-                  }
-                  //return $finca_mayor;
+
                    $tot_dev=$dias * $pago_dia;
                    $tot_basic=$tot_dev+$alim_tot;
                    $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
                    $total_dev2=round($total_dev3,2);
                    $tot_sept=round($tot_sept,2);
+
                    $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
                    $tot_a_vacs=round($tot_a_vacs,2);
                    //return $vac;
                    $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
-                   $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
-                   $inss= ($tot_inss*$inss_camp)/100;
-                   $inss_pat=($tot_inss*$inss_patronal)/100;
-                   $tot_recib=$total_acum - $inss;
-                   //return 'finc_act '.$nombre_finca.' Mayor: '.$finca_mayor.' tot_sept: '.$tot_sept;
+                  //  return $total_acum;
+                  //  return $total_dev2.' Vacaciones: '.$tot_a_vacs;
 
+                   $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
+
+                  //  return $tot_inss;
+                   $inss= ($tot_inss*$inss_camp)/100;
+                   //return ($tot_inss." ". $inss_camp);
+                   $inss_pat=($tot_inss*$inss_patronal)/100;
+                   //return $inss;
+
+                   //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
+
+                   $tot_recib=$total_acum - $inss;
+                   $f=0;
+                   $c=0;
                }
+
+
+                 /**************SEPTIMO**************/
+                 //dias trabs en una Finca
+                 //saber las fincas unicas en las que trabajo
+                 if($tot_sept>0){
+                 $cant_fincas_todas = sizeof($fincas);
+                 $fincas_sinRep=array();
+
+                  foreach ($fincas as $fin) {
+                     $valor=in_array($fin, (array)$fincas_sinRep);//si ya existe la finca en el arreglo
+                    $converted_res = ($valor) ? 'true' : 'false';
+                     //si la nueva finca es = a cualquiera del arreglo marcado con bandera entonces no agregar
+                     if ($converted_res=='false'){
+                       $fincas_sinRep[]=$fin;
+                     }
+                   }
+
+                   foreach ($fincas_sinRep as $finca_nombre) {//recorro las fincas sin repeticion
+
+                     $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca
+                     $id_finca=$finca_id_search->id;//id
+                     $dias_finca=Preplanilla::where('id_trabajador',$id_trab) //buscar los dias q trabajo ese trabajador en esa finca en ese rango de fecha
+                     ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                     ->where('id_finca', $id_finca)
+                     ->get();
+                     $cont_finc=$dias_finca->count();
+
+                     $dias_tot_fincas[$f]=$cont_finc;//agregarlo al arreglo
+                     $nomb_tot_fincas[$f]=$id_finca;
+                     $f+=1;
+                   }
+                   $mayor=0;
+                   foreach ($dias_tot_fincas as $dias_tot_finc) {
+                     if($dias_tot_finc>$mayor){
+                       $mayor=$dias_tot_finc;
+                       $id_mayor=$nomb_tot_fincas[$c];
+                     }
+                     $c+=1;
+                   }
+                   $fin_mayor_query= Finca::find($id_mayor);
+                   $finca_mayor=$fin_mayor_query->nombre;
+                }
+                else {
+                  $finca_mayor='---';
+                }
+
+
+
+
+                $variabless='12';
+
                $array = [
-                 'aaFinca_mayor'=>$finca_mayor,
-                 'aaNombre_finca'=>$nombre_finca,
-                 'aaVar'=>$var,
+
                  "id_trab"=>round($id_trab,2),
+                 "dias"=>round($dias,2),
                  "dias"=>round($dias,2),
                  "alim_tot"=>round($alim_tot,2),
                  "vac_tot"=>round($tot_a_vacs,2),
@@ -224,8 +255,9 @@ class FincasController extends Controller
                  "total_acum"=>round($total_acum,2),
                  "inss"=>round($inss,2),
                  "salario_"=>round($tot_recib,2),
-                 "fincas"=>$fincas2,
+                 "fincas"=>$fincas,
                  "total_septimo"=>round($tot_sept,2),
+                 "finca_septimo"=>$finca_mayor,
                  "inss_patronal"=>round($inss_pat,2),
                  "fecha_ini"=>$fecha_ini,
                  "fecha_fin"=>($fecha_fin),
@@ -237,11 +269,12 @@ class FincasController extends Controller
                  "prestamos"=>round($prestamo,2),
                  "fecha_ini"=>$fecha_ini,
                  "fecha_fin"=>$fecha_fin,
+                 "aacalculo"=>$calculo_septimo,
                ];
             $trabajadores[]=$array;
+
             unset($labores);
             unset($fincas);
-            unset($fincas2);
             unset($fincas_sinRep);
           }/*Fin Si no esta repetido*/
         }//Fin For de recorrer toda la planilla
@@ -252,7 +285,146 @@ class FincasController extends Controller
         $totales=$this->sum_totales($trabajadores);
         $trabajadores[]=$totales;
         return $trabajadores;
+
     }
+    /********************************************************Calculo de septimos**************************************************************/
+    public function calcular_septimos($request){
+      $trabs=$request['plani_trab'];
+      $id_finAct=$request['id_finAct'];
+      $centro_act=$request['centro_act'];
+      $id_trab=$request['id_trab'];
+      $fecha_ini=$request['fecha_ini'];
+      $fecha_fin=$request['fecha_fin'];
+      $valor_dia=$request['valor_dia'];
+      $id_finca=$request['id_finca'];
+      $centro_mayor=0;
+      $dias_sept= $trabs->count();
+      $cant_septimos=0;
+      $centro_mayor='';
+      $centro_id='';
+      foreach ($trabs as $trab) {
+        $fin_query= Finca::find($trab->id_finca);
+        $finca=$fin_query->nombre;
+        $fincas[]=$finca;
+        $centro=$trab->centro_costo;
+      }
+
+       if($dias_sept>=6){ //merece por lo menos 1 septimo
+         $cant_septimos=1;
+         if($dias_sept>=12){//merece 2 septimos
+           $cant_septimos=2;
+         }
+       }
+       $f=0;
+       $c=0;
+       if($cant_septimos>0){ //si merece por lo menos 1 septimo
+         $cant_fincas_todas = sizeof($fincas);
+         $centros_sinRep=array();
+         $fincas_sinRep=array();
+
+        $centro_0= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                ->where('id_finca',$id_finca)
+                ->where('centro_costo',0)
+                ->count();
+
+        $centro_1= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                ->where('id_finca',$id_finca)
+                ->where('centro_costo',1)
+                ->count();
+        $centro_2= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                ->where('id_finca',$id_finca)
+                ->where('centro_costo',2)
+                ->count();
+        $centro_3= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                ->where('id_finca',$id_finca)
+                ->where('centro_costo',3)
+                ->count();
+        $centro_4= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                ->where('id_finca',$id_finca)
+                ->where('centro_costo',4)
+                ->count();
+        $centros=[
+          '0'=>$centro_0,
+          '1'=>$centro_1,
+          '2'=>$centro_2,
+          '3'=>$centro_3,
+          '4'=>$centro_4,
+      ];
+
+         foreach ($fincas as $fin) {
+            $valor=in_array($fin, (array)$fincas_sinRep);//si ya existe la finca en el arreglo
+           $converted_res = ($valor) ? 'true' : 'false';
+            //si la nueva finca es = a cualquiera del arreglo marcado con bandera entonces no agregar
+            if ($converted_res=='false'){
+              $fincas_sinRep[]=$fin;
+            }
+          }
+
+          foreach ($fincas_sinRep as $finca_nombre) {//recorro las fincas sin repeticion
+            $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca
+            $id_finca=$finca_id_search->id;//id
+            $dias_finca=Preplanilla::where('id_trabajador',$id_trab) //buscar los dias q trabajo ese trabajador en esa finca en ese rango de fecha
+            ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+            ->where('id_finca', $id_finca)
+            ->get();
+            $cont_finc=$dias_finca->count();
+
+            $dias_tot_fincas[$f]=$cont_finc;//agregarlo al arreglo
+            $nomb_tot_fincas[$f]=$id_finca;
+            $f+=1;
+          }
+          $mayor=0;
+          foreach ($dias_tot_fincas as $dias_tot_finc) {
+            if($dias_tot_finc>$mayor){
+              $mayor=$dias_tot_finc;
+              $id_mayor=-1;
+              $id_mayor=$nomb_tot_fincas[$c];
+            }
+            $c+=1;
+          }
+          $fin_mayor_query= Finca::find($id_mayor);
+          $finca_mayor=$fin_mayor_query->nombre;
+          /********Calcular centro de costo mayor*********/
+          $centro_id=-1;
+          for ($i=0; $i <=4 ; $i++) {
+            if($centros[$i]>$centro_mayor){
+              $centro_mayor=$centros[$i];
+              $centro_id=$i;
+            }
+          }
+
+          $tot_sept=$cant_septimos*$valor_dia;
+          if ($id_mayor==$id_finAct && $centro_act == $centro_id){ //Y Si es el mismo centro de costo
+            $tot_sept=$tot_sept;
+          }
+          else {
+            $tot_sept=0;
+          }
+       }
+       else {//sino merece ni un septimo
+         $finca_mayor='---';
+         $id_mayor='';
+         $tot_sept=0;
+         # Inicializar las variables q envio en 0
+       }
+
+
+       $calculo=[
+         'finca_mayor'=>$id_mayor,
+         'dias_sept'=>$cant_septimos,
+         'finca_ac'=>$id_finAct,
+         'tot_sept'=>$tot_sept,
+         'centro_mayor'=>$centro_id,
+         'centro_actual'=>$centro_act,
+       ];
+       return $calculo;
+    }
+
     /**********Mostrar el reporte de planilla por finca y fecha************/
     public function sum_totales($data){
       $sum_dias_trab=0;
