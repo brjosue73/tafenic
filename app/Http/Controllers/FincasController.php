@@ -18,8 +18,9 @@ class FincasController extends Controller
   }
   public function calculo_pdf(Request $request){
     $data =$this->calculo_finca($request);
-
-    return $data;
+    $pdf = \PDF::loadView('prep_finca',array('data'=>$data));
+    $pdf->setPaper('a4')->setOrientation('landscape');
+    return $pdf->inline('Billetes_catorcenal.pdf');
   }
     public function calculo_finca($request){
       $peticion=$request->all();
@@ -54,7 +55,7 @@ class FincasController extends Controller
           $converted_res = ($valor) ? 'true' : 'false';
           if ($converted_res=='false') { //Sino esta repetido
             $identif[]=$id_trab;
-            $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+            $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
                     ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                     ->where('id_finca',$id_finca)
                     ->get();
@@ -82,7 +83,14 @@ class FincasController extends Controller
              $cant_act_ext=0;
              $sum_tot_recib=0;
              $prestamo=0;
-
+             $calculo_septimo=[
+               'id_finAct'=>$peticion['id_finca'],
+               'centro_act'=>$peticion['centro_costo'],
+               'plani_trab'=>$trab_septimo,
+             ];
+             $cant_septimos=$this->calcular_septimos($calculo_septimo);
+             return $trabs;
+             return $cant_septimos;
 
              $trabajador=Trabajador::find($id_trab);
              $nombres=$trabajador->nombre;
@@ -100,13 +108,10 @@ class FincasController extends Controller
              foreach ($trabs as $trab) {
                $feriados+=$trab->feriados;
              }
-             foreach ($trab_septimo as $trab_se) {
-               # code...
-             }
+
 
 
              $tot_sept=$cant_septimos*$valor_dia;
-
              $feriados=0;
                foreach ($trabs as $trab) {
                    $inss_camp=$trab['inss_campo'];
@@ -221,7 +226,6 @@ class FincasController extends Controller
                   $finca_mayor='---';
                 }
                 $finca_actual=$peticion['id_finca'];//id de la finca en la que se hace la consulta
-
                 $centro_actual=$peticion['centro_costo']; // id del centro de costo en la que se hace la consulta
                 //falta el centro de costo mayor
 
@@ -229,7 +233,6 @@ class FincasController extends Controller
                   $total_septimo=0;
                 }
                 $variabless='12';
-
 
                $array = [
                  "aafinca_act"=>$finca_actual,
@@ -284,6 +287,24 @@ class FincasController extends Controller
         return $trabajadores;
 
     }
+    public function calcular_septimos($request){
+      $trabs=$request['plani_trab'];
+      $id_finAct=$request['id_finAct'];
+      $centro_act=$request['centro_act'];
+
+      $dias_sept= $trabs->count();
+      return $trabs;
+
+      $cant_septimos=0;
+       if($dias_sept>=6){ //merece por lo menos 1 septimo
+         $cant_septimos=1;
+         if($dias_sept>=12){//merece 2 septimos
+           $cant_septimos=2;
+         }
+       }
+       return $cant_septimos;
+    }
+
     /**********Mostrar el reporte de planilla por finca y fecha************/
     public function sum_totales($data){
       $sum_dias_trab=0;
