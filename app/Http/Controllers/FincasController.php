@@ -18,9 +18,14 @@ class FincasController extends Controller
   }
   public function calculo_pdf(Request $request){
     $data =$this->calculo_finca($request);
+    $finca=$data[0]['fincas'][0];
+
+    
+
     $pdf = \PDF::loadView('prep_finca',array('data'=>$data));
-    $pdf->setPaper('a4')->setOrientation('landscape');
-    return $pdf->inline('Billetes_catorcenal.pdf');
+    $pdf->setOrientation('landscape')->setPaper('a4');
+    return $pdf->inline('Reporte_finca'.$finca.'.pdf');
+
   }
     public function calculo_finca($request){
       $peticion=$request->all();
