@@ -169,6 +169,11 @@
 		.state('/reportes', {
 			url:"/reportes",
 			templateUrl: "partials/reportes/reportesPanel.html"
+		})
+		.state('/totalescc', {
+			url:"/totales-centros-costos",
+			templateUrl: "partials/reportes/totalescc.html",
+			controller: "centrosCostos"
 		});
 	});
 	/*******************************************************************************************************************\
@@ -786,5 +791,19 @@
 		s.prepReg = {};
 		s.prepReg = pr.get('/planilla/:id/editar',{id:sp.id});
 		console.log(s.soprano);
+	}]);
+
+	app.controller('centrosCostos', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
+		s.sendDataCC = {};
+	  s.costosTotales = function(){
+			console.log("totales-centros-ostos");
+			h.post('/planilla_fincas', s.sendDataCC)
+			.success(function(data){
+				s.totcc = data;
+			})
+			.error(function(err){
+				console.log(err)
+			});
+		}
 	}]);
 }());

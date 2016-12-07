@@ -36,6 +36,7 @@
               <li><a href="" data-ui-sref="/RplanillaQ">Planilla Quincenal</a></li>
               <li><a href="" data-ui-sref="/prepxtrab">Preplanilla por trabajador</a></li>
               <li><a href="" data-ui-sref="/prepxfinc">Preplanilla por Fincas</a></li>
+              <li><a href="" data-ui-sref="/totalescc">Totales C.C.</a></li>
             </ul>
           </li>
           <li class="dropdown">
