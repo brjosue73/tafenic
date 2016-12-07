@@ -62,8 +62,10 @@ class FincasController extends Controller
         }
       }
     }
-    //$tot_tot=$this->sum_totales($calculo_tot);
-    //return $tot_tot;
+    //return $calculo_tot;
+
+    $suma_tot=$this->sum_planillaFinca($calculo_tot);
+    $totales[]=$suma_tot;
     return $totales;
 
   }
@@ -551,24 +553,24 @@ class FincasController extends Controller
       $sum_inss_pat=0;
       $sum_tot_recib=0;
       foreach ($data as $trab) {
-        $sum_tot_recib +=$trab['salario_'];
-        $sum_dias_trab+=$trab['dias'];
-        $sum_dev1+=$trab['total_deven'];
-        $sum_alim+=$trab['alim_tot'];
-        $sum_basico+=$trab['total_basic'];
-        $sum_septimos+=$trab['total_septimo'];
-        $sum_subsidios+=$trab['subsidio'];
-        $sum_otros+=$trab['otros'];
-        $sum_feriados+=$trab['feriado'];
-        $sum_dev2+=$trab['devengado2'];
-        $sum_h_ext+=$trab['cant_horas_ext'];
-        $sum_tot_hext+=$trab['horas_ext_tot'];
-        $sum_vacs+=$trab['vac_tot'];
-        $sum_aguin+=$trab['agui_tot'];
-        $sum_acum+=$trab['total_acum'];
-        $sum_inss_lab+=$trab['inss'];
-        $sum_prestam+=$trab['prestamos'];
-        $sum_inss_pat+=$trab['inss_patronal'];
+        $sum_tot_recib +=$trab['sum_tot_recib'];
+        $sum_dias_trab+=$trab['sum_dias_trab'];
+        $sum_dev1+=$trab['sum_dev1'];
+        $sum_alim+=$trab['sum_alim'];
+        $sum_basico+=$trab['sum_basico'];
+        $sum_septimos+=$trab['sum_septimos'];
+        $sum_subsidios+=$trab['sum_subsidios'];
+        $sum_otros+=$trab['sum_otros'];
+        $sum_feriados+=$trab['sum_feriados'];
+        $sum_dev2+=$trab['sum_dev2'];
+        $sum_h_ext+=$trab['sum_h_ext'];
+        $sum_tot_hext+=$trab['sum_tot_hext'];
+        $sum_vacs+=$trab['sum_vacs'];
+        $sum_aguin+=$trab['sum_aguin'];
+        $sum_acum+=$trab['sum_acum'];
+        $sum_inss_lab+=$trab['sum_inss_lab'];
+        $sum_prestam+=$trab['sum_prestam'];
+        $sum_inss_pat+=$trab['sum_inss_pat'];
       }
       $totales=  [
         "sum_tot_recib"=>round($sum_tot_recib,2),
