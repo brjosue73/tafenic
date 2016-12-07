@@ -22,7 +22,9 @@ class FincasController extends Controller
     $pdf = \PDF::loadView('prep_finca',array('data'=>$data));
     $pdf->setOrientation('landscape')->setPaper('a4');
     return $pdf->inline('Reporte_finca'.$finca.'.pdf');
-
+  }
+  public function planilla_fincas(Request $request){
+    return ('que nota prix');
   }
     public function calculo_finca($request){
       $peticion=$request->all();
