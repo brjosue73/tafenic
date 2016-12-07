@@ -19,9 +19,6 @@ class FincasController extends Controller
   public function calculo_pdf(Request $request){
     $data =$this->calculo_finca($request);
     $finca=$data[0]['fincas'][0];
-
-    
-
     $pdf = \PDF::loadView('prep_finca',array('data'=>$data));
     $pdf->setOrientation('landscape')->setPaper('a4');
     return $pdf->inline('Reporte_finca'.$finca.'.pdf');
