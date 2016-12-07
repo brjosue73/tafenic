@@ -38,6 +38,28 @@
 				return "label-success";
 			}
 		}
+	}).filter("centroCosto", function(){
+		return function(centro){
+			switch (centro) {
+				case 0:
+					return "Tabaco Sol";
+					break;
+				case 1:
+					return "Tabaco Tapado";
+					break;
+				case 2:
+					return "Semillero";
+					break;
+				case 3:
+					return "Ensarte";
+					break;
+				case 4:
+					return "Safadura";
+					break;
+				default: return "NaCC";
+
+			}
+		}
 	});
 	/*******************************************************************************************************************\
 		Use an exist Angular Module
@@ -796,10 +818,17 @@
 	app.controller('centrosCostos', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
 		s.sendDataCC = {};
 	  s.costosTotales = function(){
-			console.log("totales-centros-ostos");
+			//console.log("totales-centros-ostos");
 			h.post('/planilla_fincas', s.sendDataCC)
 			.success(function(data){
-				s.totcc = data;
+
+				s.totcc = [];
+				for (var i = 0; i < data.length - 1; i++) {
+					s.totcc.push(data[i]);
+				}
+				s.sumTotCC = data[data.length - 1];
+
+				//s.totcc = data;
 			})
 			.error(function(err){
 				console.log(err)
