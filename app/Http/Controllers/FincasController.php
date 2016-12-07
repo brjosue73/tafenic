@@ -17,17 +17,57 @@ class FincasController extends Controller
     return $data;
   }
   public function calculo_pdf(Request $request){
-    $data =$this->calculo_finca($request);
+    $peticion=$request->all();
+
+    $data =$this->calculo_finca($peticion);
     $finca=$data[0]['fincas'][0];
     $pdf = \PDF::loadView('prep_finca',array('data'=>$data));
     $pdf->setOrientation('landscape')->setPaper('a4');
     return $pdf->inline('Reporte_finca'.$finca.'.pdf');
   }
   public function planilla_fincas(Request $request){
-    return ('que nota prix');
+    $fincas=Finca::all();
+    $fecha_ini=$request['fecha_ini'];
+    $fecha_fin=$request['fecha_fin'];
+    $centros_costo=[
+      '0'=>0,
+      '1'=>1,
+      '2'=>2,
+      '3'=>3,
+      '4'=>4,
+    ];
+    $totales=array();
+    $calculo_tot=array();
+    foreach ($fincas as $finca) {
+      foreach ($centros_costo as $centro) {
+        $arreglo=[
+          'id_finca'=>$finca['id'],
+          'centro_costo'=>$centro,
+          'fecha_ini'=>$fecha_ini,
+          'fecha_fin'=>$fecha_fin,
+        ];
+        $calculo=$this->calculo_finca($arreglo);
+        $tamanio=sizeof($calculo);
+
+        $suma=$calculo[$tamanio-1];
+
+        $datos_finca=[
+          'nombre_finca'=>$finca['nombre'],
+          'centro_costo'=>$centro,
+          'calculo'=>$suma,
+        ];
+        if($suma['sum_tot_recib']>0){
+          $calculo_tot[]=$suma;
+          $totales[]=$datos_finca;
+        }
+      }
+    }
+    //$tot_tot=$this->sum_totales($calculo_tot);
+    //return $tot_tot;
+    return $totales;
+
   }
-    public function calculo_finca($request){
-      $peticion=$request->all();
+    public function calculo_finca($peticion){
       $finca_mayor='--';
 
       $cargo='tcampo';
@@ -488,6 +528,67 @@ class FincasController extends Controller
          'sum_inss_lab'=>round($sum_inss_lab,2),
          'sum_prestam'=>round($sum_prestam,2),
          'sum_inss_pat'=>round($sum_inss_pat,2),
+      ];
+      return $totales;
+    }
+    public function sum_planillaFinca($data){
+      $sum_dias_trab=0;
+      $sum_dev1=0;
+      $sum_alim=0;
+      $sum_basico=0;
+      $sum_septimos=0;
+      $sum_subsidios=0;
+      $sum_otros=0;
+      $sum_feriados=0;
+      $sum_dev2=0;
+      $sum_h_ext=0;
+      $sum_tot_hext=0;
+      $sum_vacs=0;
+      $sum_aguin=0;
+      $sum_acum=0;
+      $sum_inss_lab=0;
+      $sum_prestam=0;
+      $sum_inss_pat=0;
+      $sum_tot_recib=0;
+      foreach ($data as $trab) {
+        $sum_tot_recib +=$trab['salario_'];
+        $sum_dias_trab+=$trab['dias'];
+        $sum_dev1+=$trab['total_deven'];
+        $sum_alim+=$trab['alim_tot'];
+        $sum_basico+=$trab['total_basic'];
+        $sum_septimos+=$trab['total_septimo'];
+        $sum_subsidios+=$trab['subsidio'];
+        $sum_otros+=$trab['otros'];
+        $sum_feriados+=$trab['feriado'];
+        $sum_dev2+=$trab['devengado2'];
+        $sum_h_ext+=$trab['cant_horas_ext'];
+        $sum_tot_hext+=$trab['horas_ext_tot'];
+        $sum_vacs+=$trab['vac_tot'];
+        $sum_aguin+=$trab['agui_tot'];
+        $sum_acum+=$trab['total_acum'];
+        $sum_inss_lab+=$trab['inss'];
+        $sum_prestam+=$trab['prestamos'];
+        $sum_inss_pat+=$trab['inss_patronal'];
+      }
+      $totales=  [
+        "sum_tot_recib"=>round($sum_tot_recib,2),
+        'sum_dias_trab'=>round($sum_dias_trab,2),
+        "sum_dev1"=>round($sum_dev1,2),
+        "sum_alim"=>round($sum_alim,2),
+        "sum_basico"=>round($sum_basico,2),
+        'sum_septimos'=>round($sum_septimos,2),
+        'sum_subsidios'=>round($sum_subsidios,2),
+        'sum_otros'=>round($sum_otros,2),
+        'sum_feriados'=>round($sum_feriados,2),
+        'sum_dev2'=>round($sum_dev2,2),
+        'sum_h_ext'=>round($sum_h_ext,2),
+        'sum_tot_hext'=>round($sum_tot_hext,2),
+        'sum_vacs'=>$sum_vacs,
+        'sum_aguin'=>$sum_aguin,
+        'sum_acum'=>$sum_acum,
+        'sum_inss_lab'=>round($sum_inss_lab,2),
+        'sum_prestam'=>round($sum_prestam,2),
+        'sum_inss_pat'=>round($sum_inss_pat,2),
       ];
       return $totales;
     }
