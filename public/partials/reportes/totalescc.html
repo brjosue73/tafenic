@@ -12,6 +12,7 @@
       <input name="fecha_fin" type="date" class="form-control" data-ng-model="sendDataCC.fecha_fin">
     </div>
     <div class="form-group">
+      <br>
       <input type="button" value="Generar" class="btn btn-default btn-primary" data-ng-click="costosTotales()">
     </div>
     <!-- <div class="form-group">
@@ -52,8 +53,8 @@
         <tr data-ng-repeat="totCostos in totcc">
           <td><% $index + 1 %></td>
           <td><% totCostos.nombre_finca %></td>
-          <td><% totCostos.nombre_finca %></td>
-          <td>dias trab</td>
+          <td><% totCostos.centro_costo | centroCosto %></td>
+          <td><% totCostos.calculo.sum_dias_trab %></td>
           <td><% totCostos.calculo.sum_dev1 %></td>
           <td><% totCostos.calculo.sum_alim %></td>
           <td><% totCostos.calculo.sum_basico %></td>
@@ -63,8 +64,8 @@
           <td><% totCostos.calculo.sum_feriados %></td>
           <td><% totCostos.calculo.sum_dev2 %></td>
           <td><% totCostos.calculo.sum_h_ext %></td>
-          <td>activities</td>
-          <td>activities ext</td>
+          <td>0</td>
+          <td><% totCostos.calculo.sum_tot_hext %></td>
           <td><% totCostos.calculo.sum_vacs %></td>
           <td><% totCostos.calculo.sum_aguin %></td>
           <td><% totCostos.calculo.sum_acum %></td>
@@ -72,10 +73,30 @@
           <td><% totCostos.calculo.sum_prestam %></td>
           <td><% totCostos.calculo.sum_tot_recib %></td>
           <td><% totCostos.calculo.sum_inss_pat %></td>
-          <!-- <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="revision(reporfincTota.id_trab, $index, reporfincTota.fecha_ini, reporfincTota.fecha_fin)">Revisar</a></td> -->
-          <!-- <td> <% totcc. > </td>
-          <td> <% totcc. td> -->
-
+        </tr>
+        <tr>
+          <td colspan="3">TOTAL: </td>
+          <!-- <td><% sumTotCC.nombre_finca %></td>
+          <td><% sumTotCC.centro_costo %></td> -->
+          <td><% sumTotCC.sum_dias_trab %></td>
+          <td><% sumTotCC.sum_dev1 %></td>
+          <td><% sumTotCC.sum_alim %></td>
+          <td><% sumTotCC.sum_basico %></td>
+          <td><% sumTotCC.sum_septimos %></td>
+          <td><% sumTotCC.sum_subsidios %></td>
+          <td><% sumTotCC.sum_otros %></td>
+          <td><% sumTotCC.sum_feriados %></td>
+          <td><% sumTotCC.sum_dev2 %></td>
+          <td><% sumTotCC.sum_h_ext %></td>
+          <td>0</td>
+          <td><% sumTotCC.sum_tot_hext %></td>
+          <td><% sumTotCC.sum_vacs %></td>
+          <td><% sumTotCC.sum_aguin %></td>
+          <td><% sumTotCC.sum_acum %></td>
+          <td><% sumTotCC.sum_inss_lab %></td>
+          <td><% sumTotCC.sum_prestam %></td>
+          <td><% sumTotCC.sum_tot_recib %></td>
+          <td><% sumTotCC.sum_inss_pat %></td>
         </tr>
         <!-- <tr>
           <td colspan="3">Total</td>
