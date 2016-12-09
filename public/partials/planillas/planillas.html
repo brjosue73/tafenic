@@ -1,7 +1,7 @@
 <!--
   REPORTE PLANILLA CATORCENAL
 -->
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 view_body" data-ui-view>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
     <h1>Planilla Catorcenal</h1>
     <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12" method="post" action="reporte_catorcenal">
@@ -49,6 +49,7 @@
           <th>Nombre del trabajador</th>
           <th>Fincas</th>
           <th>Ocupación</th>
+          <th>dias <br> Lab</th>
           <th>Días trabajados</th>
           <th>Tot. Devengado</th>
           <th>Alimentación</th>
@@ -79,8 +80,9 @@
           <td> <% $index + 1 %></td>
           <td>#INSS</td>
           <td> <% reporfincTota.nombre %> </td>
-          <td> <li data-ng-repeat="fincass in reporfincTota.fincas track by $index"><% fincass %> </td>
-          <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
+          <td> <li data-ng-repeat="fincass in reporfincTota.finUnicas track by $index"><% fincass %> </td>
+          <td> <li data-ng-repeat="labour in reporfincTota.labUnicas track by $index"><% labour %> </li></td>
+          <td> <li data-ng-repeat="labday in reporfincTota.cantLabs track by $index"><% labday %> </li></td>
           <td> <% reporfincTota.dias %> </td>
           <td> <% reporfincTota.total_deven %> </td>
           <td> <% reporfincTota.alim_tot %> </td>

@@ -147,6 +147,7 @@
   <script src="res/dependencies/angular-route/angular-route.min.js"></script>
   <script src="res/dependencies/angular-resource/angular-resource.min.js"></script>
   <script src="res/dependencies/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="res/dependencies/lodash/lodash.min.js"></script>
   <script src="res/js/angular.js"></script>
   <script src="res/js/scripts.min.js"></script>
   <script>
