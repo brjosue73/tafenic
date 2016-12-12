@@ -149,7 +149,7 @@ class PreplanillasController extends Controller
             $prep->save();
             return 'Agregada con exito Feriado no trab';
           }
-          else { //si es feriado trabajado
+          elseif($feriado==1) { //si es feriado trabajado
             $prep->total_actividad=$dia;//aqui
             $ext=0;
             $otros=$arreglo['otros'];
@@ -202,6 +202,8 @@ class PreplanillasController extends Controller
             $prep->salario_acum= $sal;
             $subsidio=0;
 
+            $tot_feriado=round($dia*2,2);
+            $prep->feriados=$tot_feriado;
             $prep->save();
             return "Agregada! 333";
           }
