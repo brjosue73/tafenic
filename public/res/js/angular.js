@@ -565,6 +565,12 @@
 							setTimeout(function(){
 								$('#exitoprep').css("display","none");
 								$("#clean")[0].reset();
+								s.prepSendData.hora_ext = 0;
+								s.prepSendData.otros = 0;
+								s.prepSendData.prestamos = 0;
+								s.prepSendData.septimo = 0;
+								s.prepSendData.safa_ext = 0;
+								s.prepSendData.cuje_ext = 0;
 								$('#chkSub').prop('checked',false);
 								$('#save-preplanilla').removeAttr("disabled");
 								//s.prepSendData.subsidio = false;
@@ -674,7 +680,7 @@
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
 		s.getPlanilla = function() {
-			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
+			//console.log(s.plillaSendData);
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
