@@ -46,7 +46,7 @@
         <tr class="active">
           <th>N°</th>
           <th>#INSS</th>
-          <th>Nombre</th>
+          <th data-ng-click="ordenar = 'nombre' ">Nombre</th>
           <th>Fincas</th>
           <th>Ocupación</th>
           <th>dias <br> Lab</th>
@@ -59,7 +59,7 @@
           <th>Otros</th>
           <th>Feriados</th>
           <th>Tot. Dev 2</th>
-          <th>Horas Extra</th>
+          <th data-ng-click="ordenar = '-cant_horas_ext' ">Horas Extra</th>
           <th>Activ Extra</th>
           <th>Tot H. Ext.</th>
           <th>Vacaciones</th>
@@ -75,7 +75,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="reporfincTota in reporfincTot">
+        <tr data-ng-repeat="reporfincTota in reporfincTot | orderBy:ordenar">
 
           <td> <% $index + 1 %></td>
           <td> #INSS </td>
