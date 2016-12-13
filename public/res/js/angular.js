@@ -680,10 +680,19 @@
 			.success(function(data) {
 				s.reporfincTot = [];
 				for (var i = 0; i < data.length - 1; i++) {
+
+					let finUnicas = _.xor(data[i].fincas);
+					let labUnicas = _.xor(data[i].labores);
+					let cantLabs = _.countBy(data[i].labores, 'length');
+
+					data[i].finUnicas = finUnicas;
+					data[i].labUnicas = labUnicas;
+					data[i].cantLabs = cantLabs;
+
 					s.reporfincTot.push(data[i]);
+
 				}
 			  s.totales = data[data.length - 1];
-				//console.log(s.totales);
 			});
 		}
 
@@ -828,7 +837,6 @@
 				}
 				s.sumTotCC = data[data.length - 1];
 
-				//s.totcc = data;
 			})
 			.error(function(err){
 				console.log(err)
