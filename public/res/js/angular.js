@@ -495,6 +495,7 @@
 			septimo: 0,
 			centro_costo: 0
 		};
+		s.ordenar = 'cant_horas_ext';
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
 
