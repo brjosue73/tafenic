@@ -108,25 +108,25 @@
             <td> {{ ++$i }}</td>
             <td class="letra"> {{ $dat['nombre'] }} </td>
             <td> {{ $dat['dias'] }} </td>
-            <td> {{number_format( $dat['total_deven'] ,2 )}} </td>
-            <td> {{ number_format($dat['alim_tot'] ,2 )}} </td>
-            <td> {{ number_format($dat['total_basic'] ,2 )}} </td>
-            <td> {{number_format( $dat['total_septimo'] ,2 )}} </td>
-            <td> {{number_format( $dat['subsidio'] ,2 )}}</td>
-            <td> {{number_format( $dat['otros'] ,2 )}}</td>
-            <td> {{number_format( $dat['feriado'] ,2 )}} </td>
-            <td>  {{number_format( $dat['devengado2'] ,2 )}}</td>
-            <td>  {{ $dat['cant_horas_ext'] }}</td>
-            <td>0</td>
-            <td> {{number_format( $dat['horas_ext_tot'] ,2 )}} </td>
-            <td> {{number_format( $dat['vac_tot'] ,2 )}} </td>
-            <td>{{number_format( $dat['agui_tot'] ,2 )}}</td>
-            <td> {{number_format( $dat['total_acum'] ,2 )}} </td>
-            <td>{{number_format( $dat['inss'] ,2 )}}</td>
-            <td>{{number_format( $dat['prestamos'] ,2 )}}</td>
-            <td> {{number_format( $dat['salario_'] ,2 )}} </td>
+            <td> {{ number_format( $dat['total_deven'] ,2 )}} </td>
+            <td> {{ number_format( $dat['alim_tot'] ,2 )}} </td>
+            <td> {{ number_format( $dat['total_basic'] ,2 )}} </td>
+            <td> {{ number_format( $dat['total_septimo'] ,2 )}} </td>
+            <td> {{ number_format( $dat['subsidio'] ,2 )}}</td>
+            <td> {{ number_format( $dat['otros'] ,2 )}}</td>
+            <td> {{ number_format( $dat['feriado'] ,2 )}} </td>
+            <td> {{ number_format( $dat['devengado2'] ,2 )}}</td>
+            <td> {{ $dat['cant_horas_ext'] }}</td>
+            <td> 0 </td>
+            <td> {{ number_format( $dat['horas_ext_tot'] ,2 )}} </td>
+            <td> {{ number_format( $dat['vac_tot'] ,2 )}} </td>
+            <td> {{ number_format( $dat['agui_tot'] ,2 )}}</td>
+            <td> {{ number_format( $dat['total_acum'] ,2 )}} </td>
+            <td> {{ number_format( $dat['inss'] ,2 )}}</td>
+            <td> {{ number_format( $dat['prestamos'] ,2 )}}</td>
+            <td> {{ number_format( $dat['salario_'] ,2 )}} </td>
             <td class="firma"></td>
-            <td>{{number_format( $dat['inss_patronal'] ,2 )}}</td>
+            <td> {{ number_format( $dat['inss_patronal'] ,2 )}}</td>
             <!-- <td> {{ $dat['finca_septimo'] }} </td> -->
           </tr>
           @endforeach
