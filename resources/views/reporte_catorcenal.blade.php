@@ -142,8 +142,9 @@
             <td>{{number_format( $totales['sum_feriados'],2 ) }}</td>
             <td>{{number_format( $totales['sum_dev2'],2 ) }}</td>
             <td>{{number_format( $totales['sum_h_ext'],2 ) }}</td>
-            <td>0</td>
             <td>{{number_format( $totales['sum_tot_hext'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_tot_hext'],2 ) }}</td>
+            <td>0</td>
             <td>{{number_format( $totales['sum_vacs'],2 ) }}</td>
             <td>{{number_format( $totales['sum_aguin'],2 ) }}</td>
             <td>{{number_format( $totales['sum_acum'],2 ) }}</td>
