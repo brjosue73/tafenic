@@ -495,6 +495,7 @@
 			septimo: 0,
 			centro_costo: 0
 		};
+		s.ordenar = 'cant_horas_ext';
 		s.preplanillas = pr.query();
 		s.lasfincas = fr.query();
 
@@ -565,6 +566,12 @@
 							setTimeout(function(){
 								$('#exitoprep').css("display","none");
 								$("#clean")[0].reset();
+								s.prepSendData.hora_ext = 0;
+								s.prepSendData.otros = 0;
+								s.prepSendData.prestamos = 0;
+								s.prepSendData.septimo = 0;
+								s.prepSendData.safa_ext = 0;
+								s.prepSendData.cuje_ext = 0;
 								$('#chkSub').prop('checked',false);
 								$('#save-preplanilla').removeAttr("disabled");
 								//s.prepSendData.subsidio = false;
@@ -674,16 +681,25 @@
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
 		s.getPlanilla = function() {
-			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
+			//console.log(s.plillaSendData);
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
 				s.reporfincTot = [];
 				for (var i = 0; i < data.length - 1; i++) {
+
+					let finUnicas = _.xor(data[i].fincas);
+					let labUnicas = _.xor(data[i].labores);
+					let cantLabs = _.countBy(data[i].labores, 'length');
+
+					data[i].finUnicas = finUnicas;
+					data[i].labUnicas = labUnicas;
+					data[i].cantLabs = cantLabs;
+
 					s.reporfincTot.push(data[i]);
+
 				}
 			  s.totales = data[data.length - 1];
-				//console.log(s.totales);
 			});
 		}
 
@@ -828,7 +844,6 @@
 				}
 				s.sumTotCC = data[data.length - 1];
 
-				//s.totcc = data;
 			})
 			.error(function(err){
 				console.log(err)
