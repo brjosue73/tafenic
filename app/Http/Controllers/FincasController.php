@@ -48,8 +48,35 @@ class FincasController extends Controller
         ];
         $calculo=$this->calculo_finca($arreglo);
         $tamanio=sizeof($calculo);
-
         $suma=$calculo[$tamanio-1];
+
+        // $dev=$totales['sum_dev1'];
+        // $septimo=$suma['sum_septimos'];
+        // $feriados=$suma['sum_feriados'];
+        // $tot_dev2=['sum_dev2'];
+        // $a_vac=$dev+$septimo+$feriados;
+        // $vacs=$a_vac*0.083333;
+        // $total_acum=$vacs+$vacs+$tot_dev2;
+        // $suma['sum_acum']=round($total_acum,2);
+        // $suma['sum_aguin']=round($vacs,2);
+        // $suma['sum_vacs']=round($vacs,2);
+        $dev=$suma['sum_dev1'];
+        $septimo=$suma['sum_septimos'];
+        $feriados=$suma['sum_feriados'];
+        $tot_dev2=$suma['sum_dev2'];
+        $prestamos=$suma['sum_prestam'];
+        $a_vac=$dev+$septimo+$feriados;
+        $vacs=$a_vac*0.083333;
+        $tot_acum=$vacs+$vacs+$tot_dev2;
+        $inss_lab=(($tot_acum-$vacs)*4.25)/100;
+        $tot_recib=$tot_acum-$inss_lab-$prestamos;
+        $inss_pat=(($tot_acum-$vacs)*12.5)/100;
+        $suma['sum_acum']=round($tot_acum,2);
+        $suma['sum_aguin']=round($vacs,2);
+        $suma['sum_vacs']=round($vacs,2);
+        $suma['sum_inss_lab']=round($inss_lab,2);
+        $suma['sum_tot_recib']=round($tot_recib,2);
+        $suma['sum_inss_pat']=round($inss_pat,2);
 
         $datos_finca=[
           'nombre_finca'=>$finca['nombre'],
@@ -197,15 +224,22 @@ class FincasController extends Controller
                    $total_dev2=round($total_dev3,2);
                    $tot_sept=round($tot_sept,2);
                    $vacs_prueba=($tot_dev+$tot_sept+$feriados);
-                   $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
+                   $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
+                   //$tot_a_vacs=123;
                    $tot_a_vacs=round($tot_a_vacs,2);
                    $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
 
                    $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
 
-                   $inss= ($tot_inss*$inss_camp)/100;
-                   $inss_pat=($tot_inss*$inss_patronal)/100;
-                   $tot_recib=$total_acum - $inss;
+                   $total_inss=($total_acum-$tot_a_vacs);
+                   $inss=($total_inss*$inss_camp)/100;
+                    $test1=$tot_inss;
+                    $test2=$inss_camp;
+
+                    $inss_pat=($total_inss*$inss_patronal)/100;
+
+                    $tot_recib=$total_acum - $inss - $prestamo;
+
                    $f=0;
                    $c=0;
                }
