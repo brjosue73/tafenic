@@ -70,7 +70,7 @@ class PreplanillasController extends Controller
         foreach ($variables as $variable) {
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
-          $vacaciones= ($variable->vacaciones)/100;
+          $vacaciones= 0.083333;
 
           $cuje_grand= $variable->cuje_grand;
           $cuje_peq= $variable->cuje_peq;
@@ -140,8 +140,9 @@ class PreplanillasController extends Controller
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
         $prep->prestamo =$arreglo['prestamos'];
-
-        if (isset($arreglo['feriado'])) {
+        $prep->inss_campo=$inss_lab;
+        $prep->inss_admin=$inss_admin;
+        $prep->inss_patron=$inss_patron_catorce;
           $feriado=$arreglo['feriado'];
           if ($feriado==0) { //feriado no trabajado
             $tot_feriado=round($dia,2);

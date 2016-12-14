@@ -13,17 +13,39 @@ use App\Variable;
 
 class PlanillasController extends Controller
 {
-  public function planilla_general(Request $request){
+  public function planilla_general2($request){
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-     $totales=$this->sum_totales($data);
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
          return $a['order'] < $b['order']?1:-1;
      });
-     $data[]=$totales;
-
      return $data;
+  }
+  public function planilla_general(Request $request){
+    $data=$this->planilla_general2($request);
+    $totales=$this->sum_totales($data);
+
+    $dev=$totales['sum_dev1'];
+    $septimo=$totales['sum_septimos'];
+    $feriados=$totales['sum_feriados'];
+    $tot_dev2=$totales['sum_dev2'];
+    $prestamos=$totales['sum_prestam'];
+    $a_vac=$dev+$septimo+$feriados;
+    $vacs=$a_vac*0.083333;
+    $tot_acum=$vacs+$vacs+$tot_dev2;
+    $inss_lab=(($tot_acum-$vacs)*4.25)/100;
+    $tot_recib=$tot_acum-$inss_lab-$prestamos;
+    $inss_pat=(($tot_acum-$vacs)*12.5)/100;
+    $totales['sum_acum']=round($tot_acum,2);
+    $totales['sum_aguin']=round($vacs,2);
+    $totales['sum_vacs']=round($vacs,2);
+    $totales['sum_inss_lab']=round($inss_lab,2);
+    $totales['sum_tot_recib']=round($tot_recib,2);
+    $totales['sum_inss_pat']=round($inss_pat,2);
+
+    $data[]=$totales;
+    return $data;
   }
   public function inss_catorcenal(Request $request){
 
@@ -33,12 +55,19 @@ class PlanillasController extends Controller
     $peticion=$request->all();
     $funcion=$peticion['funcion'];
     if ($funcion == 'Generar Imprimible'){
-    $data =$this->calculo_planilla($peticion);
-    usort($data, function($a, $b) {
-      return strcmp($a["nombre"], $b["nombre"]);
-        return $a['order'] < $b['order']?1:-1;
-    });
+      $data=$this->planilla_general2($request);
     $totales=$this->sum_totales($data);
+    $dev=$totales['sum_dev1'];
+    $septimo=$totales['sum_septimos'];
+    $feriados=$totales['sum_feriados'];
+    $tot_dev2=['sum_dev2'];
+    $a_vac=$dev+$septimo+$feriados;
+    $vacs=$a_vac*0.083333;
+    $total_acum=$vacs+$vacs+$tot_dev2;
+    return $total_acum;
+    $totales['sum_acum']=round($total_acum,2);
+    $totales['sum_aguin']=round($vacs,2);
+    $totales['sum_vacs']=round($vacs,2);
     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     $fecha_ini=$data['0']['fecha_ini'];
     $fecha_fin=$data['0']['fecha_fin'];
@@ -92,12 +121,7 @@ class PlanillasController extends Controller
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
     $pdf->setOption('header-html', $encabezado);
-    //$pdf->setOption('header-spacing','150');
-    //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     return $pdf->inline('Planilla_catorcenal.pdf');
-
-
-    //return $pdf->download('Planilla_general.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
       $datas =$this->calculo_planilla($peticion);
@@ -107,7 +131,6 @@ class PlanillasController extends Controller
       });
       ini_set("memory_limit", "452M");
       ini_set("max_execution_time", "600");
-    //  return $datas;
     $data=array();
       foreach ($datas as $dat) {
         $array_1=array();
@@ -126,9 +149,6 @@ class PlanillasController extends Controller
         $array_1['fecha_fin']=$dat["fecha_fin"];
         $data[]=$array_1;
       }
-      //return $data[0]['fecha_ini'];
-
-      // return $data;
 
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
@@ -342,7 +362,9 @@ class PlanillasController extends Controller
       $sum_prestam+=$trab['prestamos'];
       $sum_inss_pat+=$trab['inss_patronal'];
     }
+    $test1='deb: '.$sum_dev2.'..extra: '.$sum_h_ext.'..vacs:'.$sum_vacs;
     $totales=  [
+        'aa_test1'=>$test1,
        "sum_tot_recib"=>round($sum_tot_recib,2),
        'sum_dias_trab'=>$sum_dias_trab,
        "sum_dev1"=>round($sum_dev1,2),
@@ -375,7 +397,7 @@ class PlanillasController extends Controller
       $valor_dia= $variable->sal_diario;
       $cuje_grand= $variable->cuje_grand;
       $cuje_peq= $variable->cuje_peq;
-      $vacaciones=$variable->vacaciones/100;
+      $vacaciones=0.08333;
       $pago_dia=$variable->sal_diario;
     }
     $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
@@ -486,24 +508,29 @@ class PlanillasController extends Controller
                  $total_dev2=round($total_dev3,2);
                  $tot_sept=round($tot_sept,2);
 
-                 $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*$vac;
+                 $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
                  //return $vac;
-                 $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
+
+                 $total_acum=$total_dev2 + $extra_tot + $tot_a_vacs + $tot_a_vacs;
                 //  return $total_acum;
                 //  return $total_dev2.' Vacaciones: '.$tot_a_vacs;
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
+                                                                                              /*******************/
+                $total_inss=($total_acum-$tot_a_vacs);
+                $inss=($total_inss*$inss_camp)/100;
+                 $test1='deb: '.$total_dev2.'..extra: '.$extra_tot .'..vacs:'.$tot_a_vacs;
+                 $test2=$inss_camp;
 
-                //  return $tot_inss;
-                 $inss= ($tot_inss*$inss_camp)/100;
+                 //$inss= ($tot_inss*$inss_camp)/100;
                  //return ($tot_inss." ". $inss_camp);
-                 $inss_pat=($tot_inss*$inss_patronal)/100;
+                 $inss_pat=($total_inss*$inss_patronal)/100;
                  //return $inss;
 
                  //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
 
-                 $tot_recib=$total_acum - $inss;
+                 $tot_recib=$total_acum - $inss - $prestamo;
                  $f=0;
                  $c=0;
              }
@@ -556,6 +583,8 @@ class PlanillasController extends Controller
 
 
              $array = [
+               'aa_var1'=>$test1,
+               'aa_var2'=>$test2,
                "id_trab"=>round($id_trab,2),
                "dias"=>round($dias,2),
                "alim_tot"=>round($alim_tot,2),
