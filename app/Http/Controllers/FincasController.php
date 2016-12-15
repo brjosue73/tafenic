@@ -65,12 +65,14 @@ class FincasController extends Controller
         $feriados=$suma['sum_feriados'];
         $tot_dev2=$suma['sum_dev2'];
         $prestamos=$suma['sum_prestam'];
+        $alim=$suma['sum_alim'];
+
         $a_vac=$dev+$septimo+$feriados;
         $vacs=$a_vac*0.083333;
         $tot_acum=$vacs+$vacs+$tot_dev2;
-        $inss_lab=(($tot_acum-$vacs)*4.25)/100;
+        $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
-        $inss_pat=(($tot_acum-$vacs)*12.5)/100;
+        $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
         $suma['sum_acum']=round($tot_acum,2);
         $suma['sum_aguin']=round($vacs,2);
         $suma['sum_vacs']=round($vacs,2);
@@ -157,6 +159,9 @@ class FincasController extends Controller
              $cant_act_ext=0;
              $sum_tot_recib=0;
              $prestamo=0;
+             foreach ($trabs as $trab) {
+               $feriados+=$trab->feriados;
+             }
              $calculo_septimo=[
                'id_finAct'=>$peticion['id_finca'],
                'centro_act'=>$peticion['centro_costo'],
@@ -166,7 +171,8 @@ class FincasController extends Controller
                'id_trab'=>$id_trab,
                'valor_dia'=>$valor_dia,
                'id_finca'=>$id_finca,
-
+               'feriados'=>$feriados,
+               'dias'=>$dias,
              ];
              $calculo_septimo=$this->calcular_septimos($calculo_septimo);
              //return $calculo_septimo;
@@ -176,9 +182,12 @@ class FincasController extends Controller
              $nombres=$trabajador->nombre;
              $apellido=$trabajador->apellidos;
              $nombre="$nombres $apellido";
-             foreach ($trabs as $trab) {
-               $feriados+=$trab->feriados;
+
+
+             if($feriados>=$valor_dia*2){
+               $dias=$dias-1;
              }
+
              $tot_sept=$calculo_septimo['tot_sept'];
              $feriados=0;
                foreach ($trabs as $trab) {
@@ -302,6 +311,9 @@ class FincasController extends Controller
       $fecha_fin=$request['fecha_fin'];
       $valor_dia=$request['valor_dia'];
       $id_finca=$request['id_finca'];
+      $feriados=$request['feriados'];
+      $dias=$request['dias'];
+
       $centro_mayor=0;
       $dias_sept= $trabs->count();
       $cant_septimos=0;
@@ -313,7 +325,16 @@ class FincasController extends Controller
         $fincas[]=$finca;
         $centro=$trab->centro_costo;
       }
-
+      if($feriados>=$valor_dia*2){
+        $dias_sept=$dias;
+        $dias=$dias-1;
+      }
+      elseif($feriados==$valor_dia) {
+        $dias_sept=$dias+1;
+      }
+      else {
+        $dias_sept=$dias;
+      }
        if($dias_sept>=6){ //merece por lo menos 1 septimo
          $cant_septimos=1;
          if($dias_sept>=12){//merece 2 septimos
