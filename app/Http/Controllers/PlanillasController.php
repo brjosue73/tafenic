@@ -31,12 +31,13 @@ class PlanillasController extends Controller
     $feriados=$totales['sum_feriados'];
     $tot_dev2=$totales['sum_dev2'];
     $prestamos=$totales['sum_prestam'];
+    $alim=$totales['sum_alim'];
     $a_vac=$dev+$septimo+$feriados;
     $vacs=$a_vac*0.083333;
     $tot_acum=$vacs+$vacs+$tot_dev2;
-    $inss_lab=(($tot_acum-$vacs)*4.25)/100;
+    $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
-    $inss_pat=(($tot_acum-$vacs)*12.5)/100;
+    $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
     $totales['sum_acum']=round($tot_acum,2);
     $totales['sum_aguin']=round($vacs,2);
     $totales['sum_vacs']=round($vacs,2);
@@ -62,12 +63,13 @@ class PlanillasController extends Controller
     $feriados=$totales['sum_feriados'];
     $tot_dev2=$totales['sum_dev2'];
     $prestamos=$totales['sum_prestam'];
+    $alim=$totales['sum_alim'];
     $a_vac=$dev+$septimo+$feriados;
     $vacs=$a_vac*0.083333;
     $tot_acum=$vacs+$vacs+$tot_dev2;
-    $inss_lab=(($tot_acum-$vacs)*4.25)/100;
+    $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
-    $inss_pat=(($tot_acum-$vacs)*12.5)/100;
+    $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
     $totales['sum_acum']=round($tot_acum,2);
     $totales['sum_aguin']=round($vacs,2);
     $totales['sum_vacs']=round($vacs,2);
@@ -427,6 +429,7 @@ class PlanillasController extends Controller
           ->get();
                                     //->where('id_finca',$id_finca)
            $dias= $trabs->count();
+
            $salario_tot=0;
            $alim_tot=0;
            $vac_tot=0;
@@ -451,20 +454,30 @@ class PlanillasController extends Controller
            $nombres=$trabajador->nombre;
            $apellido=$trabajador->apellidos;
            $nombre="$nombres   $apellido";
+
+           foreach ($trabs as $trab) {
+             $feriados+=$trab->feriados;
+           }
+
+           if($feriados>=$valor_dia*2){
+             $dias_sept=$dias;
+             $dias=$dias-1;
+           }
+           elseif($feriados==$valor_dia) {
+             $dias_sept=$dias+1;
+           }
+           else {
+             $dias_sept=$dias;
+           }
            /********************Saber si tiene septimos****************/
            /********************Contar los dias trabajados*****************/
           $cant_septimos=0;
-           if($dias>=6){ //merece por lo menos 1 septimo
+           if($dias_sept>=6){ //merece por lo menos 1 septimo
              $cant_septimos=1;
-             if($dias>=12){//merece 2 septimos
+             if($dias_sept>=12){//merece 2 septimos
                $cant_septimos=2;
              }
            }
-           foreach ($trabs as $trab) {
-             $feriados+=$trab->feriados;
-
-           }
-
 
            $tot_sept=$cant_septimos*$valor_dia;
 
@@ -524,7 +537,7 @@ class PlanillasController extends Controller
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
                                                                                               /*******************/
-                $total_inss=($total_acum-$tot_a_vacs);
+                $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
                 $inss=($total_inss*$inss_camp)/100;
                  $test1='deb: '.$total_dev2.'..extra: '.$extra_tot .'..vacs:'.$tot_a_vacs;
                  $test2=$inss_camp;
