@@ -4,17 +4,16 @@
 @extends('home')
 @section('content')
 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
-    <h1>Modificar Registro de Preplanilla   </h1>
+    <h1>Modificar Registro de Preplanilla - {{$trab->nombre}} {{$trab->apellidos}}  </h1>
     <form id="clean"></form>
     <form id="prepResetForm" class="col-lg-12 col-md-12 col-sm-12">
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="finca">Finca:</label>
-        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()">
-          <optgroup label="Fincas">
-            <option data-ng-repeat="finca in lasfincas" value="<% finca.id %>"><% finca.nombre %></option>
-          </optgroup>
+        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca">
+            <option Selected value="{{$data->id_finca}}">{{$finc->nombre}}</option>
         </select>
       </div>
       <div class="form-group col-md-2 col-sm-2 col-lg-2">
@@ -38,10 +37,7 @@
           </optgroup>
         </select>
       </div>
-      <!-- <div class="form-group col-sm-2 col-md-2 col-lg-2">
-        <label for="">Lote: </label>
-        <input form="clean" type="text" class="form-control clean" data-ng-model="prepSendData.id_lote">
-      </div> -->
+
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="">fecha: </label>
         <input type="date" class="form-control" data-ng-model="prepSendData.fecha">
@@ -72,10 +68,11 @@
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Trabajador: </label>
+
         <select form="clean" name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="prepSendData.id_trabajador">
           <optgroup label="trabajadores">
-            <option selected></option>
-            <option data-ng-repeat="trabajador in trabCampo | orderBy: 'nombre'" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
+            <!-- <option selected></option> -->
+            <option selected value={{$trab['id']}}>{{$trab->nombre}} {{$trab->apellidos}}</option>
           </optgroup>
         </select>
       </div>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Preplanilla;
 use App\Trabajador;
 use App\Labor;
+use App\Finca;
 use DB;
 use App\Variable;
 
@@ -58,11 +59,7 @@ class PreplanillasController extends Controller
 
 
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
 
     public function create()
     {
@@ -90,12 +87,6 @@ class PreplanillasController extends Controller
         return $prep;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
 
     public function store(Request $request){
       $peticion = $request->all();
@@ -272,12 +263,6 @@ class PreplanillasController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $prep = Preplanilla::find($id);
@@ -292,9 +277,27 @@ class PreplanillasController extends Controller
      */
     public function edit($id)
     {
-      $preplanilla = Preplanilla::find($id);
-      return view('edit_prep')->with('data',$preplanilla);
-      return $preplanilla;
+      $trabajadores=Trabajador::all();
+      $reps=array();
+      $no_reps=array();
+      //si esta repetido no incluirlo
+      $trabajadores2=$trabajadores;
+
+      $final = array();
+      foreach ($trabajadores as $array) {
+          if(!in_array($array, $final)){
+              $final[] = $array;
+          }
+          else{
+            $reps[] = $array;
+          }
+      }
+      return $reps;
+      $prep = Preplanilla::find($id);
+      $trab= Trabajador::find($prep->id_trabajador);
+      $finc= Finca::find($prep->id_finca);
+      return view('edit_prep', ['data' => $prep, 'trab'=>$trab, 'finc'=>$finc]);
+
     }
 
     /**
