@@ -150,7 +150,7 @@ class PreplanillasController extends Controller
             $prep->save();
             return 'Agregada con exito Feriado no trab';
           }
-        
+
           elseif($feriado==1) { //si es feriado trabajado
             $prep->total_actividad=$dia;//aqui
             $ext=0;
@@ -293,6 +293,7 @@ class PreplanillasController extends Controller
     public function edit($id)
     {
       $preplanilla = Preplanilla::find($id);
+      return view('edit_prep')->with('data'=>$preplanilla);
       return $preplanilla;
     }
 
