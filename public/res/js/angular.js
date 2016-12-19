@@ -354,7 +354,7 @@
 			console.log(idAct, indice, Pindice, fincId);
 			ar.delete({id:idAct}, function(res){
 				console.log(res);
-				s.nuevas_Fincas[fincId-1].actividades.splice(idAct, 1);
+				s.nuevas_Fincas[Pindice].actividades.splice(indice, 1);
 			}, function(err){
 				console.log(err);
 			});
