@@ -70,7 +70,7 @@ class PreplanillasController extends Controller
         foreach ($variables as $variable) {
           $dia=$variable->sal_diario;
           $alim=$variable->alimentacion;
-          $vacaciones= ($variable->vacaciones)/100;
+          $vacaciones= 0.083333;
 
           $cuje_grand= $variable->cuje_grand;
           $cuje_peq= $variable->cuje_peq;
@@ -134,13 +134,14 @@ class PreplanillasController extends Controller
 
         //$prep= new Preplanilla($arreglo);
         $subsidio=$arreglo['subsidio'];
-
         $prep->salario_dev =$dia;
         $prep->alimentacion =$alim;
         $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones;
         $prep->prestamo =$arreglo['prestamos'];
-
+        $prep->inss_campo=$inss_lab;
+        $prep->inss_admin=$inss_admin;
+        $prep->inss_patron=$inss_patron_catorce;
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
           if ($feriado==0) { //feriado no trabajado
@@ -149,7 +150,8 @@ class PreplanillasController extends Controller
             $prep->save();
             return 'Agregada con exito Feriado no trab';
           }
-          else { //si es feriado trabajado
+
+          elseif($feriado==1) { //si es feriado trabajado
             $prep->total_actividad=$dia;//aqui
             $ext=0;
             $otros=$arreglo['otros'];
@@ -162,12 +164,10 @@ class PreplanillasController extends Controller
                    $total_act=round($cant_cujes * $cuje_peq,2);
                    $total_act=$dia;
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
-
                  }
                  else {//cuje grande
                    $total_act=round($cant_cujes * $cuje_grand,2);
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
-
                  }
                  $total_act=$dia;
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
@@ -186,7 +186,6 @@ class PreplanillasController extends Controller
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
                  $prep->total_extras=$total_act_ext;
-
                }
             }
             else{ //Si es por Horas
@@ -202,11 +201,12 @@ class PreplanillasController extends Controller
             $prep->salario_acum= $sal;
             $subsidio=0;
 
+            $tot_feriado=round($dia*2,2);
+            $prep->feriados=$tot_feriado;
             $prep->save();
             return "Agregada! 333";
           }
         }
-
         if ($subsidio===true) {//si esta de subsidio
           $subs=$dia+$alim+$vacaciones+$vacaciones;
           $prep->subsidios=$subs;
@@ -293,6 +293,7 @@ class PreplanillasController extends Controller
     public function edit($id)
     {
       $preplanilla = Preplanilla::find($id);
+      return view('edit_prep')->with('data'=>$preplanilla);
       return $preplanilla;
     }
 
