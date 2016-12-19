@@ -588,7 +588,7 @@
 								$("input:radio").removeAttr("checked");
 								$('#save-preplanilla').removeAttr("disabled");
 								//s.prepSendData.subsidio = false;
-							},3000);
+							},2500);
 						},function(err){
 							console.log(err.status);
 							$('#prepSpinner').css("display", "none");
