@@ -16,6 +16,9 @@
       <div class="form-group col-md-2">
         <br>
         <input type="button" class="btn btn-default btn-primary" data-ng-click="getPlanilla()" value="Generar">
+        <i id="14nalpanepin" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
+        <span id="14nalexitopin" style="color:green; display:none;"><i class="fa fa-check-circle fa-lg"></i></span>
+        <span id="14nalerrorpin" style="color:Red; display:none;"><i class="fa fa-times-circle fa-lg"></i></span>
       </div>
       <div class="form-group col-md-2">
         <br>
@@ -133,6 +136,7 @@
           <td><% totales.sum_tot_recib %></td>
           <td><% totales.sum_inss_pat %></td>
           <td></td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -177,11 +181,13 @@
                 <td> <% rTrab14.otros %> </td>
                 <td> <% rTrab14.prestamo %> </td>
                 <!-- <td><span class="blue-anchor" data-ng-click="updCatorce(rTrab14.id)">update</span></td> -->
-                <td><a href="" data-ui-sref="/preplanilla.editar({id: <% rTrab14.id %>})">update</a></td>
+                <td> <a href="/preplanilla/<% rTrab14.id %>/edit">Actualizar</a></td>
+                <!-- <td><a href="" data-ui-sref="/preplanilla.editar({id: <% rTrab14.id %>})">update</a></td> -->
                 <td><span class="blue-anchor" data-ng-click="delCatorce(rTrab14.id, $index, rTrab14.fecha)">eliminar</span></td>
               </tr>
             </tbody>
           </table>
+          @yield('content')
         </div>
         <div class="modal-footer">
           <i id="" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>

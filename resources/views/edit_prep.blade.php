@@ -1,35 +1,25 @@
 <!--************************************************************************************
                               Vista: Registro de Preplanilla Diaria
 ****************************************************************************************-->
+@extends('home')
+@section('content')
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
-    <h1>Registro de Preplanilla</h1>
+    <h1>Modificar Registro de Preplanilla   </h1>
     <form id="clean"></form>
     <form id="prepResetForm" class="col-lg-12 col-md-12 col-sm-12">
-      <div class="form-group col-sm-2 col-md-2 col-lg-2">
-        <label for="finca">Finca:</label>
-        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
+        <label for="finca"><% soprano %></label>
+        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca" data-ng-change="getActividades()" data-ng-init="soprano = prepReg.aguinaldo ">
           <optgroup label="Fincas">
             <option data-ng-repeat="finca in lasfincas" value="<% finca.id %>"><% finca.nombre %></option>
           </optgroup>
         </select>
       </div>
-      <div class="form-group col-md-2 col-sm-2 col-lg-2">
-        <label for="centroCosto">Centro de Costos: </label>
-        <select name="centroCosto" class="form-control" data-ng-model="prepSendData.centro_costo">
-          <!-- <optgroup label="actividades">
-            <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
-          </optgroup> -->
-          <option value="0">Tabaco Sol</option>
-          <option value="1">Tabaco Tapado</option>
-          <option value="2">Semillero</option>
-          <option value="3">Ensarte</option>
-          <option value="4">Safadura</option>
-        </select>
-      </div>
-      <div class="form-group col-sm-2 col-md-2 col-lg-2">
+      <div class="form-group col-sm-3 col-md-3 col-lg-3">
         <label for="lotes">Lote:</label>
-        <select name="lotes" id="lotes" class="form-control" data-ng-model="prepSendData.id_lote">
+        <select form="clean" name="lotes" id="lotes" class="form-control" data-ng-model="prepSendData.id_lote">
           <optgroup label="Lotes">
             <option data-ng-repeat="lotes in loslotes" value="<% lotes.id %>"><% lotes.lote %></option>
           </optgroup>
@@ -47,7 +37,7 @@
         <label for="listero">Listero:</label>
         <select name="listero" id="lsiteroSelect" class="form-control" data-ng-model="prepSendData.id_listero">
           <optgroup label="trabajadores">
-            <option data-ng-repeat="trabajador in trabListero" value="<% trabajador.id %>"><% trabajador.nombre %> <% trabajador.apellidos %></option>
+            <option data-ng-repeat="trabajador in trabListero" value="<% trabajador.id %>"><% trabajador.nombre %></option>
           </optgroup>
         </select>
       </div>
@@ -55,7 +45,7 @@
         <label for="responsable">Resp. de finca:</label>
         <select name="responsable" id="respFSelect" class="form-control" data-ng-model="prepSendData.id_respFinca">
           <optgroup label="trabajadores">
-            <option data-ng-repeat="trabajador in trabRespFinc" value="<% trabajador.id %>"><% trabajador.nombre %> <% trabajador.apellidos %></option>
+            <option data-ng-repeat="trabajador in trabRespFinc" value="<% trabajador.id %>"><% trabajador.nombre %></option>
           </optgroup>
         </select>
       </div>
@@ -72,13 +62,13 @@
         <select form="clean" name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="prepSendData.id_trabajador">
           <optgroup label="trabajadores">
             <option selected></option>
-            <option data-ng-repeat="trabajador in trabCampo | orderBy: 'nombre'" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
+            <option data-ng-repeat="trabajador in trabCampo" value="<% trabajador.id %>"><% trabajador.nombre+" "+trabajador.apellidos %></option>
           </optgroup>
         </select>
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="actividad">Actividad:</label>
-        <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad" data-ng-change="getLabores()">
+        <select form="clean" name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad" data-ng-change="getLabores()">
           <optgroup label="Actividades">
             <option selected></option>
             <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
@@ -87,7 +77,7 @@
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="labor" >Labor:</label>
-        <select name="labor" id="laborSelect" class="form-control" data-ng-model="prepSendData.id_labor" data-ng-change="selectLab()">
+        <select form="clean" name="labor" id="laborSelect" class="form-control" data-ng-model="prepSendData.id_labor" data-ng-change="selectLab()">
           <optgroup label="Labores" data-ng-controller="preplanilla">
             <option selected></option>
             <option data-ng-repeat="labor in laslabores" value="<% labor.id %>"><% labor.nombre %></option>
@@ -98,15 +88,15 @@
         <label for="tipoLabor">Tipo Prod</label>
         <input type="checkbox" class="form-control" data-ng-model="labValue">
       </div>-->
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">horas trabajadas: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_trab">
+        <input form="clean" type="text" class="form-control" value="{{$data->otros}}">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4" >
         <label for="">horas extra: </label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_ext">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 2">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="control-label">Tamaño de cuje: </label>
         <select form="clean" class="form-control" data-ng-model="prepSendData.tamano_cuje">
           <option value="">Seleccionar</option>
@@ -114,15 +104,15 @@
           <option value="1">Grande</option>
         </select>
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 2">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="label-control">Cant. Cujes:</label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.cant_cujes">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 2">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Cujes Extras: </label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.cuje_ext">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 1">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="control-label">Tamaño de Safadura: </label>
         <select form="clean" class="form-control" data-ng-model="prepSendData.tamano_safa">
           <option value="">Seleccionar</option>
@@ -130,25 +120,21 @@
           <option value="1">Grande</option>
         </select>
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 1">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="label-control">Cant. Safa:</label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.cant_safa">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 1">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Safadura Extras: </label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.safa_ext">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Otros: </label>
-        <input form="clean" type="text" class="form-control clean" data-ng-model="prepSendData.otros" value=0>
+        <input form="clean" type="text" class="form-control clean" data-ng-model="prepSendData.otros">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Préstamos: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.prestamos" value=0>
-      </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4">
-        <label for="">Séptimo: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.septimo" value=0>
+        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.prestamos">
       </div>
       <div class="form-group col-sm-1 col-md-1 col-lg-1">
         <label class="control-label">Subsidio: </label>
@@ -165,3 +151,4 @@
     </form>
   </div>
 </div>
+@endsection
