@@ -350,6 +350,16 @@
 				},3000)
 			});
 		}
+		s.delAct = function(idAct, indice, Pindice, fincId){
+			console.log(idAct, indice, Pindice, fincId);
+			ar.delete({id:idAct}, function(res){
+				console.log(res);
+				s.nuevas_Fincas[fincId-1].actividades.splice(idAct, 1);
+			}, function(err){
+				console.log(err);
+			});
+		}
+
 		s.delLab = function(fincId, actId, id, labId) {
 			console.log(fincId, actId, id, labId);
 			lr.delete({id:labId}, function(res){
