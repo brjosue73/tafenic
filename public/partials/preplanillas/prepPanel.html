@@ -47,7 +47,7 @@
         <label for="listero">Listero:</label>
         <select name="listero" id="lsiteroSelect" class="form-control" data-ng-model="prepSendData.id_listero">
           <optgroup label="trabajadores">
-            <option data-ng-repeat="trabajador in trabListero" value="<% trabajador.id %>"><% trabajador.nombre %></option>
+            <option data-ng-repeat="trabajador in trabListero" value="<% trabajador.id %>"><% trabajador.nombre %> <% trabajador.apellidos %></option>
           </optgroup>
         </select>
       </div>
@@ -55,7 +55,7 @@
         <label for="responsable">Resp. de finca:</label>
         <select name="responsable" id="respFSelect" class="form-control" data-ng-model="prepSendData.id_respFinca">
           <optgroup label="trabajadores">
-            <option data-ng-repeat="trabajador in trabRespFinc" value="<% trabajador.id %>"><% trabajador.nombre %></option>
+            <option data-ng-repeat="trabajador in trabRespFinc" value="<% trabajador.id %>"><% trabajador.nombre %> <% trabajador.apellidos %></option>
           </optgroup>
         </select>
       </div>
@@ -78,7 +78,7 @@
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="actividad">Actividad:</label>
-        <select form="clean" name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad" data-ng-change="getLabores()">
+        <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad" data-ng-change="getLabores()">
           <optgroup label="Actividades">
             <option selected></option>
             <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
@@ -87,7 +87,7 @@
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="labor" >Labor:</label>
-        <select form="clean" name="labor" id="laborSelect" class="form-control" data-ng-model="prepSendData.id_labor" data-ng-change="selectLab()">
+        <select name="labor" id="laborSelect" class="form-control" data-ng-model="prepSendData.id_labor" data-ng-change="selectLab()">
           <optgroup label="Labores" data-ng-controller="preplanilla">
             <option selected></option>
             <option data-ng-repeat="labor in laslabores" value="<% labor.id %>"><% labor.nombre %></option>
@@ -104,7 +104,7 @@
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
         <label for="">horas extra: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_ext" value=0  >
+        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_ext">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 2">
         <label for="" class="control-label">Tamaño de cuje: </label>

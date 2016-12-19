@@ -45,7 +45,11 @@
       </ul>
 
       <ul class="list-group col-sm-3 col-md-3" data-ng-repeat="listas in nfincas.actividades track by $index">
-        <li class="list-group-item active"> <% listas.nombre_actividad %> </li>
+        <li class="list-group-item active"> <% listas.nombre_actividad %>
+          <span class="badge badge-danger" data-ng-click="delAct(listas.id_actividad, $index, $parent.$index, nfincas.id_finca)">
+            <i class="glyphicon glyphicon-minus"></i>
+          </span>
+        </li>
         <li class="list-group-item" data-ng-repeat="lavar in listas.labores track by $index">
           <% lavar.nombre %> - <% lavar.tipo_labor %>
           <span class="badge badge-danger" data-ng-click="delLab(nfincas.id_finca,$parent.$index ,$index, lavar.id)"> <i class="glyphicon glyphicon-minus"></i> </span>

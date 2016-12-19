@@ -350,6 +350,16 @@
 				},3000)
 			});
 		}
+		s.delAct = function(idAct, indice, Pindice, fincId){
+			console.log(idAct, indice, Pindice, fincId);
+			ar.delete({id:idAct}, function(res){
+				console.log(res);
+				s.nuevas_Fincas[fincId-1].actividades.splice(idAct, 1);
+			}, function(err){
+				console.log(err);
+			});
+		}
+
 		s.delLab = function(fincId, actId, id, labId) {
 			console.log(fincId, actId, id, labId);
 			lr.delete({id:labId}, function(res){
@@ -487,6 +497,7 @@
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource','loteResource', function(s,pr,h,fr,lr){
 		s.prepSendData = {
 			otros:0,
+			hora_trab: 8,
 			hora_ext:0,
 			prestamos:0,
 			labName: "",
@@ -573,6 +584,8 @@
 								s.prepSendData.safa_ext = 0;
 								s.prepSendData.cuje_ext = 0;
 								$('#chkSub').prop('checked',false);
+								//s.prepSendData.feriado = "";
+								$("input:radio").removeAttr("checked");
 								$('#save-preplanilla').removeAttr("disabled");
 								//s.prepSendData.subsidio = false;
 							},3000);
@@ -583,7 +596,11 @@
 							setTimeout(function(){
 								$('#errorprep').css("display","none");
 								$('#save-preplanilla').removeAttr("disabled");
+								$("input:radio").removeAttr("checked");
+								s.prepSendData.feriado = "";
 							},3000);
+
+
 			});
 		}
 
@@ -619,6 +636,7 @@
 		s.reporfinca = {};
 
 		s.getPrepxfinc = function(){
+			$('#ccreportpin').css("display", "inline-block");
 			h.post('planilla_finca',s.reporfinca)
 			.success(function(data){
 				s.reporfincTot = [];
@@ -630,9 +648,18 @@
 				/*s.reporfincTot = data;
 				s.totales = data[data.length-1];
 				console.log(data);*/
+				$('#ccreportpin').css("display", "none");
+				$('#ccexitopin').css("display","inline");
+				setTimeout(function(){
+					$('#ccexitopin').css("display","none");
+				},3500);
 			})
 			.error(function(err){
-				console.log(err);
+				$('#ccreportpin').css("display", "none");
+				$('#ccerrorpin').css("display","inline");
+				setTimeout(function(){
+					$('#ccerrorpin').css("display","none");
+				},3500);
 			});
 		}
 		s.getActividad = function(){
@@ -681,6 +708,7 @@
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
 		s.getPlanilla = function() {
+			$('#14nalpanepin').css("display", "inline-block");
 			//console.log(s.plillaSendData);
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
@@ -697,9 +725,19 @@
 					data[i].cantLabs = cantLabs;
 
 					s.reporfincTot.push(data[i]);
-
 				}
 			  s.totales = data[data.length - 1];
+				$('#14nalpanepin').css("display", "none");
+				$('#14nalexitopin').css("display","inline");
+				setTimeout(function(){
+					$('#14nalexitopin').css("display","none");
+				},3500);
+			}).error(function(err){
+				$('#14nalpanepin').css("display", "none");
+				$('#14nalerrorpin').css("display","inline");
+				setTimeout(function(){
+					$('#14nalerrorpin').css("display","none");
+				},3500);
 			});
 		}
 
