@@ -293,7 +293,7 @@ class PreplanillasController extends Controller
     public function edit($id)
     {
       $preplanilla = Preplanilla::find($id);
-      return view('edit_prep')->with('data'=>$preplanilla);
+      return view('edit_prep')->with('data',$preplanilla);
       return $preplanilla;
     }
 

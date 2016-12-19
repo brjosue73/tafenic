@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>TAFENICSA</title>
-    <link rel="stylesheet" href="res/dependencies/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="res/css/styles.css">
-    <link rel="stylesheet" href="res/dependencies/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/res/dependencies/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/res/css/styles.css">
+    <link rel="stylesheet" href="/res/dependencies/font-awesome/css/font-awesome.min.css">
 </head>
 <body data-ng-app="moduleName" class="container-fluid">
 <!--************************************************************************************
@@ -58,10 +58,11 @@
 ****************************************************************************************-->
 
 <!--******************************VIEWS CONTAINER***************************************-->
-  <main data-ui-view class="row gris"></main>
+  <main data-ui-view class="row gris">@yield('content')
+</main>
 <!--************************************************************************************-->
 
-<!--************************************************************************************
+        <!--************************************************************************************
                             VALORES MODAL START
 ****************************************************************************************-->
   <div class="modal fade" id="valores" data-ng-controller="valoresController">
@@ -141,15 +142,15 @@
                                 VALORES MODAL END
 ****************************************************************************************-->
 
-  <script src="res/dependencies/jquery/dist/jquery.min.js"></script>
-  <script src="res/dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
-  <script src="res/dependencies/angular/angular.min.js"></script>
-  <script src="res/dependencies/angular-route/angular-route.min.js"></script>
-  <script src="res/dependencies/angular-resource/angular-resource.min.js"></script>
-  <script src="res/dependencies/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="res/dependencies/lodash/lodash.min.js"></script>
-  <script src="res/js/angular.js"></script>
-  <script src="res/js/scripts.min.js"></script>
+  <script src="/res/dependencies/jquery/dist/jquery.min.js"></script>
+  <script src="/res/dependencies/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="/res/dependencies/angular/angular.min.js"></script>
+  <script src="/res/dependencies/angular-route/angular-route.min.js"></script>
+  <script src="/res/dependencies/angular-resource/angular-resource.min.js"></script>
+  <script src="/res/dependencies/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="/res/dependencies/lodash/lodash.min.js"></script>
+  <script src="/res/js/angular.js"></script>
+  <script src="/res/js/scripts.min.js"></script>
   <script>
     $('[data-toggle="tooltip"]').tooltip();
   </script>
