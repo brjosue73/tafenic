@@ -6,7 +6,7 @@
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 full_h view_body" data-ui-view>
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
-    <h1>Registro de Preplanilla</h1>
+    <h1>Modificar Registro de Preplanilla   </h1>
     <form id="clean"></form>
     <form id="prepResetForm" class="col-lg-12 col-md-12 col-sm-12">
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
@@ -101,15 +101,15 @@
         <label for="tipoLabor">Tipo Prod</label>
         <input type="checkbox" class="form-control" data-ng-model="labValue">
       </div>-->
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">horas trabajadas: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_trab">
+        <input form="clean" type="text" class="form-control" value="{{$data->otros}}">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4" >
         <label for="">horas extra: </label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_ext">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 2">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="control-label">Tamaño de cuje: </label>
         <select form="clean" class="form-control" data-ng-model="prepSendData.tamano_cuje">
           <option value="">Seleccionar</option>
@@ -117,15 +117,15 @@
           <option value="1">Grande</option>
         </select>
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 2">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="label-control">Cant. Cujes:</label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.cant_cujes">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 2">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Cujes Extras: </label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.cuje_ext">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 1">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="control-label">Tamaño de Safadura: </label>
         <select form="clean" class="form-control" data-ng-model="prepSendData.tamano_safa">
           <option value="">Seleccionar</option>
@@ -133,21 +133,21 @@
           <option value="1">Grande</option>
         </select>
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 1">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="label-control">Cant. Safa:</label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.cant_safa">
       </div>
-      <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 1">
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Safadura Extras: </label>
         <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.safa_ext">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Otros: </label>
-        <input form="clean" type="text" class="form-control clean" data-ng-model="prepSendData.otros" value=0>
+        <input form="clean" type="text" class="form-control clean" data-ng-model="prepSendData.otros">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Préstamos: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.prestamos" value=0>
+        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.prestamos">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Séptimo: </label>
