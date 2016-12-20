@@ -135,14 +135,14 @@ class PreplanillasController extends Controller
         $prep->inss_patron=$inss_patron_catorce;
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
-          if ($feriado==0) { //feriado no trabajado
+          if ($feriado==1) { //feriado no trabajado
             $tot_feriado=round($dia,2);
             $prep->feriados=$tot_feriado;
             $prep->save();
             return 'Agregada con exito Feriado no trab';
           }
 
-          elseif($feriado==1) { //si es feriado trabajado
+          elseif($feriado==2) { //si es feriado trabajado
             $prep->total_actividad=$dia;//aqui
             $ext=0;
             $otros=$arreglo['otros'];

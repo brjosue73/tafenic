@@ -497,6 +497,7 @@
 	app.controller('preplanilla',['$scope','prepResource','$http','fincaResource','loteResource', function(s,pr,h,fr,lr){
 		s.prepSendData = {
 			otros:0,
+			feriado:0,
 			hora_trab: 8,
 			hora_ext:0,
 			prestamos:0,
@@ -586,6 +587,7 @@
 								$('#chkSub').prop('checked',false);
 								//s.prepSendData.feriado = "";
 								$("input:radio").removeAttr("checked");
+								s.prepSendData.feriado = 0
 								$('#save-preplanilla').removeAttr("disabled");
 								//s.prepSendData.subsidio = false;
 							},2500);
@@ -597,7 +599,7 @@
 								$('#errorprep').css("display","none");
 								$('#save-preplanilla').removeAttr("disabled");
 								$("input:radio").removeAttr("checked");
-								s.prepSendData.feriado = "";
+								s.prepSendData.feriado = 0;
 							},3000);
 
 
