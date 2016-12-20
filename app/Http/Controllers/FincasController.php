@@ -184,7 +184,7 @@ class FincasController extends Controller
              $nombre="$nombres $apellido";
 
 
-             if($feriados>=$valor_dia*2){
+             if($feriados>=$valor_dia){
                $dias=$dias-1;
              }
 
