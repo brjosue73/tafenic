@@ -61,8 +61,8 @@
       </div>
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="feriado">Feriado: </label><br>
-        <label for="">Trabajado  </label><input type="radio" name="feriado" value="1" data-ng-model="prepSendData.feriado">
-        <label for="">No trab.  </label><input type="radio" name="feriado" value="0" data-ng-model="prepSendData.feriado">
+        <label for="">Trabajado  </label><input type="radio" name="feriado" value="2" data-ng-model="prepSendData.feriado">
+        <label for="">No trab.  </label><input type="radio" name="feriado" value="1" data-ng-model="prepSendData.feriado">
       </div>
 
       <hr class="col-sm-11 col-md-11 col-lg-11" style="background-color: black">
@@ -100,7 +100,7 @@
       </div>-->
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
         <label for="">horas trabajadas: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_trab">
+        <input type="text" class="form-control" data-ng-model="prepSendData.hora_trab">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4" data-ng-show="labValue == 0">
         <label for="">horas extra: </label>
