@@ -673,6 +673,50 @@
 				console.log(err);
 			});
 		}
+
+				s.revision = function(id, index, fechaini, fechafin) {
+					s.reporTrab = {
+						id_trab: id,
+						fecha_ini: fechaini,
+						fecha_fin: fechafin
+					}
+					s.nombre14 = "";
+					//console.log(id, index, fechaini, fechafin);
+					h.post('prep_trab',s.reporTrab)
+					.success(function(data){
+						s.trab14data = data;
+						s.trab14 = [];
+						for (var i = 0; i < s.trab14data.length - 1; i++) {
+							s.trab14.push(s.trab14data[i]);
+						}
+						s.nombre14 = data[data.length-1].nombre;
+					})
+					.error(function(err){
+						console.log(err);
+					});
+				}
+				s.delCatorce = function (id, index, fecha){
+					var decision = prompt("¿esta seguro que desea eliminar este registro?", fecha);
+					//console.log(decision);
+					if (decision || decision == "") {
+						h.delete('preplanilla/'+id)
+						.success(function(data){
+							console.log(data);
+							s.getPlanilla();
+						})
+						.error(function(err){
+							console.log(err);
+						})
+					} else {
+						console.log("cancelado");
+					}
+				}
+
+				s.updCatorce = function(idcatreg) {
+					h.get('/preplanilla/'+idcatreg+'/edit');
+				}
+
+
 	}]);
 
 
