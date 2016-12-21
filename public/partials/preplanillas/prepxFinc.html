@@ -32,13 +32,13 @@
     <label for="fecha_fin">Fecha fin</label>
     <input name="fecha_fin" type="date" class="form-control" data-ng-model="reporfinca.fecha_fin">
   </div>
-  <div class="form-group">
+  <div class="form-group col-md-2 col-sm-2 col-lg-2">
     <input type="button" value="Generar" class="btn btn-default btn-primary" data-ng-click="getPrepxfinc()">
     <i id="ccreportpin" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
     <span id="ccexitopin" style="color:green; display:none;"><i class="fa fa-check-circle fa-lg"></i></span>
     <span id="ccerrorpin" style="color:Red; display:none;"><i class="fa fa-times-circle fa-lg"></i></span>
   </div>
-  <div class="form-group">
+  <div class="form-group col-md-1 col-sm-1 col-lg-1">
     <input type="submit" value="imprimir" class="btn btn-default btn-primary">
   </div>
 </form>
@@ -69,7 +69,7 @@
         <th>Préstamos</th>
         <th>Tot. a Recibir</th>
         <th>INSS patronal</th>
-        <!-- <th>Acción</th> -->
+        <th>Acción</th>
 
       </tr>
     </thead>
@@ -98,6 +98,7 @@
         <td><% reporfincTota.prestamos %></td>
         <td> <% reporfincTota.salario_ %> </td>
         <td><% reporfincTota.inss_patronal %></td>
+        <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="revision(reporfincTota.id_trab, $index, reporfincTota.fecha_ini, reporfincTota.fecha_fin)">Revisar</a></td>
         <!-- <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="revision(reporfincTota.id_trab, $index, reporfincTota.fecha_ini, reporfincTota.fecha_fin)">Revisar</a></td> -->
         <!-- <td> <% reporfincTota.aguinaldo %> </td>
         <td> <% reporfincTota.vacaciones %> </td> -->
@@ -130,3 +131,63 @@
   </table>
 </div>
 </div>
+
+<!--************************************************************************************
+                            VALORES MODAL START
+****************************************************************************************-->
+  <div class="modal fade" id="uncatorcenal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" aria-hidden="true" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"><% nombre14 %></h4>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+              <tr class="active">
+                <th>N°</th>
+                <th>Fecha</th>
+                <th>Finca</th>
+                <th>Actividad</th>
+                <th>Labor</th>
+                <th>Horas Trab.</th>
+                <th>Horas Ext.</th>
+                <th>Otros</th>
+                <th>Prestamos</th>
+                <th class="text-center" colspan="2">Acción</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-ng-repeat="rTrab14 in trab14">
+                <td> <% $index + 1 %></td>
+                <td> <% rTrab14.fecha %> </td>
+                <td> <% rTrab14.id_finca %> </td>
+                <td> <% rTrab14.id_actividad %> </td>
+                <td> <% rTrab14.id_labor %> </td>
+                <td> <% rTrab14.hora_trab %> </td>
+                <td> <% rTrab14.hora_ext %> </td>
+                <td> <% rTrab14.otros %> </td>
+                <td> <% rTrab14.prestamo %> </td>
+                <!-- <td><span class="blue-anchor" data-ng-click="updCatorce(rTrab14.id)">update</span></td> -->
+                <td> <a href="/preplanilla/<% rTrab14.id %>/edit">Actualizar</a></td>
+                <!-- <td><a href="" data-ui-sref="/preplanilla.editar({id: <% rTrab14.id %>})">update</a></td> -->
+                <td><span class="blue-anchor" data-ng-click="delCatorce(rTrab14.id, $index, rTrab14.fecha)">eliminar</span></td>
+              </tr>
+            </tbody>
+          </table>
+          @yield('content')
+        </div>
+        <div class="modal-footer">
+          <i id="" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
+          <span id="" style="color:green; display:none;">Cambio Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
+          <span id="" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
+          <!-- <button id="" class="btn btn-primary" data-ng-click="" >aceptar</button> -->
+          <button class="btn btn-primary" data-dismiss="modal">cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--************************************************************************************
+                                VALORES MODAL END
+****************************************************************************************-->
