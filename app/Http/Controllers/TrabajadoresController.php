@@ -79,6 +79,7 @@ class TrabajadoresController extends Controller
         $labor=Labor::find($trab->id_labor);
 
         $array=[
+          'id'=>$trab['id'],
           'fecha'=>$trab['fecha'],
           'hora_ext'=>$trab['hora_ext'],
           'total_extras'=>$trab['total_extras'],
