@@ -461,10 +461,11 @@ class PlanillasController extends Controller
 
            if($feriados>=$valor_dia*2){
              $dias_sept=$dias;
-             $dias=$dias-1;
+             $dias=$dias;
            }
            elseif($feriados==$valor_dia) {
-             $dias_sept=$dias+1;
+             $dias_sept=$dias;
+             $dias=$dias-1;
            }
            else {
              $dias_sept=$dias;

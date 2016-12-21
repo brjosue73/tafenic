@@ -184,7 +184,7 @@ class FincasController extends Controller
              $nombre="$nombres $apellido";
 
 
-             if($feriados>=$valor_dia*2){
+             if($feriados>=$valor_dia){
                $dias=$dias-1;
              }
 
@@ -334,9 +334,9 @@ class FincasController extends Controller
       // else {
       //   $dias_calc=$dias_sept;
       // }
-       if($dias_calc>=6){ //merece por lo menos 1 septimo
+       if($dias_sept>=6){ //merece por lo menos 1 septimo
          $cant_septimos=1;
-         if($dias_calc>=12){//merece 2 septimos
+         if($dias_sept>=12){//merece 2 septimos
            $cant_septimos=2;
          }
        }
