@@ -324,7 +324,6 @@ class PreplanillasController extends Controller
      */
     public function destroy($id)
     {
-      return $id;
         $preplanilla = Preplanilla::find($id);
         $preplanilla->delete();
         return "Registro Eliminado";
