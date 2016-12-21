@@ -8,15 +8,15 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Trabajador;
 use App\Preplanilla;
+use App\Actividad;
+use App\Finca;
+use App\Labor;
+
 use DB;
 
 class TrabajadoresController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
      public function quincenal(){
        $trabajadores = DB::table('trabajadores')
        //->orderBy('nombre', 'desc')
@@ -54,11 +54,7 @@ class TrabajadoresController extends Controller
       return response()->json($trabajadores);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         //
@@ -69,14 +65,35 @@ class TrabajadoresController extends Controller
       $peticion = $request->all();
       $arreglo = $request->all();//$peticion["data"];
       $id_trab = $arreglo['id_trab'];
-      // $id_trab=2;
-      // $fecha_ini="2016-01-01";
-      // $fecha_fin="2017-01-01";
+      $planilla=array();
+
       $fecha_ini= $arreglo['fecha_ini'];
       $fecha_fin= $arreglo['fecha_fin'];
       $trabs= Preplanilla::where('id_trabajador',$id_trab)
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();
+
+      foreach ($trabs as $trab) {
+        $finca=Finca::find($trab->id_finca);
+        $actividad=Actividad::find($trab->id_actividad);
+        $labor=Labor::find($trab->id_labor);
+
+        $array=[
+          'fecha'=>$trab['fecha'],
+          'hora_ext'=>$trab['hora_ext'],
+          'total_extras'=>$trab['total_extras'],
+          'hora_trab'=>$trab['hora_trab'],
+          'otros'=>$trab['otros'],
+          'prestamo'=>$trab['prestamo'],
+          'feriados'=>$trab['feriados'],
+
+          'finca'=>$finca->nombre,
+          'actividad'=>$actividad->nombre,
+          'labor'=>$labor->nombre,
+        ];
+        $planilla[]=$array;
+      }
+
 
       $trabajador=Trabajador::find($id_trab);
       $nombres=$trabajador->nombre;
@@ -100,7 +117,7 @@ class TrabajadoresController extends Controller
         $agui_tot= $vac_tot;
         $extras=$trab->total_extras;
         $extra_tot += $extras;
-        $array = [
+        $array2 = [
           "dias"=>$dias,
           "salario_tot"=>$salario_tot,
           "alim_tot"=>$alim_tot,
@@ -110,14 +127,10 @@ class TrabajadoresController extends Controller
           "nombre"=>$completo
         ];
       }
-      // $trabs->dias=$dias;
-      // $trabs->salario_tot=$salario_tot;
-      // $trabs->alim_tot=$alim_tot;
-      // $trabs->vac_tot=$vac_tot;
-      // $trabs->agui_tot=$agui_tot;
-      // $trabs->extra_tot=$extra_tot;
-      $trabs[] = $array;
-      return $trabs;
+      $planilla[]=$array2;
+      $trabs[] = $array2;
+      //return $trabs;
+      return $planilla;
     }
     /**
      * Store a newly created resource in storage.
