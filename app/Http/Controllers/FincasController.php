@@ -66,10 +66,11 @@ class FincasController extends Controller
         $tot_dev2=$suma['sum_dev2'];
         $prestamos=$suma['sum_prestam'];
         $alim=$suma['sum_alim'];
+        $tot_hext=$suma['sum_tot_hext'];
 
         $a_vac=$dev+$septimo+$feriados;
         $vacs=$a_vac*0.083333;
-        $tot_acum=$vacs+$vacs+$tot_dev2;
+        $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext;
         $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
         $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
