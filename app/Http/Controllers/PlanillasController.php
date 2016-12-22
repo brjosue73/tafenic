@@ -32,9 +32,10 @@ class PlanillasController extends Controller
     $tot_dev2=$totales['sum_dev2'];
     $prestamos=$totales['sum_prestam'];
     $alim=$totales['sum_alim'];
+    $tot_hext=$totales['sum_tot_hext'];
     $a_vac=$dev+$septimo+$feriados;
     $vacs=$a_vac*0.083333;
-    $tot_acum=$vacs+$vacs+$tot_dev2;
+    $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext;
     $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
     $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
