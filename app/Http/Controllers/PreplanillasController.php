@@ -323,7 +323,7 @@ class PreplanillasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {0
+    {
         $preplanilla = Preplanilla::find($id);
         $preplanilla->delete();
         return "Registro Eliminado";
