@@ -92,4 +92,10 @@ th:hover {
 #fincas_wrapper {
   width: 100%; }
 
+#table-body {
+  background: blue;
+  overflow: scroll !important;
+  height: 450px !important;
+  max-height: 450px !important; }
+
 /*# sourceMappingURL=styles.css.map */

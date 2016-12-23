@@ -682,7 +682,7 @@
 						fecha_fin: fechafin
 					}
 					s.nombre14 = "";
-					//console.log(id, index, fechaini, fechafin);
+					console.log(id, index, fechaini, fechafin);
 					h.post('prep_trab',s.reporTrab)
 					.success(function(data){
 						s.trab14data = data;
