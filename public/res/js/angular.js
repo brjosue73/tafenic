@@ -565,6 +565,10 @@
 				 s.prepSendData.subsidio = cb.val();
 				 console.log(s.prepSendData.subsidio);
 		 });*/
+
+		document.getElementById("trabajadorSelect").blur(function(){
+			document.getElementById("save-preplanilla").focus();
+		});
 		s.prepTrab = function() {
 			s.prepSendData.subsidio = $('#chkSub').prop('checked');
 			$('#save-preplanilla').attr("disabled", "disabled");
