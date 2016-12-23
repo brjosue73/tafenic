@@ -109,8 +109,7 @@
 
           <td> <% reporfincTota.finca_septimo %> </td>
           <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="revision(reporfincTota.id_trab, $index, reporfincTota.fecha_ini, reporfincTota.fecha_fin)">Revisar</a></td>
-          <!-- <td> <% reporfincTota.aguinaldo %> </td>
-          <td> <% reporfincTota.vacaciones %> </td> -->
+
 
         </tr>
         <tr>
@@ -166,7 +165,6 @@
                 <th>Horas Ext.</th>
                 <th>Otros</th>
                 <th>Prestamos</th>
-                <th>Feriados</th>
                 <th class="text-center" colspan="2">Acción</th>
               </tr>
             </thead>
@@ -181,7 +179,6 @@
                 <td> <% rTrab14.hora_ext %> </td>
                 <td> <% rTrab14.otros %> </td>
                 <td> <% rTrab14.prestamo %> </td>
-                <td> <% rTrab14.feriados %> </td>
                 <!-- <td><span class="blue-anchor" data-ng-click="updCatorce(rTrab14.id)">update</span></td> -->
                 <td> <a href="/preplanilla/<% rTrab14.id %>/edit">Actualizar</a></td>
                 <!-- <td><a href="" data-ui-sref="/preplanilla.editar({id: <% rTrab14.id %>})">update</a></td> -->
@@ -189,6 +186,7 @@
               </tr>
             </tbody>
           </table>
+          @yield('content')
         </div>
         <div class="modal-footer">
           <i id="" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
