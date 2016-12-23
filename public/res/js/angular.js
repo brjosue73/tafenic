@@ -590,7 +590,7 @@
 								s.prepSendData.feriado = 0
 								$('#save-preplanilla').removeAttr("disabled");
 								//s.prepSendData.subsidio = false;
-							},2500);
+							},1500);
 						},function(err){
 							console.log(err.status);
 							$('#prepSpinner').css("display", "none");
