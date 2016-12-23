@@ -589,6 +589,7 @@
 								$("input:radio").removeAttr("checked");
 								s.prepSendData.feriado = 0
 								$('#save-preplanilla').removeAttr("disabled");
+								document.getElementById("trabajadorSelect").focus();
 								//s.prepSendData.subsidio = false;
 							},1500);
 						},function(err){
