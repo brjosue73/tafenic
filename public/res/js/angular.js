@@ -566,7 +566,7 @@
 				 console.log(s.prepSendData.subsidio);
 		 });*/
 
-		document.getElementById("trabajadorSelect").blur(function(){
+		$("#trabajadorSelect").blur(function(){
 			document.getElementById("save-preplanilla").focus();
 		});
 		s.prepTrab = function() {
