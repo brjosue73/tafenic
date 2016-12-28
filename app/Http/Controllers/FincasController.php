@@ -252,6 +252,7 @@ class FincasController extends Controller
 
                    $f=0;
                    $c=0;
+                   $created_at=$trab['created_at'];
                }
                $array = [
                  "dias"=>round($dias,2),

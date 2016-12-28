@@ -136,6 +136,7 @@ class PreplanillasController extends Controller
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
           if ($feriado==1) { //feriado no trabajado
+            $prep->tipo_feriado=1;
             $tot_feriado=round($dia,2);
             $prep->feriados=$tot_feriado;
             $prep->save();
@@ -144,6 +145,7 @@ class PreplanillasController extends Controller
 
           elseif($feriado==2) { //si es feriado trabajado
             $prep->total_actividad=$dia;//aqui
+            $prep->tipo_feriado=2;
             $ext=0;
             $otros=$arreglo['otros'];
             $prep->otros=$otros;
