@@ -465,28 +465,28 @@ class PlanillasController extends Controller
                $feriado2+=1;
              }
            }
-           if($feriados1>0){
-             $dias_sept=$dias;
-             $dias=$dias-$feriados1;
-           }
-           elseif($feriados2>0){
-             $dias_sept=$dias;
-             $dias=$dias;
-           }
-           else {
-             $dias_sept=$dias;
-           }
-          //  if($feriados>=$valor_dia*2){
+          //  if($feriados1>0){
+          //    $dias_sept=$dias;
+          //    $dias=$dias-$feriados1;
+          //  }
+          //  elseif($feriados2>0){
           //    $dias_sept=$dias;
           //    $dias=$dias;
-          //  }
-          //  elseif($feriados==$valor_dia) {
-          //    $dias_sept=$dias;
-          //    $dias=$dias-1;
           //  }
           //  else {
           //    $dias_sept=$dias;
           //  }
+           if($feriados>=$valor_dia*2){
+             $dias_sept=$dias;
+             $dias=$dias;
+           }
+           elseif($feriados==$valor_dia) {
+             $dias_sept=$dias;
+             $dias=$dias-1;
+           }
+           else {
+             $dias_sept=$dias;
+           }
            /********************Saber si tiene septimos****************/
            /********************Contar los dias trabajados*****************/
           $cant_septimos=0;
