@@ -458,12 +458,12 @@ class PlanillasController extends Controller
 
            foreach ($trabs as $trab) {
              $feriados+=$trab->feriados;
-             if($tipo_feriado==1){//Feriado no trabajado
-               $feriado1+=1;
-             }
-             if($tipo_feriado==2){//Feriado no trabajado
-               $feriado2+=1;
-             }
+            //  if($tipo_feriado==1){//Feriado no trabajado
+            //    $feriado1+=1;
+            //  }
+            //  if($tipo_feriado==2){//Feriado no trabajado
+            //    $feriado2+=1;
+            //  }
            }
           //  if($feriados1>0){
           //    $dias_sept=$dias;
