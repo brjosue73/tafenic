@@ -641,7 +641,7 @@
 	app.controller('prepxfinc',['$scope','$http','fincaResource', function(s,h,fr){
 		s.fincs = fr.query();
 		s.reporfinca = {};
-		s.ordeReal = 'nombre;'
+		s.ordeReal = 'nombre';
 		s.getPrepxfinc = function(){
 			$('#ccreportpin').css("display", "inline-block");
 			h.post('planilla_finca',s.reporfinca)
