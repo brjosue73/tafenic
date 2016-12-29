@@ -32,9 +32,10 @@ class PlanillasController extends Controller
     $tot_dev2=$totales['sum_dev2'];
     $prestamos=$totales['sum_prestam'];
     $alim=$totales['sum_alim'];
+    $tot_hext=$totales['sum_tot_hext'];
     $a_vac=$dev+$septimo+$feriados;
     $vacs=$a_vac*0.083333;
-    $tot_acum=$vacs+$vacs+$tot_dev2;
+    $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext;
     $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
     $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
@@ -448,7 +449,7 @@ class PlanillasController extends Controller
            $cant_act_ext=0;
            $sum_tot_recib=0;
            $prestamo=0;
-
+           $feriado1=0;$feriado2=0;
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -457,8 +458,24 @@ class PlanillasController extends Controller
 
            foreach ($trabs as $trab) {
              $feriados+=$trab->feriados;
+            //  if($tipo_feriado==1){//Feriado no trabajado
+            //    $feriado1+=1;
+            //  }
+            //  if($tipo_feriado==2){//Feriado no trabajado
+            //    $feriado2+=1;
+            //  }
            }
-
+          //  if($feriados1>0){
+          //    $dias_sept=$dias;
+          //    $dias=$dias-$feriados1;
+          //  }
+          //  elseif($feriados2>0){
+          //    $dias_sept=$dias;
+          //    $dias=$dias;
+          //  }
+          //  else {
+          //    $dias_sept=$dias;
+          //  }
            if($feriados>=$valor_dia*2){
              $dias_sept=$dias;
              $dias=$dias;
@@ -605,7 +622,7 @@ class PlanillasController extends Controller
              $array = [
                'aa_var1'=>$test1,
                'aa_var2'=>$test2,
-               "id_trab"=>round($id_trab,2),
+               "id_trab"=>$id_trab,
                "dias"=>round($dias,2),
                "alim_tot"=>round($alim_tot,2),
                "vac_tot"=>round($tot_a_vacs,2),

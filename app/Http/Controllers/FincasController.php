@@ -66,10 +66,11 @@ class FincasController extends Controller
         $tot_dev2=$suma['sum_dev2'];
         $prestamos=$suma['sum_prestam'];
         $alim=$suma['sum_alim'];
+        $tot_hext=$suma['sum_tot_hext'];
 
         $a_vac=$dev+$septimo+$feriados;
         $vacs=$a_vac*0.083333;
-        $tot_acum=$vacs+$vacs+$tot_dev2;
+        $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext;
         $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
         $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
@@ -184,7 +185,7 @@ class FincasController extends Controller
              $nombre="$nombres $apellido";
 
 
-             if($feriados>=$valor_dia){
+             if($feriados==$valor_dia){
                $dias=$dias-1;
              }
 
@@ -251,16 +252,16 @@ class FincasController extends Controller
 
                    $f=0;
                    $c=0;
+                   $created_at=$trab['created_at'];
                }
                $array = [
-                 'aavacs_prueba'=>$vacs_prueba,
-                 "id_trab"=>round($id_trab,2),
-                 "dias"=>round($dias,2),
                  "dias"=>round($dias,2),
                  "alim_tot"=>round($alim_tot,2),
                  "vac_tot"=>round($tot_a_vacs,2),
                  "agui_tot"=>round($tot_a_vacs,2),
                  "nombre"=>$nombre,
+                 "created_at"=>$created_at,
+                 "id_trab"=>$id_trab,
                  "labores"=>$labores,
                  "total_deven"=>round($tot_dev,2),
                  "total_basic"=>round($tot_basic,2),
