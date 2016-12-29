@@ -260,6 +260,7 @@ class FincasController extends Controller
                  "vac_tot"=>round($tot_a_vacs,2),
                  "agui_tot"=>round($tot_a_vacs,2),
                  "nombre"=>$nombre,
+                 "created_at"=>$created_at,
                  "id_trab"=>$id_trab,
                  "labores"=>$labores,
                  "total_deven"=>round($tot_dev,2),
