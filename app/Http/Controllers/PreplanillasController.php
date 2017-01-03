@@ -12,6 +12,9 @@ use App\Labor;
 use App\Finca;
 use DB;
 use App\Variable;
+use App\Lote;
+use App\Actividad;
+
 
 class PreplanillasController extends Controller
 {
@@ -56,13 +59,10 @@ class PreplanillasController extends Controller
                     ->whereBetween('fecha',[$request->fecha_inic, $request->fecha_fin])
                     ->get();
         return response()->json($prep);
-
-
     }
 
 
-    public function create()
-    {
+    public function create()  {
         $variables=Variable::all();
         foreach ($variables as $variable) {
           $dia=$variable->sal_diario;
@@ -279,26 +279,27 @@ class PreplanillasController extends Controller
      */
     public function edit($id)
     {
-      $trabajadores=Trabajador::all();
-      $reps=array();
-      $no_reps=array();
-      //si esta repetido no incluirlo
-      $trabajadores2=$trabajadores;
-
-      $final = array();
-      foreach ($trabajadores as $array) {
-          if(!in_array($array, $final)){
-              $final[] = $array;
-          }
-          else{
-            $reps[] = $array;
-          }
-      }
-      return $reps;
       $prep = Preplanilla::find($id);
       $trab= Trabajador::find($prep->id_trabajador);
       $finc= Finca::find($prep->id_finca);
-      return view('edit_prep', ['data' => $prep, 'trab'=>$trab, 'finc'=>$finc]);
+      $centro=['Tabaco Sol','Tabaco Tapado','Semillero','Ensarte','Safadura'];
+      $lote=Lote::find($prep->id_lote);
+      $listero=Trabajador::find($prep->id_listero);
+      $resp_finc=Trabajador::find($prep->id_respFinca);
+      $actividad=Actividad::find($prep->id_actividad);
+      $labor=Labor::find($prep->id_labor);
+      //return $prep;
+      return view('edit_prep', ['data' => $prep,
+      'trab'=>$trab,
+      'finc'=>$finc,
+      'centro'=>$centro,
+      'lote'=>$lote,
+      'listero'=>$listero,
+      'resp_finc'=>$resp_finc,
+      'actividad'=>$actividad,
+      'labor'=>$labor,
+
+    ]);
 
     }
 
