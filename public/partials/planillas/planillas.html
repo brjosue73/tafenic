@@ -109,8 +109,7 @@
 
           <td> <% reporfincTota.finca_septimo %> </td>
           <td><a href=""  data-toggle="modal" data-target="#uncatorcenal" data-ng-click="revision(reporfincTota.id_trab, $index, reporfincTota.fecha_ini, reporfincTota.fecha_fin)">Revisar</a></td>
-          <!-- <td> <% reporfincTota.aguinaldo %> </td>
-          <td> <% reporfincTota.vacaciones %> </td> -->
+
 
         </tr>
         <tr>
@@ -173,9 +172,9 @@
               <tr data-ng-repeat="rTrab14 in trab14">
                 <td> <% $index + 1 %></td>
                 <td> <% rTrab14.fecha %> </td>
-                <td> <% rTrab14.id_finca %> </td>
-                <td> <% rTrab14.id_actividad %> </td>
-                <td> <% rTrab14.id_labor %> </td>
+                <td> <% rTrab14.finca %> </td>
+                <td> <% rTrab14.actividad %> </td>
+                <td> <% rTrab14.labor %> </td>
                 <td> <% rTrab14.hora_trab %> </td>
                 <td> <% rTrab14.hora_ext %> </td>
                 <td> <% rTrab14.otros %> </td>

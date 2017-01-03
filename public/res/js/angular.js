@@ -565,6 +565,10 @@
 				 s.prepSendData.subsidio = cb.val();
 				 console.log(s.prepSendData.subsidio);
 		 });*/
+
+		$("#trabajadorSelect").blur(function(){
+			document.getElementById("save-preplanilla").focus();
+		});
 		s.prepTrab = function() {
 			s.prepSendData.subsidio = $('#chkSub').prop('checked');
 			$('#save-preplanilla').attr("disabled", "disabled");
@@ -589,8 +593,9 @@
 								$("input:radio").removeAttr("checked");
 								s.prepSendData.feriado = 0
 								$('#save-preplanilla').removeAttr("disabled");
+								document.getElementById("trabajadorSelect").focus();
 								//s.prepSendData.subsidio = false;
-							},2500);
+							},1500);
 						},function(err){
 							console.log(err.status);
 							$('#prepSpinner').css("display", "none");
@@ -636,7 +641,7 @@
 	app.controller('prepxfinc',['$scope','$http','fincaResource', function(s,h,fr){
 		s.fincs = fr.query();
 		s.reporfinca = {};
-
+		s.ordeReal = 'nombre';
 		s.getPrepxfinc = function(){
 			$('#ccreportpin').css("display", "inline-block");
 			h.post('planilla_finca',s.reporfinca)
@@ -673,6 +678,50 @@
 				console.log(err);
 			});
 		}
+
+				s.revision = function(id, index, fechaini, fechafin) {
+					s.reporTrab = {
+						id_trab: id,
+						fecha_ini: fechaini,
+						fecha_fin: fechafin
+					}
+					s.nombre14 = "";
+					console.log(id, index, fechaini, fechafin);
+					h.post('prep_trab',s.reporTrab)
+					.success(function(data){
+						s.trab14data = data;
+						s.trab14 = [];
+						for (var i = 0; i < s.trab14data.length - 1; i++) {
+							s.trab14.push(s.trab14data[i]);
+						}
+						s.nombre14 = data[data.length-1].nombre;
+					})
+					.error(function(err){
+						console.log(err);
+					});
+				}
+				s.delCatorce = function (id, index, fecha){
+					var decision = prompt("¿esta seguro que desea eliminar este registro?", fecha);
+					//console.log(decision);
+					if (decision || decision == "") {
+						h.delete('preplanilla/'+id)
+						.success(function(data){
+							console.log(data);
+							s.getPlanilla();
+						})
+						.error(function(err){
+							console.log(err);
+						})
+					} else {
+						console.log("cancelado");
+					}
+				}
+
+				s.updCatorce = function(idcatreg) {
+					h.get('/preplanilla/'+idcatreg+'/edit');
+				}
+
+
 	}]);
 
 
