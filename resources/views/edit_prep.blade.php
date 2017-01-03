@@ -12,16 +12,14 @@
     <form id="prepResetForm" class="col-lg-12 col-md-12 col-sm-12">
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="finca">Finca:</label>
-        <select name="finca" id="fincaSelect" class="form-control" data-ng-model="prepSendData.id_finca">
+        <select name="finca" id="fincaSelect" class="form-control">
             <option Selected value="{{$data->id_finca}}">{{$finc->nombre}}</option>
         </select>
       </div>
       <div class="form-group col-md-2 col-sm-2 col-lg-2">
         <label for="centroCosto">Centro de Costos: </label>
-        <select name="centroCosto" class="form-control" data-ng-model="prepSendData.centro_costo">
-          <!-- <optgroup label="actividades">
-            <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
-          </optgroup> -->
+        <select name="centroCosto" class="form-control" >
+          <option value="{{$data->centro_costo}}">{{$centro[$data->centro_costo]}}</option>
           <option value="0">Tabaco Sol</option>
           <option value="1">Tabaco Tapado</option>
           <option value="2">Semillero</option>
@@ -31,37 +29,46 @@
       </div>
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="lotes">Lote:</label>
-        <select name="lotes" id="lotes" class="form-control" data-ng-model="prepSendData.id_lote">
+        <select name="lotes" id="lotes" class="form-control" >
           <optgroup label="Lotes">
-            <option data-ng-repeat="lotes in loslotes" value="<% lotes.id %>"><% lotes.lote %></option>
+            <option  value="{{$data->id_lote}}">{{$lote->lote}}</option>
           </optgroup>
         </select>
       </div>
 
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="">fecha: </label>
-        <input type="date" class="form-control" data-ng-model="prepSendData.fecha">
+        <input type="date" class="form-control" value="{{$data->fecha}}">
       </div>
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="listero">Listero:</label>
-        <select name="listero" id="lsiteroSelect" class="form-control" data-ng-model="prepSendData.id_listero">
+        <select name="listero" id="lsiteroSelect" class="form-control">
           <optgroup label="trabajadores">
-            <option data-ng-repeat="trabajador in trabListero" value="<% trabajador.id %>"><% trabajador.nombre %> <% trabajador.apellidos %></option>
+            <option value="{{$data->id_listero}}">{{$listero->nombre}} {{$listero->apellidos}}</option>
           </optgroup>
         </select>
       </div>
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="responsable">Resp. de finca:</label>
-        <select name="responsable" id="respFSelect" class="form-control" data-ng-model="prepSendData.id_respFinca">
+        <select name="responsable" id="respFSelect" class="form-control">
           <optgroup label="trabajadores">
-            <option data-ng-repeat="trabajador in trabRespFinc" value="<% trabajador.id %>"><% trabajador.nombre %> <% trabajador.apellidos %></option>
+            <option value="{{$data->id_respFinca}}">{{$resp_finc->nombre}} {{$resp_finc->apellidos}}</option>
           </optgroup>
         </select>
       </div>
       <div class="form-group col-sm-2 col-md-2 col-lg-2">
         <label for="feriado">Feriado: </label><br>
-        <label for="">Trabajado  </label><input type="radio" name="feriado" value="1" data-ng-model="prepSendData.feriado">
-        <label for="">No trab.  </label><input type="radio" name="feriado" value="0" data-ng-model="prepSendData.feriado">
+        @if ($data->tipo_feriado==0)
+        <label for="">Trabajado  </label><input type="radio" name="feriado" value="1" >
+        <label for="">No trab.  </label><input type="radio" name="feriado" value="0" >
+        @elseif ($data->tipo_feriado==1)
+        <label for="">Trabajado  </label><input type="radio" name="feriado" value="1" >
+        <label for="">No trab.  </label><input type="radio" name="feriado" value="0" Selected >
+        @elseif ($data->tipo_feriado==2)
+        <label for="">Trabajado  </label><input type="radio" name="feriado" value="1" Selected>
+        <label for="">No trab.  </label><input type="radio" name="feriado" value="0"  >
+        @endif
+
       </div>
 
       <hr class="col-sm-11 col-md-11 col-lg-11" style="background-color: black">
@@ -69,28 +76,25 @@
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Trabajador: </label>
 
-        <select form="clean" name="trabajador" id="trabajadorSelect" class="form-control" data-ng-model="prepSendData.id_trabajador">
+        <select form="clean" name="trabajador" id="trabajadorSelect" class="form-control" >
           <optgroup label="trabajadores">
-            <!-- <option selected></option> -->
             <option selected value={{$trab['id']}}>{{$trab->nombre}} {{$trab->apellidos}}</option>
           </optgroup>
         </select>
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="actividad">Actividad:</label>
-        <select name="actividad" id="actividadSelect" class="form-control" data-ng-model="prepSendData.id_actividad" data-ng-change="getLabores()">
+        <select name="actividad" id="actividadSelect" class="form-control" >
           <optgroup label="Actividades">
-            <option selected></option>
-            <option data-ng-repeat="actividad in lasactividades" value="<% actividad.id %>"><% actividad.nombre %></option>
+            <option selected value="{{$actividad->id}}" >{{$actividad->nombre}}</option>
           </optgroup>
         </select>
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="labor" >Labor:</label>
-        <select name="labor" id="laborSelect" class="form-control" data-ng-model="prepSendData.id_labor" data-ng-change="selectLab()">
+        <select name="labor" id="laborSelect" class="form-control" >
           <optgroup label="Labores" data-ng-controller="preplanilla">
-            <option selected></option>
-            <option data-ng-repeat="labor in laslabores" value="<% labor.id %>"><% labor.nombre %></option>
+            <option selected value="{{$labor->id}}" >{{$labor->nombre}}</option>
           </optgroup>
         </select>
       </div>
@@ -100,11 +104,11 @@
       </div>-->
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">horas trabajadas: </label>
-        <input form="clean" type="text" class="form-control" value="{{$data->otros}}">
+        <input form="clean" type="text" class="form-control" value={{$data->hora_trab}}>
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4" >
         <label for="">horas extra: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_ext">
+        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.hora_ext" value="{{$data->hora_ext}}">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="control-label">Tamaño de cuje: </label>
@@ -140,19 +144,23 @@
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Otros: </label>
-        <input form="clean" type="text" class="form-control clean" data-ng-model="prepSendData.otros">
+        <input form="clean" type="text" class="form-control clean" value="{{$data->otros}}">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Préstamos: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.prestamos">
+        <input form="clean" type="text" class="form-control" value="{{$data->prestamo}}">
       </div>
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Séptimo: </label>
-        <input form="clean" type="text" class="form-control" data-ng-model="prepSendData.septimo" value=0>
+        <input form="clean" type="text" class="form-control" value="{{$data->septimos}}">
       </div>
       <div class="form-group col-sm-1 col-md-1 col-lg-1">
         <label class="control-label">Subsidio: </label>
+        @if($data->subsidios==0)
         <input id="chkSub" type="checkbox" class="form-control"><!-- data-ng-model="prepSendData.subsidio"-->
+        @else
+        <input id="chkSub" type="checkbox" class="form-control" checked><!-- data-ng-model="prepSendData.subsidio"-->
+        @endif
       </div>
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">

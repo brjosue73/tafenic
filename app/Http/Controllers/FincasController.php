@@ -140,7 +140,8 @@ class FincasController extends Controller
                     ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                     ->get();
 
-             $dias= $trabs->count();
+             $dias2= $trabs->count();
+             $dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
              $dias_sept=$trab_septimo->count();
              $salario_tot=0;
              $alim_tot=0;
@@ -160,9 +161,32 @@ class FincasController extends Controller
              $cant_act_ext=0;
              $sum_tot_recib=0;
              $prestamo=0;
+             $feriado1=0;$feriado2=0;
+
              foreach ($trabs as $trab) {
                $feriados+=$trab->feriados;
+               if($trab->tipo_feriado==1){//Feriado no trabajado
+                 $feriado1+=1;
+               }
+               if($trab->tipo_feriado==2){//Feriado no trabajado
+                 $feriado2+=1;
+               }
              }
+
+             if($feriado1>0){
+               $dias_sept=$dias2;
+               $dias2=$dias2-$feriado1;
+             }
+             elseif($feriado2>0){
+               $dias_sept=$dias2;
+               $dias2=$dias2;
+             }
+             else {
+               $dias_sept=$dias2;
+             }
+
+
+
              $calculo_septimo=[
                'id_finAct'=>$peticion['id_finca'],
                'centro_act'=>$peticion['centro_costo'],
@@ -185,9 +209,6 @@ class FincasController extends Controller
              $nombre="$nombres $apellido";
 
 
-             if($feriados==$valor_dia){
-               $dias=$dias-1;
-             }
 
              $tot_sept=$calculo_septimo['tot_sept'];
              $feriados=0;
