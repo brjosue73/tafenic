@@ -279,22 +279,6 @@ class PreplanillasController extends Controller
      */
     public function edit($id)
     {
-      $trabajadores=Trabajador::all();
-      $reps=array();
-      $no_reps=array();
-      //si esta repetido no incluirlo
-      $trabajadores2=$trabajadores;
-
-      $final = array();
-      foreach ($trabajadores as $array) {
-          if(!in_array($array, $final)){
-              $final[] = $array;
-          }
-          else{
-            $reps[] = $array;
-          }
-      }
-      return $reps;
       $prep = Preplanilla::find($id);
       $trab= Trabajador::find($prep->id_trabajador);
       $finc= Finca::find($prep->id_finca);
