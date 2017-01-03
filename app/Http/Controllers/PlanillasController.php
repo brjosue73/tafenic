@@ -16,6 +16,7 @@ class PlanillasController extends Controller
   public function planilla_general2($request){
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
+     //return $data;
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
          return $a['order'] < $b['order']?1:-1;
@@ -395,6 +396,22 @@ class PlanillasController extends Controller
     ];
     return $totales;
   }
+  public function contar_dias($data){
+    $dias=0;
+    $horas=0;
+    foreach ($data as $trab) {
+      $horas+=$trab['hora_trab'];
+      if($trab['hora_trab']==8){
+        $dias+=1;
+      }
+      else {
+        $x=($trab['hora_trab']*100)/8;
+        $total=$x/100;
+        $dias+=$total;
+      }
+    }
+    return $dias;
+  }
   public function calculo_planilla($peticion){
     $finca_mayor='--';
     $cargo='tcampo';
@@ -425,12 +442,12 @@ class PlanillasController extends Controller
           $identif[]=$id_trab;
           $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
           ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-          // ->where('fecha',<=,$fecha_ini)
-          // ->where('fecha',>=,$fecha_fin)
           ->get();
                                     //->where('id_finca',$id_finca)
-           $dias= $trabs->count();
-
+           $dias2= $trabs->count();
+           $dias=$this->contar_dias($trabs);
+           //return $trabs;
+           $test1=$dias;
            $salario_tot=0;
            $alim_tot=0;
            $vac_tot=0;
@@ -477,15 +494,15 @@ class PlanillasController extends Controller
           //    $dias_sept=$dias;
           //  }
            if($feriados>=$valor_dia*2){
-             $dias_sept=$dias;
-             $dias=$dias;
+             $dias_sept=$dias2;
+             $dias2=$dias2;
            }
            elseif($feriados==$valor_dia) {
-             $dias_sept=$dias;
-             $dias=$dias-1;
+             $dias_sept=$dias2;
+             $dias2=$dias2-1;
            }
            else {
-             $dias_sept=$dias;
+             $dias_sept=$dias2;
            }
            /********************Saber si tiene septimos****************/
            /********************Contar los dias trabajados*****************/
@@ -557,7 +574,6 @@ class PlanillasController extends Controller
                                                                                               /*******************/
                 $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
                 $inss=($total_inss*$inss_camp)/100;
-                 $test1='deb: '.$total_dev2.'..extra: '.$extra_tot .'..vacs:'.$tot_a_vacs;
                  $test2=$inss_camp;
 
                  //$inss= ($tot_inss*$inss_camp)/100;
@@ -623,7 +639,7 @@ class PlanillasController extends Controller
                'aa_var1'=>$test1,
                'aa_var2'=>$test2,
                "id_trab"=>$id_trab,
-               "dias"=>round($dias,2),
+               "dias"=>$dias,
                "alim_tot"=>round($alim_tot,2),
                "vac_tot"=>round($tot_a_vacs,2),
                "agui_tot"=>round($tot_a_vacs,2),
