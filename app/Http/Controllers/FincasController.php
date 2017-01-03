@@ -141,6 +141,7 @@ class FincasController extends Controller
                     ->get();
 
              $dias= $trabs->count();
+             $dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
              $dias_sept=$trab_septimo->count();
              $salario_tot=0;
              $alim_tot=0;
