@@ -65,6 +65,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('datos_fincas',"FincasController@datos_fincas");
     Route::post('finca_pdf','FincasController@calculo_pdf');
     Route::post('planilla_fincas','FincasController@planilla_fincas');
+    Route::post('preplanillass/{id}','PreplanillasController@updates');
     // Route::get('pdf2', function(){
     //   $a[]='hola';
     //   $pdf = PDF::loadView('pdf',['user'=>$a]);
