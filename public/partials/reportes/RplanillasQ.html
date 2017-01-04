@@ -6,23 +6,27 @@
     <h1>Planilla Quincenal</h1>
     <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12" method="post" action="reporte_quincenal">
 
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label for="" class="control-label">De: </label>
         <input name="fecha_ini" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_ini">
       </div>
 
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label for="" class="control-label">Hasta: </label>
         <input name="fecha_fin" type="date" class="form-control" data-ng-model="RplillaQSendData.fecha_fin">
       </div>
 
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-3">
         <label class="form-label">Tipo:</label>
         <select name='tipo' class="form-control" data-ng-model="RplillaQSendData.tipo">
           <option value="administrativo">Administrativos</option>
           <option value="servicios tecnicos">Servicios Técnicos</option>
         </select>
       </div>
+            <div class="form-group col-sm-3 col-md-3 col-lg-3">
+              <label for="">Buscar por Nombre: </label> <!--<% busquedaCriteria %>-->
+              <input type="text" class="form-control" data-ng-model="busqueda">
+            </div>
 
       <div class="form-group col-md-2">
         <br>
@@ -82,7 +86,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr data-ng-repeat="reporteQ in reporQuinc | orderBy: 'nombre' ">
+          <tr data-ng-repeat="reporteQ in reporQuinc | orderBy: 'nombre'  | filter:busqueda as results">
             <td> <% $index + 1 %></td>
             <td> <% reporteQ.inss %> </td>
             <td> <% reporteQ.nombre %> </td>
