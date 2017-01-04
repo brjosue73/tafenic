@@ -837,6 +837,7 @@
 	app.controller('RplanillaQController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.RplillaQSendData = {};
 		s.getPlanillaRQ = function() {
+			$('#15nalpanepin').css("display", "inline-block");
 			//console.log(s.plillaSendData.fecha_ini.getDate()+15);
 			//plr.query();
 			h.post('/planilla_quincenal',s.RplillaQSendData)
@@ -846,6 +847,17 @@
 					s.reporQuinc.push(data[i]);
 				}
 				s.totalesQ = data[data.length - 1];
+				$('#15nalpanepin').css("display", "none");
+				$('#15nalexitopin').css("display","inline");
+				setTimeout(function(){
+					$('#15nalexitopin').css("display","none");
+				},3500);
+			}).error(function(err){
+				$('#15nalpanepin').css("display", "none");
+				$('#15nalerrorpin').css("display","inline");
+				setTimeout(function(){
+					$('#15nalerrorpin').css("display","none");
+				},3500);
 			});
 		}
 		s.delQuince = function(id, index, reporteQ){
@@ -943,6 +955,8 @@
 	app.controller('centrosCostos', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
 		s.sendDataCC = {};
 	  s.costosTotales = function(){
+			$('#ccnalpanepin').css("display", "inline-block");
+
 			//console.log("totales-centros-ostos");
 			h.post('/planilla_fincas', s.sendDataCC)
 			.success(function(data){
@@ -952,10 +966,17 @@
 					s.totcc.push(data[i]);
 				}
 				s.sumTotCC = data[data.length - 1];
-
-			})
-			.error(function(err){
-				console.log(err)
+				$('#ccnalpanepin').css("display", "none");
+				$('#ccnalexitopin').css("display","inline");
+				setTimeout(function(){
+					$('#ccnalexitopin').css("display","none");
+				},3500);
+			}).error(function(err){
+				$('#ccnalpanepin').css("display", "none");
+				$('#ccnalerrorpin').css("display","inline");
+				setTimeout(function(){
+					$('#ccnalerrorpin').css("display","none");
+				},3500);
 			});
 		}
 	}]);
