@@ -52,7 +52,7 @@
     <thead>
       <tr class="active">
         <th data-ng-click="ordeReal = 'created_at.date' ">N°</th>
-        <th>Nombre del trabajador</th>
+        <th data-ng-click="ordeReal = 'nombre' ">Nombre del trabajador</th>
         <th>Ocupación</th>
         <th>Días trabajados</th>
         <th>Tot. Devengado</th>
@@ -174,7 +174,7 @@
                 <td> <% rTrab14.otros %> </td>
                 <td> <% rTrab14.prestamo %> </td>
                 <!-- <td><span class="blue-anchor" data-ng-click="updCatorce(rTrab14.id)">update</span></td> -->
-                <td> <a href="/preplanilla/<% rTrab14.id %>/edit">Actualizar</a></td>
+                <td> <a target="_blank" href="/preplanilla/<% rTrab14.id %>/edit">Actualizar</a></td>
                 <!-- <td><a href="" data-ui-sref="/preplanilla.editar({id: <% rTrab14.id %>})">update</a></td> -->
                 <td><span class="blue-anchor" data-ng-click="delCatorce(rTrab14.id, $index, rTrab14.fecha)">eliminar</span></td>
               </tr>
