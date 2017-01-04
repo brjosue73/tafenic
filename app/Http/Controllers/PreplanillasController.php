@@ -95,11 +95,18 @@ class PreplanillasController extends Controller
       $guardar=$this->guardar_act($prep, $arreglo);
       return $guardar;
     }
-
+    public function updates(Request $request, $id)
+    {
+      $arreglo = $request;
+      $prep = Preplanilla::find($id);
+      $guardar=$this->guardar_act($prep, $arreglo);
+      return $guardar;
+    }
     public function guardar_act($prep, $arreglo)
     {
         //$peticion = $request->all();
         //$arreglo = $peticion["data"];
+        $subsidio=0;
         $variables=Variable::all();//
         foreach ($variables as $variable) {//Toma los datos de la tabla variables
           $hora_trab=0;
@@ -124,7 +131,7 @@ class PreplanillasController extends Controller
         }
 
         //$prep= new Preplanilla($arreglo);
-        $subsidio=$arreglo['subsidio'];
+        //$subsidio=$arreglo['subsidios'];
         $prep->salario_dev =$dia;
         $prep->alimentacion =$alim;
         $prep->vacaciones= $vacaciones;
@@ -168,7 +175,6 @@ class PreplanillasController extends Controller
                  $prep->total_extras=$total_act_ext;
                }
                else {//si es safadura
-                 return $arreglo;
                  $cant_safa=round($arreglo['cant_safa'],2);
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
@@ -258,7 +264,6 @@ class PreplanillasController extends Controller
           $prep->centro_costo=$arreglo['centro_costo'];
           $prep->save();
           $subs=0;
-          return $prep;
           return "Agregada! supuestamente normal";
         }
 
@@ -310,14 +315,7 @@ class PreplanillasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updates(Request $request, $id)
-    {
-      $peticion = $request->all();
-      //$arreglo = $peticion["data"];
-      $prep = Preplanilla::find($id);
-      $guardar=$this->guardar_act($prep, $peticion);
-      return $guardar;
-    }
+
 
     /**
      * Remove the specified resource from storage.

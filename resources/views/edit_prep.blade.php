@@ -170,11 +170,7 @@
 
       <div class="form-group col-sm-1 col-md-1 col-lg-1">
         <label class="control-label">Subsidio: </label>
-        @if($data->subsidios==0)
-        <input name="subsidio" id="chkSub" type="checkbox" class="form-control">
-        @else
-        <input name="subsidio" id="chkSub" type="checkbox" class="form-control" checked>
-        @endif
+        <input name="subsidios" id="chkSub" type="checkbox" class="form-control">
       </div>
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
