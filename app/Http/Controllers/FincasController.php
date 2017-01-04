@@ -176,7 +176,7 @@ class FincasController extends Controller
 
              if($feriado1>0){
                $dias_sept=$dias2;
-               $dias2=$dias2-$feriado1;
+               //$dias2=$dias2-$feriado1;
              }
              elseif($feriado2>0){
                $dias_sept=$dias2;
