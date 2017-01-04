@@ -914,10 +914,30 @@
 			console.log(s.regQince);
 		}
 	}]);
-	app.controller('catorcenalEditar', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){
-		s.prepReg = {};
-		s.prepReg = pr.get('/planilla/:id/editar',{id:sp.id});
-		console.log(s.soprano);
+	app.controller('catorcenalEditar', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr) {
+		s.updateModel = {
+			//id_finca: ""
+		};
+
+		/*h.get('/fincas')
+		.success(function(data){
+			s.lasfincas = data;
+		});*/
+
+		/*s.getA = function(){
+			console.log(s.updateModel);
+			h.post('/actividad_finca',{id_finca:s.updateModel.id_finca})
+			.success(function(data){
+				s.lasactividades = data;
+			})
+			.error(function(err){
+				console.log(err);
+			});
+			h.get('/lotes/' + s.updateModel.id_finca)
+			.success(function(data){
+				s.loslotes = data;
+			});
+		}*/
 	}]);
 
 	app.controller('centrosCostos', ['$scope', '$http', '$stateParams','prepResource', function(s,h,sp,pr){

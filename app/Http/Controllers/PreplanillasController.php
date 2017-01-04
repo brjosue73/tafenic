@@ -310,12 +310,12 @@ class PreplanillasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updates(Request $request, $id)
     {
       $peticion = $request->all();
-      $arreglo = $peticion["data"];
+      //$arreglo = $peticion["data"];
       $prep = Preplanilla::find($id);
-      $guardar=$this->guardar_act($prep, $arreglo);
+      $guardar=$this->guardar_act($prep, $peticion);
       return $guardar;
     }
 
