@@ -20,6 +20,7 @@
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
           <li><a data-ui-sref="/adminPane">Inicio</a></li>
+          @if(Auth::user()->type_user==1)
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">Ir a...<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -29,6 +30,8 @@
               <li><a href="" data-ui-sref="/planillaq">Planilla Quincenal</a></li>
             </ul>
           </li>
+          @endif
+
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">Reportes<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -39,12 +42,15 @@
               <li><a href="" data-ui-sref="/totalescc">Totales C.C.</a></li>
             </ul>
           </li>
+          @if(Auth::user()->type_user==1)
+
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">Ajustes<span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="" data-toggle="modal" data-target="#valores">Valores</a></li>
             </ul>
           </li>
+          @endif
         </ul>
         <ul class="nav navbar-nav navbar-right" role="menu">
             <li onClick="history.back();"><a href=""><i class="glyphicon glyphicon-chevron-left"></i> volver</a></li>

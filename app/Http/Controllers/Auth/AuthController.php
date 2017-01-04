@@ -52,6 +52,7 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
+            'type_user'=> 'required'
         ]);
     }
 
@@ -67,6 +68,15 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'type_user'=> $data['type_user'],
         ]);
+    }
+    protected function userForm(){
+      return view('registro');
+    }
+    protected function registrar(Request $data){
+      $user=new User();
+      $user=$data['name'];
+      return 'asdas';
     }
 }
