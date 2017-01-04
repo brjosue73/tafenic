@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<?php  use Illuminate\Support\Facades\Auth;
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,7 +23,8 @@
         <ul class="nav navbar-nav">
           <li><a data-ui-sref="/adminPane">Inicio</a></li>
 
-
+          @if(auth::check())
+          @if(auth::user()->type_user==1)
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">Ir a...<span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -31,6 +34,8 @@
               <li><a href="" data-ui-sref="/planillaq">Planilla Quincenal</a></li>
             </ul>
           </li>
+          @endif
+          @endif
 
 
           <li class="dropdown">
@@ -44,13 +49,16 @@
             </ul>
           </li>
 
-
+          @if(auth::check())
+          @if(auth::user()->type_user==1)
             <li class="dropdown">
               <a href="" class="dropdown-toggle" data-toggle="dropdown">Ajustes<span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><a href="" data-toggle="modal" data-target="#valores">Valores</a></li>
               </ul>
             </li>
+          @endif
+          @endif
 
 
         </ul>
