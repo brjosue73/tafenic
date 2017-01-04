@@ -140,6 +140,7 @@ class PreplanillasController extends Controller
         $prep->inss_campo=$inss_lab;
         $prep->inss_admin=$inss_admin;
         $prep->inss_patron=$inss_patron_catorce;
+        $prep->hora_trab=$arreglo['hora_trab'];
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
           if ($feriado==1) { //feriado no trabajado
