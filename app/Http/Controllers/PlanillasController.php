@@ -508,17 +508,29 @@ class PlanillasController extends Controller
            /********************Saber si tiene septimos****************/
            /********************Contar los dias trabajados*****************/
           $cant_septimos=0;
-           if($dias_sept>=6 && $dias_sept<12){ //merece por lo menos 1 septimo
+          //  if($dias_sept>=6 && $dias_sept<12){ //merece por lo menos 1 septimo
+          //    $cant_septimos=1;
+          //  }
+          //  elseif($dias_sept>=12 && $dias_sept<18){//merece 2 septimos
+          //    $cant_septimos=2;
+          //  }
+          //  elseif($dias_sept>=18 && $dias_sept<18){//merece 3 septimos
+          //    $cant_septimos=3;
+          //  }
+          //  elseif($dias_sept>=24){//merece 4 septimos
+          //    $cant_septimos=4;
+          //  }
+           if($dias_sept>=6){
              $cant_septimos=1;
-           }
-           elseif($dias_sept>=12 && $dias_sept<18){//merece 2 septimos
-             $cant_septimos=2;
-           }
-           elseif($dias_sept>=18 && $dias_sept<18){//merece 3 septimos
-             $cant_septimos=3;
-           }
-           elseif($dias_sept>=24){//merece 4 septimos
-             $cant_septimos=4;
+             if($dias_sept>=12){
+               $cant_septimos=2;
+               if ($dias_sept>=18) {
+                 $cant_septimos=3;
+                 if ($dias_sept>=18) {
+                   $cant_septimos=4;
+                 }
+               }
+             }
            }
            $test1=$cant_septimos;
            $tot_sept=$cant_septimos*$valor_dia;
