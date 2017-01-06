@@ -399,18 +399,30 @@ class PlanillasController extends Controller
   public function contar_dias($data){
     $dias=0;
     $horas=0;
+    $dias_sept=0;
     foreach ($data as $trab) {
       $horas+=$trab['hora_trab'];
       if($trab['hora_trab']==8){
         $dias+=1;
+        $dias_sept+=1;
+
+      }
+      elseif ($trab['hora_trab']==0) {
+        $dias_sept+=1;
       }
       else {
         $x=($trab['hora_trab']*100)/8;
         $total=$x/100;
         $dias+=$total;
+        $dias_sept+=$total;
       }
+
     }
-    return $dias;
+    $arreglo=[
+      'dias'=>$dias,
+      'dias_sept'=>$dias_sept,
+    ];
+    return $arreglo;
   }
   public function calculo_planilla($peticion){
     $finca_mayor='--';
@@ -445,7 +457,10 @@ class PlanillasController extends Controller
           ->get();
                                     //->where('id_finca',$id_finca)
            $dias2= $trabs->count();
-           $dias=$this->contar_dias($trabs);
+           $contar_dias=$this->contar_dias($trabs);
+           $dias=$contar_dias['dias'];
+           $dias_sept=$contar_dias['dias_sept'];
+
            $test1=$dias;
            $salario_tot=0;
            $alim_tot=0;
@@ -483,17 +498,17 @@ class PlanillasController extends Controller
              }
            }
 
-           if($feriado1>0){
-             $dias_sept=$dias;
-             //$dias=$dias-$feriado1;
-           }
-           elseif($feriado2>0){
-             $dias_sept=$dias;
-             $dias=$dias;
-           }
-           else {
-             $dias_sept=$dias;
-           }
+          //  if($feriado1>0){
+          //    $dias_sept=$dias;
+          //    //$dias=$dias-$feriado1;
+          //  }
+          //  elseif($feriado2>0){
+          //    $dias_sept=$dias;
+          //    $dias=$dias;
+          //  }
+          //  else {
+          //    $dias_sept=$dias;
+          //  }
           //  if($feriados>=$valor_dia*2){
           //    $dias_sept=$dias2;
           //    $dias2=$dias2;
@@ -535,7 +550,9 @@ class PlanillasController extends Controller
            $test1=$cant_septimos;
            $tot_sept=$cant_septimos*$valor_dia;
 
-           $feriados=0;
+           $feriado_nt=$feriado1*$valor_dia;
+           $feriado_t=$feriado2*($valor_dia*2);
+           $feriados=$feriado_t+$feriado_nt;
              foreach ($trabs as $trab) {
                  $inss_camp=$trab['inss_campo'];
                  $tot_sept+=$trab['septimo'];
@@ -578,6 +595,7 @@ class PlanillasController extends Controller
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
+                 $test1='tot_basic: '.$tot_basic.' tot_sept '.$tot_sept.' otros '.$otros.' feriados '.$feriados;
                  $total_dev2=round($total_dev3,2);
                  $tot_sept=round($tot_sept,2);
 
