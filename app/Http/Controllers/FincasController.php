@@ -242,7 +242,7 @@ class FincasController extends Controller
                    $labor=$lab_query->nombre;
                    $labores[]=$labor;
                    $tot_dev +=$trab['total_actividad'];
-                   $feriados+=$trab->feriados;
+                   //$feriados+=$trab->feriados;
                    //$feriado_tot+=$feriados;
                    $subsidios += $trab['subsidios'];
                    $fin_query= Finca::find($trab->id_finca);
