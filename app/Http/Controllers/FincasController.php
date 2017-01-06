@@ -141,7 +141,9 @@ class FincasController extends Controller
                     ->get();
 
              $dias2= $trabs->count();
-             $dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
+             $contar_dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
+             $dias=$contar_dias['dias'];
+             $dias_sept=$contar_dias['dias_sept'];
 
              $dias_sept=$trab_septimo->count();
              $salario_tot=0;
@@ -174,17 +176,17 @@ class FincasController extends Controller
                }
              }
 
-             if($feriado1>0){
-               $dias_sept=$dias2;
-               //$dias2=$dias2-$feriado1;
-             }
-             elseif($feriado2>0){
-               $dias_sept=$dias2;
-               $dias2=$dias2;
-             }
-             else {
-               $dias_sept=$dias2;
-             }
+            //  if($feriado1>0){
+            //    $dias_sept=$dias2;
+            //    //$dias2=$dias2-$feriado1;
+            //  }
+            //  elseif($feriado2>0){
+            //    $dias_sept=$dias2;
+            //    $dias2=$dias2;
+            //  }
+            //  else {
+            //    $dias_sept=$dias2;
+            //  }
 
 
 
@@ -213,8 +215,10 @@ class FincasController extends Controller
 
 
              $tot_sept=$calculo_septimo['tot_sept'];
-             $feriados=0;
              $test1=$dias;
+             $feriado_nt=$feriado1*$valor_dia;
+             $feriado_t=$feriado2*($valor_dia*2);
+             $feriados=$feriado_t+$feriado_nt;
 
                foreach ($trabs as $trab) {
                    $inss_camp=$trab['inss_campo'];
@@ -333,8 +337,8 @@ class FincasController extends Controller
       $feriados=$request['feriados'];
 
       $centro_mayor=0;
-      $dias_sept=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
-
+      $contar_dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
+      $dias_sept=$contar_dias['dias_sept'];
       $cant_septimos=0;
       $centro_mayor='';
       $centro_id='';
