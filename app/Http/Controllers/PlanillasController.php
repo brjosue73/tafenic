@@ -68,7 +68,8 @@ class PlanillasController extends Controller
     $alim=$totales['sum_alim'];
     $a_vac=$dev+$septimo+$feriados;
     $vacs=$a_vac*0.083333;
-    $tot_acum=$vacs+$vacs+$tot_dev2;
+    $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext;
+    // $tot_acum=$vacs+$vacs+$tot_dev2;
     $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
     $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
