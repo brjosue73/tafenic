@@ -36,7 +36,6 @@
 <h5 class="text-centro">Esteli, Nicaragua		</h5>
 <h5 class="text-centro">Telefono: 2773-9100, 2773-9101  Telefax 2773-9109		</h5>
 
-<h5 class="text-centro">PLANILLA   ADMINISTRACION</h5>
 
   <div class="table-responsive">
     <table class="table table-striped table-bordered table-hover table-condensed">
