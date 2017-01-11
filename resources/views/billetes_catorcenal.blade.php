@@ -34,7 +34,7 @@
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
   <h5 class="text-centro">DISTRIBUCION DE BILLETES</h5>
 <h5 class="text-centro">Esteli, Nicaragua		</h5>
-<h5 class="text-centro">Telefono: 2773-9100, 2773-9101  Telefax 2773-9109		</h5>
+<h5 class="text-centro">Telefono: 2773-9100, 2710-1015 </h5>
 
 
   <div class="table-responsive">
