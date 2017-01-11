@@ -52,7 +52,6 @@
       <thead>
         <tr class="active">
           <th>N°</th>
-          <th>#INSS</th>
           <th data-ng-click="ordenar = 'nombre' ">Nombre</th>
           <th>Fincas</th>
           <th>Ocupación</th>
@@ -85,7 +84,6 @@
         <tr data-ng-repeat="reporfincTota in reporfincTot | orderBy:ordenar | filter:busqueda as results">
 
           <td> <% $index + 1 %></td>
-          <td> #INSS </td>
           <td> <% reporfincTota.nombre %> </td>
           <td> <li data-ng-repeat="fincass in reporfincTota.finUnicas track by $index"><% fincass %> </li></td>
           <td> <li data-ng-repeat="labour in reporfincTota.labUnicas track by $index"><% labour %> </li></td>
@@ -117,7 +115,7 @@
 
         </tr>
         <tr>
-          <td colspan="5">Total</td>
+          <td colspan="4">Total</td>
           <td><% totales.sum_dias_trab %></td>
           <td><% totales.sum_dias_trab %></td>
           <td><% totales.sum_dev1 %></td>
