@@ -267,7 +267,6 @@ class PreplanillasController extends Controller
           $prep->inss_patron=$inss_patron_catorce;
           $prep->septimo=$arreglo['septimo'];
           $prep->centro_costo=$arreglo['centro_costo'];
-          return $prep;
           $prep->save();
           $subs=0;
           return "Agregada! supuestamente normal";
