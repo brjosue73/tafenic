@@ -217,20 +217,24 @@ class PreplanillasController extends Controller
           $ext=0;
           $otros=$arreglo['otros'];
           $prep->otros=$otros;
+          $cuje_ext=$arreglo['cuje_ext'];
           $labor_dat=Labor::find($arreglo['id_labor']);
           if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
             if($arreglo['labName']=='cuje'){//si es cuje
                $cant_cujes=$arreglo['cant_cujes'];
                if($arreglo['tamano_cuje'] == 0){//pequeno
-                 $total_act=$cant_cujes * $cuje_peq;
+                 $total_ext=$cuje_ext * $cuje_peq;
+                 $prep->total_extras=$total_ext;
                }
                else {//cuje grande
                  $total_act=$cant_cujes * $cuje_grand;
+                 $total_ext=$cuje_ext * $cuje_grand;
+                 $prep->total_extras=$total_ext;
+
                }
                $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                $prep->tamano_cuje=$arreglo['tamano_cuje'];
                $prep->cuje_ext=$arreglo['cuje_ext'];
-               $prep->total_extras=$total_act;
              }
              else {//si es safadura
                $cant_safa=$arreglo['cant_safa'];
@@ -263,6 +267,7 @@ class PreplanillasController extends Controller
           $prep->inss_patron=$inss_patron_catorce;
           $prep->septimo=$arreglo['septimo'];
           $prep->centro_costo=$arreglo['centro_costo'];
+          return $prep;
           $prep->save();
           $subs=0;
           return "Agregada! supuestamente normal";
