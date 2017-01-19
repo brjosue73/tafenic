@@ -346,6 +346,7 @@ class PlanillasController extends Controller
     $sum_h_ext=0;
     $sum_tot_hext=0;
     $sum_act_extra_tot=0;
+    $sum_dinero_activ=0;
     $sum_vacs=0;
     $sum_aguin=0;
     $sum_acum=0;
@@ -369,6 +370,8 @@ class PlanillasController extends Controller
       $sum_h_ext+=$trab['cant_horas_ext'];
       $sum_tot_hext+=$trab['horas_ext_tot'];
       $sum_act_extra_tot+=$trab['cant_act_ext'];
+      $sum_dinero_activ+=$trab['act_extra_tot'];
+
       $sum_vacs+=$trab['vac_tot'];
       $sum_aguin+=$trab['agui_tot'];
       $sum_acum+=$trab['total_acum'];
@@ -398,6 +401,7 @@ class PlanillasController extends Controller
        'sum_inss_lab'=>round($sum_inss_lab,2),
        'sum_prestam'=>round($sum_prestam,2),
        'sum_inss_pat'=>round($sum_inss_pat,2),
+       'sum_dinero_activ'=>round($sum_dinero_activ,2),
     ];
     return $totales;
   }
@@ -542,7 +546,7 @@ class PlanillasController extends Controller
                  $act_ext=$trab['tot_act_ext'];
                  $act_extra_tot+=$act_ext; //Suma de las ganancias de activi
                  $extras=$trab['total_extras'];// Ganancia de las horas extras
-                 $extra_tot += $extras; // Suma de Ganancia de las horas extras 
+                 $extra_tot += $extras; // Suma de Ganancia de las horas extras
                  $cant_horas_ext += $trab['hora_ext']; //Cantidad de horas extras
                  $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext']; //Cantidad de extras, ya sea safa o ensarte
                  $cant_act_ext += $act_ext_sum; //Cantidades totales de los extras
