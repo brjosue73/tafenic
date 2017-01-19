@@ -50,16 +50,7 @@ class FincasController extends Controller
         $tamanio=sizeof($calculo);
         $suma=$calculo[$tamanio-1];
 
-        // $dev=$totales['sum_dev1'];
-        // $septimo=$suma['sum_septimos'];
-        // $feriados=$suma['sum_feriados'];
-        // $tot_dev2=['sum_dev2'];
-        // $a_vac=$dev+$septimo+$feriados;
-        // $vacs=$a_vac*0.083333;
-        // $total_acum=$vacs+$vacs+$tot_dev2;
-        // $suma['sum_acum']=round($total_acum,2);
-        // $suma['sum_aguin']=round($vacs,2);
-        // $suma['sum_vacs']=round($vacs,2);
+
         $dev=$suma['sum_dev1'];
         $septimo=$suma['sum_septimos'];
         $feriados=$suma['sum_feriados'];
@@ -141,7 +132,10 @@ class FincasController extends Controller
                     ->get();
 
              $dias2= $trabs->count();
-             $dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
+             $contar_dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
+             $dias=$contar_dias['dias'];
+             $dias_sept=$contar_dias['dias_sept'];
+
              $dias_sept=$trab_septimo->count();
              $salario_tot=0;
              $alim_tot=0;
@@ -158,6 +152,7 @@ class FincasController extends Controller
              $tot_dev=0;
              $subsidios=0;
              $cant_horas_ext=0;
+             $act_extra_tot=0;
              $cant_act_ext=0;
              $sum_tot_recib=0;
              $prestamo=0;
@@ -173,17 +168,17 @@ class FincasController extends Controller
                }
              }
 
-             if($feriado1>0){
-               $dias_sept=$dias2;
-               $dias2=$dias2-$feriado1;
-             }
-             elseif($feriado2>0){
-               $dias_sept=$dias2;
-               $dias2=$dias2;
-             }
-             else {
-               $dias_sept=$dias2;
-             }
+            //  if($feriado1>0){
+            //    $dias_sept=$dias2;
+            //    //$dias2=$dias2-$feriado1;
+            //  }
+            //  elseif($feriado2>0){
+            //    $dias_sept=$dias2;
+            //    $dias2=$dias2;
+            //  }
+            //  else {
+            //    $dias_sept=$dias2;
+            //  }
 
 
 
@@ -199,6 +194,7 @@ class FincasController extends Controller
                'feriados'=>$feriados,
                'dias'=>$dias,
              ];
+
              $calculo_septimo=$this->calcular_septimos($calculo_septimo);
              //return $calculo_septimo;
              $cant_septimos=$calculo_septimo['dias_sept'];
@@ -211,7 +207,11 @@ class FincasController extends Controller
 
 
              $tot_sept=$calculo_septimo['tot_sept'];
-             $feriados=0;
+             $test1=$dias;
+             $feriado_nt=$feriado1*$valor_dia;
+             $feriado_t=$feriado2*($valor_dia*2);
+             $feriados=$feriado_t+$feriado_nt;
+
                foreach ($trabs as $trab) {
                    $inss_camp=$trab['inss_campo'];
                    $tot_sept+=$trab['septimo'];
@@ -228,25 +228,21 @@ class FincasController extends Controller
                    $extras=$trab['total_extras'];
                    $extra_tot += $extras;
                    $cant_horas_ext += $trab['hora_ext'];
+                   $act_ext=$trab['tot_act_ext'];
+                   $act_extra_tot+=$act_ext;
                    $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext'];
                    $cant_act_ext += $act_ext_sum;
                    $lab_query=Labor::find($trab->id_labor);
                    $labor=$lab_query->nombre;
                    $labores[]=$labor;
                    $tot_dev +=$trab['total_actividad'];
-                   $feriados+=$trab->feriados;
+                   //$feriados+=$trab->feriados;
                    //$feriado_tot+=$feriados;
                    $subsidios += $trab['subsidios'];
                    $fin_query= Finca::find($trab->id_finca);
                    $finca=$fin_query->nombre;
                    $fincas[]=$finca;
-                   //si la labor es de hora o de actividad
-                  //  if($lab_query['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
-                  //      $tot_dev=$trab['total_actividad'];
-                  //  }
-                  //  else {//si es por horas
-                  //    $tot_dev=$dias * $pago_dia;
-                  //  }
+
 
 
                    $tot_dev=$dias * $pago_dia;
@@ -258,25 +254,24 @@ class FincasController extends Controller
                    $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                    //$tot_a_vacs=123;
                    $tot_a_vacs=round($tot_a_vacs,2);
-                   $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
+                   $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs+$act_extra_tot;
 
                    $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
 
                    $total_inss=($total_acum-$tot_a_vacs);
                    $inss=($total_inss*$inss_camp)/100;
-                    $test1=$tot_inss;
-                    $test2=$inss_camp;
-
                     $inss_pat=($total_inss*$inss_patronal)/100;
-
                     $tot_recib=$total_acum - $inss - $prestamo;
 
                    $f=0;
                    $c=0;
                    $created_at=$trab['created_at'];
                }
+               $test2=$dias;
                $array = [
-                 "dias"=>round($dias,2),
+                 'aatest'=>$test1,
+                 'aatest2'=>$test2,
+                 "dias"=>$dias,
                  "alim_tot"=>round($alim_tot,2),
                  "vac_tot"=>round($tot_a_vacs,2),
                  "agui_tot"=>round($tot_a_vacs,2),
@@ -290,6 +285,7 @@ class FincasController extends Controller
                  "cant_horas_ext"=>round($cant_horas_ext,2),
                  "cant_act_ext"=>round($cant_act_ext,2),
                  "cuje_ext_tot"=>round($cuje_ext_tot,2),
+                 "act_extra_tot"=>round($act_extra_tot,2),
                  "total_acum"=>round($total_acum,2),
                  "inss"=>round($inss,2),
                  "salario_"=>round($tot_recib,2),
@@ -336,7 +332,8 @@ class FincasController extends Controller
       $feriados=$request['feriados'];
 
       $centro_mayor=0;
-      $dias_sept= $trabs->count();
+      $contar_dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
+      $dias_sept=$contar_dias['dias_sept'];
       $cant_septimos=0;
       $centro_mayor='';
       $centro_id='';
@@ -346,29 +343,30 @@ class FincasController extends Controller
         $fincas[]=$finca;
         $centro=$trab->centro_costo;
       }
-      // if($feriados>=$valor_dia*2){
-      //   $dias_calc=$dias_sept;
-      //   $dias_sept=$dias_sept-1;
-      // }
-      // elseif($feriados==$valor_dia) {
-      //   $dias_calc=$dias_sept+1;
-      // }
-      // else {
-      //   $dias_calc=$dias_sept;
-      // }
-       if($dias_sept>=6){ //merece por lo menos 1 septimo
-         $cant_septimos=1;
-         if($dias_sept>=12){//merece 2 septimos
-           $cant_septimos=2;
-         }
-       }
+      if($dias_sept>=6){
+        $cant_septimos=1;
+        if($dias_sept>=12){
+          $cant_septimos=2;
+          if ($dias_sept>=18) {
+            $cant_septimos=3;
+            if ($dias_sept>=18) {
+              $cant_septimos=4;
+            }
+          }
+        }
+      }
+      //  if($dias_sept>=6){ //merece por lo menos 1 septimo
+      //    $cant_septimos=1;
+      //    if($dias_sept>=12){//merece 2 septimos
+      //      $cant_septimos=2;
+      //    }
+      //  }
        $f=0;
        $c=0;
        if($cant_septimos>0){ //si merece por lo menos 1 septimo
          $cant_fincas_todas = sizeof($fincas);
          $centros_sinRep=array();
          $fincas_sinRep=array();
-
         $centro_0= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                 ->where('id_finca',$id_finca)
