@@ -50,16 +50,7 @@ class FincasController extends Controller
         $tamanio=sizeof($calculo);
         $suma=$calculo[$tamanio-1];
 
-        // $dev=$totales['sum_dev1'];
-        // $septimo=$suma['sum_septimos'];
-        // $feriados=$suma['sum_feriados'];
-        // $tot_dev2=['sum_dev2'];
-        // $a_vac=$dev+$septimo+$feriados;
-        // $vacs=$a_vac*0.083333;
-        // $total_acum=$vacs+$vacs+$tot_dev2;
-        // $suma['sum_acum']=round($total_acum,2);
-        // $suma['sum_aguin']=round($vacs,2);
-        // $suma['sum_vacs']=round($vacs,2);
+
         $dev=$suma['sum_dev1'];
         $septimo=$suma['sum_septimos'];
         $feriados=$suma['sum_feriados'];
@@ -161,6 +152,7 @@ class FincasController extends Controller
              $tot_dev=0;
              $subsidios=0;
              $cant_horas_ext=0;
+             $act_extra_tot=0;
              $cant_act_ext=0;
              $sum_tot_recib=0;
              $prestamo=0;
@@ -236,6 +228,8 @@ class FincasController extends Controller
                    $extras=$trab['total_extras'];
                    $extra_tot += $extras;
                    $cant_horas_ext += $trab['hora_ext'];
+                   $act_ext=$trab['tot_act_ext'];
+                   $act_extra_tot+=$act_ext;
                    $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext'];
                    $cant_act_ext += $act_ext_sum;
                    $lab_query=Labor::find($trab->id_labor);
@@ -260,7 +254,7 @@ class FincasController extends Controller
                    $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                    //$tot_a_vacs=123;
                    $tot_a_vacs=round($tot_a_vacs,2);
-                   $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs;
+                   $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs+$act_extra_tot;
 
                    $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
 
@@ -291,6 +285,7 @@ class FincasController extends Controller
                  "cant_horas_ext"=>round($cant_horas_ext,2),
                  "cant_act_ext"=>round($cant_act_ext,2),
                  "cuje_ext_tot"=>round($cuje_ext_tot,2),
+                 "act_extra_tot"=>round($act_extra_tot,2),
                  "total_acum"=>round($total_acum,2),
                  "inss"=>round($inss,2),
                  "salario_"=>round($tot_recib,2),

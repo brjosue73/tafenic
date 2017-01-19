@@ -540,12 +540,12 @@ class PlanillasController extends Controller
                  $horas_ext_tot +=$trab->hora_ext;
                  $cuje_ext_tot +=$trab->cuje_ext;
                  $act_ext=$trab['tot_act_ext'];
-                 $act_extra_tot+=$act_ext;
-                 $extras=$trab['total_extras'];
-                 $extra_tot += $extras;
-                 $cant_horas_ext += $trab['hora_ext'];
-                 $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext'];
-                 $cant_act_ext += $act_ext_sum;
+                 $act_extra_tot+=$act_ext; //Suma de las ganancias de activi
+                 $extras=$trab['total_extras'];// Ganancia de las horas extras
+                 $extra_tot += $extras; // Suma de Ganancia de las horas extras 
+                 $cant_horas_ext += $trab['hora_ext']; //Cantidad de horas extras
+                 $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext']; //Cantidad de extras, ya sea safa o ensarte
+                 $cant_act_ext += $act_ext_sum; //Cantidades totales de los extras
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
@@ -574,7 +574,7 @@ class PlanillasController extends Controller
 
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
-                 $total_acum=$total_dev2 + $extra_tot + $tot_a_vacs + $tot_a_vacs+$act_extra_tot;
+                 $total_acum=$total_dev2 + $extra_tot/*Total Horas extras*/ + $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
                                                                                           /*******************/
                 $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
