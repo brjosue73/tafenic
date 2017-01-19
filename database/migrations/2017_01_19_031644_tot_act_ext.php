@@ -13,7 +13,9 @@ class TotActExt extends Migration
     public function up()
     {
         Schema::table('preplanillas', function (Blueprint $table) {
-          $table->string('tot_act_ext');
+          $table->double('tot_act_ext');
+          $table->double('tot_cuje_ext');
+          $table->double('tot_safa_ext');
         });
     }
 
