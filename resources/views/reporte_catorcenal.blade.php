@@ -86,9 +86,12 @@
             <th>Otros</th>
             <th>Fer.</th>
             <th>Tot.<br> Deven</th>
+
             <th>H.<br> Ext</th>
+            <th>T. H.<br> Ext</th>
             <th>Act.<br> Ext</th>
-            <th>T. <br> Extras</th>
+            <th>T. Act.<br> Ext</th>
+
             <th>Vac</th>
             <th>Aguin</th>
             <th>Tot. <br> Acumu</th>
@@ -116,10 +119,12 @@
             <td> {{ number_format( $dat['otros'] ,2 )}}</td>
             <td> {{ number_format( $dat['feriado'] ,2 )}} </td>
             <td> {{ number_format( $dat['devengado2'] ,2 )}}</td>
+
             <td> {{ $dat['cant_horas_ext'] }}</td>
             <td> {{ number_format( $dat['horas_ext_tot'] ,2 )}} </td>
             <td> {{ $dat['cant_act_ext'] }}</td>
-            <!-- <td></td> -->
+            <td>{{ $dat['tot_act_ext'] }}</td>
+
             <td> {{ number_format( $dat['vac_tot'] ,2 )}} </td>
             <td> {{ number_format( $dat['agui_tot'] ,2 )}}</td>
             <td> {{ number_format( $dat['total_acum'] ,2 )}} </td>
@@ -142,10 +147,12 @@
             <td>{{number_format( $totales['sum_otros'],2 ) }}</td>
             <td>{{number_format( $totales['sum_feriados'],2 ) }}</td>
             <td>{{number_format( $totales['sum_dev2'],2 ) }}</td>
+
             <td>{{number_format( $totales['sum_h_ext'],2 ) }}</td>
             <td>{{number_format( $totales['sum_tot_hext'],2 ) }}</td>
             <td>{{number_format( $totales['horas_ext_tot'],2 ) }}</td>
-            <!-- <td>{{number_format( $totales['sum_tot_hext'],2 ) }}</td> -->
+            <td>n/a</td>
+
             <td>{{number_format( $totales['sum_vacs'],2 ) }}</td>
             <td>{{number_format( $totales['sum_aguin'],2 ) }}</td>
             <td>{{number_format( $totales['sum_acum'],2 ) }}</td>

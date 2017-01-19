@@ -65,9 +65,12 @@
           <th>Otros</th>
           <th>Feriados</th>
           <th>Tot. Dev 2</th>
-          <th data-ng-click="ordenar = '-cant_horas_ext' ">Horas Extra</th>
-          <th>Activ Extra</th>
+
+          <th data-ng-click="ordenar = '-cant_horas_ext' ">Hrs Ext.</th>
           <th>Tot H. Ext.</th>
+          <th>Act. Ext.</th>
+          <th>Tot. Act. Ext.</th>
+
           <th>Vacaciones</th>
           <th>Aguinaldo</th>
           <th>Tot.Acumulado</th>
@@ -97,9 +100,12 @@
           <td><% reporfincTota.otros %></td>
           <td><% reporfincTota.feriado %></td>
           <td><% reporfincTota.devengado2 %></td>
+
           <td><% reporfincTota.cant_horas_ext%>  </td>
-          <td><% reporfincTota.cant_act_ext%>  </td>
           <td><% reporfincTota.horas_ext_tot %></td>
+          <td><% reporfincTota.cant_act_ext%>  </td>
+          <td><% reporfincTota.tot_act_ext%></td>
+
           <td><% reporfincTota.vac_tot %></td>
           <td><% reporfincTota.agui_tot %></td>
           <td> <% reporfincTota.total_acum %> </td>
@@ -126,9 +132,12 @@
           <td><% totales.sum_otros %></td>
           <td><% totales.sum_feriados %></td>
           <td><% totales.sum_dev2 %></td>
+
           <td><% totales.sum_h_ext %></td>
-          <td>0</td>
           <td><% totales.sum_tot_hext %></td>
+          <td>n/a</td>
+          <td>n/a</td>
+
           <td><% totales.sum_vacs %></td>
           <td><% totales.sum_aguin %></td>
           <td><% totales.sum_acum %></td>
