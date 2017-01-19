@@ -150,8 +150,8 @@
 
             <td>{{number_format( $totales['sum_h_ext'],2 ) }}</td>
             <td>{{number_format( $totales['sum_tot_hext'],2 ) }}</td>
-            <td>{{number_format( $totales['horas_ext_tot'],2 ) }}</td>
-            <td>n/a</td>
+            <td>{{number_format( $totales['sum_act_extra_tot'],2 ) }}</td>
+            <td>{{number_format( $totales['sum_dinero_activ'],2 ) }}</td>
 
             <td>{{number_format( $totales['sum_vacs'],2 ) }}</td>
             <td>{{number_format( $totales['sum_aguin'],2 ) }}</td>
