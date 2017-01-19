@@ -66,9 +66,11 @@ class PlanillasController extends Controller
     $tot_dev2=$totales['sum_dev2'];
     $prestamos=$totales['sum_prestam'];
     $alim=$totales['sum_alim'];
+    $tot_hext=$totales['sum_tot_hext'];
     $a_vac=$dev+$septimo+$feriados;
     $vacs=$a_vac*0.083333;
-    $tot_acum=$vacs+$vacs+$tot_dev2;
+    $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext;
+    // $tot_acum=$vacs+$vacs+$tot_dev2;
     $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
     $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
@@ -85,7 +87,7 @@ class PlanillasController extends Controller
     $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
     $dia_ini=date("d", strtotime($fecha_1));
     $mes_ini=date("m", strtotime($fecha_1));
-    $ano=date("Y", strtotime($fecha_1));
+    $ano="2017";//date("Y", strtotime($fecha_1));
 
     $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
     $dia_fin=date("d", strtotime($fecha_2));

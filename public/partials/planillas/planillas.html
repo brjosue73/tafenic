@@ -5,13 +5,17 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
     <h1>Planilla Catorcenal</h1>
     <form class="col-xs-12 col-sm-12 col-md-12 col-lg-12" method="post" action="reporte_catorcenal">
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-4">
         <label for="" class="control-label">De: </label>
         <input name="fecha_ini" type="date" class="form-control" data-ng-model="plillaSendData.fecha_ini">
       </div>
-      <div class="form-group col-md-6">
+      <div class="form-group col-md-4">
         <label for="" class="control-label">Hasta: </label>
         <input name="fecha_fin" type="date" class="form-control" data-ng-model="plillaSendData.fecha_fin">
+      </div>
+      <div class="form-group col-sm-4 col-md-4 col-lg-4">
+        <label for="">Buscar por Nombre: </label> <!--<% busquedaCriteria %>-->
+        <input type="text" class="form-control" data-ng-model="busqueda">
       </div>
       <div class="form-group col-md-2">
         <br>
@@ -48,7 +52,6 @@
       <thead>
         <tr class="active">
           <th>N°</th>
-          <th>#INSS</th>
           <th data-ng-click="ordenar = 'nombre' ">Nombre</th>
           <th>Fincas</th>
           <th>Ocupación</th>
@@ -78,10 +81,9 @@
         </tr>
       </thead>
       <tbody>
-        <tr data-ng-repeat="reporfincTota in reporfincTot | orderBy:ordenar">
+        <tr data-ng-repeat="reporfincTota in reporfincTot | orderBy:ordenar | filter:busqueda as results">
 
           <td> <% $index + 1 %></td>
-          <td> #INSS </td>
           <td> <% reporfincTota.nombre %> </td>
           <td> <li data-ng-repeat="fincass in reporfincTota.finUnicas track by $index"><% fincass %> </li></td>
           <td> <li data-ng-repeat="labour in reporfincTota.labUnicas track by $index"><% labour %> </li></td>
@@ -113,7 +115,7 @@
 
         </tr>
         <tr>
-          <td colspan="5">Total</td>
+          <td colspan="4">Total</td>
           <td><% totales.sum_dias_trab %></td>
           <td><% totales.sum_dias_trab %></td>
           <td><% totales.sum_dev1 %></td>
@@ -163,6 +165,7 @@
                 <th>Labor</th>
                 <th>Horas Trab.</th>
                 <th>Horas Ext.</th>
+                <th>Feriado</th>
                 <th>Otros</th>
                 <th>Prestamos</th>
                 <th class="text-center" colspan="2">Acción</th>
@@ -177,10 +180,11 @@
                 <td> <% rTrab14.labor %> </td>
                 <td> <% rTrab14.hora_trab %> </td>
                 <td> <% rTrab14.hora_ext %> </td>
+                <td> <% rTrab14.feriados %> </td>
                 <td> <% rTrab14.otros %> </td>
                 <td> <% rTrab14.prestamo %> </td>
                 <!-- <td><span class="blue-anchor" data-ng-click="updCatorce(rTrab14.id)">update</span></td> -->
-                <td> <a href="/preplanilla/<% rTrab14.id %>/edit">Actualizar</a></td>
+                <td> <a target="_blank" href="/preplanilla/<% rTrab14.id %>/edit">Actualizar</a></td>
                 <!-- <td><a href="" data-ui-sref="/preplanilla.editar({id: <% rTrab14.id %>})">update</a></td> -->
                 <td><span class="blue-anchor" data-ng-click="delCatorce(rTrab14.id, $index, rTrab14.fecha)">eliminar</span></td>
               </tr>
