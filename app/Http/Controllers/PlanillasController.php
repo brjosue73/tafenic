@@ -134,31 +134,31 @@ class PlanillasController extends Controller
     return $pdf->inline('Planilla_catorcenal.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
-      $datas =$this->calculo_planilla($peticion);
-      usort($datas, function($a, $b) {
+      $data =$this->calculo_planilla($peticion);
+      usort($data, function($a, $b) {
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
       ini_set("memory_limit", "452M");
       ini_set("max_execution_time", "600");
-    $data=array();
-      foreach ($datas as $dat) {
-        $array_1=array();
-        $array_1['nombre']=$dat['nombre'];
-        $array_1['total_septimo']=$dat["total_septimo"];
-        $array_1['total_basic']=$dat["total_basic"];
-        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
-        $array_1['cant_horas_ext']=$dat["cant_horas_ext"];
-        $array_1['vac_tot']=$dat["vac_tot"];
-        $array_1['agui_tot']=$dat["agui_tot"];
-        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
-        $array_1['total_deven']=$dat["total_deven"];
-        $array_1['salario_']=$dat["salario_"];
-        $array_1['inss']=$dat["inss"];
-        $array_1['fecha_ini']=$dat["fecha_ini"];
-        $array_1['fecha_fin']=$dat["fecha_fin"];
-        $data[]=$array_1;
-      }
+    // $data=array();
+    //   foreach ($datas as $dat) {
+    //     $array_1=array();
+    //     $array_1['nombre']=$dat['nombre'];
+    //     $array_1['total_septimo']=$dat["total_septimo"];
+    //     $array_1['total_basic']=$dat["total_basic"];
+    //     $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+    //     $array_1['cant_horas_ext']=$dat["cant_horas_ext"];
+    //     $array_1['vac_tot']=$dat["vac_tot"];
+    //     $array_1['agui_tot']=$dat["agui_tot"];
+    //     $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+    //     $array_1['total_deven']=$dat["total_deven"];
+    //     $array_1['salario_']=$dat["salario_"];
+    //     $array_1['inss']=$dat["inss"];
+    //     $array_1['fecha_ini']=$dat["fecha_ini"];
+    //     $array_1['fecha_fin']=$dat["fecha_fin"];
+    //     $data[]=$array_1;
+    //   }
 
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
@@ -343,6 +343,7 @@ class PlanillasController extends Controller
     $sum_dev2=0;
     $sum_h_ext=0;
     $sum_tot_hext=0;
+    $sum_act_extra_tot=0;
     $sum_vacs=0;
     $sum_aguin=0;
     $sum_acum=0;
@@ -365,6 +366,7 @@ class PlanillasController extends Controller
       $sum_dev2+=$trab['devengado2'];
       $sum_h_ext+=$trab['cant_horas_ext'];
       $sum_tot_hext+=$trab['horas_ext_tot'];
+      $sum_act_extra_tot+=$trab['cant_act_ext'];
       $sum_vacs+=$trab['vac_tot'];
       $sum_aguin+=$trab['agui_tot'];
       $sum_acum+=$trab['total_acum'];
@@ -385,6 +387,7 @@ class PlanillasController extends Controller
        'sum_otros'=>round($sum_otros,2),
        'sum_feriados'=>round($sum_feriados,2),
        'sum_dev2'=>round($sum_dev2,2),
+       'sum_act_extra_tot'=>round($sum_act_extra_tot,2),
        'sum_h_ext'=>round($sum_h_ext,2),
        'sum_tot_hext'=>round($sum_tot_hext,2),
        'sum_vacs'=>$sum_vacs,
@@ -405,18 +408,17 @@ class PlanillasController extends Controller
       if($trab['hora_trab']==8){
         $dias+=1;
         $dias_sept+=1;
-
       }
       elseif ($trab['hora_trab']==0) {
         $dias_sept+=1;
       }
+
       else {
         $x=($trab['hora_trab']*100)/8;
         $total=$x/100;
         $dias+=$total;
         $dias_sept+=$total;
       }
-
     }
     $arreglo=[
       'dias'=>$dias,
@@ -467,6 +469,7 @@ class PlanillasController extends Controller
            $vac_tot=0;
            $agui_tot=0;
            $extra_tot=0;
+           $tot_act_ext=0;
            $horas_ext_tot=0;
            $cuje_ext_tot=0;
            $total_dev2=0;
@@ -478,6 +481,7 @@ class PlanillasController extends Controller
            $subsidios=0;
            $cant_horas_ext=0;
            $cant_act_ext=0;
+           $act_extra_tot=0;
            $sum_tot_recib=0;
            $prestamo=0;
            $feriado1=0;$feriado2=0;
@@ -497,44 +501,9 @@ class PlanillasController extends Controller
                $feriado2+=1;
              }
            }
-
-          //  if($feriado1>0){
-          //    $dias_sept=$dias;
-          //    //$dias=$dias-$feriado1;
-          //  }
-          //  elseif($feriado2>0){
-          //    $dias_sept=$dias;
-          //    $dias=$dias;
-          //  }
-          //  else {
-          //    $dias_sept=$dias;
-          //  }
-          //  if($feriados>=$valor_dia*2){
-          //    $dias_sept=$dias2;
-          //    $dias2=$dias2;
-          //  }
-          //  elseif($feriados==$valor_dia) {
-          //    $dias_sept=$dias2;
-          //    $dias2=$dias2-1;
-          //  }
-          //  else {
-          //    $dias_sept=$dias2;
-          //  }
            /********************Saber si tiene septimos****************/
            /********************Contar los dias trabajados*****************/
           $cant_septimos=0;
-          //  if($dias_sept>=6 && $dias_sept<12){ //merece por lo menos 1 septimo
-          //    $cant_septimos=1;
-          //  }
-          //  elseif($dias_sept>=12 && $dias_sept<18){//merece 2 septimos
-          //    $cant_septimos=2;
-          //  }
-          //  elseif($dias_sept>=18 && $dias_sept<18){//merece 3 septimos
-          //    $cant_septimos=3;
-          //  }
-          //  elseif($dias_sept>=24){//merece 4 septimos
-          //    $cant_septimos=4;
-          //  }
            if($dias_sept>=6){
              $cant_septimos=1;
              if($dias_sept>=12){
@@ -568,6 +537,8 @@ class PlanillasController extends Controller
                 //  $agui_tot= $vac_tot;
                  $horas_ext_tot +=$trab->hora_ext;
                  $cuje_ext_tot +=$trab->cuje_ext;
+                 $act_ext=$trab['tot_act_ext'];
+                 $act_extra_tot+=$act_ext;
                  $extras=$trab['total_extras'];
                  $extra_tot += $extras;
                  $cant_horas_ext += $trab['hora_ext'];
@@ -601,7 +572,7 @@ class PlanillasController extends Controller
 
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
-                 $total_acum=$total_dev2 + $extra_tot + $tot_a_vacs + $tot_a_vacs;
+                 $total_acum=$total_dev2 + $extra_tot + $tot_a_vacs + $tot_a_vacs+$act_extra_tot;
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
                                                                                           /*******************/
                 $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
@@ -685,6 +656,7 @@ class PlanillasController extends Controller
                "cant_horas_ext"=>round($cant_horas_ext,2),
                "cant_act_ext"=>round($cant_act_ext,2),
                "cuje_ext_tot"=>round($cuje_ext_tot,2),
+               "act_extra_tot"=>round($act_extra_tot,2),
                "total_acum"=>round($total_acum,2),
                "inss"=>round($inss,2),
                "salario_"=>round($tot_recib,2),

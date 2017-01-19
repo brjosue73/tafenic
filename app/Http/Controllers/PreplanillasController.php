@@ -129,7 +129,7 @@ class PreplanillasController extends Controller
           $inss_patron=$variable->inss_patron;
           $inss_patron_catorce=$variable->inss_patron_catorce;
         }
-
+        $total_act_ext=0;
         //$prep= new Preplanilla($arreglo);
         //$subsidio=$arreglo['subsidios'];
         $prep->salario_dev =$dia;
@@ -173,7 +173,7 @@ class PreplanillasController extends Controller
                  $total_act=$dia;
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                  $prep->tamano_cuje=$arreglo['tamano_cuje'];
-                 $prep->total_extras=$total_act_ext;
+                 $prep->tot_act_ext=$total_act_ext;
                }
                else {//si es safadura
                  $cant_safa=round($arreglo['cant_safa'],2);
@@ -185,7 +185,7 @@ class PreplanillasController extends Controller
                  }
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
-                 $prep->total_extras=$total_act_ext;
+                 $prep->tot_act_ext=$total_act_ext;
                }
             }
             else{ //Si es por Horas
@@ -224,12 +224,12 @@ class PreplanillasController extends Controller
                $cant_cujes=$arreglo['cant_cujes'];
                if($arreglo['tamano_cuje'] == 0){//pequeno
                  $total_ext=$cuje_ext * $cuje_peq;
-                 $prep->total_extras=$total_ext;
+                 $prep->tot_act_ext=$total_ext;
                }
                else {//cuje grande
                  $total_act=$cant_cujes * $cuje_grand;
                  $total_ext=$cuje_ext * $cuje_grand;
-                 $prep->total_extras=$total_ext;
+                 $prep->tot_act_ext=$total_ext;
 
                }
                $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
@@ -248,7 +248,7 @@ class PreplanillasController extends Controller
                }
                $prep->cant_safa=$cant_safa;
                $prep->tamano_safa=$arreglo['tamano_safa'];
-               $prep->total_extras=$total_act_ext;//falta el total de las actividades
+               $prep->tot_act_ext=$total_act_ext;//falta el total de las actividades
                $prep->safa_ext=$arreglo['safa_ext'];
                $prep->total_actividad=$total_act;
              }
@@ -259,7 +259,7 @@ class PreplanillasController extends Controller
             $prep->hora_ext = $arreglo['hora_ext'];
             $prep->total_extras=$ext;
           }
-          $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros;
+          $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros+$total_act_ext;
           $prep->salario_acum= $sal;
           $subsidio=0;
           $prep->inss_campo=$inss_lab;
@@ -269,6 +269,7 @@ class PreplanillasController extends Controller
           $prep->centro_costo=$arreglo['centro_costo'];
           $prep->save();
           $subs=0;
+          return $prep;
           return "Agregada! supuestamente normal";
         }
 
