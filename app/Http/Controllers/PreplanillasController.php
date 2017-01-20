@@ -235,6 +235,8 @@ class PreplanillasController extends Controller
                $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                $prep->tamano_cuje=$arreglo['tamano_cuje'];
                $prep->cuje_ext=$arreglo['cuje_ext'];
+               $prep->tot_cuje_ext=$total_ext;
+
              }
              else {//si es safadura
                $cant_safa=$arreglo['cant_safa'];
@@ -251,6 +253,7 @@ class PreplanillasController extends Controller
                $prep->tot_act_ext=$total_act_ext;//falta el total de las actividades
                $prep->safa_ext=$arreglo['safa_ext'];
                $prep->total_actividad=$total_act;
+               $prep->tot_safa_ext=$total_act_ext;
              }
           }
           else{ //Si es por Horas
