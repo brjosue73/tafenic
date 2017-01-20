@@ -136,32 +136,35 @@ class PlanillasController extends Controller
     return $pdf->inline('Planilla_catorcenal.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
-      $data =$this->calculo_planilla($peticion);
-      usort($data, function($a, $b) {
+      $datas =$this->calculo_planilla($peticion);
+      usort($datas, function($a, $b) {
         return strcmp($a["nombre"], $b["nombre"]);
           return $a['order'] < $b['order']?1:-1;
       });
       ini_set("memory_limit", "452M");
       ini_set("max_execution_time", "600");
-    // $data=array();
-    //   foreach ($datas as $dat) {
-    //     $array_1=array();
-    //     $array_1['nombre']=$dat['nombre'];
-    //     $array_1['total_septimo']=$dat["total_septimo"];
-    //     $array_1['total_basic']=$dat["total_basic"];
-    //     $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
-    //     $array_1['cant_horas_ext']=$dat["cant_horas_ext"];
-    //     $array_1['vac_tot']=$dat["vac_tot"];
-    //     $array_1['agui_tot']=$dat["agui_tot"];
-    //     $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
-    //     $array_1['total_deven']=$dat["total_deven"];
-    //     $array_1['salario_']=$dat["salario_"];
-    //     $array_1['inss']=$dat["inss"];
-    //     $array_1['fecha_ini']=$dat["fecha_ini"];
-    //     $array_1['fecha_fin']=$dat["fecha_fin"];
-    //     $data[]=$array_1;
-    //   }
-      return $data;
+    $data=array();
+      foreach ($datas as $dat) {
+        $array_1=array();
+        $array_1['nombre']=$dat['nombre'];
+        $array_1['total_septimo']=$dat["total_septimo"];
+        $array_1['total_basic']=$dat["total_basic"];
+        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+        $array_1['cant_horas_ext']=$dat["cant_horas_ext"];
+        $array_1['vac_tot']=$dat["vac_tot"];
+        $array_1['agui_tot']=$dat["agui_tot"];
+        $array_1['horas_ext_tot']=$dat["horas_ext_tot"];
+        $array_1['total_deven']=$dat["total_deven"];
+        $array_1['salario_']=$dat["salario_"];
+        $array_1['inss']=$dat["inss"];
+        $array_1['fecha_ini']=$dat["fecha_ini"];
+        $array_1['fecha_fin']=$dat["fecha_fin"];
+        $array_1['feriado']=$dat["feriado"];
+        $array_1['dinero_cuje']=$dat["dinero_cuje"];
+        $array_1['dinero_safa']=$dat["dinero_safa"];
+        $data[]=$array_1;
+      }
+      //return $data;
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
       $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm')->setOption('margin-top', 5)->setOption('margin-bottom', 3);
