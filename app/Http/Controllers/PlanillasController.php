@@ -161,7 +161,7 @@ class PlanillasController extends Controller
     //     $array_1['fecha_fin']=$dat["fecha_fin"];
     //     $data[]=$array_1;
     //   }
-
+      return $data;
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
       $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm')->setOption('margin-top', 5)->setOption('margin-bottom', 3);
@@ -492,6 +492,7 @@ class PlanillasController extends Controller
            $prestamo=0;
            $feriado1=0;$feriado2=0;
            $test1=0;$test2=0;
+           $dinero_cuje=0;$dinero_safa=0;
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -550,6 +551,9 @@ class PlanillasController extends Controller
                  $cant_horas_ext += $trab['hora_ext']; //Cantidad de horas extras
                  $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext']; //Cantidad de extras, ya sea safa o ensarte
                  $cant_act_ext += $act_ext_sum; //Cantidades totales de los extras
+
+                 $dinero_cuje+=$trab['tot_cuje_ext'];
+                 $dinero_safa+=$trab['tot_safa_ext'];
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
@@ -680,6 +684,8 @@ class PlanillasController extends Controller
                "prestamos"=>round($prestamo,2),
                "fecha_ini"=>$fecha_ini,
                "fecha_fin"=>$fecha_fin,
+               'dinero_cuje'=>round($dinero_cuje,2),
+               'dinero_safa'=>round($dinero_safa,2),
              ];
           $trabajadores[]=$array;
 
