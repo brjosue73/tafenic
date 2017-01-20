@@ -134,14 +134,14 @@
       <tr>
         <td> FERIADO </td>
         <td>  </td>
-        <td>  </td>
-        <td>  </td>
+        <td> CUJE </td>
+        <td> {{$dat['dinero_cuje']}} </td>
       </tr>
       <tr>
         <td> VACACIONES </td>
         <td> {{$dat['vac_tot']}} </td>
-        <td>  </td>
-        <td>  </td>
+        <td> SAFA </td>
+        <td> {{$dat['dinero_safa']}} </td>
       </tr>
       <tr>
         <td> AGUINALDO </td>
