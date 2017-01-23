@@ -10,6 +10,7 @@ use App\Labor;
 use App\Variable;
 use App\Actividad;
 use App\Lote;
+use DB;
 class FincasController extends Controller
 {
   public function planilla_finca(Request $request){
@@ -483,6 +484,7 @@ class FincasController extends Controller
       $sum_dev2=0;
       $sum_h_ext=0;
       $sum_tot_hext=0;
+      $sum_act_extra_tot=0;
       $sum_vacs=0;
       $sum_aguin=0;
       $sum_acum=0;
@@ -490,6 +492,8 @@ class FincasController extends Controller
       $sum_prestam=0;
       $sum_inss_pat=0;
       $sum_tot_recib=0;
+      $sum_dinero_activ=0;
+
       foreach ($data as $trab) {
         $sum_tot_recib +=$trab['salario_'];
         $sum_dias_trab+=$trab['dias'];
@@ -503,6 +507,9 @@ class FincasController extends Controller
         $sum_dev2+=$trab['devengado2'];
         $sum_h_ext+=$trab['cant_horas_ext'];
         $sum_tot_hext+=$trab['horas_ext_tot'];
+        $sum_act_extra_tot+=$trab['cant_act_ext'];
+        $sum_dinero_activ+=$trab['act_extra_tot'];
+
         $sum_vacs+=$trab['vac_tot'];
         $sum_aguin+=$trab['agui_tot'];
         $sum_acum+=$trab['total_acum'];
@@ -521,6 +528,7 @@ class FincasController extends Controller
          'sum_otros'=>round($sum_otros,2),
          'sum_feriados'=>round($sum_feriados,2),
          'sum_dev2'=>round($sum_dev2,2),
+         'sum_act_extra_tot'=>round($sum_act_extra_tot,2),
          'sum_h_ext'=>round($sum_h_ext,2),
          'sum_tot_hext'=>round($sum_tot_hext,2),
          'sum_vacs'=>$sum_vacs,
@@ -529,6 +537,7 @@ class FincasController extends Controller
          'sum_inss_lab'=>round($sum_inss_lab,2),
          'sum_prestam'=>round($sum_prestam,2),
          'sum_inss_pat'=>round($sum_inss_pat,2),
+         'sum_dinero_activ'=>round($sum_dinero_activ,2),
       ];
       return $totales;
     }
@@ -655,16 +664,14 @@ class FincasController extends Controller
         $finca = Finca::all();
         return response()->json($finca);
     }
-    public function create()
-    {
+    public function create(){
         /*enviar ultimo valor de Fincas*/
         $id = Finca::all()->max('id');
         $query = Finca::find($id);
         return $query;
         //
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $peticion = $request->all();
         $arreglo = $peticion["data"];
         $finca = new Finca($arreglo);
@@ -679,16 +686,13 @@ class FincasController extends Controller
         ];
         return $ultimo;
     }
-    public function show($id)
-    {
+    public function show($id){
         $finca = Finca::find($id);
         return response()->json($finca);
     }
-    public function edit($id)
-    {
+    public function edit($id){
     }
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id){
         $peticion = $request->all();
         $arreglo = $peticion["data"];
         $finca = Finca::find($id);
@@ -697,10 +701,124 @@ class FincasController extends Controller
         $finca->save();
         return "Done!";
     }
-    public function destroy($id)
-    {
+    public function destroy($id){
         $finca = Finca::find($id);
         $finca->delete();
         return "Registro Eliminado";
     }
+    public function reporteActiv(Request $request){
+      $cargo='tcampo';
+      $fecha_ini=$peticion['fecha_ini'];
+      $fecha_fin=$peticion['fecha_fin'];
+      $id_finca=$peticion['id_finca'];
+      $centro_costo=$peticion['centro_costo'];
+      $variables=Variable::all();
+      foreach ($variables as $variable) {
+        $alim_var=$variable->alimentacion;
+        $valor_dia= $variable->sal_diario;
+        $cuje_grand= $variable->cuje_grand;
+        $cuje_peq= $variable->cuje_peq;
+        $vacaciones=$variable->vacaciones/100;
+        $pago_dia=$variable->sal_diario;
+      }
+      $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
+                              ->where('id_finca',$id_finca)
+                              ->where('centro_costo',$centro_costo)
+                                ->get();
+
+
+      $tamano = sizeof($planillas);
+      $trabajadores=array();
+      $identif=array();
+      $trab=0;
+      $count=0;
+        for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
+          $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
+          $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
+          $converted_res = ($valor) ? 'true' : 'false';
+          if ($converted_res=='false') { //Sino esta repetido
+            $identif[]=$id_trab;
+            $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                    ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                    ->where('id_finca',$id_finca)
+                    ->where('centro_costo',$centro_costo)
+                    ->get();
+
+            /*******************************************Almacenar todas las labores(actividades) de ese CC***********************************************/
+            $users = DB::table('fincas')
+            ->join('actividades', 'fincas.id', '=', 'actividades.id_finca')
+            ->select('actividades.id', 'actividades.nombre')
+            ->where('fincas.id',$id_finca)
+            ->where('actividades.nombre','like',$nomb_cc)
+            ->get();
+            return $
+            $trab_septimo= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+                    ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                    ->get();
+
+             $dias2= $trabs->count();
+             $contar_dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
+             $dias=$contar_dias['dias'];
+             $dias_sept=$contar_dias['dias_sept'];
+
+             $dias_sept=$trab_septimo->count();
+             $salario_tot=0;
+             $alim_tot=0;
+             $vac_tot=0;
+             $agui_tot=0;
+             $extra_tot=0;
+             $horas_ext_tot=0;
+             $cuje_ext_tot=0;
+             $total_dev2=0;
+             $septimo=0;
+             $otros=0;
+             $feriados=0;
+             $feriado_tot=0;
+             $tot_dev=0;
+             $subsidios=0;
+             $cant_horas_ext=0;
+             $act_extra_tot=0;
+             $cant_act_ext=0;
+             $sum_tot_recib=0;
+             $prestamo=0;
+             $feriado1=0;$feriado2=0;
+
+             foreach ($trabs as $trab) {
+               $feriados+=$trab->feriados;
+               if($trab->tipo_feriado==1){//Feriado no trabajado
+                 $feriado1+=1;
+               }
+               if($trab->tipo_feriado==2){//Feriado no trabajado
+                 $feriado2+=1;
+               }
+             }
+             $calculo_septimo=[
+               'id_finAct'=>$peticion['id_finca'],
+               'centro_act'=>$peticion['centro_costo'],
+               'plani_trab'=>$trab_septimo,
+               'fecha_fin'=>$fecha_fin,
+               'fecha_ini'=>$fecha_ini,
+               'id_trab'=>$id_trab,
+               'valor_dia'=>$valor_dia,
+               'id_finca'=>$id_finca,
+               'feriados'=>$feriados,
+               'dias'=>$dias,
+             ];
+
+             $calculo_septimo=$this->calcular_septimos($calculo_septimo);
+             //return $calculo_septimo;
+             $cant_septimos=$calculo_septimo['dias_sept'];
+
+             $trabajador=Trabajador::find($id_trab);
+             $nombres=$trabajador->nombre;
+             $apellido=$trabajador->apellidos;
+             $nombre="$nombres $apellido";
+
+
+
+             $tot_sept=$calculo_septimo['tot_sept'];
+             $test1=$dias;
+             $feriado_nt=$feriado1*$valor_dia;
+             $feriado_t=$feriado2*($valor_dia*2);
+             $feriados=$feriado_t+$feriado_nt;
 }
