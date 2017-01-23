@@ -138,6 +138,11 @@
 			templateUrl: "partials/preplanillas/prepReport.html",
 			controller:"preplanilla"
 		})
+		.state('/labsRep', {
+			url: "/reporte-de-labores",
+			templateUrl: "partials/preplanillas/prepxFinc.html",
+			controller:"preplanillaLab"
+		})
 		.state('/preplanilla.editar',{
 			url: "/editar/:id",
 			templateUrl: "partials/preplanillas/prepEdit.html",
@@ -639,6 +644,7 @@
 	}]);
 
 	app.controller('prepxfinc',['$scope','$http','fincaResource', function(s,h,fr){
+		s.title = "Planilla por Fincas";
 		s.fincs = fr.query();
 		s.reporfinca = {};
 		s.ordeReal = 'nombre';
@@ -978,6 +984,25 @@
 					$('#ccnalerrorpin').css("display","none");
 				},3500);
 			});
+		}
+	}])
+	app.controller('preplanillaLab',['$scope','$http','fincaResource', function(s,h,fr){
+		s.title = "Planilla por Actividades";
+		s.fincs = fr.query();
+
+		s.getPrepxfinc = function(){
+				var activData = {
+					id_finca: s.reporfinca.id_finca,
+					fecha_ini: s.reporfinca.fecha_ini,
+					fecha_fin: s.reporfinca.fecha_fin,
+					centro_costo: s.reporfinca.centro_costo,
+					nombre_cc: $('[name=centro_costo] :selected').text()
+				}
+			console.log(activData)
+			h.post('/reporteActiv',activData)
+			.success(function(data){
+				console.log(data);
+			})
 		}
 	}]);
 }());
