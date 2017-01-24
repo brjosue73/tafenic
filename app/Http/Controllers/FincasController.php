@@ -744,14 +744,21 @@ class FincasController extends Controller
                     ->where('centro_costo',$centro_costo)
                     ->get();
 
-            /*******************************************Almacenar todas las labores(actividades) de ese CC***********************************************/
-            $users = DB::table('fincas')
+            /*******************************************Capturar todas las labores(actividades) de ese Centro de costos***********************************************/
+            $actividad = DB::table('fincas')
             ->join('actividades', 'fincas.id', '=', 'actividades.id_finca')
             ->select('actividades.id', 'actividades.nombre')
             ->where('fincas.id',$id_finca)
             ->where('actividades.nombre','like',$nomb_cc)
             ->get();
-            return $
+            $id_activ=$activ[id];
+            return $users;
+
+            $labores = DB::table('labores')
+            ->join('actividades', 'labores.id_actividad', '=', 'actividades.id')
+            ->select('labores.nombre', 'labores.id')
+            ->where('labores.id_actividad',$id_activ)
+            ->get();
             $trab_septimo= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
                     ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                     ->get();
