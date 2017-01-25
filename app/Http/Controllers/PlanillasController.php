@@ -68,7 +68,7 @@ class PlanillasController extends Controller
     $prestamos=$totales['sum_prestam'];
     $alim=$totales['sum_alim'];
     $tot_hext=$totales['sum_tot_hext'];
-
+    $dinero_cuje=$totales['sum_dinero_activ'];
 
     $a_vac=$dev+$septimo+$feriados;
     $vacs=$a_vac*0.083333;
