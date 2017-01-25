@@ -87,6 +87,10 @@ class TrabajadoresController extends Controller
           'otros'=>$trab['otros'],
           'prestamo'=>$trab['prestamo'],
           'feriados'=>$trab['feriados'],
+          'tot_cuje_peq'=>$trab['tot_cuje_peq'],
+          'tot_safa_peq'=>$trab['tot_safa_peq'],
+          'tot_cuje_grand'=>$trab['tot_cuje_grand'],
+          'tot_safa_gran'=>$trab['tot_safa_gran'],
 
           'finca'=>$finca->nombre,
           'actividad'=>$actividad->nombre,
