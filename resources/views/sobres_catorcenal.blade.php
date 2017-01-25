@@ -128,29 +128,26 @@
       <tr>
         <td> HORAS EXTRAS </td>
         <td> {{$dat['cant_horas_ext']}} </td>
-        <td>
-          <td>Cuje G.</td>
-          <td>{{ $dat['tot_cuje_gran'] }}</td>
-        </td>
-        <td>  </td>
+        <td> Cuje G.</td>
+        <td> {{ $dat['tot_cuje_gran'] }} </td>
       </tr>
       <tr>
         <td> FERIADO </td>
         <td> {{$dat['feriados']}} </td>
-        <td>  </td>
-        <td>  </td>
+        <td> Cuje Peq. </td>
+        <td> {{ $dat['tot_cuje_peq'] }} </td>
       </tr>
       <tr>
         <td> VACACIONES </td>
         <td> {{$dat['vac_tot']}} </td>
-        <td> SAFA </td>
-        <td> {{$dat['dinero_safa']}} </td>
+        <td> Safadura G. </td>
+        <td> {{$dat['tot_safa_gran']}} </td>
       </tr>
       <tr>
         <td> AGUINALDO </td>
         <td> {{$dat['agui_tot']}} </td>
-        <td>  </td>
-        <td>  </td>
+        <td> Safadura Peq. </td>
+        <td> {{ $dat['tot_safa_peq'] }} </td>
       </tr>
       <tr>
         <td> OTROS </td>

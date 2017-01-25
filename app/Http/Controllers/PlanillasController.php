@@ -29,7 +29,7 @@ class PlanillasController extends Controller
 
     $dev=$totales['sum_dev1'];
     $septimo=$totales['sum_septimos'];
-    $feriados=$totales['sum_feriados'];
+    $feriadoss=$totales['sum_feriados'];
     $tot_dev2=$totales['sum_dev2'];
     $prestamos=$totales['sum_prestam'];
     $alim=$totales['sum_alim'];
@@ -379,7 +379,7 @@ class PlanillasController extends Controller
       $sum_septimos+=$trab['total_septimo'];
       $sum_subsidios+=$trab['subsidio'];
       $sum_otros+=$trab['otros'];
-      $sum_feriados+=$trab['feriado'];
+      $sum_feriados+=$trab['feriados'];
       $sum_dev2+=$trab['devengado2'];
       $sum_h_ext+=$trab['cant_horas_ext'];
       $sum_tot_hext+=$trab['horas_ext_tot'];
