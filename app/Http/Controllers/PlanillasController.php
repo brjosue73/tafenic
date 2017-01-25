@@ -165,6 +165,11 @@ class PlanillasController extends Controller
         $array_1['feriado']=$dat["feriado"];
         $array_1['dinero_cuje']=$dat["dinero_cuje"];
         $array_1['dinero_safa']=$dat["dinero_safa"];
+        $array_1['tot_cuje_peq']=$dat["tot_cuje_peq"];
+        $array_1['tot_cuje_gran']=$dat["tot_cuje_gran"];
+        $array_1['tot_safa_peq']=$dat["tot_safa_peq"];
+        $array_1['tot_safa_peq']=$dat["tot_safa_peq"];
+
         $data[]=$array_1;
       }
       //return $data;
