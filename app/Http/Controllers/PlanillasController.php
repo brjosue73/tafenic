@@ -163,13 +163,16 @@ class PlanillasController extends Controller
         $array_1['inss']=$dat["inss"];
         $array_1['fecha_ini']=$dat["fecha_ini"];
         $array_1['fecha_fin']=$dat["fecha_fin"];
-        $array_1['feriado']=$dat["feriado"];
+        $array_1['feriados']=$dat["feriados"];
+        $array_1['otros']=$dat["otros"];
+
         $array_1['dinero_cuje']=$dat["dinero_cuje"];
         $array_1['dinero_safa']=$dat["dinero_safa"];
         $array_1['tot_cuje_peq']=$dat["tot_cuje_peq"];
         $array_1['tot_cuje_gran']=$dat["tot_cuje_gran"];
         $array_1['tot_safa_peq']=$dat["tot_safa_peq"];
         $array_1['tot_safa_peq']=$dat["tot_safa_peq"];
+
 
         $data[]=$array_1;
       }
@@ -694,7 +697,7 @@ class PlanillasController extends Controller
                "fecha_fin"=>($fecha_fin),
                "subsidio"=>round($subsidios,2),
                "otros"=>round($otros,2),
-               "feriado"=>round($feriados,2),
+               "feriados"=>round($feriados,2),
                "devengado2"=>round($total_dev2,2),
                "sum_tot_recib"=>round($sum_tot_recib,2),
                "prestamos"=>round($prestamo,2),
