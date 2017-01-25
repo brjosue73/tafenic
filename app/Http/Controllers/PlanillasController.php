@@ -147,6 +147,7 @@ class PlanillasController extends Controller
       ini_set("memory_limit", "452M");
       ini_set("max_execution_time", "600");
     $data=array();
+    //return $datas;
       foreach ($datas as $dat) {
         $array_1=array();
         $array_1['nombre']=$dat['nombre'];
@@ -172,7 +173,6 @@ class PlanillasController extends Controller
 
         $data[]=$array_1;
       }
-      //return $data;
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
       $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm')->setOption('margin-top', 5)->setOption('margin-bottom', 3);
@@ -504,6 +504,7 @@ class PlanillasController extends Controller
            $feriado1=0;$feriado2=0;
            $test1=0;$test2=0;
            $dinero_cuje=0;$dinero_safa=0;
+           $tot_cuje_peq=0;$tot_safa_peq=0;$tot_cuje_gran=0;$tot_safa_gran=0;
 
            $trabajador=Trabajador::find($id_trab);
            $nombres=$trabajador->nombre;
@@ -565,6 +566,10 @@ class PlanillasController extends Controller
 
                  $dinero_cuje+=$trab['tot_cuje_ext'];
                  $dinero_safa+=$trab['tot_safa_ext'];
+                 $tot_cuje_peq+=$trab['tot_cuje_peq'];
+                $tot_safa_peq+=$trab['tot_safa_peq'];
+                $tot_cuje_gran+=$trab['tot_cuje_gran'];
+                $tot_safa_gran+=$trab['tot_safa_gran'];
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
@@ -697,6 +702,10 @@ class PlanillasController extends Controller
                "fecha_fin"=>$fecha_fin,
                'dinero_cuje'=>round($dinero_cuje,2),
                'dinero_safa'=>round($dinero_safa,2),
+               'tot_cuje_peq'=>$tot_cuje_peq,
+                'tot_safa_peq'=>$tot_safa_peq,
+                'tot_cuje_gran'=>$tot_cuje_gran,
+                'tot_safa_gran'=>$tot_safa_gran,
              ];
           $trabajadores[]=$array;
 
