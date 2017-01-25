@@ -128,14 +128,17 @@
       <tr>
         <td> HORAS EXTRAS </td>
         <td> {{$dat['cant_horas_ext']}} </td>
-        <td>  </td>
+        <td>
+          <td>Cuje G.</td>
+          <td>{{ $dat['tot_cuje_gran'] }}</td>
+        </td>
         <td>  </td>
       </tr>
       <tr>
         <td> FERIADO </td>
+        <td> {{$dat['feriados']}} </td>
         <td>  </td>
-        <td> CUJE </td>
-        <td> {{$dat['dinero_cuje']}} </td>
+        <td>  </td>
       </tr>
       <tr>
         <td> VACACIONES </td>
@@ -151,7 +154,7 @@
       </tr>
       <tr>
         <td> OTROS </td>
-        <td>  </td>
+        <td> {{$dat['otros']}} </td>
         <td> TOTAL DEDUCCIONES </td>
         <td>  </td>
       </tr>
