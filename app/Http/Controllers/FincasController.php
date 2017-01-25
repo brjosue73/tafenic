@@ -59,7 +59,7 @@ class FincasController extends Controller
         $prestamos=$suma['sum_prestam'];
         $alim=$suma['sum_alim'];
         $tot_hext=$suma['sum_tot_hext'];
-        $dinero_cuje=$totales['sum_dinero_activ'];
+        $dinero_cuje=$suma['sum_dinero_activ'];
         $a_vac=$dev+$septimo+$feriados;
         $vacs=$a_vac*0.083333;
         $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
