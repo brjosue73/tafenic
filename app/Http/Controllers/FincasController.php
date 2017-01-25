@@ -59,10 +59,10 @@ class FincasController extends Controller
         $prestamos=$suma['sum_prestam'];
         $alim=$suma['sum_alim'];
         $tot_hext=$suma['sum_tot_hext'];
-
+        $dinero_cuje=$totales['sum_dinero_activ'];
         $a_vac=$dev+$septimo+$feriados;
         $vacs=$a_vac*0.083333;
-        $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext;
+        $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
         $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
         $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
@@ -168,20 +168,6 @@ class FincasController extends Controller
                  $feriado2+=1;
                }
              }
-
-            //  if($feriado1>0){
-            //    $dias_sept=$dias2;
-            //    //$dias2=$dias2-$feriado1;
-            //  }
-            //  elseif($feriado2>0){
-            //    $dias_sept=$dias2;
-            //    $dias2=$dias2;
-            //  }
-            //  else {
-            //    $dias_sept=$dias2;
-            //  }
-
-
 
              $calculo_septimo=[
                'id_finAct'=>$peticion['id_finca'],
