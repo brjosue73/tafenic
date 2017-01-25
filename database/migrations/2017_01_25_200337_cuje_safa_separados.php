@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TotActExt extends Migration
+class CujeSafaSeparados extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class TotActExt extends Migration
     public function up()
     {
         Schema::table('preplanillas', function (Blueprint $table) {
-          $table->double('tot_act_ext');
-          $table->double('tot_cuje_ext');
-          $table->double('tot_safa_ext');
+          $table->double('tot_cuje_peq');
+          $table->double('tot_cuje_gran');
+          $table->double('tot_safa_peq');
+          $table->double('tot_safa_gran');
         });
     }
 
