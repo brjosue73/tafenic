@@ -117,7 +117,7 @@
             <td> {{ number_format( $dat['total_septimo'] ,2 )}} </td>
             <td> {{ number_format( $dat['subsidio'] ,2 )}}</td>
             <td> {{ number_format( $dat['otros'] ,2 )}}</td>
-            <td> {{ number_format( $dat['feriado'] ,2 )}} </td>
+            <td> {{ number_format( $dat['feriados'] ,2 )}} </td>
             <td> {{ number_format( $dat['devengado2'] ,2 )}}</td>
 
             <td> {{ $dat['cant_horas_ext'] }}</td>
