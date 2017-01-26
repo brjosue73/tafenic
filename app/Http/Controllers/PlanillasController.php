@@ -24,6 +24,11 @@ class PlanillasController extends Controller
      return $data;
   }
   public function planilla_general(Request $request){
+    $data=$this->planilla_general3($request);
+      return $data;
+
+  }
+  public function planilla_general3($request){
     $data=$this->planilla_general2($request);
     $totales=$this->sum_totales($data);
 
@@ -59,7 +64,7 @@ class PlanillasController extends Controller
     $peticion=$request->all();
     $funcion=$peticion['funcion'];
     if ($funcion == 'Generar Imprimible'){
-      $data=$this->planilla_general2($request);
+    $data=$this->planilla_general2($request);
     $totales=$this->sum_totales($data);
     $dev=$totales['sum_dev1'];
     $septimo=$totales['sum_septimos'];
@@ -98,7 +103,6 @@ class PlanillasController extends Controller
     $i=0;
     $encabezado='<!DOCTYPE html>
     <html>
-
     <head>
         <style type="text/css">
             /*(bootstrap source)*/
@@ -120,7 +124,6 @@ class PlanillasController extends Controller
             }
         </style>
     </head>
-
     <body>
         <div class="cabecera">
           <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
@@ -131,7 +134,6 @@ class PlanillasController extends Controller
 
         </div>
     </body>
-
     </html>';
     $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
     $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
@@ -192,18 +194,47 @@ class PlanillasController extends Controller
       return $pdf->stream('Sobre.pdf');
     }
     elseif($funcion == 'Billetes'){
+      //$general=$this->planilla_general3($request);
+      //return $general;
       $peticion=$request->all();
       //$data =$this->billetes($peticion);
       $planillas=$this->calculo_planilla($peticion);
+      // usort($planillas, function($a, $b) {
+      //   return strcmp($a["nombre"], $b["nombre"]);
+      //     return $a['order'] < $b['order']?1:-1;
+      // });
 
-      usort($planillas, function($a, $b) {
-        return strcmp($a["nombre"], $b["nombre"]);
-          return $a['order'] < $b['order']?1:-1;
-      });
+      $totales=$this->sum_totales($planillas);
+      $dev=$totales['sum_dev1'];
+      $septimo=$totales['sum_septimos'];
+      $feriados=$totales['sum_feriados'];
+      $tot_dev2=$totales['sum_dev2'];
+      $prestamos=$totales['sum_prestam'];
+      $alim=$totales['sum_alim'];
+      $tot_hext=$totales['sum_tot_hext'];
+      $dinero_cuje=$totales['sum_dinero_activ'];
+
+      $a_vac=$dev+$septimo+$feriados;
+      $vacs=$a_vac*0.083333;
+      $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
+      // $tot_acum=$vacs+$vacs+$tot_dev2;
+      $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+      $tot_recib=$tot_acum-$inss_lab-$prestamos;
+      $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+      $totales['sum_acum']=round($tot_acum,2);
+      $totales['sum_aguin']=round($vacs,2);
+      $totales['sum_vacs']=round($vacs,2);
+      $totales['sum_inss_lab']=round($inss_lab,2);
+      $totales['sum_tot_recib']=round($tot_recib,2);
+      $totales['sum_inss_pat']=round($inss_pat,2);
+      //return $totales;
       $pdf='';
-      $data =$this->calcular_billetes($planillas);
+      $data=$this->calcular_billetes($planillas, $totales);
+      //return $data;
+      // $totales2=$this->sum_totales($planillas);
+      // return $totales2;
       $nombres=$this->nombres_billetes($planillas);
-      $pdf = \PDF::loadView('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
+    $pdf = \PDF::loadView('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf->setPaper('a4')->setOrientation('landscape');
       return $pdf->inline('Billetes_catorcenal.pdf');
     }
@@ -269,13 +300,54 @@ class PlanillasController extends Controller
     $data =$this->calcular_billetes($planillas);
     return $data;
   }
+  public function calc_billetes2($totales){
+
+    $billete=$totales['sum_tot_recib'];
+    $numero_de_billetes_500 = $billete / 500;
+    $billete = $billete % 500;
+    $numero_de_billetes_500=floor($numero_de_billetes_500);
+
+    $numero_de_billetes_200 = floor($billete / 200);
+    $billete = $billete % 200;
+
+    $numero_de_billetes_100 =floor($billete / 100);
+    $billete = $billete % 100;
+
+    $numero_de_billetes_50 =floor ($billete / 50);
+    $billete = $billete % 50;
+
+    $numero_de_billetes_20 = floor($billete / 20);
+    $billete = $billete % 20;
+
+    $numero_de_billetes_10 =floor ($billete / 10);
+    $billete = $billete % 10;
+
+    $numero_de_billetes_5 = floor($billete / 5);
+    $billete = $billete % 5;
+
+    $numero_de_billetes_1 = floor($billete / 1);
+    $billete = $billete % 1;
+    $num[0]=$billete;
+    $num[500]=$numero_de_billetes_500;
+    $num[200]=$numero_de_billetes_200;
+    $num[100]=$numero_de_billetes_100;
+    $num[50]=$numero_de_billetes_50;
+    $num[20]=$numero_de_billetes_20;
+    $num[10]=$numero_de_billetes_10;
+    $num[5]=$numero_de_billetes_5;
+    $num[1]=$numero_de_billetes_1;
+    $num[2]=$billete;
+    $todos[]=$num;
+    return $todos;
+  }
   public function nombres_billetes($planillas){
     foreach ($planillas as $planilla) {
       $nombres[]=$planilla['nombre'];
     }
     return $nombres;
   }
-  public function calcular_billetes($planillas){
+  public function calcular_billetes($planillas, $totales){
+    $tot_dinero=$totales['sum_tot_recib'];
     foreach ($planillas as $planilla) {
       $nums[]=$planilla['salario_'];
     }
@@ -340,10 +412,10 @@ class PlanillasController extends Controller
     $cant_ind[500]=$tot_500;$cant_ind[200]=$tot_200;$cant_ind[100]=$tot_100;$cant_ind[50]=$tot_50;$cant_ind[20]=$tot_20;
     $cant_ind[10]=$tot_10;$cant_ind[5]=$tot_5;$cant_ind[1]=$tot_1;$cant_ind[0]=$tot_billetes;
     $tot_mul=$cant_mult_500+$cant_mult_200+$cant_mult_100+$cant_mult_50+$cant_mult_20+$cant_mult_10+$cant_mult_5+$cant_mult_1;
-    $dif=round($tot_billetes-$tot_mul,2);
+    $dif=round($tot_dinero-$tot_mul,2);
     $todos['diferencia']=$dif;
     $todos['cantidad_multiplicada']=$tot_mul;
-    $todos['total_billetes']=$tot_billetes;
+    $todos['total_billetes']=$tot_dinero;
     $todos['total_individual']=$cant_ind;
     return $todos;
   }
