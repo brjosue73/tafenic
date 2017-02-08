@@ -165,10 +165,12 @@ class PreplanillasController extends Controller
                    $total_act=round($cant_cujes * $cuje_peq,2);
                    $total_act=$dia;
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
+                   $prep->tot_cuje_peq=$arreglo['tot_cuje_peq'];
                  }
                  else {//cuje grande
                    $total_act=round($cant_cujes * $cuje_grand,2);
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
+                   $prep->tot_cuje_peq=$total_act_ext;
                  }
                  $total_act=$dia;
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
@@ -182,6 +184,7 @@ class PreplanillasController extends Controller
                  }
                  else { //safadura grande
                    $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
+                   $prep->tot_safa_gran=$total_act_ext;
                  }
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
