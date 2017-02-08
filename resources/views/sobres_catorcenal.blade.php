@@ -127,7 +127,7 @@
       </tr>-->
       <tr>
         <td> HORAS EXTRAS </td>
-        <td> {{$dat['cant_horas_ext']}} </td>
+        <td> {{$dat['horas_ext_tot']}} </td>
         <td> Cuje G.</td>
         <td> {{ $dat['tot_cuje_gran'] }} </td>
       </tr>
