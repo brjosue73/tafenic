@@ -72,7 +72,7 @@ class TrabajadoresController extends Controller
       $trabs= Preplanilla::where('id_trabajador',$id_trab)
                                 ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
                                 ->get();
-
+      //return $trabs;
       foreach ($trabs as $trab) {
         $finca=Finca::find($trab->id_finca);
         $actividad=Actividad::find($trab->id_actividad);

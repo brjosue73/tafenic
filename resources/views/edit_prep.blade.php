@@ -126,7 +126,7 @@
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="label-control">Cant. Cujes:</label>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" value="{{$data->cant_cujes}}">
       </div>
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">

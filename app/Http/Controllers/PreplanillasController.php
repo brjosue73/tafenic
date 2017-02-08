@@ -165,10 +165,12 @@ class PreplanillasController extends Controller
                    $total_act=round($cant_cujes * $cuje_peq,2);
                    $total_act=$dia;
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
+                   $prep->tot_cuje_peq=$total_act_ext;
                  }
                  else {//cuje grande
                    $total_act=round($cant_cujes * $cuje_grand,2);
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
+                   $prep->tot_cuje_gran=$total_act_ext;
                  }
                  $total_act=$dia;
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
@@ -179,9 +181,11 @@ class PreplanillasController extends Controller
                  $cant_safa=round($arreglo['cant_safa'],2);
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
+                   $prep->tot_safa_peq  =$total_act_ext;
                  }
                  else { //safadura grande
                    $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
+                   $prep->tot_safa_gran=$total_act_ext;
                  }
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
@@ -303,6 +307,19 @@ class PreplanillasController extends Controller
       $actividad=Actividad::find($prep->id_actividad);
       $labor=Labor::find($prep->id_labor);
       //return $prep;
+      tamano_cuje   tamano_safa
+      if ($prep['tamano_cuje']==0) {
+        $tamano_cuje=['valor'=>'0','name'=>'Pequeño'];
+      }
+      else {
+        $tamano_cuje=['valor'=>'1','name'=>'Grande'];
+      }
+      if ($prep['tamano_safa']==0) {
+        $tamano_safa=['valor'=>'0','name'=>'Pequeño'];
+      }
+      else {
+        $tamano_safa=['valor'=>'1','name'=>'Grande'];
+      }
       return view('edit_prep', ['data' => $prep,
       'trab'=>$trab,
       'finc'=>$finc,
@@ -312,6 +329,12 @@ class PreplanillasController extends Controller
       'resp_finc'=>$resp_finc,
       'actividad'=>$actividad,
       'labor'=>$labor,
+      'cant_cujes'=>$prep['cant_cujes'],
+      'cuje_ext'=>$prep['cuje_ext'],
+      'safa_ext'=>$prep['safa_ext'],
+      'cant_safa'=>$prep['cant_safa'],
+      'tamano_cuje'=>$tamano_cuje,
+      'tamano_safa'=>$tamano_safa,
 
     ]);
 
