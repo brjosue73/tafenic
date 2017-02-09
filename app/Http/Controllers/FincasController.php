@@ -496,7 +496,6 @@ class FincasController extends Controller
         $sum_tot_hext+=$trab['horas_ext_tot'];
         $sum_act_extra_tot+=$trab['cant_act_ext'];
         $sum_dinero_activ+=$trab['act_extra_tot'];
-
         $sum_vacs+=$trab['vac_tot'];
         $sum_aguin+=$trab['agui_tot'];
         $sum_acum+=$trab['total_acum'];
@@ -536,6 +535,8 @@ class FincasController extends Controller
       $sum_septimos=0;
       $sum_subsidios=0;
       $sum_otros=0;
+      $sum_act_extra_tot=0;
+      $sum_dinero_activ=0;
       $sum_feriados=0;
       $sum_dev2=0;
       $sum_h_ext=0;
@@ -548,6 +549,9 @@ class FincasController extends Controller
       $sum_inss_pat=0;
       $sum_tot_recib=0;
       foreach ($data as $trab) {
+        $sum_act_extra_tot+=$trab['cant_act_ext'];
+        $sum_dinero_activ+=$trab['act_extra_tot'];
+
         $sum_tot_recib +=$trab['sum_tot_recib'];
         $sum_dias_trab+=$trab['sum_dias_trab'];
         $sum_dev1+=$trab['sum_dev1'];
@@ -578,6 +582,8 @@ class FincasController extends Controller
         'sum_otros'=>round($sum_otros,2),
         'sum_feriados'=>round($sum_feriados,2),
         'sum_dev2'=>round($sum_dev2,2),
+        'sum_act_extra_tot'=>round($sum_act_extra_tot,2),
+        'sum_dinero_activ'=>round($sum_dinero_activ,2),
         'sum_h_ext'=>round($sum_h_ext,2),
         'sum_tot_hext'=>round($sum_tot_hext,2),
         'sum_vacs'=>$sum_vacs,
