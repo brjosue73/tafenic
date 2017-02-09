@@ -549,8 +549,8 @@ class FincasController extends Controller
       $sum_inss_pat=0;
       $sum_tot_recib=0;
       foreach ($data as $trab) {
-        $sum_act_extra_tot+=$trab['cant_act_ext'];
-        $sum_dinero_activ+=$trab['act_extra_tot'];
+        $sum_act_extra_tot+=$trab['sum_act_extra_tot'];
+        $sum_dinero_activ+=$trab['sum_dinero_activ'];
 
         $sum_tot_recib +=$trab['sum_tot_recib'];
         $sum_dias_trab+=$trab['sum_dias_trab'];
