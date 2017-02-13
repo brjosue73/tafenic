@@ -307,7 +307,6 @@ class PreplanillasController extends Controller
       $actividad=Actividad::find($prep->id_actividad);
       $labor=Labor::find($prep->id_labor);
       //return $prep;
-      tamano_cuje   tamano_safa
       if ($prep['tamano_cuje']==0) {
         $tamano_cuje=['valor'=>'0','name'=>'Pequeño'];
       }
