@@ -699,34 +699,19 @@ class FincasController extends Controller
         $finca->delete();
         return "Registro Eliminado";
     }
+
     public function reporteActiv(Request $request){
-      $cargo='tcampo';
-      $peticion=$request;
-      $fecha_ini=$peticion['fecha_ini'];
-      $fecha_fin=$peticion['fecha_fin'];
-      $id_finca=$peticion['id_finca'];
-      $centro_costo=$peticion['centro_costo'];
-      $nombre_cc=$peticion['nombre_cc'];
-      $variables=Variable::all();
+      $peticion=$request; $fecha_ini=$peticion['fecha_ini']; $fecha_fin=$peticion['fecha_fin']; $id_finca=$peticion['id_finca'];
+      $centro_costo=$peticion['centro_costo']; $nombre_cc=$peticion['nombre_cc']; $variables=Variable::all();
       foreach ($variables as $variable) {
-        $alim_var=$variable->alimentacion;
-        $valor_dia= $variable->sal_diario;
-        $cuje_grand= $variable->cuje_grand;
-        $cuje_peq= $variable->cuje_peq;
-        $vacaciones=$variable->vacaciones/100;
-        $pago_dia=$variable->sal_diario;
+        $alim_var=$variable->alimentacion; $valor_dia= $variable->sal_diario; $cuje_grand= $variable->cuje_grand; $cuje_peq= $variable->cuje_peq;
+         $vacaciones=$variable->vacaciones/100; $pago_dia=$variable->sal_diario;
       }
       $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->where('id_finca',$id_finca)
                               ->where('centro_costo',$centro_costo)
                                 ->get();
-
-
-      $tamano = sizeof($planillas);
-      $trabajadores=array();
-      $identif=array();
-      $trab=0;
-      $count=0;
+      $tamano = sizeof($planillas); $trabajadores=array(); $identif=array(); $trab=0; $count=0;
         for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
           $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
           $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
@@ -824,7 +809,6 @@ class FincasController extends Controller
                 $feriado_t=$feriado2*($valor_dia*2);
                 $feriados=$feriado_t+$feriado_nt;
                 //Sumar los valores de total y agregarlos al array 1-> incluyendo los septimos y dias trabs
-
                 //agregarlos al array 1 (La suma de los valores)
               }//Fin Si hay valores en esa actividad
 
