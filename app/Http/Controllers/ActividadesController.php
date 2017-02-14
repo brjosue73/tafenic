@@ -148,14 +148,16 @@ class ActividadesController extends Controller
               }
               else{
                 $tot=0;
+                $master=array();
                 foreach ($lab_array as $total) {
                   $tot+=$total['total'];
+                  if($total['total']!=0){
+                    $master[]=$total;
+                  }
                 }
-
-                $lab_array[]=$tot;
+                $master[]=$tot;
                 //return 'total: '.$tot . 'suma: '. $dat['sum_acum'];
-
-                return $lab_array;
+                return $master;
               }
             }
             $sum=0;
