@@ -140,7 +140,7 @@
 		})
 		.state('/labsRep', {
 			url: "/reporte-de-labores",
-			templateUrl: "partials/preplanillas/prepxFinc.html",
+			templateUrl: "partials/preplanillas/prepxLabs.html",
 			controller:"preplanillaLab"
 		})
 		.state('/preplanilla.editar',{
@@ -990,7 +990,7 @@
 		s.title = "Planilla por Actividades";
 		s.fincs = fr.query();
 
-		s.getPrepxfinc = function(){
+		s.getPrepxLab = function(){
 				var activData = {
 					id_finca: s.reporfinca.id_finca,
 					fecha_ini: s.reporfinca.fecha_ini,
@@ -1001,7 +1001,8 @@
 			console.log(activData)
 			h.post('/reporteActiv',activData)
 			.success(function(data){
-				console.log(data);
+				s.totLab = data;
+				//console.log(data);
 			})
 		}
 	}]);
