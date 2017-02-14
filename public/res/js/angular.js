@@ -999,7 +999,7 @@
 					nombre_cc: $('[name=centro_costo] :selected').text()
 				}
 			console.log(activData)
-			h.post('/rep_activid',activData)
+			h.post('/reporteActiv',activData)
 			.success(function(data){
 				console.log(data);
 			})

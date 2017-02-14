@@ -16,7 +16,8 @@ Route::group(['middleware' => 'web'], function () {
     // Only authenticated users may enter...
     Route::resource('trabajadores','TrabajadoresController');
     Route::resource('fincas','FincasController');
-    Route::post('reporteActiv','FincasController@reporteActiv');
+    Route::post('reporteActiv','ActividadesController@reporteAct');
+    //Route::post('reporteActiv','ActividadesController@reporteActiv');
     Route::resource('actividad','ActividadesController');
     Route::resource('labor','LaboresController');
     Route::resource("preplanilla",'PreplanillasController');
