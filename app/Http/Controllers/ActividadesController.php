@@ -152,8 +152,8 @@ class ActividadesController extends Controller
                   $tot+=$total['total'];
                 }
 
-                $lab_array[]=$dat['sum_acum'];
-                return 'total: '.$tot . 'suma: '. $dat['sum_acum'];
+                $lab_array[]=$tot;
+                //return 'total: '.$tot . 'suma: '. $dat['sum_acum'];
 
                 return $lab_array;
               }
