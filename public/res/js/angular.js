@@ -140,7 +140,7 @@
 		})
 		.state('/labsRep', {
 			url: "/reporte-de-labores",
-			templateUrl: "partials/preplanillas/prepxFinc.html",
+			templateUrl: "partials/preplanillas/prepxLabs.html",
 			controller:"preplanillaLab"
 		})
 		.state('/preplanilla.editar',{
