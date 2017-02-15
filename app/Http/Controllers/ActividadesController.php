@@ -131,23 +131,24 @@ class ActividadesController extends Controller
                   $i=-1;
                   foreach ($lab_array as $lab_tot) {
                     $i++;
-                    if($lab_ind==$lab_array[$i]['nombre']){
+                    if($lab_ind==$lab_tot['nombre']){
                       $acum_por_act=$dat['total_acum']/$tot_labores;
-                      $var+=$acum_por_act;
-                      $total_ant=$lab_array[$i]['total'];
+                      $total_ant=$lab_tot['total'];
                       $tot_nuevo=$total_ant+$acum_por_act;
                       $array1=[
-                      'nombre'=>$lab_array[$i]['nombre'],
+                      'nombre'=>$lab_tot['nombre'],
                       'total'=>$tot_nuevo,
                       ];
                       //return $array1;
                       $lab_array[$i]=$array1;
+
                     }
                   }
                 }
               }
               else{
                 $tot=0;
+                //return $lab_array;
                 $master=array();
                 foreach ($lab_array as $total) {
                   $tot+=$total['total'];
@@ -155,15 +156,23 @@ class ActividadesController extends Controller
                     $master[]=$total;
                   }
                 }
-                $master[]=$tot;
-                //return 'total: '.$tot . 'suma: '. $dat['sum_acum'];
-                return $master;
+                $ultimo_tot=array();
+                foreach ($master as $mast) {
+                  if (in_array($mast, $ultimo_tot)){
+                    //alguna
+                    }
+                  else{
+                    $ultimo_tot[]=$mast;
+                    }
+                }
+                $ultimo_tot[]=$tot;
+                return $ultimo_tot;
               }
             }
             $sum=0;
             $tamano=sizeof($data);
             /****************************Aqui va lo cortado********************************/
-          }            return $lab_array;
+          }            return $master;
 //Fin de saber sino esta repetido 3
            //return $lab_comp;
 
