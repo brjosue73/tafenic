@@ -149,15 +149,9 @@ class ActividadesController extends Controller
               else{
                 $tot=0;
                 //return $lab_array;
-                $master=array();
-                foreach ($lab_array as $total) {
-                  $tot+=$total['total'];
-                  if($total['total']!=0){
-                    $master[]=$total;
-                  }
-                }
+
                 $ultimo_tot=array();
-                foreach ($master as $mast) {
+                foreach ($lab_array as $mast) {
                   if (in_array($mast, $ultimo_tot)){
                     //alguna
                     }
@@ -165,8 +159,16 @@ class ActividadesController extends Controller
                     $ultimo_tot[]=$mast;
                     }
                 }
-                $ultimo_tot[]=$tot;
-                return $ultimo_tot;
+                $master=array();
+                foreach ($ultimo_tot as $total) {
+                  $tot+=$total['total'];
+                  if($total['total']!=0){
+                    $master[]=$total;
+                  }
+                }
+
+                $master[]=$tot;
+                return $master;
               }
             }
             $sum=0;
