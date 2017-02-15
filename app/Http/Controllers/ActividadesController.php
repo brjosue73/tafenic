@@ -128,9 +128,8 @@ class ActividadesController extends Controller
                 $labor_trab=$dat['labores'];
                 $tot_labores=sizeof($labor_trab);
                 foreach ($labor_trab as $lab_ind) {
-                  $i=-1;
+                  $i=0;
                   foreach ($lab_array as $lab_tot) {
-                    $i++;
                     if($lab_ind==$lab_array[$i]['nombre']){
                       $acum_por_act=$dat['total_acum']/$tot_labores;
                       $var+=$acum_por_act;
@@ -142,6 +141,8 @@ class ActividadesController extends Controller
                       ];
                       //return $array1;
                       $lab_array[$i]=$array1;
+                      $i++;
+
                     }
                   }
                 }
@@ -151,9 +152,18 @@ class ActividadesController extends Controller
                 $master=array();
                 foreach ($lab_array as $total) {
                   $tot+=$total['total'];
+                  if (in_array("Glenn", $people))
+                  {
+                  echo "Match found";
+                  }
+                else
+                  {
+                  echo "Match not found";
+                  }
                   if($total['total']!=0){
                     $master[]=$total;
                   }
+
                 }
                 $master[]=$tot;
                 //return 'total: '.$tot . 'suma: '. $dat['sum_acum'];
