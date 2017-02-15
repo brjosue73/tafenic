@@ -59,9 +59,9 @@
         <td> <% totalLab.nombre %> </td>
         <td> <% totalLab.total %> </td>
       </tr>
-      <tr>
+      <tr data-ng-repeat="sumTotLab in sumTotLabs">
         <td>Total</td>
-        <td>Plata</td>
+        <td><% sumTotLab.total %></td>
 
       </tr>
     </tbody>

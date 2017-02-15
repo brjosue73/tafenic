@@ -1001,8 +1001,11 @@
 			console.log(activData)
 			h.post('/reporteActiv',activData)
 			.success(function(data){
-				s.totLab = data;
-				//console.log(data);
+				s.totLab = [];
+				for (var i = 0; i < data.length - 1; i++) {
+					s.totLab.push(data[i]);
+				}
+				s.sumTotLab = data[data.length - 1];
 			})
 		}
 	}]);
