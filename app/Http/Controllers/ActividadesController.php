@@ -118,6 +118,7 @@ class ActividadesController extends Controller
               'nombre'=>$labor2['nombre'],
               'total'=>0,
               'cantidad'=>0,
+              'total2'=>0,
             ];
               $lab_array[]=$array1;
             }
@@ -134,9 +135,9 @@ class ActividadesController extends Controller
                   foreach ($lab_array as $lab_tot) {
                     $i++;
                     if($lab_ind==$lab_tot['nombre']){
-                      // $cantid=$lab_array[$i]['cantidad']+1;
+                      $cantid=$lab_array[$i]['cantidad']+1;
                       // $cant_2=$cantid;
-                      // $lab_array[$i]['cantidad']=$cant_2;
+                      $lab_array[$i]['cantidad']=$cantid;
                       $acum_por_act=$dat['total_acum']/$tot_labores;
                       $total_ant=$lab_tot['total'];
                       $tot_nuevo=$total_ant+$acum_por_act;
@@ -157,7 +158,8 @@ class ActividadesController extends Controller
                 //return $lab_array;
 
                 $ultimo_tot=array();
-                foreach ($lab_array as $mast) {
+                foreach ($lab_array as $mast) {//quito los repetidos
+
                   if (in_array($mast, $ultimo_tot)){
                     //alguna
                     }
@@ -166,12 +168,20 @@ class ActividadesController extends Controller
                     }
                 }
                 $master=array();
-                foreach ($ultimo_tot as $total) {
-                  $tot+=$total['total'];
+                foreach ($ultimo_tot as $total) {//elimino los valores en 0 y sumo los valores
+                  //$tot+=$total['total'];
                   if($total['total']!=0){
                     $master[]=$total;
                   }
                 }
+                $k=0;
+                foreach ($master as $master2) {
+                  $tot+=$master2['total'];
+                  $tot2=$total_acum/$master2['cantidad'];
+                  $master[$k]['total2']=$tot2;
+                  $k++;
+                }
+
 
                 $master[]=$tot;
                 return $master;
