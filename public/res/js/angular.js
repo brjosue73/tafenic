@@ -1002,10 +1002,11 @@
 			h.post('/reporteActiv',activData)
 			.success(function(data){
 				s.totLab = [];
-				for (var i = 0; i < data.length - 1; i++) {
+				for (var i = 0; i < data.length - 2; i++) {
 					s.totLab.push(data[i]);
 				}
 				s.sumTotLab = data[data.length - 1];
+				s.sumTotDia = data[data.length - 2];
 			})
 		}
 	}]);
