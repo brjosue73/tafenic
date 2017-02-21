@@ -56,9 +56,7 @@ class PlanillasController extends Controller
     $data[]=$totales;
     return $data;
   }
-  public function inss_catorcenal(Request $request){
-
-  }
+  public function inss_catorcenal(Request $request){}
 
   public function reporte_planilla(Request $request){
     $peticion=$request->all();

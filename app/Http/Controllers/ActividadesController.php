@@ -109,29 +109,44 @@ class ActividadesController extends Controller
             $array1=array();
             $array2=array();
             $lab_array=array();
+            $tamano=sizeof($data);
 
             $labores2=Labor::where('id_actividad',$id_activ)->get();
             foreach ($labores2 as $labor2) {
               $labores[]=$labor2['nombre'];
-
               $array1=[
               'nombre'=>$labor2['nombre'],
               'total'=>0,
               'cantidad'=>0,
-              'total2'=>0,
+              'tot_dias'=>$data[$tamano-1]['sum_dias_trab'],
+              'tot_acum'=>$data[$tamano-1]['sum_acum'],
             ];
               $lab_array[]=$array1;
             }
             $var=0;
 
             $tamano=sizeof($data);
+            $contad=0;
+            $arraytest=array();
+            $arraytest2=array();
             foreach ($data as $dat) {
               if($dat!=$data[$tamano-1]){
                 $total_acum=$data[$tamano-1]['sum_acum'];
                 $labor_trab=$dat['labores'];
                 $tot_labores=sizeof($labor_trab);
+
+                foreach ($labor_trab as $lab_ind) {
+                  $acum_ind=$dat['total_acum'];
+                  $arraytest=[
+                  'nombre'=>$lab_ind,
+                  'total'=>$acum_ind/$tot_labores,
+                  ];
+                  $arraytest2[]=$arraytest;
+                }
+
                 foreach ($labor_trab as $lab_ind) {
                   $i=-1;
+                  $contad++;
                   foreach ($lab_array as $lab_tot) {
                     $i++;
                     if($lab_ind==$lab_tot['nombre']){
@@ -148,41 +163,46 @@ class ActividadesController extends Controller
                       $lab_array[$i]['total']=$tot_nuevo;
                       //return $array1;
                       //$lab_array[$i]=$array1;
-
                     }
                   }
+                  /**********4*********/
                 }
               }
               else{
-                $tot=0;
-                //return $lab_array;
+                $i=-1;
 
+                $tot=0;
+                $tot_dias=0;
                 $ultimo_tot=array();
                 foreach ($lab_array as $mast) {//quito los repetidos
-
-                  if (in_array($mast, $ultimo_tot)){
-                    //alguna
-                    }
-                  else{
-                    $ultimo_tot[]=$mast;
-                    }
+                  if (in_array($mast, $ultimo_tot)){}else{$ultimo_tot[]=$mast;}
                 }
                 $master=array();
+                $dias_ind=0;
                 foreach ($ultimo_tot as $total) {//elimino los valores en 0 y sumo los valores
                   //$tot+=$total['total'];
+                  $dias_ind+=$total['cantidad'];
                   if($total['total']!=0){
                     $master[]=$total;
                   }
                 }
                 $k=0;
+
                 foreach ($master as $master2) {
-                  $tot+=$master2['total'];
-                  $tot2=$total_acum/$master2['cantidad'];
-                  $master[$k]['total2']=$tot2;
+
+                  $porc=($master2['cantidad']*100)/$dias_ind;
+                  $tot2= ($porc*$master[0]['tot_acum'])/100;
+                  $tot+=$tot2;
+                  $porc_cant=($master2['cantidad']*100)/$dias_ind;
+                  $cantid=round(($porc_cant*$master2['tot_dias'])/100 , 0);
+                  $tot_dias+=$cantid;
+                  // $tot2=$total_acum/$master2['cantidad'];
+                  $master[$k]['total']=$tot2;
+                  $master[$k]['cantidad']=$tot2;
                   $k++;
                 }
 
-
+                $master[]=$tot_dias;
                 $master[]=$tot;
                 return $master;
               }
