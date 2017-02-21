@@ -50,6 +50,7 @@
       <tr class="active">
         <td> N° </td>
         <td>Labores</td>
+        <td>Días</td>
         <td>Totales</td>
       </tr>
     </thead>
@@ -57,11 +58,13 @@
       <tr data-ng-repeat="totalLab in totLab">
         <td> <% $index + 1 %> </td>
         <td> <% totalLab.nombre %> </td>
+        <td> <% totalLab.tot_dias %> </td>
         <td> <% totalLab.total %> </td>
       </tr>
       <tr>
         <td colspan="2">Total</td>
         <td><% sumTotLab %></td>
+        <td><% sumTotDia %></td>
 
       </tr>
     </tbody>
