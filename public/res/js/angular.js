@@ -1006,6 +1006,7 @@
 					s.totLab.push(data[i]);
 				}
 				s.sumTotLab = data[data.length - 1];
+				s.sumTotDia = data[data.length - 2];
 			})
 		}
 	}]);
