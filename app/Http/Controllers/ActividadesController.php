@@ -169,6 +169,7 @@ class ActividadesController extends Controller
                 }
               }
               else{
+                $dias_general=$lab_array['0']['tot_dias'];
                 $i=-1;
 
                 $tot=0;
@@ -187,9 +188,7 @@ class ActividadesController extends Controller
                   }
                 }
                 $k=0;
-
                 foreach ($master as $master2) {
-
                   $porc=($master2['cantidad']*100)/$dias_ind;
                   $tot2= ($porc*$master[0]['tot_acum'])/100;
                   $tot+=$tot2;
@@ -198,11 +197,11 @@ class ActividadesController extends Controller
                   $tot_dias+=$cantid;
                   // $tot2=$total_acum/$master2['cantidad'];
                   $master[$k]['total']=$tot2;
-                  $master[$k]['cantidad']=$tot2;
+                  $master[$k]['tot_dias']=$cantid;
                   $k++;
                 }
 
-                $master[]=$tot_dias;
+                $master[]=$dias_general;
                 $master[]=$tot;
                 return $master;
               }
