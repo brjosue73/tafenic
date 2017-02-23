@@ -137,7 +137,7 @@
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="control-label">Tamaño de Safadura: </label>
         <select class="form-control">
-          <option value="">Seleccionar</option>
+          <option selected value="{{$tamano_safa['id']}}" >{{$tamano_safa['name']}}</option>
           <option value="0">Pequeño</option>
           <option value="1">Grande</option>
         </select>
@@ -145,12 +145,13 @@
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="label-control">Cant. Safa:</label>
-        <input type="text" class="form-control">
+        <input name="cant_safa" type="text" class="form-control" value="{{$data->cant_safa}}">
+
       </div>
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="">Safadura Extras: </label>
-        <input type="text" class="form-control">
+        <input name="safa_ext" type="text" class="form-control" value="{{$data->safa_ext}}">
       </div>
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
