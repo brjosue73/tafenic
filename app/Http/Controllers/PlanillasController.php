@@ -463,7 +463,7 @@ class PlanillasController extends Controller
       $sum_prestam+=$trab['prestamos'];
       $sum_inss_pat+=$trab['inss_patronal'];
     }
-    $test1='deb: '.$sum_dev2.'..extra: '.$sum_h_ext.'..vacs:'.$sum_vacs;
+    $test1=0;
     $totales=  [
         'aa_test1'=>$test1,
        "sum_tot_recib"=>round($sum_tot_recib,2),
@@ -665,13 +665,15 @@ class PlanillasController extends Controller
                  $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
-                 $test1='tot_basic: '.$tot_basic.' tot_sept '.$tot_sept.' otros '.$otros.' feriados '.$feriados;
+                 //$test1='tot_basic: '.$tot_basic.' tot_sept '.$tot_sept.' otros '.$otros.' feriados '.$feriados;
                  $total_dev2=round($total_dev3,2);
                  $tot_sept=round($tot_sept,2);
 
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
                  $total_acum=$total_dev2 + $extra_tot/*Total Horas extras*/ + $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
+                 $test1 ='dev 2 '. $total_dev2. ' extra_tot '.$extra_tot .' vacs '.$tot_a_vacs.' act ext tot ' .$act_extra_tot .'acum'.$total_acum;
+
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
                                                                                           /*******************/
                 $total_inss=($total_acum-$tot_a_vacs-$alim_tot);

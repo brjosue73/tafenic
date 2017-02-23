@@ -91,7 +91,6 @@ class TrabajadoresController extends Controller
           'tot_safa_peq'=>$trab['tot_safa_peq'],
           'tot_cuje_gran'=>$trab['tot_cuje_gran'],
           'tot_safa_gran'=>$trab['tot_safa_gran'],
-
           'finca'=>$finca->nombre,
           'actividad'=>$actividad->nombre,
           'labor'=>$labor->nombre,
