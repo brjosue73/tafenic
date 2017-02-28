@@ -539,6 +539,7 @@ class PlanillasController extends Controller
     $trab=0;
     $count=0;
       for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
+        $valor_dia=$planillas[$i]['salario_dev'];
         $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
         $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
         $converted_res = ($valor) ? 'true' : 'false';
@@ -568,6 +569,7 @@ class PlanillasController extends Controller
            $feriados=0;
            $feriado_tot=0;
            $tot_dev=0;
+           $tot_devengado=0;
            $subsidios=0;
            $cant_horas_ext=0;
            $cant_act_ext=0;
@@ -585,6 +587,8 @@ class PlanillasController extends Controller
            $nombre="$nombres   $apellido";
 
            foreach ($trabs as $trab) {
+             $tot_dev+=$valor_dia;
+
              $feriados+=$trab->feriados;
              if($trab->tipo_feriado==1){//Feriado no trabajado
                $feriado1+=1;
@@ -608,7 +612,10 @@ class PlanillasController extends Controller
                }
              }
            }
-           $test1=$cant_septimos;
+           //return $trabajador;
+           $test1=$trabs['0']['salario_dev'];
+           $test1=$valor_dia;
+           /*******************************************************Fijarse aqui***********************************************************************/
            $tot_sept=$cant_septimos*$valor_dia;
 
            $feriado_nt=$feriado1*$valor_dia;
@@ -646,7 +653,7 @@ class PlanillasController extends Controller
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
-                 $tot_dev +=$trab['total_actividad'];
+                 //$tot_dev +=$trab['total_actividad'];
                  //$feriados+=$trab->feriados;
                  //$feriado_tot+=$feriados;
                  $subsidios += $trab['subsidios'];
@@ -661,8 +668,8 @@ class PlanillasController extends Controller
                 //    $tot_dev=$dias * $pago_dia;
                 //  }
 
-
-                 $tot_dev=$dias * $pago_dia;
+                 //$tot_dev+=$valor_dia;
+                 //$tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
                  //$test1='tot_basic: '.$tot_basic.' tot_sept '.$tot_sept.' otros '.$otros.' feriados '.$feriados;
@@ -672,7 +679,7 @@ class PlanillasController extends Controller
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
                  $total_acum=$total_dev2 + $extra_tot/*Total Horas extras*/ + $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
-                 $test1 ='dev 2 '. $total_dev2. ' extra_tot '.$extra_tot .' vacs '.$tot_a_vacs.' act ext tot ' .$act_extra_tot .'acum'.$total_acum;
+                 //$test1 ='dev 2 '. $total_dev2. ' extra_tot '.$extra_tot .' vacs '.$tot_a_vacs.' act ext tot ' .$act_extra_tot .'acum'.$total_acum;
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
                                                                                           /*******************/
