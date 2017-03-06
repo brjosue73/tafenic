@@ -44,7 +44,11 @@
         td,th{
           font-size: 10px;
         }
-
+        .numeracion {
+          position: absolute;
+          top: 50px;
+          left: 50px;
+        }
   </style>
 </head>
 <body>
