@@ -118,6 +118,7 @@ class FincasController extends Controller
       $trab=0;
       $count=0;
         for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
+          $valor_dia=$planillas[$i]['salario_dev'];
           $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
           $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
           $converted_res = ($valor) ? 'true' : 'false';
@@ -161,6 +162,7 @@ class FincasController extends Controller
 
              foreach ($trabs as $trab) {
                $feriados+=$trab->feriados;
+               $tot_dev+=$valor_dia;
                if($trab->tipo_feriado==1){//Feriado no trabajado
                  $feriado1+=1;
                }

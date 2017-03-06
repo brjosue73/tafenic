@@ -62,81 +62,81 @@ class PlanillasController extends Controller
     $peticion=$request->all();
     $funcion=$peticion['funcion'];
     if ($funcion == 'Generar Imprimible'){
-    $data=$this->planilla_general2($request);
-    $totales=$this->sum_totales($data);
-    $dev=$totales['sum_dev1'];
-    $septimo=$totales['sum_septimos'];
-    $feriados=$totales['sum_feriados'];
-    $tot_dev2=$totales['sum_dev2'];
-    $prestamos=$totales['sum_prestam'];
-    $alim=$totales['sum_alim'];
-    $tot_hext=$totales['sum_tot_hext'];
-    $dinero_cuje=$totales['sum_dinero_activ'];
+      $data=$this->planilla_general2($request);
+      $totales=$this->sum_totales($data);
+      $dev=$totales['sum_dev1'];
+      $septimo=$totales['sum_septimos'];
+      $feriados=$totales['sum_feriados'];
+      $tot_dev2=$totales['sum_dev2'];
+      $prestamos=$totales['sum_prestam'];
+      $alim=$totales['sum_alim'];
+      $tot_hext=$totales['sum_tot_hext'];
+      $dinero_cuje=$totales['sum_dinero_activ'];
 
-    $a_vac=$dev+$septimo+$feriados;
-    $vacs=$a_vac*0.083333;
-    $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
-    // $tot_acum=$vacs+$vacs+$tot_dev2;
-    $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
-    $tot_recib=$tot_acum-$inss_lab-$prestamos;
-    $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
-    $totales['sum_acum']=round($tot_acum,2);
-    $totales['sum_aguin']=round($vacs,2);
-    $totales['sum_vacs']=round($vacs,2);
-    $totales['sum_inss_lab']=round($inss_lab,2);
-    $totales['sum_tot_recib']=round($tot_recib,2);
-    $totales['sum_inss_pat']=round($inss_pat,2);
-    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-    $fecha_ini=$data['0']['fecha_ini'];
-    $fecha_fin=$data['0']['fecha_fin'];
+      $a_vac=$dev+$septimo+$feriados;
+      $vacs=$a_vac*0.083333;
+      $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
+      // $tot_acum=$vacs+$vacs+$tot_dev2;
+      $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+      $tot_recib=$tot_acum-$inss_lab-$prestamos;
+      $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+      $totales['sum_acum']=round($tot_acum,2);
+      $totales['sum_aguin']=round($vacs,2);
+      $totales['sum_vacs']=round($vacs,2);
+      $totales['sum_inss_lab']=round($inss_lab,2);
+      $totales['sum_tot_recib']=round($tot_recib,2);
+      $totales['sum_inss_pat']=round($inss_pat,2);
+      $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+      $fecha_ini=$data['0']['fecha_ini'];
+      $fecha_fin=$data['0']['fecha_fin'];
 
-    $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
-    $dia_ini=date("d", strtotime($fecha_1));
-    $mes_ini=date("m", strtotime($fecha_1));
-    $ano="2017";//date("Y", strtotime($fecha_1));
+      $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+      $dia_ini=date("d", strtotime($fecha_1));
+      $mes_ini=date("m", strtotime($fecha_1));
+      $ano="2017";//date("Y", strtotime($fecha_1));
 
-    $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
-    $dia_fin=date("d", strtotime($fecha_2));
-    $mes_fin=date("m", strtotime($fecha_2));
-    $i=0;
-    $encabezado='<!DOCTYPE html>
-    <html>
-    <head>
-        <style type="text/css">
-            /*(bootstrap source)*/
-        </style>
+      $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
+      $dia_fin=date("d", strtotime($fecha_2));
+      $mes_fin=date("m", strtotime($fecha_2));
+      $i=0;
+      $encabezado='<!DOCTYPE html>
+      <html>
+      <head>
+          <style type="text/css">
+              /*(bootstrap source)*/
+          </style>
 
-        <style type="text/css">
-            .cabecera {
-                text-align: center;
-                /*margin-bottom: 20px;*/
-                height: 70px;
-                padding:0;
-                margin-bottom: 0;
-                opacity: 1;
-                font-size:13px;
-            }
-            h4{
-              padding: 2px;
-              margin: 1px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="cabecera">
-          <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-          <h4>PLANILLA GENERAL</h4>
-          <h4>Planilla de pago del '
-           .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
-          '</h4>
+          <style type="text/css">
+              .cabecera {
+                  text-align: center;
+                  /*margin-bottom: 20px;*/
+                  height: 70px;
+                  padding:0;
+                  margin-bottom: 0;
+                  opacity: 1;
+                  font-size:13px;
+              }
+              h4{
+                padding: 2px;
+                margin: 1px;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="cabecera">
+            <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+            <h4>PLANILLA GENERAL</h4>
+            <h4>Planilla de pago del '
+             .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
+            '</h4>
 
-        </div>
-    </body>
-    </html>';
-    $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
-    $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
-    $pdf->setOption('header-html', $encabezado);
-    return $pdf->inline('Planilla_catorcenal.pdf');
+          </div>
+      </body>
+      </html>';
+      $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
+      $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
+      $pdf->setOption('header-html', $encabezado);
+      return $pdf->inline('Planilla_catorcenal.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
       $datas =$this->calculo_planilla($peticion);
@@ -146,8 +146,8 @@ class PlanillasController extends Controller
       });
       ini_set("memory_limit", "452M");
       ini_set("max_execution_time", "600");
-    $data=array();
-    //return $datas;
+      $data=array();
+      //return $datas;
       foreach ($datas as $dat) {
         $array_1=array();
         $array_1['nombre']=$dat['nombre'];
@@ -232,7 +232,7 @@ class PlanillasController extends Controller
       // $totales2=$this->sum_totales($planillas);
       // return $totales2;
       $nombres=$this->nombres_billetes($planillas);
-    $pdf = \PDF::loadView('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
+      $pdf = \PDF::loadView('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf->setPaper('a4')->setOrientation('landscape');
       return $pdf->inline('Billetes_catorcenal.pdf');
     }
@@ -244,6 +244,7 @@ class PlanillasController extends Controller
       //   return strcmp($a["nombre"], $b["nombre"]);
       //     return $a['order'] < $b['order']?1:-1;
       // });
+      return $datas;
       foreach ($datas as $data) {
         $id=$data['id_trab'];
         $trabajador= Trabajador::find($id);
@@ -530,6 +531,7 @@ class PlanillasController extends Controller
       $vacaciones=0.08333;
       $pago_dia=$variable->sal_diario;
     }
+
     $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->get();
 
@@ -538,42 +540,49 @@ class PlanillasController extends Controller
     $identif=array();
     $trab=0;
     $count=0;
-      for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
-        $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
-        $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
+    $array_id=array();
+    $id_sinRep=0;
+    for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla para tomar los id de los trabajadores sin repetir*/
+      if (sizeof($array_id)>0) {
+        $valor=in_array($planillas[$i]['id_trabajador'], (array)$array_id);
         $converted_res = ($valor) ? 'true' : 'false';
-        if ($converted_res=='false') { //Sino esta repetido
-          $identif[]=$id_trab;
+        if ($converted_res=='false') {
+          $array_id[]=$planillas[$i]['id_trabajador'];
+        }
+      }
+      else {
+        $array_id[]=$planillas[$i]['id_trabajador'];
+      }
+    }
+    //return $array_id;
+    //return $planillas;
+
+
+    $tamano2=sizeof($array_id);
+
+      for ($i=0; $i < $tamano2; $i++) { /*Recorre toda la planilla*/
+        $valor_dia=$planillas[$i]['salario_dev'];
+        $id_trab=$array_id[$i];
+        // $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
+        // $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
+        // $converted_res = ($valor) ? 'true' : 'false';
+        // if ($converted_res=='false') { //Sino esta repetido
+        //   $identif[]=$id_trab;
+
+
           $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
           ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
           ->get();
-                                    //->where('id_finca',$id_finca)
+
+          $valor_dia=$trabs[0]['salario_dev'];
+                //->where('id_finca',$id_finca)
            $dias2= $trabs->count();
            $contar_dias=$this->contar_dias($trabs);
            $dias=$contar_dias['dias'];
            $dias_sept=$contar_dias['dias_sept'];
 
-           $test1=$dias;
-           $salario_tot=0;
-           $alim_tot=0;
-           $vac_tot=0;
-           $agui_tot=0;
-           $extra_tot=0;
-           $tot_act_ext=0;
-           $horas_ext_tot=0;
-           $cuje_ext_tot=0;
-           $total_dev2=0;
-           $septimo=0;
-           $otros=0;
-           $feriados=0;
-           $feriado_tot=0;
-           $tot_dev=0;
-           $subsidios=0;
-           $cant_horas_ext=0;
-           $cant_act_ext=0;
-           $act_extra_tot=0;
-           $sum_tot_recib=0;
-           $prestamo=0;
+           $test1=$dias; $salario_tot=0; $alim_tot=0; $vac_tot=0; $agui_tot=0; $extra_tot=0; $tot_act_ext=0; $horas_ext_tot=0; $cuje_ext_tot=0; $total_dev2=0; $septimo=0;
+           $otros=0; $feriados=0; $feriado_tot=0; $tot_dev=0; $tot_devengado=0; $subsidios=0; $cant_horas_ext=0; $cant_act_ext=0; $act_extra_tot=0; $sum_tot_recib=0; $prestamo=0;
            $feriado1=0;$feriado2=0;
            $test1=0;$test2=0;
            $dinero_cuje=0;$dinero_safa=0;
@@ -585,6 +594,7 @@ class PlanillasController extends Controller
            $nombre="$nombres   $apellido";
 
            foreach ($trabs as $trab) {
+             $tot_dev+=$valor_dia;
              $feriados+=$trab->feriados;
              if($trab->tipo_feriado==1){//Feriado no trabajado
                $feriado1+=1;
@@ -608,9 +618,8 @@ class PlanillasController extends Controller
                }
              }
            }
-           $test1=$cant_septimos;
+           /*******************************************************Fijarse aqui***********************************************************************/
            $tot_sept=$cant_septimos*$valor_dia;
-
            $feriado_nt=$feriado1*$valor_dia;
            $feriado_t=$feriado2*($valor_dia*2);
            $feriados=$feriado_t+$feriado_nt;
@@ -646,23 +655,12 @@ class PlanillasController extends Controller
                  $lab_query=Labor::find($trab->id_labor);
                  $labor=$lab_query->nombre;
                  $labores[]=$labor;
-                 $tot_dev +=$trab['total_actividad'];
-                 //$feriados+=$trab->feriados;
-                 //$feriado_tot+=$feriados;
+
                  $subsidios += $trab['subsidios'];
                  $fin_query= Finca::find($trab->id_finca);
                  $finca=$fin_query->nombre;
                  $fincas[]=$finca;
-                 //si la labor es de hora o de actividad
-                //  if($lab_query['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
-                //      $tot_dev=$trab['total_actividad'];
-                //  }
-                //  else {//si es por horas
-                //    $tot_dev=$dias * $pago_dia;
-                //  }
 
-
-                 $tot_dev=$dias * $pago_dia;
                  $tot_basic=$tot_dev+$alim_tot;
                  $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
                  //$test1='tot_basic: '.$tot_basic.' tot_sept '.$tot_sept.' otros '.$otros.' feriados '.$feriados;
@@ -672,7 +670,7 @@ class PlanillasController extends Controller
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
                  $total_acum=$total_dev2 + $extra_tot/*Total Horas extras*/ + $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
-                 $test1 ='dev 2 '. $total_dev2. ' extra_tot '.$extra_tot .' vacs '.$tot_a_vacs.' act ext tot ' .$act_extra_tot .'acum'.$total_acum;
+                 //$test1 ='dev 2 '. $total_dev2. ' extra_tot '.$extra_tot .' vacs '.$tot_a_vacs.' act ext tot ' .$act_extra_tot .'acum'.$total_acum;
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
                                                                                           /*******************/
@@ -787,7 +785,7 @@ class PlanillasController extends Controller
           unset($labores);
           unset($fincas);
           unset($fincas_sinRep);
-        }/*Fin Si no esta repetido*/
+        //}/*Fin Si no esta repetido*/
       }//Fin For de recorrer toda la planilla
 
       return $trabajadores;
