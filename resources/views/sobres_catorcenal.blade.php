@@ -75,9 +75,16 @@
       font-size: 12px !important;
       padding: 1px;
     }
+
+    .numeracion {
+      position: absolute;
+      top: 50px;
+      left: 50px;
+    }
   </style>
 </head>
 <body>
+  <span class="numeracion">#</span>
   <?php
   setlocale(LC_ALL,"es_ES");
   $fecha_1='';
