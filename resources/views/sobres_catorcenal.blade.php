@@ -83,8 +83,9 @@
     }
   </style>
 </head>
+<body>
+
   <?php
-  <body>
   setlocale(LC_ALL,"es_ES");
   $fecha_1='';
   $fecha2='21';
@@ -96,7 +97,7 @@
   $i=0;
    ?>
   @foreach($data as $dat)
-  <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.    <span class="numeracion">#</span></h4>
+  <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A. <span class="numeracion">#</span></h4>
   <h5 class="text-centro">FINCA</h5>
   <h5 class="text-centro">PLANILLA DE PAGO DEL {{$fecha_1}} al {{$dat['fecha_fin']}}</h5>
   <table>
