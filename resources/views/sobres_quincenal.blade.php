@@ -44,6 +44,7 @@
   </style>
 </head>
 <body>
+    <span class="numeracion">#</span>
   <?php
   setlocale(LC_ALL,"es_ES");
   $fecha1='';
