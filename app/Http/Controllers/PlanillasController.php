@@ -237,6 +237,7 @@ class PlanillasController extends Controller
       return $pdf->inline('Billetes_catorcenal.pdf');
     }
     elseif($funcion == 'Reporte DGI'){
+
       $peticion=$request->all();
       $tot=array();
       $datas =$this->calculo_planilla($peticion);
@@ -534,7 +535,7 @@ class PlanillasController extends Controller
 
     $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->get();
-
+                              //return $planillas;
     $tamano = sizeof($planillas);
     $trabajadores=array();
     $identif=array();
@@ -542,39 +543,37 @@ class PlanillasController extends Controller
     $count=0;
     $array_id=array();
     $id_sinRep=0;
-    for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla para tomar los id de los trabajadores sin repetir*/
-      if (sizeof($array_id)>0) {
-        $valor=in_array($planillas[$i]['id_trabajador'], (array)$array_id);
-        $converted_res = ($valor) ? 'true' : 'false';
-        if ($converted_res=='false') {
-          $array_id[]=$planillas[$i]['id_trabajador'];
-        }
-      }
-      else {
-        $array_id[]=$planillas[$i]['id_trabajador'];
-      }
-    }
+    // for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla para tomar los id de los trabajadores sin repetir*/
+    //   if (sizeof($array_id)>0) {
+    //     $valor=in_array($planillas[$i]['id_trabajador'], (array)$array_id);
+    //     $converted_res = ($valor) ? 'true' : 'false';
+    //     if ($converted_res=='false') {
+    //       $array_id[]=$planillas[$i]['id_trabajador'];
+    //     }
+    //   }
+    //   else {
+    //     $array_id[]=$planillas[$i]['id_trabajador'];
+    //   }
+    // }
     //return $array_id;
     //return $planillas;
 
 
     $tamano2=sizeof($array_id);
 
-      for ($i=0; $i < $tamano2; $i++) { /*Recorre toda la planilla*/
+      for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
         $valor_dia=$planillas[$i]['salario_dev'];
-        $id_trab=$array_id[$i];
-        // $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
-        // $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
-        // $converted_res = ($valor) ? 'true' : 'false';
-        // if ($converted_res=='false') { //Sino esta repetido
-        //   $identif[]=$id_trab;
-
-
+        //$id_trab=$array_id[$i];
+        $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
+        $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
+        $converted_res = ($valor) ? 'true' : 'false';
+        if ($converted_res=='false') { //Sino esta repetido
+          $identif[]=$id_trab;
           $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
           ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
           ->get();
 
-          $valor_dia=$trabs[0]['salario_dev'];
+          //$valor_dia=$trabs[0]['salario_dev'];
                 //->where('id_finca',$id_finca)
            $dias2= $trabs->count();
            $contar_dias=$this->contar_dias($trabs);
@@ -584,7 +583,7 @@ class PlanillasController extends Controller
            $test1=$dias; $salario_tot=0; $alim_tot=0; $vac_tot=0; $agui_tot=0; $extra_tot=0; $tot_act_ext=0; $horas_ext_tot=0; $cuje_ext_tot=0; $total_dev2=0; $septimo=0;
            $otros=0; $feriados=0; $feriado_tot=0; $tot_dev=0; $tot_devengado=0; $subsidios=0; $cant_horas_ext=0; $cant_act_ext=0; $act_extra_tot=0; $sum_tot_recib=0; $prestamo=0;
            $feriado1=0;$feriado2=0;
-           $test1=0;$test2=0;
+           $test1=array();$test2=0;
            $dinero_cuje=0;$dinero_safa=0;
            $tot_cuje_peq=0;$tot_safa_peq=0;$tot_cuje_gran=0;$tot_safa_gran=0;
 
@@ -592,9 +591,11 @@ class PlanillasController extends Controller
            $nombres=$trabajador->nombre;
            $apellido=$trabajador->apellidos;
            $nombre="$nombres   $apellido";
-
+           $sep3=0;$sep4=0;$sep1=0;$sep2=0;
            foreach ($trabs as $trab) {
+             $valor_dia=$trab['salario_dev'];
              $tot_dev+=$valor_dia;
+             $test1[]=$trab['salario_dev'];
              $feriados+=$trab->feriados;
              if($trab->tipo_feriado==1){//Feriado no trabajado
                $feriado1+=1;
@@ -612,14 +613,32 @@ class PlanillasController extends Controller
                $cant_septimos=2;
                if ($dias_sept>=18) {
                  $cant_septimos=3;
-                 if ($dias_sept>=18) {
+                 if ($dias_sept>=24) {
                    $cant_septimos=4;
                  }
                }
              }
            }
            /*******************************************************Fijarse aqui***********************************************************************/
-           $tot_sept=$cant_septimos*$valor_dia;
+           if ($cant_septimos==1) {
+             $sep1=$trabs[0]['salario_dev'];
+           }
+           elseif($cant_septimos==2){
+             $sep1=$trabs[0]['salario_dev'];
+             $sep2=$trabs[11]['salario_dev'];
+           }
+           elseif ($cant_septimos==3) {
+             $sep1=$trabs[0]['salario_dev'];
+             $sep2=$trabs[11]['salario_dev'];
+             $sep3=$trabs[17]['salario_dev'];
+           }
+           elseif ($cant_septimos==3) {
+             $sep1=$trabs[0]['salario_dev'];
+             $sep2=$trabs[11]['salario_dev'];
+             $sep3=$trabs[17]['salario_dev'];
+             $sep4=$trabs[21]['salario_dev'];
+           }
+           $tot_sept=$sep1+$sep2+$sep3+$sep4;
            $feriado_nt=$feriado1*$valor_dia;
            $feriado_t=$feriado2*($valor_dia*2);
            $feriados=$feriado_t+$feriado_nt;
@@ -670,19 +689,14 @@ class PlanillasController extends Controller
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
                  $total_acum=$total_dev2 + $extra_tot/*Total Horas extras*/ + $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
-                 //$test1 ='dev 2 '. $total_dev2. ' extra_tot '.$extra_tot .' vacs '.$tot_a_vacs.' act ext tot ' .$act_extra_tot .'acum'.$total_acum;
 
                  $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
                                                                                           /*******************/
                 $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
                 $inss=($total_inss*$inss_camp)/100;
 
-                 //$inss= ($tot_inss*$inss_camp)/100;
-                 //return ($tot_inss." ". $inss_camp);
                  $inss_pat=($total_inss*$inss_patronal)/100;
                  //return $inss;
-
-                 //return ("acum: ".$total_acum." agui_tot: ".round($tot_a_vacs,2)." alim_tot: ".$alim_tot);
 
                  $tot_recib=$total_acum - $inss - $prestamo;
                  $f=0;
@@ -785,7 +799,7 @@ class PlanillasController extends Controller
           unset($labores);
           unset($fincas);
           unset($fincas_sinRep);
-        //}/*Fin Si no esta repetido*/
+        }/*Fin Si no esta repetido*/
       }//Fin For de recorrer toda la planilla
 
       return $trabajadores;
