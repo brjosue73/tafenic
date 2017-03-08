@@ -592,16 +592,29 @@ class PlanillasController extends Controller
            $apellido=$trabajador->apellidos;
            $nombre="$nombres   $apellido";
            $sep3=0;$sep4=0;$sep1=0;$sep2=0;
+           $dia_mayor=0;$dia_menor=0;
            foreach ($trabs as $trab) {
              $valor_dia=$trab['salario_dev'];
+             //$dia_mayor=$valor_dia;
              $tot_dev+=$valor_dia;
              $test1[]=$trab['salario_dev'];
              $feriados+=$trab->feriados;
+             if($dia_mayor<$valor_dia){
+               $dia_menor=$dia_mayor;
+               $dia_mayor=$valor_dia;
+             }
+             elseif ($dia_mayor<$valor_dia) {
+               $dia_menor=$valor_dia;
+             }
              if($trab->tipo_feriado==1){//Feriado no trabajado
                $feriado1+=1;
              }
              if($trab->tipo_feriado==2){//Feriado no trabajado
                $feriado2+=1;
+             }
+             if ($dia_menor==0){
+                 $valor_dia=$trab['salario_dev'];
+                 $dia_menor=$valor_dia;
              }
            }
            /********************Saber si tiene septimos****************/
@@ -619,13 +632,17 @@ class PlanillasController extends Controller
                }
              }
            }
+
            /*******************************************************Fijarse aqui***********************************************************************/
            if ($cant_septimos==1) {
              $sep1=$trabs[0]['salario_dev'];
+             $tot_sept=$dia_menor;
            }
            elseif($cant_septimos==2){
              $sep1=$trabs[0]['salario_dev'];
              $sep2=$trabs[11]['salario_dev'];
+             $tot_sept=$dia_mayor+$dia_menor;
+
            }
            elseif ($cant_septimos==3) {
              $sep1=$trabs[0]['salario_dev'];
@@ -638,7 +655,7 @@ class PlanillasController extends Controller
              $sep3=$trabs[17]['salario_dev'];
              $sep4=$trabs[21]['salario_dev'];
            }
-           $tot_sept=$sep1+$sep2+$sep3+$sep4;
+           //$tot_sept=$sep1+$sep2+$sep3+$sep4;
            $feriado_nt=$feriado1*$valor_dia;
            $feriado_t=$feriado2*($valor_dia*2);
            $feriados=$feriado_t+$feriado_nt;
