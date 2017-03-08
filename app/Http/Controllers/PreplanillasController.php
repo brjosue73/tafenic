@@ -304,7 +304,7 @@ class PreplanillasController extends Controller
       $prep = Preplanilla::find($id);
       $trab= Trabajador::find($prep->id_trabajador);
       $finc= Finca::find($prep->id_finca);
-      $centro=['Tabaco Sol','Tabaco Tapado','Semillero','Ensarte','Safadura'];
+      $centro=['Tabaco Sol','Tabaco Tapado','Semillero','Ensarte-sol','Safadura-sol','Ensarte-Tapado','Safadura-tapado'];
       $lote=Lote::find($prep->id_lote);
       $listero=Trabajador::find($prep->id_listero);
       $resp_finc=Trabajador::find($prep->id_respFinca);
