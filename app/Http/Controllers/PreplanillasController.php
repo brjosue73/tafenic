@@ -100,7 +100,7 @@ class PreplanillasController extends Controller
       $arreglo = $request;
       $prep = Preplanilla::find($id);
       $guardar=$this->guardar_act($prep, $arreglo);
-      return $guardar;
+      return 'Almacenada con exito';
     }
     public function guardar_act($prep, $arreglo)
     {

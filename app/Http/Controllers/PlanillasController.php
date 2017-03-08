@@ -582,7 +582,7 @@ class PlanillasController extends Controller
 
            $test1=$dias; $salario_tot=0; $alim_tot=0; $vac_tot=0; $agui_tot=0; $extra_tot=0; $tot_act_ext=0; $horas_ext_tot=0; $cuje_ext_tot=0; $total_dev2=0; $septimo=0;
            $otros=0; $feriados=0; $feriado_tot=0; $tot_dev=0; $tot_devengado=0; $subsidios=0; $cant_horas_ext=0; $cant_act_ext=0; $act_extra_tot=0; $sum_tot_recib=0; $prestamo=0;
-           $feriado1=0;$feriado2=0;
+           $feriado1=0;$feriado2=0; $tot_sept=0;
            $test1=array();$test2=0;
            $dinero_cuje=0;$dinero_safa=0;
            $tot_cuje_peq=0;$tot_safa_peq=0;$tot_cuje_gran=0;$tot_safa_gran=0;
@@ -645,11 +645,13 @@ class PlanillasController extends Controller
 
            }
            elseif ($cant_septimos==3) {
+             $tot_sep=$dia_mayor+$dia_menor+$dia_mayor+$dia_mayor;
              $sep1=$trabs[0]['salario_dev'];
              $sep2=$trabs[11]['salario_dev'];
              $sep3=$trabs[17]['salario_dev'];
            }
            elseif ($cant_septimos==3) {
+             $tot_sep=$dia_mayor+$dia_menor+$dia_mayor+$dia_menor;
              $sep1=$trabs[0]['salario_dev'];
              $sep2=$trabs[11]['salario_dev'];
              $sep3=$trabs[17]['salario_dev'];
