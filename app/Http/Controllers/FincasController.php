@@ -118,6 +118,7 @@ class FincasController extends Controller
       $trab=0;
       $count=0;
         for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
+          $valor_dia=$planillas[$i]['salario_dev'];
           $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
           $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
           $converted_res = ($valor) ? 'true' : 'false';
@@ -160,7 +161,9 @@ class FincasController extends Controller
              $feriado1=0;$feriado2=0;
 
              foreach ($trabs as $trab) {
+               $valor_dia=$trab['salario_dev'];
                $feriados+=$trab->feriados;
+               $tot_dev+=$valor_dia;
                if($trab->tipo_feriado==1){//Feriado no trabajado
                  $feriado1+=1;
                }
@@ -222,7 +225,7 @@ class FincasController extends Controller
                    $lab_query=Labor::find($trab->id_labor);
                    $labor=$lab_query->nombre;
                    $labores[]=$labor;
-                   $tot_dev +=$trab['total_actividad'];
+                   //$tot_dev +=$trab['total_actividad'];
                    //$feriados+=$trab->feriados;
                    //$feriado_tot+=$feriados;
                    $subsidios += $trab['subsidios'];
@@ -233,7 +236,7 @@ class FincasController extends Controller
 
 
 
-                   $tot_dev=$dias * $pago_dia;
+                   //$tot_dev=$dias * $pago_dia;
                    $tot_basic=$tot_dev+$alim_tot;
                    $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
                    $total_dev2=round($total_dev3,2);
@@ -318,6 +321,7 @@ class FincasController extends Controller
       $valor_dia=$request['valor_dia'];
       $id_finca=$request['id_finca'];
       $feriados=$request['feriados'];
+      $sep3=0;$sep4=0;$sep1=0;$sep2=0;
 
       $centro_mayor=0;
       $contar_dias=app('App\Http\Controllers\PlanillasController')->contar_dias($trabs);
@@ -343,12 +347,7 @@ class FincasController extends Controller
           }
         }
       }
-      //  if($dias_sept>=6){ //merece por lo menos 1 septimo
-      //    $cant_septimos=1;
-      //    if($dias_sept>=12){//merece 2 septimos
-      //      $cant_septimos=2;
-      //    }
-      //  }
+
        $f=0;
        $c=0;
        if($cant_septimos>0){ //si merece por lo menos 1 septimo
@@ -430,7 +429,26 @@ class FincasController extends Controller
               $centro_id=$i;
             }
           }
-          $tot_sept=$cant_septimos*$valor_dia;
+          if ($cant_septimos==1) {
+            $sep1=$trabs[0]['salario_dev'];
+          }
+          elseif($cant_septimos==2){
+            $sep1=$trabs[0]['salario_dev'];
+            $sep2=$trabs[11]['salario_dev'];
+          }
+          elseif ($cant_septimos==3) {
+            $sep1=$trabs[0]['salario_dev'];
+            $sep2=$trabs[11]['salario_dev'];
+            $sep3=$trabs[17]['salario_dev'];
+          }
+          elseif ($cant_septimos==3) {
+            $sep1=$trabs[0]['salario_dev'];
+            $sep2=$trabs[11]['salario_dev'];
+            $sep3=$trabs[17]['salario_dev'];
+            $sep4=$trabs[21]['salario_dev'];
+          }
+          $tot_sept=$sep1+$sep2+$sep3+$sep4;
+          //$tot_sept=$cant_septimos*$valor_dia;
           if ($id_mayor==$id_finAct && $centro_act == $centro_id){ //Y Si es el mismo centro de costo
             $tot_sept=$tot_sept;
           }

@@ -100,10 +100,11 @@ class PreplanillasController extends Controller
       $arreglo = $request;
       $prep = Preplanilla::find($id);
       $guardar=$this->guardar_act($prep, $arreglo);
-      return $guardar;
+      return 'Almacenada con exito';
     }
     public function guardar_act($prep, $arreglo)
     {
+
         //$peticion = $request->all();
         //$arreglo = $peticion["data"];
         $subsidio=0;
@@ -141,6 +142,7 @@ class PreplanillasController extends Controller
         $prep->inss_admin=$inss_admin;
         $prep->inss_patron=$inss_patron_catorce;
         $prep->hora_trab=$arreglo['hora_trab'];
+
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
           if ($feriado==1) { //feriado no trabajado
@@ -150,7 +152,6 @@ class PreplanillasController extends Controller
             $prep->save();
             return 'Agregada con exito Feriado no trab';
           }
-
           elseif($feriado==2) { //si es feriado trabajado
             $prep->total_actividad=$dia;//aqui
             $prep->tipo_feriado=2;
@@ -158,7 +159,8 @@ class PreplanillasController extends Controller
             $otros=$arreglo['otros'];
             $prep->otros=$otros;
             $labor_dat=Labor::find($arreglo['id_labor']);
-            if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
+            return $labor_dat['cuje_ext'];
+            if($labor_dat['tipo_labor']=='prod' ){ //Si es de tipo actividad/cujes/ensarte
               if($arreglo['labName']=='cuje'){//si es cuje
                  $cant_cujes=$arreglo['cant_cujes'];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
@@ -224,23 +226,25 @@ class PreplanillasController extends Controller
           $cuje_ext=$arreglo['cuje_ext'];
           $labor_dat=Labor::find($arreglo['id_labor']);
           if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
-            if($arreglo['labName']=='cuje'){//si es cuje
+            if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']){//si es cuje
                $cant_cujes=$arreglo['cant_cujes'];
                if($arreglo['tamano_cuje'] == 0){//pequeno
-                 $total_ext=$cuje_ext * $cuje_peq;
-                 $prep->tot_act_ext=$total_ext;
+                 $total_act=round($cant_cujes * $cuje_peq,2);
+                 $total_act=$dia;
+                 $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
+                 $prep->tot_cuje_peq=$total_act_ext;
                }
                else {//cuje grande
-                 $total_act=$cant_cujes * $cuje_grand;
-                 $total_ext=$cuje_ext * $cuje_grand;
-                 $prep->tot_act_ext=$total_ext;
-
+                 $total_act=round($cant_cujes * $cuje_grand,2);
+                 $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
+                 $prep->tot_cuje_gran=$total_act_ext;
                }
+               $prep->cuje_ext=$arreglo['cuje_ext'];
+               $prep->tot_cuje_ext=$total_act_ext;
+               $total_act=$dia;
                $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                $prep->tamano_cuje=$arreglo['tamano_cuje'];
-               $prep->cuje_ext=$arreglo['cuje_ext'];
-               $prep->tot_cuje_ext=$total_ext;
-
+               $prep->tot_act_ext=$total_act_ext;
              }
              else {//si es safadura
                $cant_safa=$arreglo['cant_safa'];
@@ -276,8 +280,8 @@ class PreplanillasController extends Controller
           $prep->centro_costo=$arreglo['centro_costo'];
           $prep->save();
           $subs=0;
-          return $prep;
-          return "Agregada! supuestamente normal";
+          //return $prep;
+          return "Actualizacion Agregada";
         }
 
 
@@ -308,16 +312,16 @@ class PreplanillasController extends Controller
       $labor=Labor::find($prep->id_labor);
       //return $prep;
       if ($prep['tamano_cuje']==0) {
-        $tamano_cuje=['valor'=>'0','name'=>'Pequeño'];
+        $tamano_cuje=['id'=>'0','name'=>'Pequeño'];
       }
       else {
-        $tamano_cuje=['valor'=>'1','name'=>'Grande'];
+        $tamano_cuje=['id'=>'1','name'=>'Grande'];
       }
       if ($prep['tamano_safa']==0) {
-        $tamano_safa=['valor'=>'0','name'=>'Pequeño'];
+        $tamano_safa=['id'=>'0','name'=>'Pequeño'];
       }
       else {
-        $tamano_safa=['valor'=>'1','name'=>'Grande'];
+        $tamano_safa=['id'=>'1','name'=>'Grande'];
       }
       return view('edit_prep', ['data' => $prep,
       'trab'=>$trab,
