@@ -51,10 +51,16 @@
 					return "Semillero";
 					break;
 				case 3:
-					return "Ensarte";
+					return "Ensarte Sol";
 					break;
 				case 4:
-					return "Safadura";
+					return "Safadura Sol";
+					break;
+				case 5:
+					return "Ensarte Tapado";
+					break;
+				case 6:
+					return "Safadura Tapado";
 					break;
 				default: return "NaCC";
 
