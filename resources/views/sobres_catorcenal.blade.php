@@ -75,9 +75,14 @@
       font-size: 12px !important;
       padding: 1px;
     }
+    .numeracion {
+      font-size: 1.2em;
+      color: #222;
+    }
   </style>
 </head>
 <body>
+
   <?php
   setlocale(LC_ALL,"es_ES");
   $fecha_1='';
@@ -87,10 +92,11 @@
   $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
 
 
-  $i=0;
+  $i=1;
    ?>
   @foreach($data as $dat)
-  <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+
+  <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.       <span class="numeracion"> #{{ $i++ }} </span></h4>
   <h5 class="text-centro">FINCA</h5>
   <h5 class="text-centro">PLANILLA DE PAGO DEL {{$fecha_1}} al {{$dat['fecha_fin']}}</h5>
   <table>
