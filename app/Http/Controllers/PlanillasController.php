@@ -61,6 +61,8 @@ class PlanillasController extends Controller
   public function reporte_planilla(Request $request){
     $peticion=$request->all();
     $funcion=$peticion['funcion'];
+    set_time_limit(600);
+
     if ($funcion == 'Generar Imprimible'){
       $data=$this->planilla_general2($request);
       $totales=$this->sum_totales($data);
@@ -245,7 +247,7 @@ class PlanillasController extends Controller
       //   return strcmp($a["nombre"], $b["nombre"]);
       //     return $a['order'] < $b['order']?1:-1;
       // });
-      return $datas;
+      //return $datas;
       foreach ($datas as $data) {
         $id=$data['id_trab'];
         $trabajador= Trabajador::find($id);
@@ -595,7 +597,6 @@ class PlanillasController extends Controller
            $dia_mayor=0;$dia_menor=0;
            foreach ($trabs as $trab) {
              $valor_dia=$trab['salario_dev'];
-             //$dia_mayor=$valor_dia;
              $tot_dev+=$valor_dia;
              $test1[]=$trab['salario_dev'];
              $feriados+=$trab->feriados;
@@ -614,7 +615,7 @@ class PlanillasController extends Controller
              }
              if ($dia_menor==0){
                  $valor_dia=$trab['salario_dev'];
-                 $dia_menor=$valor_dia;
+                 $dia_menor=116.02;
              }
            }
            /********************Saber si tiene septimos****************/
