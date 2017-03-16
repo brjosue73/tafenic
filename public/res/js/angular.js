@@ -516,7 +516,8 @@
 			safa_ext: 0,
 			cuje_ext: 0,
 			septimo: 0,
-			centro_costo: 0
+			centro_costo: 0,
+			cant_cujes = null
 		};
 		s.ordenar = 'cant_horas_ext';
 		//s.preplanillas = pr.query();
