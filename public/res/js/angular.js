@@ -528,7 +528,7 @@
 		s.selectLab = function(){
 			var labSelected = $('#laborSelect option:selected').text();
 			//s.labValue = labSelected;
-			if (labSelected == "safadura" || labSelected == "Safadura" || labSelected == "Safa" || labSelected == "safa") {
+			if (labSelected == "safadura" || labSelected == "Safadura" || labSelected == "Safa" || labSelected == "safa" || labSelected == "safadura tapado" || labSelected == "safadura sol" || labSelected == "Safadura sol" || labSelected == "Safa tapado" || labSelected == "safa sol") {
 				s.labValue = 1;
 				s.prepSendData.labName = "safadura";
 				console.log(s.prepSendData.labName);
