@@ -516,7 +516,8 @@
 			safa_ext: 0,
 			cuje_ext: 0,
 			septimo: 0,
-			centro_costo: 0
+			centro_costo: 0,
+			cant_cujes: null
 		};
 		s.ordenar = 'cant_horas_ext';
 		//s.preplanillas = pr.query();
@@ -527,7 +528,7 @@
 		s.selectLab = function(){
 			var labSelected = $('#laborSelect option:selected').text();
 			//s.labValue = labSelected;
-			if (labSelected == "safadura" || labSelected == "Safadura" || labSelected == "Safa" || labSelected == "safa") {
+			if (labSelected == "safadura" || labSelected == "Safadura" || labSelected == "Safa" || labSelected == "safa" || labSelected == "safadura tapado" || labSelected == "safadura sol" || labSelected == "Safadura sol" || labSelected == "Safa tapado" || labSelected == "safa sol") {
 				s.labValue = 1;
 				s.prepSendData.labName = "safadura";
 				console.log(s.prepSendData.labName);
