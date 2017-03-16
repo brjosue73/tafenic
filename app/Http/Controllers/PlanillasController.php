@@ -247,7 +247,7 @@ class PlanillasController extends Controller
       //   return strcmp($a["nombre"], $b["nombre"]);
       //     return $a['order'] < $b['order']?1:-1;
       // });
-      return $datas;
+      //return $datas;
       foreach ($datas as $data) {
         $id=$data['id_trab'];
         $trabajador= Trabajador::find($id);
