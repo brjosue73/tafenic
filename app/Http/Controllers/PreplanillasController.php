@@ -83,7 +83,6 @@ class PreplanillasController extends Controller
 
 
         //$prep->save();
-
         return $prep;
     }
 
@@ -100,7 +99,7 @@ class PreplanillasController extends Controller
       $arreglo = $request;
       $prep = Preplanilla::find($id);
       $guardar=$this->guardar_act($prep, $arreglo);
-      return 'Almacenada con exito';
+      return 'Actualizada con exito';
     }
     public function guardar_act($prep, $arreglo)
     {
@@ -219,13 +218,16 @@ class PreplanillasController extends Controller
           $prep->save();
           return "Agregada! subsidio";
         }
-        else {
+        else {//Si No es subsidio
           $ext=0;
           $otros=$arreglo['otros'];
           $prep->otros=$otros;
           $cuje_ext=$arreglo['cuje_ext'];
           $labor_dat=Labor::find($arreglo['id_labor']);
           if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
+            if(!$arreglo['cant_cujes']){
+              $arreglo['cant_cujes']=0;
+            }
             if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']){//si es cuje
                $cant_cujes=$arreglo['cant_cujes'];
                if($arreglo['tamano_cuje'] == 0){//pequeno
@@ -247,6 +249,7 @@ class PreplanillasController extends Controller
                $prep->tot_act_ext=$total_act_ext;
              }
              else {//si es safadura
+               $arreglo['cant_cujes']=0;
                $cant_safa=$arreglo['cant_safa'];
                if($arreglo['tamano_safa'] == 0){// safadura pequeno
                  $total_act=$cant_safa * $safa_peq;
@@ -262,6 +265,7 @@ class PreplanillasController extends Controller
                $prep->safa_ext=$arreglo['safa_ext'];
                $prep->total_actividad=$total_act;
                $prep->tot_safa_ext=$total_act_ext;
+               $prep->cant_cujes=0;
              }
           }
           else{ //Si es por Horas
@@ -293,12 +297,6 @@ class PreplanillasController extends Controller
         return response()->json($prep);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
       $prep = Preplanilla::find($id);
@@ -339,25 +337,10 @@ class PreplanillasController extends Controller
       'tamano_cuje'=>$tamano_cuje,
       'tamano_safa'=>$tamano_safa,
 
-    ]);
+      ]);
 
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $preplanilla = Preplanilla::find($id);
