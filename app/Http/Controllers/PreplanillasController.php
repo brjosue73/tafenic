@@ -158,7 +158,6 @@ class PreplanillasController extends Controller
             $otros=$arreglo['otros'];
             $prep->otros=$otros;
             $labor_dat=Labor::find($arreglo['id_labor']);
-            return $labor_dat['cuje_ext'];
             if($labor_dat['tipo_labor']=='prod' ){ //Si es de tipo actividad/cujes/ensarte
               if($arreglo['labName']=='cuje'){//si es cuje
                  $cant_cujes=$arreglo['cant_cujes'];
@@ -269,6 +268,7 @@ class PreplanillasController extends Controller
              }
           }
           else{ //Si es por Horas
+            $prep->cant_cujes=0;
             $prep->total_actividad=$dia;
             $ext= $arreglo['hora_ext'] * $h_ext_val;
             $prep->hora_ext = $arreglo['hora_ext'];
