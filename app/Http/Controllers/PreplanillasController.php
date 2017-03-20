@@ -160,7 +160,7 @@ class PreplanillasController extends Controller
             $labor_dat=Labor::find($arreglo['id_labor']);
             if($labor_dat['tipo_labor']=='prod' ){ //Si es de tipo actividad/cujes/ensarte
               if($arreglo['labName']=='cuje'){//si es cuje
-                 $=$arreglo[''];
+                 //$=$arreglo[''];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
                    $total_act=round($ * $cuje_peq,2);
                    $total_act=$dia;
