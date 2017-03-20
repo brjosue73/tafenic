@@ -264,7 +264,7 @@ class PreplanillasController extends Controller
                $prep->safa_ext=$arreglo['safa_ext'];
                $prep->total_actividad=$total_act;
                $prep->tot_safa_ext=$total_act_ext;
-               $prep->=0;
+               $prep->cant_cujes=0;
              }
           }
           else{ //Si es por Horas
