@@ -162,13 +162,13 @@ class PreplanillasController extends Controller
               if($arreglo['labName']=='cuje'){//si es cuje
                  //$=$arreglo[''];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
-                   $total_act=round($ * $cuje_peq,2);
+                   $total_act=round($cant_cujes * $cuje_peq,2);
                    $total_act=$dia;
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
                    $prep->tot_cuje_peq=$total_act_ext;
                  }
                  else {//cuje grande
-                   $total_act=round($ * $cuje_grand,2);
+                   $total_act=round($cant_cujes * $cuje_grand,2);
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
                    $prep->tot_cuje_gran=$total_act_ext;
                  }
@@ -230,13 +230,13 @@ class PreplanillasController extends Controller
             if($arreglo['labName']=='cuje' || $arreglo['']){//si es cuje
                $=$arreglo[''];
                if($arreglo['tamano_cuje'] == 0){//pequeno
-                 $total_act=round($ * $cuje_peq,2);
+                 $total_act=round($cant_cujes * $cuje_peq,2);
                  $total_act=$dia;
                  $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
                  $prep->tot_cuje_peq=$total_act_ext;
                }
                else {//cuje grande
-                 $total_act=round($ * $cuje_grand,2);
+                 $total_act=round($cant_cujes * $cuje_grand,2);
                  $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
                  $prep->tot_cuje_gran=$total_act_ext;
                }
