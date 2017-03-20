@@ -268,7 +268,7 @@ class PreplanillasController extends Controller
              }
           }
           else{ //Si es por Horas
-            $prep->=0;
+            $prep->cant_cujes=0;
             $prep->total_actividad=$dia;
             $ext= $arreglo['hora_ext'] * $h_ext_val;
             $prep->hora_ext = $arreglo['hora_ext'];
