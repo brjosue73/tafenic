@@ -160,7 +160,7 @@ class PreplanillasController extends Controller
             $labor_dat=Labor::find($arreglo['id_labor']);
             if($labor_dat['tipo_labor']=='prod' ){ //Si es de tipo actividad/cujes/ensarte
               if($arreglo['labName']=='cuje'){//si es cuje
-                 //$=$arreglo[''];
+                  $cant_cujes=$arreglo['cant_cujes'];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
                    $total_act=round($cant_cujes * $cuje_peq,2);
                    $total_act=$dia;
@@ -173,7 +173,7 @@ class PreplanillasController extends Controller
                    $prep->tot_cuje_gran=$total_act_ext;
                  }
                  $total_act=$dia;
-                 $prep->=$;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
+                 $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                  $prep->tamano_cuje=$arreglo['tamano_cuje'];
                  $prep->tot_act_ext=$total_act_ext;
                }
@@ -243,7 +243,7 @@ class PreplanillasController extends Controller
                $prep->cuje_ext=$arreglo['cuje_ext'];
                $prep->tot_cuje_ext=$total_act_ext;
                $total_act=$dia;
-               $prep->=$;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
+                $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                $prep->tamano_cuje=$arreglo['tamano_cuje'];
                $prep->tot_act_ext=$total_act_ext;
              }
