@@ -248,7 +248,7 @@ class PreplanillasController extends Controller
                $prep->tot_act_ext=$total_act_ext;
              }
              else {//si es safadura
-               $cant_cujes=$arreglo['cant_cujes'];=0;
+               $arreglo['cant_cujes']=0;
                $cant_safa=$arreglo['cant_safa'];
                if($arreglo['tamano_safa'] == 0){// safadura pequeno
                  $total_act=$cant_safa * $safa_peq;
