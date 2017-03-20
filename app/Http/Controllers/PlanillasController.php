@@ -303,8 +303,12 @@ class PlanillasController extends Controller
     return $data;
   }
   public function calc_billetes2($totales){
-
     $billete=$totales['sum_tot_recib'];
+
+    $numero_de_billetes_1000 = $billete / 1000;
+    $billete = $billete % 1000;
+    $numero_de_billetes_1000=floor($numero_de_billetes_1000);
+
     $numero_de_billetes_500 = $billete / 500;
     $billete = $billete % 500;
     $numero_de_billetes_500=floor($numero_de_billetes_500);
@@ -330,6 +334,7 @@ class PlanillasController extends Controller
     $numero_de_billetes_1 = floor($billete / 1);
     $billete = $billete % 1;
     $num[0]=$billete;
+    $num[1000]=$numero_de_billetes_1000;
     $num[500]=$numero_de_billetes_500;
     $num[200]=$numero_de_billetes_200;
     $num[100]=$numero_de_billetes_100;
@@ -359,6 +364,10 @@ class PlanillasController extends Controller
       //recibir el total de pagos en un array
       //recibe el nombre de la gente
       $billete=$N;
+      $numero_de_billetes_1000 = $billete / 1000;
+      $billete = $billete % 1000;
+      $numero_de_billetes_1000=floor($numero_de_billetes_1000);
+
       $numero_de_billetes_500 = $billete / 500;
       $billete = $billete % 500;
       $numero_de_billetes_500=floor($numero_de_billetes_500);
@@ -384,6 +393,7 @@ class PlanillasController extends Controller
       $numero_de_billetes_1 = floor($billete / 1);
       $billete = $billete % 1;
       $num[0]=$N;
+      $num[1000]=$numero_de_billetes_1000;
       $num[500]=$numero_de_billetes_500;
       $num[200]=$numero_de_billetes_200;
       $num[100]=$numero_de_billetes_100;
@@ -396,9 +406,10 @@ class PlanillasController extends Controller
       $todos[]=$num;
       $i++;
     }
-    $tot_500=0;$tot_200=0;$tot_100=0;$tot_50=0;$tot_20=0;$tot_10=0;$tot_5=0;$tot_1=0;$tot_billetes=0;
+    $tot_1000=0;$tot_500=0;$tot_200=0;$tot_100=0;$tot_50=0;$tot_20=0;$tot_10=0;$tot_5=0;$tot_1=0;$tot_billetes=0;
     foreach ($todos as $key) {
 
+      $tot_1000=$key[1000]+$tot_1000;
       $tot_500=$key[500]+$tot_500;
       $tot_200=$key[200]+$tot_200;
       $tot_100=$key[100]+$tot_100;
@@ -409,9 +420,9 @@ class PlanillasController extends Controller
       $tot_1=$key[1]+$tot_1;
       $tot_billetes=round($key[0]+$tot_billetes,2);
       $cant_mult_500=$tot_500*500;$tot_500*500;$cant_mult_200=$tot_200*200;$cant_mult_100=$tot_100*100;$cant_mult_50=$tot_50*50;$cant_mult_20=$tot_20*20;$cant_mult_10=$tot_10*10;
-      $cant_mult_5=$tot_5*5;$cant_mult_1=$tot_1*1;
+      $cant_mult_5=$tot_5*5;$cant_mult_1=$tot_1*1;$cant_mult_1000=$tot_1000*1000;
     }
-    $cant_ind[500]=$tot_500;$cant_ind[200]=$tot_200;$cant_ind[100]=$tot_100;$cant_ind[50]=$tot_50;$cant_ind[20]=$tot_20;
+    $cant_ind[1000]=$tot_1000;$cant_ind[500]=$tot_500;$cant_ind[200]=$tot_200;$cant_ind[100]=$tot_100;$cant_ind[50]=$tot_50;$cant_ind[20]=$tot_20;
     $cant_ind[10]=$tot_10;$cant_ind[5]=$tot_5;$cant_ind[1]=$tot_1;$cant_ind[0]=$tot_billetes;
     $tot_mul=$cant_mult_500+$cant_mult_200+$cant_mult_100+$cant_mult_50+$cant_mult_20+$cant_mult_10+$cant_mult_5+$cant_mult_1;
     $dif=round($tot_dinero-$tot_mul,2);
