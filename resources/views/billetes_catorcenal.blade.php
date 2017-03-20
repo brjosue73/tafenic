@@ -18,6 +18,7 @@
 <body>
   <?php
   foreach ($data as $dat) {
+    $data1000=$dat['1000'];
     $data500=$dat['500'];
     $data200=$dat['200'];
     $data100=$dat['100'];
@@ -28,7 +29,7 @@
     $data1=$dat['1'];
   }
   $tot500=$data500*500;
-  $tot_gen=$data500*500+$data200*200+$data100*100+$data50*50+$data20*20+$data10*10+$data5*5+$data1;
+  $tot_gen=$data1000*1000+$data500*500+$data200*200+$data100*100+$data50*50+$data20*20+$data10*10+$data5*5+$data1;
 
   ?>
   <h4 class="text-centro">TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
@@ -53,6 +54,16 @@
         </tr>
       </thead>
       <tbody>
+        tr>
+          <th>
+            1000
+          </th>
+          <th>
+            {{number_format( $data1000 ,2 )}}
+          </th>
+          <th>            {{number_format( $data1000*1000 ,2 )}}</th>
+        </tr>
+
         <tr>
           <th>
             500
