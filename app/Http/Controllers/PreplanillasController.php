@@ -321,6 +321,8 @@ class PreplanillasController extends Controller
       else {
         $tamano_safa=['id'=>'1','name'=>'Grande'];
       }
+      //return "ok si";
+
       return view('edit_prep', ['data' => $prep,
       'trab'=>$trab,
       'finc'=>$finc,
@@ -330,7 +332,7 @@ class PreplanillasController extends Controller
       'resp_finc'=>$resp_finc,
       'actividad'=>$actividad,
       'labor'=>$labor,
-      ''=>$prep[''],
+      'cant_cujes'=>$prep['cant_cujes'],
       'cuje_ext'=>$prep['cuje_ext'],
       'safa_ext'=>$prep['safa_ext'],
       'cant_safa'=>$prep['cant_safa'],
