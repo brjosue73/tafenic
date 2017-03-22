@@ -110,37 +110,20 @@ class PreplanillasController extends Controller
         $variables=Variable::all();//
         foreach ($variables as $variable) {//Toma los datos de la tabla variables
           $hora_trab=0;
-          $dia=$variable->sal_diario;
-          $alim=$variable->alimentacion;
-          $vacaciones=$variable->vacaciones/100;
-          $cuje_grand= $variable->cuje_grand;
-          $cuje_peq= $variable->cuje_peq;
-          $h_ext_val= $variable->hora_ext;
-          $cuje_peq_ext=$cuje_peq*2;
-          $cuje_grand_ext=$cuje_grand*2;
-          $pago_hora=$dia/8;
-          $pago_hora_ext=$pago_hora*2;
-          $safa_peq=$variable->safa_peq;
-          $safa_grand=$variable->safa_grand;
-          $safa_peq_ext=$safa_peq*2;
-          $safa_grand_ext=$safa_grand*2;
-          $inss_lab=$variable->inss_campo;
-          $inss_admin=$variable->inss_admin;
-          $inss_patron=$variable->inss_patron;
-          $inss_patron_catorce=$variable->inss_patron_catorce;
+          $dia=$variable->sal_diario; $alim=$variable->alimentacion; $vacaciones=$variable->vacaciones/100;
+          $cuje_grand= $variable->cuje_grand; $cuje_peq= $variable->cuje_peq; $h_ext_val= $variable->hora_ext;
+          $cuje_peq_ext=$cuje_peq; $cuje_grand_ext=$cuje_grand; $pago_hora=$dia/8; $pago_hora_ext=$pago_hora*2;
+          $safa_peq=$variable->safa_peq; $safa_grand=$variable->safa_grand; $safa_peq_ext=$safa_peq;
+          $safa_grand_ext=$safa_grand; $inss_lab=$variable->inss_campo; $inss_admin=$variable->inss_admin;
+          $inss_patron=$variable->inss_patron; $inss_patron_catorce=$variable->inss_patron_catorce;
         }
         $total_act_ext=0;
         //$prep= new Preplanilla($arreglo);
         //$subsidio=$arreglo['subsidios'];
-        $prep->salario_dev =$dia;
-        $prep->alimentacion =$alim;
-        $prep->vacaciones= $vacaciones;
-        $prep->aguinaldo= $vacaciones;
-        $prep->prestamo =$arreglo['prestamos'];
-        $prep->inss_campo=$inss_lab;
-        $prep->inss_admin=$inss_admin;
-        $prep->inss_patron=$inss_patron_catorce;
-        $prep->hora_trab=$arreglo['hora_trab'];
+        $prep->salario_dev =$dia; $prep->alimentacion =$alim; $prep->vacaciones= $vacaciones;
+        $prep->aguinaldo= $vacaciones; $prep->prestamo =$arreglo['prestamos']; $prep->inss_campo=$inss_lab;
+        $prep->inss_admin=$inss_admin; $prep->inss_patron=$inss_patron_catorce; $prep->hora_trab=$arreglo['hora_trab'];
+
 
         if (isset($arreglo['feriado'])) {
           $feriado=$arreglo['feriado'];
@@ -217,26 +200,20 @@ class PreplanillasController extends Controller
           $prep->save();
           return "Agregada! subsidio";
         }
-        else {//Si No es subsidio
+        else {//Si No es subsidio ni feriado
           $ext=0;
           $otros=$arreglo['otros'];
           $prep->otros=$otros;
           $cuje_ext=$arreglo['cuje_ext'];
           $labor_dat=Labor::find($arreglo['id_labor']);
           if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
-            if(!$arreglo['cant_cujes']){
-              $arreglo['cant_cujes']=0;
-            }
             if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']){//si es cuje
-                 $cant_cujes=$arreglo['cant_cujes'];
-                 if($arreglo['tamano_cuje'] == 0){//pequeno
-                 $total_act=round($cant_cujes * $cuje_peq,2);
-                 $total_act=$dia;
+               $cant_cujes=$arreglo['cant_cujes'];
+               if($arreglo['tamano_cuje'] == 0){//pequeno
                  $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
                  $prep->tot_cuje_peq=$total_act_ext;
                }
                else {//cuje grande
-                 $total_act=round($cant_cujes * $cuje_grand,2);
                  $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
                  $prep->tot_cuje_gran=$total_act_ext;
                }
