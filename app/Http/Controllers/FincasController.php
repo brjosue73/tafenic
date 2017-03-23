@@ -348,7 +348,7 @@ class FincasController extends Controller
         }
         if ($dia_menor==0){
             $valor_dia=$trab['salario_dev'];
-            $dia_menor=116.02;
+            $dia_menor=$valor_dia;
         }
       }
       if($dias_sept>=6){
