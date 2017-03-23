@@ -338,8 +338,6 @@ class PlanillasController extends Controller
       $numero_de_billetes_200 = floor($billete / 200);
       $billete = $billete % 200;
 
-      $numero_de_billetes_200 = floor($billete / 200);
-      $billete = $billete % 200;
 
       $numero_de_billetes_100 =floor($billete / 100);
       $billete = $billete % 100;
