@@ -14,6 +14,7 @@ use App\Variable;
 class PlanillasController extends Controller
 {
   public function planilla_general2($request){
+    set_time_limit(600);
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
      //return $data;
