@@ -89,7 +89,6 @@ class PlanillasController extends Controller
       $totales['sum_inss_lab']=round($inss_lab,2);
       $totales['sum_tot_recib']=round($tot_recib,2);
       $totales['sum_inss_pat']=round($inss_pat,2);
-            return $totales;
 
       $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
       $fecha_ini=$data['0']['fecha_ini'];
@@ -197,6 +196,8 @@ class PlanillasController extends Controller
       return $pdf->stream('Sobre.pdf');
     }
     elseif($funcion == 'Billetes'){
+      set_time_limit(600);
+
       $data=$this->planilla_general2($request);
       $totales=$this->sum_totales($data);
 
@@ -304,6 +305,7 @@ class PlanillasController extends Controller
     }
   }
   public function billetes(Request $request){
+
     $peticion=$request->all();
     $planillas=$this->calculo_planilla($peticion);
     $data =$this->calcular_billetes($planillas);
