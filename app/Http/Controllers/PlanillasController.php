@@ -89,6 +89,8 @@ class PlanillasController extends Controller
       $totales['sum_inss_lab']=round($inss_lab,2);
       $totales['sum_tot_recib']=round($tot_recib,2);
       $totales['sum_inss_pat']=round($inss_pat,2);
+            return $totales;
+
       $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
       $fecha_ini=$data['0']['fecha_ini'];
       $fecha_fin=$data['0']['fecha_fin'];
@@ -104,37 +106,37 @@ class PlanillasController extends Controller
       $i=0;
       $encabezado='<!DOCTYPE html>
       <html>
-      <head>
-          <style type="text/css">
-              /*(bootstrap source)*/
-          </style>
+        <head>
+            <style type="text/css">
+                /*(bootstrap source)*/
+            </style>
 
-          <style type="text/css">
-              .cabecera {
-                  text-align: center;
-                  /*margin-bottom: 20px;*/
-                  height: 70px;
-                  padding:0;
-                  margin-bottom: 0;
-                  opacity: 1;
-                  font-size:13px;
-              }
-              h4{
-                padding: 2px;
-                margin: 1px;
-              }
-          </style>
-      </head>
-      <body>
-          <div class="cabecera">
-            <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-            <h4>PLANILLA GENERAL</h4>
-            <h4>Planilla de pago del '
-             .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
-            '</h4>
+            <style type="text/css">
+                .cabecera {
+                    text-align: center;
+                    /*margin-bottom: 20px;*/
+                    height: 70px;
+                    padding:0;
+                    margin-bottom: 0;
+                    opacity: 1;
+                    font-size:13px;
+                }
+                h4{
+                  padding: 2px;
+                  margin: 1px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="cabecera">
+              <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+              <h4>PLANILLA GENERAL</h4>
+              <h4>Planilla de pago del '
+               .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
+              '</h4>
 
-          </div>
-      </body>
+            </div>
+        </body>
       </html>';
       $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
@@ -195,10 +197,14 @@ class PlanillasController extends Controller
       return $pdf->stream('Sobre.pdf');
     }
     elseif($funcion == 'Billetes'){
+      $data=$this->planilla_general2($request);
+      $totales=$this->sum_totales($data);
+
       //$general=$this->planilla_general3($request);
       //return $general;
       $peticion=$request->all();
       //$data =$this->billetes($peticion);
+      //return $peticion;
       $planillas=$this->calculo_planilla($peticion);
       // usort($planillas, function($a, $b) {
       //   return strcmp($a["nombre"], $b["nombre"]);
@@ -206,6 +212,8 @@ class PlanillasController extends Controller
       // });
 
       $totales=$this->sum_totales($planillas);
+
+
       $dev=$totales['sum_dev1'];
       $septimo=$totales['sum_septimos'];
       $feriados=$totales['sum_feriados'];
@@ -228,10 +236,8 @@ class PlanillasController extends Controller
       $totales['sum_inss_lab']=round($inss_lab,2);
       $totales['sum_tot_recib']=round($tot_recib,2);
       $totales['sum_inss_pat']=round($inss_pat,2);
-      //return $totales;
       $pdf='';
       $data=$this->calcular_billetes($planillas, $totales);
-      //return $data;
       // $totales2=$this->sum_totales($planillas);
       // return $totales2;
       $nombres=$this->nombres_billetes($planillas);
@@ -303,51 +309,6 @@ class PlanillasController extends Controller
     $data =$this->calcular_billetes($planillas);
     return $data;
   }
-  public function calc_billetes2($totales){
-    $billete=$totales['sum_tot_recib'];
-
-    $numero_de_billetes_1000 = $billete / 1000;
-    $billete = $billete % 1000;
-    $numero_de_billetes_1000=floor($numero_de_billetes_1000);
-
-    $numero_de_billetes_500 = $billete / 500;
-    $billete = $billete % 500;
-    $numero_de_billetes_500=floor($numero_de_billetes_500);
-
-    $numero_de_billetes_200 = floor($billete / 200);
-    $billete = $billete % 200;
-
-    $numero_de_billetes_100 =floor($billete / 100);
-    $billete = $billete % 100;
-
-    $numero_de_billetes_50 =floor ($billete / 50);
-    $billete = $billete % 50;
-
-    $numero_de_billetes_20 = floor($billete / 20);
-    $billete = $billete % 20;
-
-    $numero_de_billetes_10 =floor ($billete / 10);
-    $billete = $billete % 10;
-
-    $numero_de_billetes_5 = floor($billete / 5);
-    $billete = $billete % 5;
-
-    $numero_de_billetes_1 = floor($billete / 1);
-    $billete = $billete % 1;
-    $num[0]=$billete;
-    $num[1000]=$numero_de_billetes_1000;
-    $num[500]=$numero_de_billetes_500;
-    $num[200]=$numero_de_billetes_200;
-    $num[100]=$numero_de_billetes_100;
-    $num[50]=$numero_de_billetes_50;
-    $num[20]=$numero_de_billetes_20;
-    $num[10]=$numero_de_billetes_10;
-    $num[5]=$numero_de_billetes_5;
-    $num[1]=$numero_de_billetes_1;
-    $num[2]=$billete;
-    $todos[]=$num;
-    return $todos;
-  }
   public function nombres_billetes($planillas){
     foreach ($planillas as $planilla) {
       $nombres[]=$planilla['nombre'];
@@ -365,13 +326,15 @@ class PlanillasController extends Controller
       //recibir el total de pagos en un array
       //recibe el nombre de la gente
       $billete=$N;
-      $numero_de_billetes_1000 = $billete / 1000;
-      $billete = $billete % 1000;
-      $numero_de_billetes_1000=floor($numero_de_billetes_1000);
 
-      $numero_de_billetes_500 = $billete / 500;
+      $numero_de_billetes_1000 = floor($billete / 1000);
+      $billete = $billete % 1000;
+
+      $numero_de_billetes_500 = floor($billete / 500);
       $billete = $billete % 500;
-      $numero_de_billetes_500=floor($numero_de_billetes_500);
+
+      $numero_de_billetes_200 = floor($billete / 200);
+      $billete = $billete % 200;
 
       $numero_de_billetes_200 = floor($billete / 200);
       $billete = $billete % 200;
@@ -420,12 +383,13 @@ class PlanillasController extends Controller
       $tot_5=$key[5]+$tot_5;
       $tot_1=$key[1]+$tot_1;
       $tot_billetes=round($key[0]+$tot_billetes,2);
-      $cant_mult_500=$tot_500*500;$tot_500*500;$cant_mult_200=$tot_200*200;$cant_mult_100=$tot_100*100;$cant_mult_50=$tot_50*50;$cant_mult_20=$tot_20*20;$cant_mult_10=$tot_10*10;
-      $cant_mult_5=$tot_5*5;$cant_mult_1=$tot_1*1;$cant_mult_1000=$tot_1000*1000;
+      $cant_mult_1000=$tot_1000*1000;$cant_mult_500=$tot_500*500;
+      $tot_500*500;$tot_1000*1000;$cant_mult_200=$tot_200*200;$cant_mult_100=$tot_100*100;$cant_mult_50=$tot_50*50;$cant_mult_20=$tot_20*20;$cant_mult_10=$tot_10*10;
+      $cant_mult_5=$tot_5*5;$cant_mult_1=$tot_1*1;
     }
     $cant_ind[1000]=$tot_1000;$cant_ind[500]=$tot_500;$cant_ind[200]=$tot_200;$cant_ind[100]=$tot_100;$cant_ind[50]=$tot_50;$cant_ind[20]=$tot_20;
     $cant_ind[10]=$tot_10;$cant_ind[5]=$tot_5;$cant_ind[1]=$tot_1;$cant_ind[0]=$tot_billetes;
-    $tot_mul=$cant_mult_500+$cant_mult_200+$cant_mult_100+$cant_mult_50+$cant_mult_20+$cant_mult_10+$cant_mult_5+$cant_mult_1;
+    $tot_mul=$cant_mult_1000+$cant_mult_500+$cant_mult_200+$cant_mult_100+$cant_mult_50+$cant_mult_20+$cant_mult_10+$cant_mult_5+$cant_mult_1;
     $dif=round($tot_dinero-$tot_mul,2);
     $todos['diferencia']=$dif;
     $todos['cantidad_multiplicada']=$tot_mul;
