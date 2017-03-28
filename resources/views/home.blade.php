@@ -43,7 +43,7 @@
             <ul class="dropdown-menu">
               <li><a href="" data-ui-sref="/planilla">Planilla Catorcenal</a></li>
               <li><a href="" data-ui-sref="/RplanillaQ">Planilla Quincenal</a></li>
-              <li><a href="" data-ui-sref="/prepxtrab">Preplanilla por trabajador</a></li>
+              <!-- <li><a href="" data-ui-sref="/prepxtrab">Preplanilla por trabajador</a></li> -->
               <li><a href="" data-ui-sref="/prepxfinc">Preplanilla por Fincas</a></li>
               <li><a href="" data-ui-sref="/labsRep">Preplanilla por Labores</a></li>
               <li><a href="" data-ui-sref="/totalescc">Totales C.C.</a></li>
