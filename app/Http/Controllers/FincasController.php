@@ -14,10 +14,12 @@ use DB;
 class FincasController extends Controller
 {
   public function planilla_finca(Request $request){
+set_time_limit(600);
     $data =$this->calculo_finca($request);
     return $data;
   }
   public function calculo_pdf(Request $request){
+set_time_limit(600);
     $peticion=$request->all();
 
     $data =$this->calculo_finca($peticion);
@@ -27,6 +29,7 @@ class FincasController extends Controller
     return $pdf->inline('Reporte_finca'.$finca.'.pdf');
   }
   public function planilla_fincas(Request $request){
+set_time_limit(600);
     $fincas=Finca::all();
     $fecha_ini=$request['fecha_ini'];
     $fecha_fin=$request['fecha_fin'];
@@ -348,7 +351,7 @@ class FincasController extends Controller
         }
         if ($dia_menor==0){
             $valor_dia=$trab['salario_dev'];
-            $dia_menor=116.02;
+            $dia_menor=$valor_dia;
         }
       }
       if($dias_sept>=6){
