@@ -77,7 +77,6 @@ class TrabajadoresController extends Controller
         $finca=Finca::find($trab->id_finca);
         $actividad=Actividad::find($trab->id_actividad);
         $labor=Labor::find($trab->id_labor);
-
         $array=[
           'id'=>$trab['id'],
           'fecha'=>$trab['fecha'],

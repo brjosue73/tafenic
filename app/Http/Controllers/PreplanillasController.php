@@ -99,15 +99,16 @@ class PreplanillasController extends Controller
       $arreglo = $request;
       $prep = Preplanilla::find($id);
       $guardar=$this->guardar_act($prep, $arreglo);
-      return 'Actualizada con exito';
+      return $guardar;
+      return 'Actualizada hjhjhg con exito';
     }
     public function guardar_act($prep, $arreglo)
     {
-
         //$peticion = $request->all();
         //$arreglo = $peticion["data"];
         $subsidio=0;
         $variables=Variable::all();//
+
         foreach ($variables as $variable) {//Toma los datos de la tabla variables
           $hora_trab=0;
           $dia=$variable->sal_diario; $alim=$variable->alimentacion; $vacaciones=$variable->vacaciones/100;
@@ -205,6 +206,7 @@ class PreplanillasController extends Controller
           $otros=$arreglo['otros'];
           $prep->otros=$otros;
           $cuje_ext=$arreglo['cuje_ext'];
+
           $labor_dat=Labor::find($arreglo['id_labor']);
           if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
             if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']){//si es cuje
@@ -228,13 +230,17 @@ class PreplanillasController extends Controller
                $arreglo['cant_cujes']=0;
                $cant_safa=$arreglo['cant_safa'];
                if($arreglo['tamano_safa'] == 0){// safadura pequeno
-                 $total_act=$cant_safa * $safa_peq;
                  $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
+                 $prep->tot_safa_peq=$total_act_ext;
+
                }
                else { //safadura grande
-                 $total_act=$cant_safa * $safa_grand;
                  $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
+                 $prep->tot_safa_gran=$total_act_ext;
+
                }
+               $total_act=$dia;
+
                $prep->cant_safa=$cant_safa;
                $prep->tamano_safa=$arreglo['tamano_safa'];
                $prep->tot_act_ext=$total_act_ext;//falta el total de las actividades
@@ -242,15 +248,18 @@ class PreplanillasController extends Controller
                $prep->total_actividad=$total_act;
                $prep->tot_safa_ext=$total_act_ext;
                $prep->cant_cujes=0;
+
              }
           }
           else{ //Si es por Horas
+
             $prep->cant_cujes=0;
             $prep->total_actividad=$dia;
             $ext= $arreglo['hora_ext'] * $h_ext_val;
             $prep->hora_ext = $arreglo['hora_ext'];
             $prep->total_extras=$ext;
           }
+
           $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros+$total_act_ext;
           $prep->salario_acum= $sal;
           $subsidio=0;
@@ -276,6 +285,7 @@ class PreplanillasController extends Controller
 
     public function edit($id)
     {
+
       $prep = Preplanilla::find($id);
       $trab= Trabajador::find($prep->id_trabajador);
       $finc= Finca::find($prep->id_finca);
@@ -315,7 +325,6 @@ class PreplanillasController extends Controller
       'cant_safa'=>$prep['cant_safa'],
       'tamano_cuje'=>$tamano_cuje,
       'tamano_safa'=>$tamano_safa,
-
       ]);
 
     }
