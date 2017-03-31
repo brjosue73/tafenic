@@ -9,9 +9,16 @@
         "laravel/framework": "5.2.*",
         "barryvdh/laravel-dompdf": "^0.6.1",
         "barryvdh/laravel-snappy": "^0.3.1",
+<<<<<<< HEAD
         "h4cc/wkhtmltopdf-i386": "0.12.x",
         "h4cc/wkhtmltoimage-i386": "0.12.x",
         "h4cc/wkhtmltopdf-amd64": "0.12.x"
+=======
+        "h4cc/wkhtmltoimage-amd64": "0.12.x",
+        "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
+        "maciejczyzewski/bottomline": "*",
+        "anahkiasen/underscore-php": "^2.0"
+>>>>>>> d8d1ef066ed3e4059cd817842889dc6cc8274d9d
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
