@@ -148,6 +148,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Application Service Providers...
          */
@@ -162,6 +163,7 @@ return [
         //OTRO PDF//
         Barryvdh\Snappy\ServiceProvider::class,
 
+        //maciejczyzewski\bottomline\bottomline::class,
 
     ],
 
@@ -210,8 +212,9 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         /*DOM PDF*/
         //'PDF'       => Barryvdh\DomPDF\Facade::class,
-          'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
-          'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        //'__'=> maciejczyzewski\bottomline::class,
 
 
 

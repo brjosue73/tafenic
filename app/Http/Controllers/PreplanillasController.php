@@ -240,7 +240,6 @@ class PreplanillasController extends Controller
 
                }
                $total_act=$dia;
-
                $prep->cant_safa=$cant_safa;
                $prep->tamano_safa=$arreglo['tamano_safa'];
                $prep->tot_act_ext=$total_act_ext;//falta el total de las actividades
