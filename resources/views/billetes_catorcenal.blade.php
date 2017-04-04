@@ -54,7 +54,7 @@
         </tr>
       </thead>
       <tbody>
-        tr>
+        <tr>
           <th>
             1000
           </th>

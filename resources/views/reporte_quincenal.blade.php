@@ -32,6 +32,7 @@
   $dia_ini=date("d", strtotime($fecha_1));
   $mes_ini=date("m", strtotime($fecha_1));
   $ano=date("Y", strtotime($fecha_1));
+  
 
   $fecha_2=date("d-F-Y", strtotime("$fecha_fin - 1 days"));
   $dia_fin=date("d", strtotime($fecha_2));
