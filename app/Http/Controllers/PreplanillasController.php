@@ -142,38 +142,43 @@ class PreplanillasController extends Controller
             $otros=$arreglo['otros'];
             $prep->otros=$otros;
             $labor_dat=Labor::find($arreglo['id_labor']);
-            if($labor_dat['tipo_labor']=='prod' ){ //Si es de tipo actividad/cujes/ensarte
-              if($arreglo['labName']=='cuje'){//si es cuje
-                  $cant_cujes=$arreglo['cant_cujes'];
+            iif($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
+              if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']>0){//si es cuje
+                 $cant_cujes=$arreglo['cant_cujes'];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
-                   $total_act=round($cant_cujes * $cuje_peq,2);
-                   $total_act=$dia;
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
                    $prep->tot_cuje_peq=$total_act_ext;
                  }
-                 elseif($arreglo['tamano_cuje'] == 1) {//cuje grande
-                   $total_act=round($cant_cujes * $cuje_grand,2);
+                 else {//cuje grande
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
                    $prep->tot_cuje_gran=$total_act_ext;
                  }
+                 $prep->cuje_ext=$arreglo['cuje_ext'];
+                 $prep->tot_cuje_ext=$total_act_ext;
                  $total_act=$dia;
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                  $prep->tamano_cuje=$arreglo['tamano_cuje'];
                  $prep->tot_act_ext=$total_act_ext;
                }
-               elseif($arreglo['labName']=='cuje') {//si es safadura
-                 $cant_safa=round($arreglo['cant_safa'],2);
+               elseif($arreglo['labName']=='safadura' || $arreglo['cant_safa']>0) {//si es safadura
+                 $arreglo['cant_cujes']=0;
+                 $cant_safa=$arreglo['cant_safa'];
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
-                   $prep->tot_safa_peq  =$total_act_ext;
+                   $prep->tot_safa_peq=$total_act_ext;
                  }
-                 else { //safadura grande
+                 elseif($arreglo['tamano_safa'] == 1) { //safadura grande
                    $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
                    $prep->tot_safa_gran=$total_act_ext;
                  }
+                 $total_act=$dia;
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
-                 $prep->tot_act_ext=$total_act_ext;
+                 $prep->tot_act_ext=$total_act_ext;//falta el total de las actividades
+                 $prep->safa_ext=$arreglo['safa_ext'];
+                 $prep->total_actividad=$total_act;
+                 $prep->tot_safa_ext=$total_act_ext;
+                 $prep->cant_cujes=0;
                }
             }
             else{ //Si es por Horas
