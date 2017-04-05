@@ -138,7 +138,7 @@
 
       <div class="form-group col-sm-4 col-md-4 col-lg-4">
         <label for="" class="control-label">Tamaño de Safadura: </label>
-        <select class="form-control">
+        <select name="tamano_cuje" class="form-control">
           <option selected value="{{$tamano_safa['id']}}" >{{$tamano_safa['name']}}</option>
           <option value="0">Pequeño</option>
           <option value="1">Grande</option>
