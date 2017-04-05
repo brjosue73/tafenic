@@ -142,7 +142,7 @@ class PreplanillasController extends Controller
             $otros=$arreglo['otros'];
             $prep->otros=$otros;
             $labor_dat=Labor::find($arreglo['id_labor']);
-            iif($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
+            if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
               if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']>0){//si es cuje
                  $cant_cujes=$arreglo['cant_cujes'];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
