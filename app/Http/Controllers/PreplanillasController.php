@@ -151,7 +151,7 @@ class PreplanillasController extends Controller
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
                    $prep->tot_cuje_peq=$total_act_ext;
                  }
-                 else {//cuje grande
+                 elseif($arreglo['tamano_cuje'] == 1) {//cuje grande
                    $total_act=round($cant_cujes * $cuje_grand,2);
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
                    $prep->tot_cuje_gran=$total_act_ext;
@@ -161,7 +161,7 @@ class PreplanillasController extends Controller
                  $prep->tamano_cuje=$arreglo['tamano_cuje'];
                  $prep->tot_act_ext=$total_act_ext;
                }
-               else {//si es safadura
+               elseif($arreglo['labName']=='cuje') {//si es safadura
                  $cant_safa=round($arreglo['cant_safa'],2);
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
@@ -209,7 +209,7 @@ class PreplanillasController extends Controller
 
           $labor_dat=Labor::find($arreglo['id_labor']);
           if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
-            if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']){//si es cuje
+            if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']>0){//si es cuje
                $cant_cujes=$arreglo['cant_cujes'];
                if($arreglo['tamano_cuje'] == 0){//pequeno
                  $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
@@ -226,7 +226,7 @@ class PreplanillasController extends Controller
                $prep->tamano_cuje=$arreglo['tamano_cuje'];
                $prep->tot_act_ext=$total_act_ext;
              }
-             else {//si es safadura
+             elseif($arreglo['labName']=='safadura' || $arreglo['cant_safa']>0) {//si es safadura
                $arreglo['cant_cujes']=0;
                $cant_safa=$arreglo['cant_safa'];
                if($arreglo['tamano_safa'] == 0){// safadura pequeno
@@ -234,7 +234,7 @@ class PreplanillasController extends Controller
                  $prep->tot_safa_peq=$total_act_ext;
 
                }
-               else { //safadura grande
+               elseif($arreglo['tamano_safa'] == 1) { //safadura grande
                  $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
                  $prep->tot_safa_gran=$total_act_ext;
 
