@@ -110,7 +110,6 @@ class ActividadesController extends Controller
             $array2=array();
             $lab_array=array();
             $tamano=sizeof($data);
-
             $labores2=Labor::where('id_actividad',$id_activ)->get();
             foreach ($labores2 as $labor2) {
               $labores[]=$labor2['nombre'];

@@ -18,7 +18,7 @@ class PlanillasController extends Controller
     set_time_limit(600);
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-
+     //return $data;
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
          return $a['order'] < $b['order']?1:-1;
@@ -31,7 +31,9 @@ class PlanillasController extends Controller
 
   }
   public function planilla_general3($request){
+
     $data=$this->planilla_general2($request);
+    //return $data;
     $totales=$this->sum_totales($data);
 
     $dev=$totales['sum_dev1'];
@@ -516,11 +518,10 @@ class PlanillasController extends Controller
 
           $identif[]=$id_trab;
 
-          //$trabs=$planillas->where('id_trabajador',$id_trab);
+          //$trabs=$planillas->where('id_trabajador',$id_trab);$id_trab
           $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
           ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
           ->get();
-
            $dias2= $trabs->count();
            $contar_dias=$this->contar_dias($trabs);
            $dias=$contar_dias['dias'];
@@ -541,7 +542,11 @@ class PlanillasController extends Controller
            foreach ($trabs as $trab) {
              $valor_dia=$trab['salario_dev'];
              $test1=$valor_dia;
-             $tot_dev+=$valor_dia;
+             $x=($trab['hora_trab']*100)/8;
+             $tot_hora=$x/100;
+             // $dias+=$total;
+             $hora_pag=$tot_hora*$valor_dia;
+             $tot_dev+=$hora_pag;
              //$test1[]=$trab['salario_dev'];
              $feriados+=$trab->feriados;
              if($dia_mayor<$valor_dia){
