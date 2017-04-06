@@ -176,7 +176,12 @@ ini_set('memory_limit', '2048M');
 
              foreach ($trabs as $trab) {
                $valor_dia=$trab['salario_dev'];
-               $tot_dev+=$valor_dia;
+               $test1=$valor_dia;
+               $x=($trab['hora_trab']*100)/8;
+               $tot_hora=$x/100;
+               // $dias+=$total;
+               $hora_pag=$tot_hora*$valor_dia;
+               $tot_dev+=$hora_pag;
                $feriados+=$trab->feriados;
                if($trab->tipo_feriado==1){//Feriado no trabajado
                  $feriado1+=1;

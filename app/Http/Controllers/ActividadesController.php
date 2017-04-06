@@ -38,7 +38,7 @@ class ActividadesController extends Controller
         $query = Actividad::find($id);
         return $query;
     }
-        public function store(Request $request){
+    public function store(Request $request){
         $peticion = $request->all();
         $arreglo = $peticion["data"];
 
@@ -209,9 +209,39 @@ class ActividadesController extends Controller
             $tamano=sizeof($data);
             /****************************Aqui va lo cortado********************************/
           }            return $master;
-//Fin de saber sino esta repetido 3
-           //return $lab_comp;
+      //Fin de saber sino esta repetido 3
+                 //return $lab_comp;
 
         }
+     }
+    public function reporte_cujesafa(Request $request){
+      return 'hola shennier';
+
+      $cuje_peq= Preplanilla::where('tamano_cuje',0)
+      ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+      ->where('cuje_ext','>',0)
+      ->max('cuje_ext');
+      $cuje_gran= Preplanilla::where('tamano_cuje',1)
+      ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+      ->where('cuje_ext','>',0)
+      ->max('cuje_ext');
+
+      $safa_peq= Preplanilla::where('tamano_safa',0)
+      ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+      ->where('safa_ext','>',0)
+      ->max('safa_ext');
+      $safa_gran= Preplanilla::where('tamano_safa',1)
+      ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+      ->where('safa_ext','>',0)
+      ->max('safa_ext');
+
+      $totales=[
+        'cant_safa_peq'=>$safa_peq,
+        'cant_cuje_peq'=>$cuje_peq,
+        'cant_safa_gran'=>$safa_gran,
+        'cant_cuje_gran'=>$cuje_gran,
+      ];
+
     }
+
 }
