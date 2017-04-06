@@ -121,7 +121,14 @@ class PreplanillasController extends Controller
         $total_act_ext=0;
         //$prep= new Preplanilla($arreglo);
         //$subsidio=$arreglo['subsidios'];
-        $prep->salario_dev =$dia; $prep->alimentacion =$alim; $prep->vacaciones= $vacaciones;
+        $prep->salario_dev =$dia;
+
+        // $x=($trab['hora_trab']*100)/8;
+        // $total=$x/100;
+        // $dias+=$total;
+        // $dias_sept+=$total;
+
+         $prep->alimentacion =$alim; $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones; $prep->prestamo =$arreglo['prestamos']; $prep->inss_campo=$inss_lab;
         $prep->inss_admin=$inss_admin; $prep->inss_patron=$inss_patron_catorce; $prep->hora_trab=$arreglo['hora_trab'];
 
