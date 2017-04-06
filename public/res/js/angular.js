@@ -207,6 +207,11 @@
 			url:"/totales-centros-costos",
 			templateUrl: "partials/reportes/totalescc.html",
 			controller: "centrosCostos"
+		})
+		.state('/repActProd', {
+			url:"/reporte-actividades-produccion",
+			templateUrl: "partials/reportes/repActProd.html",
+			controller: "actividadesProd"
 		});
 	});
 	/*******************************************************************************************************************\
@@ -1015,6 +1020,16 @@
 				s.sumTotLab = data[data.length - 1];
 				s.sumTotDia = data[data.length - 2];
 			})
+		}
+	}])
+	app.controller('actividadesProd',['$scope','$http', function(s, h) {
+		s.sendDataAP = {};
+		s.getActProd = function() {
+			console.log(s.sendDataAP);
+			h.post('/reporte_cujesafa', s.sendDataAP)
+			.success(function(data){
+				console.log(data);
+			});
 		}
 	}]);
 }());
