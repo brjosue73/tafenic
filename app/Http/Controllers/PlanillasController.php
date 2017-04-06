@@ -547,6 +547,7 @@ class PlanillasController extends Controller
              // $dias+=$total;
              $hora_pag=$tot_hora*$valor_dia;
              $tot_dev+=$hora_pag;
+             /**********************************************************************************************************************/
              //$test1[]=$trab['salario_dev'];
              $feriados+=$trab->feriados;
              if($dia_mayor<$valor_dia){
