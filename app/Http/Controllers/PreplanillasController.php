@@ -140,6 +140,7 @@ class PreplanillasController extends Controller
             return 'Agregada con exito Feriado no trab';
           }
           elseif($feriado==2) { //si es feriado trabajado
+            $prep->cant_cujes=0;
             $prep->total_actividad=$dia;//aqui
             $prep->tipo_feriado=2;
             $ext=0;
@@ -167,6 +168,7 @@ class PreplanillasController extends Controller
                elseif($arreglo['labName']=='safadura' || $arreglo['cant_safa']>0) {//si es safadura
                  $arreglo['cant_cujes']=0;
                  $cant_safa=$arreglo['cant_safa'];
+                 $prep->cant_cujes=0;
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
                    $prep->tot_safa_peq=$total_act_ext;
@@ -182,11 +184,10 @@ class PreplanillasController extends Controller
                  $prep->safa_ext=$arreglo['safa_ext'];
                  $prep->total_actividad=$total_act;
                  $prep->tot_safa_ext=$total_act_ext;
-                 $prep->cant_cujes=0;
                }
             }
             else{ //Si es por Horas
-              $total_act=$dia;
+              $prep->cant_cujes=0;
               $prep->total_actividad=$dia;
               $ext= $arreglo['hora_ext'] * $h_ext_val;
               $prep->hora_ext = $arreglo['hora_ext'];
@@ -198,10 +199,17 @@ class PreplanillasController extends Controller
             $prep->salario_acum= $sal;
             $subsidio=0;
 
+            $prep->inss_campo=$inss_lab;
+            $prep->inss_admin=$inss_admin;
+            $prep->inss_patron=$inss_patron_catorce;
+            $prep->septimo=$arreglo['septimo'];
+            $prep->centro_costo=$arreglo['centro_costo'];
+          
+
             $tot_feriado=round($dia*2,2);
             $prep->feriados=$tot_feriado;
             $prep->save();
-            return "Agregada! 333";
+            return "Agregada con exito feriado trabajado";
           }
         }
         if ($subsidio===true) {//si esta de subsidio
@@ -238,6 +246,7 @@ class PreplanillasController extends Controller
              elseif($arreglo['labName']=='safadura' || $arreglo['cant_safa']>0) {//si es safadura
                $arreglo['cant_cujes']=0;
                $cant_safa=$arreglo['cant_safa'];
+               $prep->cant_cujes=0;
                if($arreglo['tamano_safa'] == 0){// safadura pequeno
                  $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
                  $prep->tot_safa_peq=$total_act_ext;
@@ -255,7 +264,6 @@ class PreplanillasController extends Controller
                $prep->safa_ext=$arreglo['safa_ext'];
                $prep->total_actividad=$total_act;
                $prep->tot_safa_ext=$total_act_ext;
-               $prep->cant_cujes=0;
 
              }
           }
