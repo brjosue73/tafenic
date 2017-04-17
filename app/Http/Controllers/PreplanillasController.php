@@ -136,11 +136,14 @@ class PreplanillasController extends Controller
             $prep->tipo_feriado=1;
             $tot_feriado=round($dia,2);
             $prep->feriados=$tot_feriado;
+            $prep->hora_trab=0;
+
             $prep->save();
             return 'Agregada con exito Feriado no trab';
           }
           elseif($feriado==2) { //si es feriado trabajado
             $prep->cant_cujes=0;
+            $prep->hora_trab=8;
             $prep->total_actividad=$dia;//aqui
             $prep->tipo_feriado=2;
             $ext=0;
@@ -204,7 +207,7 @@ class PreplanillasController extends Controller
             $prep->inss_patron=$inss_patron_catorce;
             $prep->septimo=$arreglo['septimo'];
             $prep->centro_costo=$arreglo['centro_costo'];
-          
+
 
             $tot_feriado=round($dia*2,2);
             $prep->feriados=$tot_feriado;
