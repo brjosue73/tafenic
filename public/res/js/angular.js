@@ -1029,6 +1029,12 @@
 			h.post('/reporte_cujesafa', s.sendDataAP)
 			.success(function(data){
 				console.log(data);
+				s.ProdActData = [];
+
+				for (var i = 0; i < data.length - 1; i++) {
+					s.ProdActData.push(data[i]);
+				}
+				s.ProdActTot = data[data.length - 1];
 			});
 		}
 	}]);
