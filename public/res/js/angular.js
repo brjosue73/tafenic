@@ -1025,7 +1025,8 @@
 	app.controller('actividadesProd',['$scope','$http', function(s, h) {
 		s.sendDataAP = {};
 		s.getActProd = function() {
-			console.log(s.sendDataAP);
+			//console.log(s.sendDataAP);
+
 			h.post('/reporte_cujesafa', s.sendDataAP)
 			.success(function(data){
 				console.log(data);
@@ -1034,6 +1035,7 @@
 				for (var i = 0; i < data.length - 1; i++) {
 					s.ProdActData.push(data[i]);
 				}
+
 				s.ProdActTot = data[data.length - 1];
 			});
 		}
