@@ -99,15 +99,16 @@ class PreplanillasController extends Controller
       $arreglo = $request;
       $prep = Preplanilla::find($id);
       $guardar=$this->guardar_act($prep, $arreglo);
-      return 'Actualizada con exito';
+      return $guardar;
+      return 'Actualizada hjhjhg con exito';
     }
     public function guardar_act($prep, $arreglo)
     {
-
         //$peticion = $request->all();
         //$arreglo = $peticion["data"];
         $subsidio=0;
         $variables=Variable::all();//
+
         foreach ($variables as $variable) {//Toma los datos de la tabla variables
           $hora_trab=0;
           $dia=$variable->sal_diario; $alim=$variable->alimentacion; $vacaciones=$variable->vacaciones/100;
@@ -120,7 +121,11 @@ class PreplanillasController extends Controller
         $total_act_ext=0;
         //$prep= new Preplanilla($arreglo);
         //$subsidio=$arreglo['subsidios'];
-        $prep->salario_dev =$dia; $prep->alimentacion =$alim; $prep->vacaciones= $vacaciones;
+        $prep->salario_dev =$dia;
+        /*****************************************************************************************************************************/
+
+
+         $prep->alimentacion =$alim; $prep->vacaciones= $vacaciones;
         $prep->aguinaldo= $vacaciones; $prep->prestamo =$arreglo['prestamos']; $prep->inss_campo=$inss_lab;
         $prep->inss_admin=$inss_admin; $prep->inss_patron=$inss_patron_catorce; $prep->hora_trab=$arreglo['hora_trab'];
 
@@ -131,52 +136,61 @@ class PreplanillasController extends Controller
             $prep->tipo_feriado=1;
             $tot_feriado=round($dia,2);
             $prep->feriados=$tot_feriado;
+            $prep->hora_trab=0;
+
             $prep->save();
             return 'Agregada con exito Feriado no trab';
           }
           elseif($feriado==2) { //si es feriado trabajado
+            $prep->cant_cujes=0;
+            $prep->hora_trab=8;
             $prep->total_actividad=$dia;//aqui
             $prep->tipo_feriado=2;
             $ext=0;
             $otros=$arreglo['otros'];
             $prep->otros=$otros;
             $labor_dat=Labor::find($arreglo['id_labor']);
-            if($labor_dat['tipo_labor']=='prod' ){ //Si es de tipo actividad/cujes/ensarte
-              if($arreglo['labName']=='cuje'){//si es cuje
-                  $cant_cujes=$arreglo['cant_cujes'];
+            if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
+              if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']>0){//si es cuje
+                 $cant_cujes=$arreglo['cant_cujes'];
                  if($arreglo['tamano_cuje'] == 0){//pequeno
-                   $total_act=round($cant_cujes * $cuje_peq,2);
-                   $total_act=$dia;
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
                    $prep->tot_cuje_peq=$total_act_ext;
                  }
                  else {//cuje grande
-                   $total_act=round($cant_cujes * $cuje_grand,2);
                    $total_act_ext=round($arreglo['cuje_ext']*$cuje_grand_ext,2);
                    $prep->tot_cuje_gran=$total_act_ext;
                  }
+                 $prep->cuje_ext=$arreglo['cuje_ext'];
+                 $prep->tot_cuje_ext=$total_act_ext;
                  $total_act=$dia;
                  $prep->cant_cujes=$cant_cujes;/****AFINAR AQUI y en safadura--agregar valors faltantes****/
                  $prep->tamano_cuje=$arreglo['tamano_cuje'];
                  $prep->tot_act_ext=$total_act_ext;
                }
-               else {//si es safadura
-                 $cant_safa=round($arreglo['cant_safa'],2);
+               elseif($arreglo['labName']=='safadura' || $arreglo['cant_safa']>0) {//si es safadura
+                 $arreglo['cant_cujes']=0;
+                 $cant_safa=$arreglo['cant_safa'];
+                 $prep->cant_cujes=0;
                  if($arreglo['tamano_safa'] == 0){// safadura pequeno
                    $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
-                   $prep->tot_safa_peq  =$total_act_ext;
+                   $prep->tot_safa_peq=$total_act_ext;
                  }
-                 else { //safadura grande
+                 elseif($arreglo['tamano_safa'] == 1) { //safadura grande
                    $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
                    $prep->tot_safa_gran=$total_act_ext;
                  }
+                 $total_act=$dia;
                  $prep->cant_safa=$cant_safa;
                  $prep->tamano_safa=$arreglo['tamano_safa'];
-                 $prep->tot_act_ext=$total_act_ext;
+                 $prep->tot_act_ext=$total_act_ext;//falta el total de las actividades
+                 $prep->safa_ext=$arreglo['safa_ext'];
+                 $prep->total_actividad=$total_act;
+                 $prep->tot_safa_ext=$total_act_ext;
                }
             }
             else{ //Si es por Horas
-              $total_act=$dia;
+              $prep->cant_cujes=0;
               $prep->total_actividad=$dia;
               $ext= $arreglo['hora_ext'] * $h_ext_val;
               $prep->hora_ext = $arreglo['hora_ext'];
@@ -188,10 +202,17 @@ class PreplanillasController extends Controller
             $prep->salario_acum= $sal;
             $subsidio=0;
 
+            $prep->inss_campo=$inss_lab;
+            $prep->inss_admin=$inss_admin;
+            $prep->inss_patron=$inss_patron_catorce;
+            $prep->septimo=$arreglo['septimo'];
+            $prep->centro_costo=$arreglo['centro_costo'];
+
+
             $tot_feriado=round($dia*2,2);
             $prep->feriados=$tot_feriado;
             $prep->save();
-            return "Agregada! 333";
+            return "Agregada con exito feriado trabajado";
           }
         }
         if ($subsidio===true) {//si esta de subsidio
@@ -205,9 +226,10 @@ class PreplanillasController extends Controller
           $otros=$arreglo['otros'];
           $prep->otros=$otros;
           $cuje_ext=$arreglo['cuje_ext'];
+
           $labor_dat=Labor::find($arreglo['id_labor']);
           if($labor_dat['tipo_labor']=='prod'){ //Si es de tipo actividad/cujes/ensarte
-            if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']){//si es cuje
+            if($arreglo['labName']=='cuje' || $arreglo['cant_cujes']>0){//si es cuje
                $cant_cujes=$arreglo['cant_cujes'];
                if($arreglo['tamano_cuje'] == 0){//pequeno
                  $total_act_ext=round($arreglo['cuje_ext']*$cuje_peq_ext,2);
@@ -224,33 +246,39 @@ class PreplanillasController extends Controller
                $prep->tamano_cuje=$arreglo['tamano_cuje'];
                $prep->tot_act_ext=$total_act_ext;
              }
-             else {//si es safadura
+             elseif($arreglo['labName']=='safadura' || $arreglo['cant_safa']>0) {//si es safadura
                $arreglo['cant_cujes']=0;
                $cant_safa=$arreglo['cant_safa'];
+               $prep->cant_cujes=0;
                if($arreglo['tamano_safa'] == 0){// safadura pequeno
-                 $total_act=$cant_safa * $safa_peq;
                  $total_act_ext=$arreglo['safa_ext']*$safa_peq_ext;
+                 $prep->tot_safa_peq=$total_act_ext;
+
                }
-               else { //safadura grande
-                 $total_act=$cant_safa * $safa_grand;
+               elseif($arreglo['tamano_safa'] == 1) { //safadura grande
                  $total_act_ext=$arreglo['safa_ext']*$safa_grand_ext;
+                 $prep->tot_safa_gran=$total_act_ext;
+
                }
+               $total_act=$dia;
                $prep->cant_safa=$cant_safa;
                $prep->tamano_safa=$arreglo['tamano_safa'];
                $prep->tot_act_ext=$total_act_ext;//falta el total de las actividades
                $prep->safa_ext=$arreglo['safa_ext'];
                $prep->total_actividad=$total_act;
                $prep->tot_safa_ext=$total_act_ext;
-               $prep->cant_cujes=0;
+
              }
           }
           else{ //Si es por Horas
+
             $prep->cant_cujes=0;
             $prep->total_actividad=$dia;
             $ext= $arreglo['hora_ext'] * $h_ext_val;
             $prep->hora_ext = $arreglo['hora_ext'];
             $prep->total_extras=$ext;
           }
+
           $sal=$dia+$alim + $vacaciones +$vacaciones+$ext+$otros+$total_act_ext;
           $prep->salario_acum= $sal;
           $subsidio=0;
@@ -276,6 +304,7 @@ class PreplanillasController extends Controller
 
     public function edit($id)
     {
+
       $prep = Preplanilla::find($id);
       $trab= Trabajador::find($prep->id_trabajador);
       $finc= Finca::find($prep->id_finca);
@@ -315,7 +344,6 @@ class PreplanillasController extends Controller
       'cant_safa'=>$prep['cant_safa'],
       'tamano_cuje'=>$tamano_cuje,
       'tamano_safa'=>$tamano_safa,
-
       ]);
 
     }

@@ -71,6 +71,10 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('planilla_fincas','FincasController@planilla_fincas');
     Route::post('preplanillass/{id}','PreplanillasController@updates');
 
+
+    /*Reporte de Cujes y Zafadura separado*/
+    Route::post('reporte_cujesafa','ActividadesController@reporte_cujesafa');
+
     // Route::get('pdf2', function(){
     //   $a[]='hola';
     //   $pdf = PDF::loadView('pdf',['user'=>$a]);
