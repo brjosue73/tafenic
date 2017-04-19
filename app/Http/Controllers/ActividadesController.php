@@ -215,33 +215,56 @@ class ActividadesController extends Controller
         }
      }
     public function reporte_cujesafa(Request $request){
-      return 'hola shennier';
-
+      //return 'hola shennier';
+      $fecha_ini=$request['fecha_ini'];
+      $fecha_fin=$request['fecha_fin'];
+      $variables=Variable::all();
+      $var= $variables[0];
+      $val_cuje_gran=$var['cuje_grand'];
+      $val_cuje_peq=$var['cuje_peq'];
+      $val_safa_gran=$var['safa_grand'];
+      $val_safa_peq=$var['cuje_grand'];
       $cuje_peq= Preplanilla::where('tamano_cuje',0)
       ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
       ->where('cuje_ext','>',0)
-      ->max('cuje_ext');
+      ->sum('cuje_ext');
+
       $cuje_gran= Preplanilla::where('tamano_cuje',1)
       ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
       ->where('cuje_ext','>',0)
-      ->max('cuje_ext');
+      ->sum('cuje_ext');
 
       $safa_peq= Preplanilla::where('tamano_safa',0)
       ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
       ->where('safa_ext','>',0)
-      ->max('safa_ext');
+      ->sum('safa_ext');
+
       $safa_gran= Preplanilla::where('tamano_safa',1)
       ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
       ->where('safa_ext','>',0)
-      ->max('safa_ext');
+      ->sum('safa_ext');
 
+
+      $total_cujes=$safa_peq+$cuje_peq+$safa_gran+$cuje_gran;
+
+      $tot_cant_safa_peq =$safa_peq*$val_safa_peq;
+      $tot_cant_cuje_peq =$cuje_peq*$val_cuje_peq;
+      $tot_cant_safa_gran=$safa_gran*$val_safa_gran;
+      $tot_cant_cuje_gran=$cuje_gran*$val_cuje_gran;
+      $total_dinero=$tot_cant_safa_peq+$tot_cant_cuje_peq+$tot_cant_safa_gran+$tot_cant_cuje_gran;
       $totales=[
         'cant_safa_peq'=>$safa_peq,
         'cant_cuje_peq'=>$cuje_peq,
         'cant_safa_gran'=>$safa_gran,
         'cant_cuje_gran'=>$cuje_gran,
+        'tot_cant_safa_peq'=>$tot_cant_safa_peq ,
+        'tot_cant_cuje_peq'=>$tot_cant_cuje_peq ,
+        'tot_cant_safa_gran'=>$tot_cant_safa_gran,
+        'tot_cant_cuje_gran'=>$tot_cant_cuje_gran,
+        'total_dinero'=>$total_dinero,
+        'total_cujes'=>$total_cujes,
       ];
-
+      return $totales;
     }
 
 }
