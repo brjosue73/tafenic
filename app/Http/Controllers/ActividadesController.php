@@ -245,7 +245,7 @@ class ActividadesController extends Controller
       ->sum('safa_ext');
 
 
-      $total_cujes=$safa_peq+$cuje_peq+$safa_gran+$cuje_gran;
+      $total_activs=$safa_peq+$cuje_peq+$safa_gran+$cuje_gran;
 
       $tot_cant_safa_peq =$safa_peq*$val_safa_peq;
       $tot_cant_cuje_peq =$cuje_peq*$val_cuje_peq;
@@ -262,7 +262,7 @@ class ActividadesController extends Controller
         'tot_cant_safa_gran'=>$tot_cant_safa_gran,
         'tot_cant_cuje_gran'=>$tot_cant_cuje_gran,
         'total_dinero'=>$total_dinero,
-        'total_cujes'=>$total_cujes,
+        'total_activs'=>$total_activs,
       ];
       return $totales;
     }
