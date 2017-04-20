@@ -46,7 +46,7 @@
               <!-- <li><a href="" data-ui-sref="/prepxtrab">Preplanilla por trabajador</a></li> -->
               <li><a href="" data-ui-sref="/prepxfinc">Preplanilla por Fincas</a></li>
               <li><a href="" data-ui-sref="/labsRep">Preplanilla por Labores</a></li>
-              <!-- <li><a href="" data-ui-sref="/repActProd">R. Act. Prod.</a></li> -->
+              <li><a href="" data-ui-sref="/repActProd">R. Act. Prod.</a></li>
               <li><a href="" data-ui-sref="/totalescc">Totales C.C.</a></li>
             </ul>
           </li>
