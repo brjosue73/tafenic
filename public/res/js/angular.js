@@ -62,6 +62,12 @@
 				case 6:
 					return "Safadura Tapado";
 					break;
+				case 7:
+					return "Maíz";
+					break;
+				case 8:
+					return "Frijol";
+					break;
 				default: return "NaCC";
 
 			}
