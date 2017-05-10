@@ -47,6 +47,8 @@ ini_set('memory_limit', '2048M');
       '4'=>4,
       '5'=>5,
       '6'=>6,
+      '7'=>7,
+      '8'=>8,
     ];
     $totales=array();
     $calculo_tot=array();
@@ -450,6 +452,16 @@ ini_set('memory_limit', '2048M');
                 ->where('id_finca',$id_finca)
                 ->where('centro_costo',6)
                 ->count();
+        $centro_7= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                ->where('id_finca',$id_finca)
+                ->where('centro_costo',7)
+                ->count();
+        $centro_8= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha en esa finca*/
+                ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+                ->where('id_finca',$id_finca)
+                ->where('centro_costo',8)
+                ->count();
         $centros=[
           '0'=>$centro_0,
           '1'=>$centro_1,
@@ -458,6 +470,9 @@ ini_set('memory_limit', '2048M');
           '4'=>$centro_4,
           '5'=>$centro_5,
           '6'=>$centro_6,
+          '7'=>$centro_7,
+          '8'=>$centro_8,
+
       ];
 
          foreach ($fincas as $fin) {
