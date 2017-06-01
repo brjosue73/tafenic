@@ -12,7 +12,8 @@
         "h4cc/wkhtmltoimage-amd64": "0.12.x",
         "wemersonjanuario/wkhtmltopdf-windows": "0.12.2.3",
         "maciejczyzewski/bottomline": "*",
-        "anahkiasen/underscore-php": "^2.0"
+        "anahkiasen/underscore-php": "^2.0",
+        "maatwebsite/excel": "~2.1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

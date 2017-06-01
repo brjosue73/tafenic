@@ -11,6 +11,7 @@ use App\Trabajador;
 use App\Labor;
 use App\Variable;
 use DB;
+use Excel;
 
 class PlanillasController extends Controller
 {
@@ -60,6 +61,7 @@ class PlanillasController extends Controller
     $data[]=$totales;
     return $data;
   }
+
   public function inss_catorcenal(Request $request){}
 
   public function reporte_planilla(Request $request){
@@ -69,81 +71,30 @@ class PlanillasController extends Controller
 
     if ($funcion == 'Generar Imprimible'){
       $data=$this->planilla_general2($request);
-      $totales=$this->sum_totales($data);
-      $dev=$totales['sum_dev1'];
-      $septimo=$totales['sum_septimos'];
-      $feriados=$totales['sum_feriados'];
-      $tot_dev2=$totales['sum_dev2'];
-      $prestamos=$totales['sum_prestam'];
-      $alim=$totales['sum_alim'];
-      $tot_hext=$totales['sum_tot_hext'];
-      $dinero_cuje=$totales['sum_dinero_activ'];
+      $totales=$this->faltantes_planilla($data);
 
-      $a_vac=$dev+$septimo+$feriados;
-      $vacs=$a_vac*0.083333;
-      $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
-      // $tot_acum=$vacs+$vacs+$tot_dev2;
-      $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
-      $tot_recib=$tot_acum-$inss_lab-$prestamos;
-      $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
-      $totales['sum_acum']=round($tot_acum,2);
-      $totales['sum_aguin']=round($vacs,2);
-      $totales['sum_vacs']=round($vacs,2);
-      $totales['sum_inss_lab']=round($inss_lab,2);
-      $totales['sum_tot_recib']=round($tot_recib,2);
-      $totales['sum_inss_pat']=round($inss_pat,2);
+      $encabezado=$this->estilos_planilla($data);
 
-      $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-      $fecha_ini=$data['0']['fecha_ini'];
-      $fecha_fin=$data['0']['fecha_fin'];
-
-      $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
-      $dia_ini=date("d", strtotime($fecha_1));
-      $mes_ini=date("m", strtotime($fecha_1));
-      $ano="2017";//date("Y", strtotime($fecha_1));
-
-      $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
-      $dia_fin=date("d", strtotime($fecha_2));
-      $mes_fin=date("m", strtotime($fecha_2));
-      $i=0;
-      $encabezado='<!DOCTYPE html>
-      <html>
-        <head>
-            <style type="text/css">
-                /*(bootstrap source)*/
-            </style>
-
-            <style type="text/css">
-                .cabecera {
-                    text-align: center;
-                    /*margin-bottom: 20px;*/
-                    height: 70px;
-                    padding:0;
-                    margin-bottom: 0;
-                    opacity: 1;
-                    font-size:13px;
-                }
-                h4{
-                  padding: 2px;
-                  margin: 1px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="cabecera">
-              <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-              <h4>PLANILLA GENERAL</h4>
-              <h4>Planilla de pago del '
-               .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
-              '</h4>
-
-            </div>
-        </body>
-      </html>';
       $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
       $pdf->setOption('header-html', $encabezado);
+      // Excel::create('Planilla', function($excel) use($data, $totales) {
+      //     $excel->sheet('Excel sheet', function($sheet) use($data, $totales) {
+      //         $sheet->loadView('reporte_catorcenal_excel', array('data'=>$data,'totales'=>$totales));
+      //     });
+      // })->export('xls');
       return $pdf->inline('Planilla_catorcenal.pdf');
+    }
+    elseif($function=='Excel'){
+      $data=$this->planilla_general2($request);
+      $totales=$this->faltantes_planilla($data);
+
+      $encabezado=$this->estilos_planilla($data);
+      Excel::create('Planilla', function($excel) use($data, $totales) {
+          $excel->sheet('Excel sheet', function($sheet) use($data, $totales) {
+              $sheet->loadView('reporte_catorcenal_excel', array('data'=>$data,'totales'=>$totales));
+          });
+      })->export('xls');
     }
     elseif ($funcion == 'Generar sobres'){
       $datas =$this->calculo_planilla($peticion);
@@ -299,6 +250,32 @@ class PlanillasController extends Controller
       return $tot;
 
     }
+  }
+  public function faltantes_planilla($data){ //realiza los calculos para mostrar lo mismo en todos los reportes
+    $totales=$this->sum_totales($data);
+    $dev=$totales['sum_dev1'];
+    $septimo=$totales['sum_septimos'];
+    $feriados=$totales['sum_feriados'];
+    $tot_dev2=$totales['sum_dev2'];
+    $prestamos=$totales['sum_prestam'];
+    $alim=$totales['sum_alim'];
+    $tot_hext=$totales['sum_tot_hext'];
+    $dinero_cuje=$totales['sum_dinero_activ'];
+
+    $a_vac=$dev+$septimo+$feriados;
+    $vacs=$a_vac*0.083333;
+    $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
+    // $tot_acum=$vacs+$vacs+$tot_dev2;
+    $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+    $tot_recib=$tot_acum-$inss_lab-$prestamos;
+    $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+    $totales['sum_acum']=round($tot_acum,2);
+    $totales['sum_aguin']=round($vacs,2);
+    $totales['sum_vacs']=round($vacs,2);
+    $totales['sum_inss_lab']=round($inss_lab,2);
+    $totales['sum_tot_recib']=round($tot_recib,2);
+    $totales['sum_inss_pat']=round($inss_pat,2);
+    return $totales;
   }
   public function billetes(Request $request){
 
@@ -781,8 +758,55 @@ class PlanillasController extends Controller
     return 'Eliminada';
 
   }
+  public function estilos_planilla($data){
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    $fecha_ini=$data['0']['fecha_ini'];
+    $fecha_fin=$data['0']['fecha_fin'];
 
+    $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+    $dia_ini=date("d", strtotime($fecha_1));
+    $mes_ini=date("m", strtotime($fecha_1));
+    $ano="2017";//date("Y", strtotime($fecha_1));
 
+    $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
+    $dia_fin=date("d", strtotime($fecha_2));
+    $mes_fin=date("m", strtotime($fecha_2));
+    $i=0;
+    $encabezado='<!DOCTYPE html>
+    <html>
+      <head>
+          <style type="text/css">
+              /*(bootstrap source)*/
+          </style>
+
+          <style type="text/css">
+              .cabecera {
+                  text-align: center;
+                  /*margin-bottom: 20px;*/
+                  height: 70px;
+                  padding:0;
+                  margin-bottom: 0;
+                  opacity: 1;
+                  font-size:13px;
+              }
+              h4{
+                padding: 2px;
+                margin: 1px;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="cabecera">
+            <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+            <h4>PLANILLA GENERAL</h4>
+            <h4>Planilla de pago del '
+             .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
+            '</h4>
+
+          </div>
+      </body>
+    </html>';
+  }
 
 
 }
