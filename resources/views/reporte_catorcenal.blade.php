@@ -58,7 +58,9 @@
   $fecha_ini=$data['0']['fecha_ini'];
   $fecha_fin=$data['0']['fecha_fin'];
 
-  $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+  //$fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+  $fecha_1=date("d-m-Y", strtotime("$fecha_ini "));
+
   $dia_ini=date("d", strtotime($fecha_1));
   $mes_ini=date("m", strtotime($fecha_1));
   $ano=date("Y", strtotime($fecha_1));
