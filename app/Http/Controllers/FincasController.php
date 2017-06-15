@@ -78,7 +78,7 @@ ini_set('memory_limit', '2048M');
         $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
         $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
-        $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+        $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
 
 
 
@@ -275,10 +275,12 @@ ini_set('memory_limit', '2048M');
 
 
 
-                   $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
+                   $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;                                                                                          /*******************/
                    $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
                    $inss=($total_inss*$inss_camp)/100;
                    $inss_pat=($total_inss*$inss_patronal)/100;
+
+
                    $tot_recib=$total_acum - $inss - $prestamo;
 
                    $f=0;

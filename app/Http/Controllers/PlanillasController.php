@@ -49,7 +49,7 @@ class PlanillasController extends Controller
     $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
     $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
-    $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+    $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
     $totales['sum_acum']=round($tot_acum,2);
     $totales['sum_aguin']=round($vacs,2);
     $totales['sum_vacs']=round($vacs,2);
@@ -85,7 +85,7 @@ class PlanillasController extends Controller
       // $tot_acum=$vacs+$vacs+$tot_dev2;
       $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
       $tot_recib=$tot_acum-$inss_lab-$prestamos;
-      $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+      $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
       $totales['sum_acum']=round($tot_acum,2);
       $totales['sum_aguin']=round($vacs,2);
       $totales['sum_vacs']=round($vacs,2);
@@ -658,13 +658,11 @@ class PlanillasController extends Controller
 
                  $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
                  $tot_a_vacs=round($tot_a_vacs,2);
-                 $total_acum=$total_dev2 + $extra_tot/*Total Horas extras*/ + $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
+                 $total_acum=$total_dev2 + $extra_tot+ $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
 
-                 $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
-                                                                                          /*******************/
+                 $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;                                                                                          /*******************/
                  $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
                  $inss=($total_inss*$inss_camp)/100;
-
                  $inss_pat=($total_inss*$inss_patronal)/100;
                  //return $inss;
 
