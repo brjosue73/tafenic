@@ -200,6 +200,7 @@ class PlanillasController extends Controller
     }
     elseif($funcion == 'Billetes'){
       set_time_limit(600);
+      ini_set('memory_limit', '2048M');
 
       $data=$this->planilla_general2($request);
       $totales=$this->sum_totales($data);

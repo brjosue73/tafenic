@@ -79,12 +79,16 @@ ini_set('memory_limit', '2048M');
         $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
         $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+
+
+
         $suma['sum_acum']=round($tot_acum,2);
         $suma['sum_aguin']=round($vacs,2);
         $suma['sum_vacs']=round($vacs,2);
         $suma['sum_inss_lab']=round($inss_lab,2);
         $suma['sum_tot_recib']=round($tot_recib,2);
         $suma['sum_inss_pat']=round($inss_pat,2);
+
 
         $datos_finca=[
           'nombre_finca'=>$finca['nombre'],
@@ -269,12 +273,13 @@ ini_set('memory_limit', '2048M');
                    $tot_a_vacs=round($tot_a_vacs,2);
                    $total_acum=$total_dev2+ $extra_tot+$tot_a_vacs+$tot_a_vacs+$act_extra_tot;
 
-                   $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
 
-                   $total_inss=($total_acum-$tot_a_vacs);
+
+                   $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;
+                   $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
                    $inss=($total_inss*$inss_camp)/100;
-                    $inss_pat=($total_inss*$inss_patronal)/100;
-                    $tot_recib=$total_acum - $inss - $prestamo;
+                   $inss_pat=($total_inss*$inss_patronal)/100;
+                   $tot_recib=$total_acum - $inss - $prestamo;
 
                    $f=0;
                    $c=0;
