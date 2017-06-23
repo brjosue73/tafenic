@@ -74,11 +74,14 @@ ini_set('memory_limit', '2048M');
         $tot_hext=$suma['sum_tot_hext'];
         $dinero_cuje=$suma['sum_dinero_activ'];
         $a_vac=$dev+$septimo+$feriados;
+        $vacs_para_suma=0;
         $vacs=$a_vac*0.083333;
         $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
         $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
         $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
+
+
 
 
 
@@ -595,7 +598,47 @@ ini_set('memory_limit', '2048M');
         $sum_prestam+=$trab['prestamos'];
         $sum_inss_pat+=$trab['inss_patronal'];
       }
+      $dev=$sum_dev1;
+
+      $septimo=$sum_septimos;
+      $feriados=$sum_feriados;
+      $tot_dev2=$sum_dev2;
+      $prestamos=$sum_prestam;
+      $alim=$sum_alim;
+      $tot_hext=$sum_tot_hext;
+      $dinero_cuje=$sum_dinero_activ;
+      $a_vac=$dev+$septimo+$feriados;
+      $vacs_para_suma=0;
+      $vacs=$a_vac*0.083333;
+      $sum_vacs=round($vacs,2);
+
+      $sum_aguin=round($vacs,2);
+      $tot_acum=$sum_vacs+$sum_vacs+$tot_dev2+$tot_hext+$dinero_cuje;
+      $var= 'vacs= '.$sum_vacs.' TotDev2= '.$tot_dev2.' tot_hext= '.$tot_hext.' Dine cuje = '.$dinero_cuje;
+      $sum_acum=round($tot_acum,2);
+      $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+      $sum_inss_lab=round($inss_lab,2);
+      $tot_recib=$tot_acum-$inss_lab-$prestamos;
+      $sum_tot_recib=round($tot_recib,2);
+      $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
+      $sum_inss_pat=round($inss_pat,2);
+/****************************************************/
+
+      // $tot_hext=$suma['sum_tot_hext'];
+      // $dinero_cuje=$suma['sum_dinero_activ'];
+      // $a_vac=$dev+$septimo+$feriados;
+      // $vacs_para_suma=0;
+      // $vacs=$a_vac*0.083333;
+      // $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
+
+      /*
+
+
+      $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
+      $sum_inss_pat=round($inss_pat,2);
+      */
       $totales=  [
+        'aa'=>$var,
          "sum_tot_recib"=>round($sum_tot_recib,2),
          'sum_dias_trab'=>round($sum_dias_trab,2),
          "sum_dev1"=>round($sum_dev1,2),

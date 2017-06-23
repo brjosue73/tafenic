@@ -227,7 +227,7 @@ class PlanillasController extends Controller
       // $tot_acum=$vacs+$vacs+$tot_dev2;
       $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
       $tot_recib=$tot_acum-$inss_lab-$prestamos;
-      $inss_pat=(($tot_acum-$vacs-$alim)*12.5)/100;
+      $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
       $totales['sum_acum']=round($tot_acum,2);
       $totales['sum_aguin']=round($vacs,2);
       $totales['sum_vacs']=round($vacs,2);

@@ -7,5 +7,5 @@
 /public/.sass-cache
 Homestead.yaml
 Homestead.json
-
+/.env
 .env
