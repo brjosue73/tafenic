@@ -80,7 +80,7 @@
           <tr class="active">
 
             <th> N° </th>
-            <th>____________Nombre____________</th>
+            <th>_____________Nombre_____________</th>
             <th>#inss</th>
             <th>Días <br>  trab</th>
             <th>Tot. <br> Deven</th>
@@ -144,6 +144,7 @@
           @endforeach
           <tr>
             <td colspan="2">Total</td>
+            <td></td>
             <td>{{ round($totales['sum_dias_trab'] ,2)}}</td>
             <td>{{number_format( $totales['sum_dev1'],2 ) }}</td>
             <td>{{round($totales['sum_alim'],2) }}</td>
