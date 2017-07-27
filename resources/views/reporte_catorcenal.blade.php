@@ -80,14 +80,14 @@
           <tr class="active">
 
             <th> N° </th>
-            <th>_____________Nombre_____________</th>
+            <th>______________Nombre______________</th>
             <th>#inss</th>
             <th>Días <br>  trab</th>
             <th>Tot. <br> Deven</th>
             <th>Alim.</th>
             <th>Tot. <br> Básico</th>
-            <th>Septimo</th>
-            <th>subsidio</th>
+            <th>Sept</th>
+            <th>subs</th>
             <th>Otros</th>
             <th>Fer.</th>
             <th>Tot.<br> Deven</th>
