@@ -18,7 +18,7 @@ class PlanillasController extends Controller
     set_time_limit(600);
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-     //return $data;
+     return $data;
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
          return $a['order'] < $b['order']?1:-1;
@@ -495,7 +495,6 @@ class PlanillasController extends Controller
   }
   public function calculo_planilla($peticion){
     ini_set('memory_limit', '2048M');
-
     $finca_mayor='--';
     $fecha_ini=$peticion['fecha_ini'];
     $fecha_fin=$peticion['fecha_fin'];
@@ -538,6 +537,7 @@ class PlanillasController extends Controller
            $nombres=$trabajador->nombre;
            $apellido=$trabajador->apellidos;
            $nombre="$nombres   $apellido";
+           $n_inss=$trabajador->inss;
            $sep3=0;$sep4=0;$sep1=0;$sep2=0;
            $dia_mayor=0;$dia_menor=0;
            foreach ($trabs as $trab) {
@@ -730,6 +730,7 @@ class PlanillasController extends Controller
                "vac_tot"=>round($tot_a_vacs,2),
                "agui_tot"=>round($tot_a_vacs,2),
                "nombre"=>$nombre,
+               'n_inss'=>$trabajador->nss,
                "labores"=>$labores,
                "total_deven"=>round($tot_dev,2),
                "total_basic"=>round($tot_basic,2),
