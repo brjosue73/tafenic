@@ -294,7 +294,9 @@ class PlanillasController extends Controller
           "nss"=>$trabajador->nss,
           "pnombre"=>$nombre,
           "papellido"=>$apellido,
-          "t_devengado"=>$data['salario_'],
+          "salario"=>$data['salario_'],
+          "t_devengado"=>$data['devengado2'],
+
           "fecha_ini"=>$fecha_act,
         ];
         $tot[]=$array;

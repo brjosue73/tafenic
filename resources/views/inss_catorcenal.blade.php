@@ -38,7 +38,7 @@
             <td>03</td>
             <td>{{$dat['fecha_ini']}}-01 </td>
             <td>{{$dat['t_devengado']}}</td>
-            <td>{{$dat['t_devengado']}}</td>
+            <td>{{$dat['salario']}}</td>
             <td>0</td>
             <td></td>
             <td>0</td>
