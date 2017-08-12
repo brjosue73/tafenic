@@ -831,6 +831,7 @@ public function estilos_planilla($data){
           </div>
       </body>
     </html>';
+    return $encabezado;
   }
 
 
