@@ -166,6 +166,7 @@ return [
         //maciejczyzewski\bottomline\bottomline::class,
 
         //Excell
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -216,6 +217,7 @@ return [
         //'PDF'       => Barryvdh\DomPDF\Facade::class,
         'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
         //'__'=> maciejczyzewski\bottomline::class,
 
