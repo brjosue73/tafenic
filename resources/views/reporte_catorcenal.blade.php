@@ -82,13 +82,14 @@
           <tr class="active">
 
             <th> N° </th>
-            <th>________________Nombre________________</th>
+            <th>______________Nombre______________</th>
+            <th>#inss</th>
             <th>Días <br>  trab</th>
             <th>Tot. <br> Deven</th>
             <th>Alim.</th>
             <th>Tot. <br> Básico</th>
-            <th>Septimo</th>
-            <th>subsidio</th>
+            <th>Sept</th>
+            <th>subs</th>
             <th>Otros</th>
             <th>Fer.</th>
             <th>Tot.<br> Deven</th>
@@ -116,6 +117,7 @@
             $fecha_fin=$dat['fecha_fin']; ?>
             <td> {{ ++$i }}</td>
             <td class="letra"> {{ $dat['nombre'] }} </td>
+            <td> {{ $dat['n_inss'] }} </td>
             <td> {{ $dat['dias'] }} </td>
             <td> {{ number_format( $dat['total_deven'] ,2 )}} </td>
             <td> {{ number_format( $dat['alim_tot'] ,2 )}} </td>
@@ -144,6 +146,7 @@
           @endforeach
           <tr>
             <td colspan="2">Total</td>
+            <td></td>
             <td>{{ round($totales['sum_dias_trab'] ,2)}}</td>
             <td>{{number_format( $totales['sum_dev1'],2 ) }}</td>
             <td>{{round($totales['sum_alim'],2) }}</td>
