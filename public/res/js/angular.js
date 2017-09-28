@@ -462,7 +462,15 @@
 	}]);
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
-		//s.busquedaCriteria = "";
+		s.trabToDel;
+		s.trabToDelIndex;
+
+		s.trabajorDel = function(t, i){
+			console.log(t, i);
+			s.trabToDel = t;
+			s.trabToDelIndex = i;
+		};
+
 		s.sorting = "nombre";
 		s.filtrar = "todos";
 		s.trabajadores = r.query();
@@ -470,6 +478,32 @@
 		s.titulo = "Ingreso de trabajadores nuevos";
 		s.boton = "Guardar";
 		s.sendData = {};
+
+		s.del = function() {
+			$('#delTrab').attr("disabled","disabled");
+			$('#trabDelSpinner').css("display", "inline-block");
+
+			h.delete('trabajadores/'+s.trabToDel.id)
+				.success(function(data){
+					$('#trabDelSpinner').css("display", "none");
+					$('#exitotrabDel').css("display","inline");
+
+					setTimeout(function(){
+						$('#exitotrabDel').css("display","none");
+						$('#delTrab').removeAttr("disabled");
+					},3000);
+				})
+				.error(function(err){
+					console.log(err.status);
+					$('#trabDelSpinner').css("display", "none");
+					$('#errortrabDel').css("display","block");
+					setTimeout(function(){
+						$('#errortrabDel').css("display","none");
+						$('#delTrab').removeAttr("disabled");
+					},3000);
+				})
+		}
+
 		s.save = function(){
 			$('#save-trab').attr("disabled","disabled");
 			$('#trabSpinner').css("display", "inline-block");

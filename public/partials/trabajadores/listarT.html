@@ -50,7 +50,7 @@
           <th data-ng-click="sorting = 'cargo' ">Cargo</th>
           <th data-ng-click="sorting = 'tipo' ">Tipo</th>
           <th data-ng-click="sorting = 'estado' ">Estado</th>
-          <th>Modificar</th>
+          <th colspan="2"> Acciones </th>
           <!-- <th>accion</th>
           <th>Borrar</th> -->
         </tr>
@@ -68,10 +68,34 @@
           <td> <% trabajador.tipo%> </td>
           <td> <span class="label <% trabajador.estado | labelState %>"> <% trabajador.estado | estadoTrab %> </span></td>
           <td><a href="" data-ui-sref="/trabajadores.editar({id:<% trabajador.id %>})">Editar</a></td>
+          <td> <span class="label label-danger"  data-toggle="modal" data-target="#DelModal" data-ng-click="trabajorDel(trabajador, $index + 1)"> Eliminar </span> </td>
           <!-- <td><a href="">Dar de baja</a></td>
           <td><a href="" data-ui-sref="/trabajadores" data-ng-click='del(trabajador.id)'>Eliminar</a></td> -->
         </tr>
       </tbody>
     </table>
   </div>
+</div>
+
+
+<div class="modal fade" id="DelModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <buton class="close" aria-hidden="true" data-dismiss="modal">&times;</buton>
+                <h4 class="modal-title">¿Esta seguro que desa eliminar este Trabajador?</h4>
+            </div>
+            <div class="modal-body">
+                <h1> <% trabToDelIndex %> - <% trabToDel.nombre %> <% trabToDel.apellidos %> </h1>
+            </div>
+            <div class="modal-footer">
+              <i id="trabDelSpinner" class="fa fa-spinner fa-pulse fa-lg" style="color:blue; display:none;"></i>
+              <span id="exitotrabDel" style="color:green; display:none;">Eliminado con éxito! <i class="fa fa-check-circle fa-lg"></i></span>
+              <span id="errortrabDel" style="color:Red; display:none;">Error: no debe eliminarse!! <i class="fa fa-times-circle fa-lg"></i></span>
+
+                <button id="delTrab" class="btn btn-primary" data-ng-click="del()">aceptar</button>
+                <button class="btn btn-default" data-dismiss="modal">cancelar</button>
+            </div>
+        </div>
+    </div>
 </div>
