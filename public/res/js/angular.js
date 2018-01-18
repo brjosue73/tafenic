@@ -525,11 +525,16 @@
 
 					$('#trabSpinner').css("display", "none");
 					$('#exitotrab').css("display","inline");
-
+					console.log("éxito");
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
-						s.sendData = {};
+						/*s.sendData = {};*/
+						s.sendData.nombre = "";
+						s.sendData.apellidos = "";
+						s.sendData.nss = "";
+						s.sendData.cedula = "";
+						s.sendData.celular = "";
 						$('#save-trab').removeAttr("disabled");
 						console.log(s.sendData);
 					},3000);
