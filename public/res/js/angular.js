@@ -409,25 +409,37 @@
 		s.titulo = "Ingreso de trabajadores nuevos";
 		s.boton = "Guardar";
 		s.sendData = {};
-		s.save = function(){
+
+		s.save = function() {
+
+			console.log("TRABAJADORES");
+
 			$('#trabSpinner').css("display", "inline-block");
-			r.save({data:s.sendData},function(){
+
+			r.save({data:s.sendData},function() {
+
 					$('#trabSpinner').css("display", "none");
 					$('#exitotrab').css("display","inline");
-					//s.$apply();
+
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
+						console.log(s.sendData);
 					},1000);
-				},function(err){
+
+				},function(err) {
+
 					console.log(err.status);
 					$('#trabSpinner').css("display", "none");
 					$('#errortrab').css("display","block");
-					setTimeout(function(){
+
+					setTimeout(function() {
 						$('#errortrab').css("display","none");
 					},3000);
+
 			});
-		}
+		};
+
 	}]);
 	//Read one && Update One
 	app.controller('getOne', ['$scope','$stateParams','Resource','$location', function(s,sp,r,l){
@@ -462,7 +474,15 @@
 	}]);
 	//Read all && Del One
 	app.controller('getAll', ['$scope','Resource','$location','$http', function(s,r,l,h){
-		//s.busquedaCriteria = "";
+		s.trabToDel;
+		s.trabToDelIndex;
+
+		s.trabajorDel = function(t, i){
+			console.log(t, i);
+			s.trabToDel = t;
+			s.trabToDelIndex = i;
+		};
+
 		s.sorting = "nombre";
 		s.filtrar = "todos";
 		s.trabajadores = r.query();
@@ -470,27 +490,65 @@
 		s.titulo = "Ingreso de trabajadores nuevos";
 		s.boton = "Guardar";
 		s.sendData = {};
+
+		s.del = function() {
+			$('#delTrab').attr("disabled","disabled");
+			$('#trabDelSpinner').css("display", "inline-block");
+
+			h.delete('trabajadores/'+s.trabToDel.id)
+				.success(function(data){
+					$('#trabDelSpinner').css("display", "none");
+					$('#exitotrabDel').css("display","inline");
+
+					setTimeout(function(){
+						$('#exitotrabDel').css("display","none");
+						$('#delTrab').removeAttr("disabled");
+					},3000);
+				})
+				.error(function(err){
+					console.log(err.status);
+					$('#trabDelSpinner').css("display", "none");
+					$('#errortrabDel').css("display","block");
+					setTimeout(function(){
+						$('#errortrabDel').css("display","none");
+						$('#delTrab').removeAttr("disabled");
+					},3000);
+				})
+		}
+
 		s.save = function(){
+
 			$('#save-trab').attr("disabled","disabled");
 			$('#trabSpinner').css("display", "inline-block");
+
 			r.save({data:s.sendData},function(data){
+
 					$('#trabSpinner').css("display", "none");
 					$('#exitotrab').css("display","inline");
+
 					setTimeout(function(){
 						$('#exitotrab').css("display","none");
 						$("#trabForm")[0].reset();
+						s.sendData = {};
 						$('#save-trab').removeAttr("disabled");
+						console.log(s.sendData);
 					},3000);
+
 					s.trabajadores.push(data);
+
 				},function(err){
+
 					console.log(err.status);
+
 					$('#trabSpinner').css("display", "none");
 					$('#errortrab').css("display","block");
+
 					setTimeout(function(){
 						$('#errortrab').css("display","none");
 						$('#save-trab').removeAttr("disabled");
 					},3000);
 			});
+
 		}
 		/*s.del = function(id){
 			r.delete({id:id}, function(datos){
