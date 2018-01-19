@@ -89,7 +89,8 @@
   $fecha2='21';
   $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
   $fecha_ini=$data[0]['fecha_ini'];;
-  $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+  //$fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+  $fecha_1=date("d-m-Y", strtotime("$fecha_ini"));
 
 
   $i=1;
