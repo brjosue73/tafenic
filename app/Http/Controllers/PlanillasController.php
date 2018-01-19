@@ -19,7 +19,6 @@ class PlanillasController extends Controller
     set_time_limit(600);
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-     return $data; //eliminar aqui
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
          return $a['order'] < $b['order']?1:-1;
@@ -34,7 +33,6 @@ class PlanillasController extends Controller
   public function planilla_general3($request){
 
     $data=$this->planilla_general2($request);
-    //return $data;
     $totales=$this->sum_totales($data);
 
     $dev=$totales['sum_dev1'];
@@ -70,7 +68,6 @@ class PlanillasController extends Controller
 
     if ($funcion == 'Generar Imprimible'){
       $data=$this->planilla_general2($request);
-      return $data; //remover aqui
       $totales=$this->sum_totales($data);
       $dev=$totales['sum_dev1'];
       $septimo=$totales['sum_septimos'];
@@ -99,7 +96,6 @@ class PlanillasController extends Controller
       $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
       $pdf->setOption('header-html', $encabezado);
-      //quitar aqui
       //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       return $pdf->inline('Planilla_catorcenal.pdf');
     }
@@ -112,7 +108,6 @@ class PlanillasController extends Controller
       ini_set("memory_limit", "1024M");
       ini_set("max_execution_time", "600");
       $data=array();
-      //return $datas;
       foreach ($datas as $dat) {
         $array_1=array();
         $array_1['nombre']=$dat['nombre'];
@@ -144,9 +139,7 @@ class PlanillasController extends Controller
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
       $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm')->setOption('margin-top', 5)->setOption('margin-bottom', 3);
-      //quitar aqui
       //return view('sobres_catorcenal',array('data'=>$data));
-      //hasta aqui
       return $pdf->inline('sobres_catorcenal.pdf');
 
 
