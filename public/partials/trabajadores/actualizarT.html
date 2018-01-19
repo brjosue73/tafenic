@@ -1,29 +1,29 @@
 <!--
   FORMULARIO DE REGISTRO Y MODIFICACION DE DATOS DE TRABAJADORES
 -->
-<form id="trabForm" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 tarjeta blanco m-top_dow">
 
   <h1> <% titulo %> </h1>
 
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">Nombres: </label>
-    <input type="text" class="form-control" data-ng-model="sendData.nombre">
+    <input type="text" class="form-control" data-ng-model="sendData.nombre" form="trabForm">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">Apellidos: </label>
-    <input type="text" class="form-control" data-ng-model="sendData.apellidos">
+    <input type="text" class="form-control" data-ng-model="sendData.apellidos" form="trabForm">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">NSS: </label>
-    <input type="text" class="form-control" data-ng-model="sendData.nss">
+    <input type="text" class="form-control" data-ng-model="sendData.nss" form="trabForm">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">Cédula: </label>
-    <input type="text" class="form-control" data-ng-model="sendData.cedula">
+    <input type="text" class="form-control" data-ng-model="sendData.cedula" form="trabForm">
   </div>
   <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">N° de Tel. / Celular: </label>
-    <input type="text" class="form-control" data-ng-model="sendData.celular">
+    <input type="text" class="form-control" data-ng-model="sendData.celular" form="trabForm">
   </div>
   <!-- <div class="form-group col-sm-4 col-md-4 col-lg-4">
     <label for="">celular</label>
@@ -59,5 +59,5 @@
     <span id="exitotrab" style="color:green; display:none;">Guardado! <i class="fa fa-check-circle fa-lg"></i></span>
     <span id="errortrab" style="color:Red; display:none;">Error: vuelve a intentarlo <i class="fa fa-times-circle fa-lg"></i></span>
   </div>
-
-</form>
+</div>
+<form id="trabForm"></form>
