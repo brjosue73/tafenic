@@ -510,6 +510,10 @@ class PlanillasController extends Controller
     $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->get();
 
+    //realizar un if(en dependencia del valor recibido)
+    //si es general utilizar la consulta anterior
+    //si es con inss, realizar la misma consulta agregando el where del inss >0
+    //si es sin inss, realizar la misma consulta agregando el where del inss ==null;
     $tamano = sizeof($planillas);
     $trabajadores=array();$identif=array();
     $trab=0; $count=0;
@@ -539,16 +543,16 @@ class PlanillasController extends Controller
           $v1=0;
           $v2=0;
           if($inss==2){//General
-          
+
             //si es 2 - recorrer de cualquier manera
             $validacion_inss=1;//crea variable para que siempre se recorra, xq es general
           }
           else{//Sino es general
-            if($inss==$valor_inss){//si el trabajador tiene el inss q se esta solicitando 
+            if($inss==$valor_inss){//si el trabajador tiene el inss q se esta solicitando
               $v1+=1;
               $validacion_inss=1;
             }
-            elseif($valor_inss==0){//sino tiene el inss como lo solicitan 
+            elseif($valor_inss==0){//sino tiene el inss como lo solicitan
               $validacion_inss=0;
               $v2+=1;
             }
@@ -581,7 +585,7 @@ class PlanillasController extends Controller
             $sep3=0;$sep4=0;$sep1=0;$sep2=0;
             $dia_mayor=0;$dia_menor=0;
             foreach ($trabs as $trab) {
-              
+
               $valor_dia=$trab['salario_dev'];
               $test1=$valor_dia;
               $x=($trab['hora_trab']*100)/8;
@@ -789,7 +793,7 @@ class PlanillasController extends Controller
             unset($labores);
             unset($fincas);
             unset($fincas_sinRep);
-          //}//fin validacion_inss          
+          //}//fin validacion_inss
         }/*Fin Si no esta repetido*/
       }//Fin For de recorrer toda la planilla
       return $v1 . ' ---- '.$v2;
