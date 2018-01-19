@@ -850,7 +850,7 @@
 			$('#14nalpanepin').css("display", "inline-block");
 			console.log(s.plillaSendData);
 			//plr.query();
-			/*h.post('/planilla',s.plillaSendData)
+			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
 				s.reporfincTot = [];
 				for (var i = 0; i < data.length - 1; i++) {
@@ -877,7 +877,7 @@
 				setTimeout(function(){
 					$('#14nalerrorpin').css("display","none");
 				},3500);
-			});*/
+			});
 		}
 
 		s.revision = function(id, index, fechaini, fechafin) {
