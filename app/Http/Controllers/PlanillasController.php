@@ -665,8 +665,6 @@ class PlanillasController extends Controller
             }
             $inss_pat=($total_inss*$inss_patronal)/100;
             $tot_recib=$total_acum - $inss - $prestamo;
-            
-              $tot_recib=$total_acum-$prestamo;
             $f=0;
             $c=0;
           }
