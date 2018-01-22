@@ -19,6 +19,8 @@ class PlanillasController extends Controller
     set_time_limit(600);
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
+     return $data;
+     
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
          return $a['order'] < $b['order']?1:-1;
@@ -31,9 +33,10 @@ class PlanillasController extends Controller
 
   }
   public function planilla_general3($request){
-
+    
     $data=$this->planilla_general2($request);
-    $totales=$this->sum_totales($data);
+    return $data;
+    $totales=$this->sum_totales($data); 
 
     $dev=$totales['sum_dev1'];
     $septimo=$totales['sum_septimos'];
@@ -91,7 +94,7 @@ class PlanillasController extends Controller
       $totales['sum_inss_lab']=round($inss_lab,2);
       $totales['sum_tot_recib']=round($tot_recib,2);
       $totales['sum_inss_pat']=round($inss_pat,2);
-
+      return $data;
       $encabezado=$this->estilos_planilla($data);
       $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
@@ -656,9 +659,16 @@ class PlanillasController extends Controller
             $total_acum=$total_dev2 + $extra_tot+ $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
             $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;                                                                                          /*******************/
             $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
-            $inss=($total_inss*$inss_camp)/100;
+            if($trabajador->nss>0){
+              $inss=($total_inss*$inss_camp)/100;
+            }
+            else{
+              $inss=0;
+            }
             $inss_pat=($total_inss*$inss_patronal)/100;
             $tot_recib=$total_acum - $inss - $prestamo;
+            
+              $tot_recib=$total_acum-$prestamo;
             $f=0;
             $c=0;
           }
