@@ -64,7 +64,6 @@ class FincasController extends Controller
           $tamanio=sizeof($calculo);
           $suma=$calculo[$tamanio-1];
 
-
           $dev=$suma['sum_dev1'];
           $septimo=$suma['sum_septimos'];
           $feriados=$suma['sum_feriados'];
@@ -77,13 +76,10 @@ class FincasController extends Controller
           $vacs_para_suma=0;
           $vacs=$a_vac*0.083333;
           $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
-          $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+          //$inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+          $inss_lab=$suma['sum_inss_lab'];
           $tot_recib=$tot_acum-$inss_lab-$prestamos;
           $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
-
-
-
-
 
           $suma['sum_acum']=round($tot_acum,2);
           $suma['sum_aguin']=round($vacs,2);
@@ -91,7 +87,6 @@ class FincasController extends Controller
           $suma['sum_inss_lab']=round($inss_lab,2);
           $suma['sum_tot_recib']=round($tot_recib,2);
           $suma['sum_inss_pat']=round($inss_pat,2);
-
 
           $datos_finca=[
             'nombre_finca'=>$finca['nombre'],
@@ -105,7 +100,8 @@ class FincasController extends Controller
         }
       }
       //return $calculo_tot;
-
+      //return $inss_lab;
+      //return $calculo_tot;
       $suma_tot=$this->sum_planillaFinca($calculo_tot);
       $totales[]=$suma_tot;
       return $totales;
@@ -220,6 +216,7 @@ class FincasController extends Controller
                $trabajador=Trabajador::find($id_trab);
                $nombres=$trabajador->nombre;
                $apellido=$trabajador->apellidos;
+               $inss_trab= $trabajador['nss'];
                $nombre="$nombres $apellido";
 
 
@@ -230,8 +227,8 @@ class FincasController extends Controller
                $feriado_nt=$feriado1*$valor_dia;
                $feriado_t=$feriado2*($valor_dia*2);
                $feriados=$feriado_t+$feriado_nt;
-
                  foreach ($trabs as $trab) {
+
                      $inss_camp=$trab['inss_campo'];
                      $tot_sept+=$trab['septimo'];
                      $inss_patronal=$trab->inss_patron;
@@ -280,7 +277,12 @@ class FincasController extends Controller
 
                      $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;                                                                                          /*******************/
                      $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
-                     $inss=($total_inss*$inss_camp)/100;
+                     if($inss_trab==0){
+                       $inss=0;
+                     }
+                     else{
+                      $inss=($total_inss*$inss_camp)/100;
+                     }
                      $inss_pat=($total_inss*$inss_patronal)/100;
 
 
@@ -614,9 +616,12 @@ class FincasController extends Controller
 
         $sum_aguin=round($vacs,2);
         $tot_acum=$sum_vacs+$sum_vacs+$tot_dev2+$tot_hext+$dinero_cuje;
-        $var= 'vacs= '.$sum_vacs.' TotDev2= '.$tot_dev2.' tot_hext= '.$tot_hext.' Dine cuje = '.$dinero_cuje;
+        //$var= 'vacs= '.$sum_vacs.' TotDev2= '.$tot_dev2.' tot_hext= '.$tot_hext.' Dine cuje = '.$dinero_cuje;
         $sum_acum=round($tot_acum,2);
         $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+        //$inss_lab=$suma['sum_inss_lab'];
+        $inss_lab=$sum_inss_lab;
+
         $sum_inss_lab=round($inss_lab,2);
         $tot_recib=$tot_acum-$inss_lab-$prestamos;
         $sum_tot_recib=round($tot_recib,2);
@@ -638,7 +643,7 @@ class FincasController extends Controller
       $sum_inss_pat=round($inss_pat,2);
       */
       $totales=  [
-        'aa'=>$var,
+        //'aa'=>$var,
          "sum_tot_recib"=>round($sum_tot_recib,2),
          'sum_dias_trab'=>round($sum_dias_trab,2),
          "sum_dev1"=>round($sum_dev1,2),
