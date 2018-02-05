@@ -11,6 +11,7 @@ use App\Trabajador;
 use App\Labor;
 use App\Variable;
 use DB;
+use Excel;
 
 class PlanillasController extends Controller
 {
@@ -19,6 +20,7 @@ class PlanillasController extends Controller
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
      return $data;
+     
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
          return $a['order'] < $b['order']?1:-1;
@@ -31,10 +33,10 @@ class PlanillasController extends Controller
 
   }
   public function planilla_general3($request){
-
+    
     $data=$this->planilla_general2($request);
-    //return $data;
-    $totales=$this->sum_totales($data);
+    return $data;
+    $totales=$this->sum_totales($data); 
 
     $dev=$totales['sum_dev1'];
     $septimo=$totales['sum_septimos'];
@@ -69,7 +71,6 @@ class PlanillasController extends Controller
 
     if ($funcion == 'Generar Imprimible'){
       $data=$this->planilla_general2($request);
-      return $data;
       $totales=$this->sum_totales($data);
       $dev=$totales['sum_dev1'];
       $septimo=$totales['sum_septimos'];
@@ -93,58 +94,12 @@ class PlanillasController extends Controller
       $totales['sum_inss_lab']=round($inss_lab,2);
       $totales['sum_tot_recib']=round($tot_recib,2);
       $totales['sum_inss_pat']=round($inss_pat,2);
-
-      $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-      $fecha_ini=$data['0']['fecha_ini'];
-      $fecha_fin=$data['0']['fecha_fin'];
-
-      $fecha_1=date("d-m-Y", strtotime("$fecha_ini"));
-      $dia_ini=date("d", strtotime($fecha_1));
-      $mes_ini=date("m", strtotime($fecha_1));
-      $ano="2017";//date("Y", strtotime($fecha_1));
-
-      $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
-      $dia_fin=date("d", strtotime($fecha_2));
-      $mes_fin=date("m", strtotime($fecha_2));
-      $i=0;
-      $encabezado='<!DOCTYPE html>
-      <html>
-        <head>
-            <style type="text/css">
-                /*(bootstrap source)*/
-            </style>
-
-            <style type="text/css">
-                .cabecera {
-                    text-align: center;
-                    /*margin-bottom: 20px;*/
-                    height: 70px;
-                    padding:0;
-                    margin-bottom: 0;
-                    opacity: 1;
-                    font-size:13px;
-                }
-                h4{
-                  padding: 2px;
-                  margin: 1px;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="cabecera">
-              <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
-              <h4>PLANILLA GENERAL</h4>
-              <h4>Planilla de pago del '
-               .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
-              '</h4>
-
-            </div>
-        </body>
-      </html>';
-      //return view('reporte_general',array('data'=>$data,'totales'=>$totales));
+      return $data;
+      $encabezado=$this->estilos_planilla($data);
       $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
       $pdf->setOption('header-html', $encabezado);
+      //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       return $pdf->inline('Planilla_catorcenal.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
@@ -156,7 +111,6 @@ class PlanillasController extends Controller
       ini_set("memory_limit", "1024M");
       ini_set("max_execution_time", "600");
       $data=array();
-      //return $datas;
       foreach ($datas as $dat) {
         $array_1=array();
         $array_1['nombre']=$dat['nombre'];
@@ -180,7 +134,7 @@ class PlanillasController extends Controller
         $array_1['tot_cuje_peq']=$dat["tot_cuje_peq"];
         $array_1['tot_cuje_gran']=$dat["tot_cuje_gran"];
         $array_1['tot_safa_peq']=$dat["tot_safa_peq"];
-        $array_1['tot_safa_gran']=$dat["tot_safa_peq"];
+        $array_1['tot_safa_gran']=$dat["tot_safa_gran"];
 
 
         $data[]=$array_1;
@@ -188,6 +142,7 @@ class PlanillasController extends Controller
       $pdf = \PDF::loadView('sobres_catorcenal',array('data'=>$data));
       $pdf->setOrientation('landscape');
       $pdf->setOption('page-width', '9.5cm')->setOption('page-height', '19.05cm')->setOption('margin-top', 5)->setOption('margin-bottom', 3);
+      //return view('sobres_catorcenal',array('data'=>$data));
       return $pdf->inline('sobres_catorcenal.pdf');
 
 
@@ -292,7 +247,9 @@ class PlanillasController extends Controller
           "nss"=>$trabajador->nss,
           "pnombre"=>$nombre,
           "papellido"=>$apellido,
-          "t_devengado"=>$data['salario_'],
+          "salario"=>$data['salario_'],
+          "t_devengado"=>$data['devengado2'],
+
           "fecha_ini"=>$fecha_act,
         ];
         $tot[]=$array;
@@ -301,6 +258,51 @@ class PlanillasController extends Controller
       return view('inss_catorcenal')->with('data',$tot);
       return $tot;
 
+    }
+    elseif ($funcion == 'Rep. Excel') {
+      $data=$this->planilla_general2($request);
+      $totales=$this->sum_totales($data);
+      $dev=$totales['sum_dev1'];
+      $septimo=$totales['sum_septimos'];
+      $feriados=$totales['sum_feriados'];
+      $tot_dev2=$totales['sum_dev2'];
+      $prestamos=$totales['sum_prestam'];
+      $alim=$totales['sum_alim'];
+      $tot_hext=$totales['sum_tot_hext'];
+      $dinero_cuje=$totales['sum_dinero_activ'];
+
+      $a_vac=$dev+$septimo+$feriados;
+      $vacs=$a_vac*0.083333;
+      $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
+      // $tot_acum=$vacs+$vacs+$tot_dev2;
+      $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+      $tot_recib=$tot_acum-$inss_lab-$prestamos;
+      $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
+      $totales['sum_acum']=round($tot_acum,2);
+      $totales['sum_aguin']=round($vacs,2);
+      $totales['sum_vacs']=round($vacs,2);
+      $totales['sum_inss_lab']=round($inss_lab,2);
+      $totales['sum_tot_recib']=round($tot_recib,2);
+      $totales['sum_inss_pat']=round($inss_pat,2);
+
+      $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+      $fecha_ini=$data['0']['fecha_ini'];
+      $fecha_fin=$data['0']['fecha_fin'];
+
+      $fecha_1=date("d-m-Y", strtotime("$fecha_ini"));
+      $dia_ini=date("d", strtotime($fecha_1));
+      $mes_ini=date("m", strtotime($fecha_1));
+      $ano="2017";//date("Y", strtotime($fecha_1));
+
+      $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
+      $dia_fin=date("d", strtotime($fecha_2));
+      $mes_fin=date("m", strtotime($fecha_2));
+      $i=0;
+      Excel::create('Planilla', function($excel) use($data, $totales) {
+          $excel->sheet('Excel sheet', function($sheet) use($data, $totales) {
+              $sheet->loadView('reporte_catorcenal_excel', array('data'=>$data,'totales'=>$totales));
+          });
+      })->export('xls');
     }
   }
   public function billetes(Request $request){
@@ -500,294 +502,289 @@ class PlanillasController extends Controller
     $finca_mayor='--';
     $fecha_ini=$peticion['fecha_ini'];
     $fecha_fin=$peticion['fecha_fin'];
-    $inss=$peticion['inss'];
+    $inss_recibido=$peticion['inss'];
     $planillas= Preplanilla::whereBetween('fecha', [$fecha_ini, $fecha_fin]) /***********Buscar en preplanilla segun el rango de fecha*************/
                               ->get();
-  
-    //realizar un if(en dependencia del valor recibido)
-    //si es general utilizar la consulta anterior 
-    //si es con inss, realizar la misma consulta agregando el where del inss >0
-    //si es sin inss, realizar la misma consulta agregando el where del inss ==null;                          
+
     $tamano = sizeof($planillas);
-    $trabajadores=array();$identif=array();
+    $trabajadores=array();$identif=array();$con_inss=array();$sin_inss=array();
     $trab=0; $count=0;
     $array_id=array();
     $id_sinRep=0;
     $tamano2=sizeof($array_id);
     $j=0;
-      for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
+    $v1=0;
+    $v2=0;
+    for ($i=0; $i < $tamano; $i++) { /*Recorre toda la planilla*/
+      $valor_dia=$planillas[$i]['salario_dev'];
+      //$id_trab=$array_id[$i];
+      $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
+      $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
+      $converted_res = ($valor) ? 'true' : 'false';
+      
+      if ($converted_res=='false') { //Sino esta repetido
+        $identif[]=$id_trab;
+        $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
+        ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+        ->get();
 
-        $valor_dia=$planillas[$i]['salario_dev'];
-        //$id_trab=$array_id[$i];
-        $id_trab=$planillas[$i]->id_trabajador;//Asigna el id del trabajador que esta recorriendo en la planilla actualmente
-        $valor=in_array($id_trab, (array)$identif);//si ya existe la finca en el arreglo
-        $converted_res = ($valor) ? 'true' : 'false';
-        if ($converted_res=='false') { //Sino esta repetido
-          $validacion_inss=0;
-          $trab_inssb=Trabajador::find('id_trab');
-          $inss_trab=$trab_inssb['nss'];
-          return $trab_inssb;
-          if($inss_trab==0){
+        $dias2= $trabs->count();
+        $contar_dias=$this->contar_dias($trabs);
+        $dias=$contar_dias['dias'];
+        $dias_sept=$contar_dias['dias_sept'];
+        $salario_tot=0; $alim_tot=0; $vac_tot=0; $agui_tot=0; $extra_tot=0; $tot_act_ext=0; $horas_ext_tot=0; $cuje_ext_tot=0; $total_dev2=0; $septimo=0;
+        $otros=0; $feriados=0; $feriado_tot=0; $tot_dev=0; $tot_devengado=0; $subsidios=0; $cant_horas_ext=0; $cant_act_ext=0; $act_extra_tot=0; $sum_tot_recib=0; $prestamo=0;
+        $feriado1=0;$feriado2=0; $tot_sept=0;
+        $test1=0;$test2=0;
+        $dinero_cuje=0;$dinero_safa=0;
+        $tot_cuje_peq=0;$tot_safa_peq=0;$tot_cuje_gran=0; $tot_safa_gran=0;
+
+        $trabajador=Trabajador::find($id_trab);
+        $nombres=$trabajador->nombre;
+        $apellido=$trabajador->apellidos;
+        $nombre="$nombres   $apellido";
+        $n_inss=$trabajador->inss;
+        $sep3=0;$sep4=0;$sep1=0;$sep2=0;
+        $dia_mayor=0;$dia_menor=0;
+        foreach ($trabs as $trab) {
+          
+          $valor_dia=$trab['salario_dev'];
+          $test1=$valor_dia;
+          $x=($trab['hora_trab']*100)/8;
+          $tot_hora=$x/100;
+          // $dias+=$total;
+          $hora_pag=$tot_hora*$valor_dia;
+          $tot_dev+=$hora_pag;
+          /**********************************************************************************************************************/
+          //$test1[]=$trab['salario_dev'];
+          $feriados+=$trab->feriados;
+          if($dia_mayor<$valor_dia){
+            $dia_menor=$dia_mayor;
+            $dia_mayor=$valor_dia;
+          }
+          elseif ($dia_mayor<$valor_dia) {
+            $dia_menor=$valor_dia;
+          }
+          if($trab->tipo_feriado==1){//Feriado no trabajado
+            $feriado1+=1;
+          }
+          if($trab->tipo_feriado==2){//Feriado no trabajado
+            $feriado2+=1;
+          }
+          if ($dia_menor==0){
+              $valor_dia=$trab['salario_dev'];
+              $dia_menor=$valor_dia;
+          }
+        }
+        /********Contar los dias trabajados  Saber si tiene septimos**********/
+        $cant_septimos=0;
+        if($dias_sept>=6){
+          $cant_septimos=1;
+          if($dias_sept>=12){
+            $cant_septimos=2;
+            if ($dias_sept>=18) {
+              $cant_septimos=3;
+              if ($dias_sept>=24) {
+                $cant_septimos=4;
+              }
+            }
+          }
+        }
+        if ($cant_septimos==1) {
+          $sep1=$trabs[0]['salario_dev'];
+          $tot_sept=$dia_menor;
+        }
+        elseif($cant_septimos==2){
+          $sep1=$trabs[0]['salario_dev'];
+          $sep2=$trabs[11]['salario_dev'];
+          $tot_sept=$dia_mayor+$dia_menor;
+
+        }
+        elseif ($cant_septimos==3) {
+          $tot_sep=$dia_mayor+$dia_menor+$dia_mayor+$dia_mayor;
+          $sep1=$trabs[0]['salario_dev'];
+          $sep2=$trabs[11]['salario_dev'];
+          $sep3=$trabs[17]['salario_dev'];
+        }
+        elseif ($cant_septimos==4) {
+          $tot_sep=$dia_mayor+$dia_menor+$dia_mayor+$dia_menor;
+          $sep1=$trabs[0]['salario_dev'];
+          $sep2=$trabs[11]['salario_dev'];
+          $sep3=$trabs[17]['salario_dev'];
+          $sep4=$trabs[21]['salario_dev'];
+        }
+        $tot_sept=$sep1+$sep2+$sep3+$sep4;
+        $feriado_nt=$feriado1*$valor_dia;
+        $feriado_t=$feriado2*($valor_dia*2);
+        $feriados=$feriado_t+$feriado_nt;
+          foreach ($trabs as $trab) {
+            $tot_safa_gran+=$trab['tot_safa_gran'];
+            $inss_camp=$trab['inss_campo'];
+            $tot_sept+=$trab['septimo'];
+            $inss_patronal=$trab->inss_patron;
+            $otros+=$trab->otros;
+            $salario=$trab->salario_acum;
+            $salario_tot += $salario;
+            $alim=$trab->alimentacion;
+            $alim_tot = $dias*$alim;
+            $vac= $trab->vacaciones;
+            $prestamo+= $trab->prestamo;
+            $horas_ext_tot +=$trab->hora_ext;
+            $cuje_ext_tot +=$trab->cuje_ext;
+            $act_ext=$trab['tot_act_ext'];
+            $act_extra_tot+=$act_ext; //Suma de las ganancias de activi
+            $extras=$trab['total_extras'];// Ganancia de las horas extras
+            $extra_tot += $extras; // Suma de Ganancia de las horas extras
+            $cant_horas_ext += $trab['hora_ext']; //Cantidad de horas extras
+            $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext']; //Cantidad de extras, ya sea safa o ensarte
+            $cant_act_ext += $act_ext_sum; //Cantidades totales de los extras
+            $dinero_cuje+=$trab['tot_cuje_ext'];
+            $dinero_safa+=$trab['tot_safa_ext'];
+            $tot_cuje_peq+=$trab['tot_cuje_peq'];
+            $tot_safa_peq+=$trab['tot_safa_peq'];
+            $tot_cuje_gran+=$trab['tot_cuje_gran'];
+            $lab_query=Labor::find($trab->id_labor);
+            $labor=$lab_query->nombre;
+            $labores[]=$labor;
+            $subsidios += $trab['subsidios'];
+            $fin_query= Finca::find($trab->id_finca);
+            $finca=$fin_query->nombre;
+            $fincas[]=$finca;
+            $tot_basic=$tot_dev+$alim_tot;
+            $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
+            $total_dev2=round($total_dev3,2);
+            $tot_sept=round($tot_sept,2);
+            $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
+            $tot_a_vacs=round($tot_a_vacs,2);
+            $total_acum=$total_dev2 + $extra_tot+ $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
+            $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;                                                                                          /*******************/
+            $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
+            if($trabajador->nss>0){
+              $inss=($total_inss*$inss_camp)/100;
+            }
+            else{
+              $inss=0;
+            }
+            $inss_pat=($total_inss*$inss_patronal)/100;
+            $tot_recib=$total_acum - $inss - $prestamo;
+            
+              $tot_recib=$total_acum-$prestamo;
+            $f=0;
+            $c=0;
+          }
+          $feriado_nt=$feriado1*$valor_dia;
+          $feriado_t=$feriado2*($valor_dia*2);
+          $feriados=$feriado_t+$feriado_nt;
+          /**************SEPTIMO**************/
+          //dias trabs en una Finca
+          //saber las fincas unicas en las que trabajo
+          if($tot_sept>0){
+            $cant_fincas_todas = sizeof($fincas);
+            $fincas_sinRep=array();
+            foreach ($fincas as $fin) {
+              $valor=in_array($fin, (array)$fincas_sinRep);//si ya existe la finca en el arreglo
+              $converted_res = ($valor) ? 'true' : 'false';
+              //si la nueva finca es = a cualquiera del arreglo marcado con bandera entonces no agregar
+              if ($converted_res=='false'){
+                $fincas_sinRep[]=$fin;
+              }
+            }
+            foreach ($fincas_sinRep as $finca_nombre) {//recorro las fincas sin repeticion
+              $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca
+              $id_finca=$finca_id_search->id;//id
+              $dias_finca=Preplanilla::where('id_trabajador',$id_trab) //buscar los dias q trabajo ese trabajador en esa finca en ese rango de fecha
+              ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
+              ->where('id_finca', $id_finca)
+              ->get();
+              $cont_finc=$dias_finca->count();
+              $dias_tot_fincas[$f]=$cont_finc;//agregarlo al arreglo
+              $nomb_tot_fincas[$f]=$id_finca;
+              $f+=1;
+            }
+            $mayor=0;
+            foreach ($dias_tot_fincas as $dias_tot_finc) {
+              if($dias_tot_finc>$mayor){
+                $mayor=$dias_tot_finc;
+                $id_mayor=$nomb_tot_fincas[$c];
+              }
+              $c+=1;
+            }
+            $fin_mayor_query= Finca::find($id_mayor);
+            $finca_mayor=$fin_mayor_query->nombre;
+          }
+          else {
+            $finca_mayor='---';
+          }
+
+          $array = [
+            //'aa_var1'=>$test1,
+            //  'aa_var2'=>$test2,
+            "id_trab"=>$id_trab,
+            "dias"=>$dias,
+            "alim_tot"=>round($alim_tot,2),
+            "vac_tot"=>round($tot_a_vacs,2),
+            "agui_tot"=>round($tot_a_vacs,2),
+            "nombre"=>$nombre,
+            'n_inss'=>$trabajador->nss,
+            "labores"=>$labores,
+            "total_deven"=>round($tot_dev,2),
+            "total_basic"=>round($tot_basic,2),
+            "horas_ext_tot"=>round($extra_tot,2),
+            "cant_horas_ext"=>round($cant_horas_ext,2),
+            "cant_act_ext"=>round($cant_act_ext,2),
+            "cuje_ext_tot"=>round($cuje_ext_tot,2),
+            "act_extra_tot"=>round($act_extra_tot,2),
+            "total_acum"=>round($total_acum,2),
+            "inss"=>round($inss,2),
+            "salario_"=>round($tot_recib,2),
+            "fincas"=>$fincas,
+            "total_septimo"=>round($tot_sept,2),
+            "finca_septimo"=>$finca_mayor,
+            "inss_patronal"=>round($inss_pat,2),
+            "fecha_ini"=>$fecha_ini,
+            "fecha_fin"=>($fecha_fin),
+            "subsidio"=>round($subsidios,2),
+            "otros"=>round($otros,2),
+            "feriados"=>round($feriados,2),
+            "devengado2"=>round($total_dev2,2),
+            "sum_tot_recib"=>round($sum_tot_recib,2),
+            "prestamos"=>round($prestamo,2),
+            "fecha_ini"=>$fecha_ini,
+            "fecha_fin"=>$fecha_fin,
+            'dinero_cuje'=>round($dinero_cuje,2),
+            'dinero_safa'=>round($dinero_safa,2),
+            'tot_cuje_peq'=>$tot_cuje_peq,
+              'tot_safa_peq'=>$tot_safa_peq,
+              'tot_cuje_gran'=>$tot_cuje_gran,
+              'tot_safa_gran'=>$tot_safa_gran,
+          ];
+
+          if($array['n_inss']==0){ //sino tiene inss
             $valor_inss=0;
+            $v1+=1;
+            $sin_inss[]=$array;
           }
-          elseif($inss_trab!=0){
-            $valor_inss=1;
+          else{ //si tiene inss
+            $v2+=1;
+            $con_inss[]=$array;
           }
-          /**********REPORTES CON DIFERENTES INSS************************************************************************************************** */
-          if($inss==2){//General
-            
-            //si es 2 - recorrer de cualquier manera
-            $validacion_inss=1;//crea variable para que siempre se recorra, xq es general
-          }
-          else{//Sino es general
-            if($inss==$valor_inss){//si el trabajador tiene el inss q se esta solicitando 
-              $validacion_inss=1;
-            }
-            elseif($valor_inss==0){//sino tiene el inss como lo solicitan 
-              $validacion_inss=0;
-            }
-          }
-
-          //if($validacion_inss==1){        
-            $identif[]=$id_trab;
-          //$trabs=$planillas->where('id_trabajador',$id_trab);$id_trab
-          $trabs= Preplanilla::where('id_trabajador',$id_trab) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
-          ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-          ->get();
-          // $trabs= Preplanilla::where('id_trabajador',88) /*Todas las preplanillas de ese trabajador en ese rango de fecha*/
-          // ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-          // ->get();
-           $dias2= $trabs->count();
-           $contar_dias=$this->contar_dias($trabs);
-           $dias=$contar_dias['dias'];
-           $dias_sept=$contar_dias['dias_sept'];
-           $salario_tot=0; $alim_tot=0; $vac_tot=0; $agui_tot=0; $extra_tot=0; $tot_act_ext=0; $horas_ext_tot=0; $cuje_ext_tot=0; $total_dev2=0; $septimo=0;
-           $otros=0; $feriados=0; $feriado_tot=0; $tot_dev=0; $tot_devengado=0; $subsidios=0; $cant_horas_ext=0; $cant_act_ext=0; $act_extra_tot=0; $sum_tot_recib=0; $prestamo=0;
-           $feriado1=0;$feriado2=0; $tot_sept=0;
-           $test1=0;$test2=0;
-           $dinero_cuje=0;$dinero_safa=0;
-           $tot_cuje_peq=0;$tot_safa_peq=0;$tot_cuje_gran=0; $tot_safa_gran=0;
-           $trabajador=Trabajador::find($id_trab);
-           $nombres=$trabajador->nombre;
-           $apellido=$trabajador->apellidos;
-           $nombre="$nombres   $apellido";
-           $n_inss=$trabajador->inss;
-           $sep3=0;$sep4=0;$sep1=0;$sep2=0;
-           $dia_mayor=0;$dia_menor=0;
-           foreach ($trabs as $trab) {
-            
-             $valor_dia=$trab['salario_dev'];
-             $test1=$valor_dia;
-             $x=($trab['hora_trab']*100)/8;
-             $tot_hora=$x/100;
-             // $dias+=$total;
-             $hora_pag=$tot_hora*$valor_dia;
-             $tot_dev+=$hora_pag;
-             /**********************************************************************************************************************/
-             //$test1[]=$trab['salario_dev'];
-             $feriados+=$trab->feriados;
-             if($dia_mayor<$valor_dia){
-               $dia_menor=$dia_mayor;
-               $dia_mayor=$valor_dia;
-             }
-             elseif ($dia_mayor<$valor_dia) {
-               $dia_menor=$valor_dia;
-             }
-             if($trab->tipo_feriado==1){//Feriado no trabajado
-               $feriado1+=1;
-             }
-             if($trab->tipo_feriado==2){//Feriado no trabajado
-               $feriado2+=1;
-             }
-             if ($dia_menor==0){
-                 $valor_dia=$trab['salario_dev'];
-                 $dia_menor=$valor_dia;
-             }
-           }
-           /********************Saber si tiene septimos****************/
-           /********************Contar los dias trabajados*****************/
-          $cant_septimos=0;
-           if($dias_sept>=6){
-             $cant_septimos=1;
-             if($dias_sept>=12){
-               $cant_septimos=2;
-               if ($dias_sept>=18) {
-                 $cant_septimos=3;
-                 if ($dias_sept>=24) {
-                   $cant_septimos=4;
-                 }
-               }
-             }
-           }
-           /*******************************************************Fijarse aqui***********************************************************************/
-           if ($cant_septimos==1) {
-             $sep1=$trabs[0]['salario_dev'];
-             $tot_sept=$dia_menor;
-           }
-           elseif($cant_septimos==2){
-             $sep1=$trabs[0]['salario_dev'];
-             $sep2=$trabs[11]['salario_dev'];
-             $tot_sept=$dia_mayor+$dia_menor;
-           }
-           elseif ($cant_septimos==3) {
-             $tot_sep=$dia_mayor+$dia_menor+$dia_mayor+$dia_mayor;
-             $sep1=$trabs[0]['salario_dev'];
-             $sep2=$trabs[11]['salario_dev'];
-             $sep3=$trabs[17]['salario_dev'];
-           }
-           elseif ($cant_septimos==4) {
-             $tot_sep=$dia_mayor+$dia_menor+$dia_mayor+$dia_menor;
-             $sep1=$trabs[0]['salario_dev'];
-             $sep2=$trabs[11]['salario_dev'];
-             $sep3=$trabs[17]['salario_dev'];
-             $sep4=$trabs[21]['salario_dev'];
-           }
-           $tot_sept=$sep1+$sep2+$sep3+$sep4;
-           $feriado_nt=$feriado1*$valor_dia;
-           $feriado_t=$feriado2*($valor_dia*2);
-           $feriados=$feriado_t+$feriado_nt;
-             foreach ($trabs as $trab) {
-               $tot_safa_gran+=$trab['tot_safa_gran'];
-                 $inss_camp=$trab['inss_campo'];
-                 $tot_sept+=$trab['septimo'];
-                 $inss_patronal=$trab->inss_patron;
-                 $otros+=$trab->otros;
-                 $salario=$trab->salario_acum;
-                 $salario_tot += $salario;
-                 $alim=$trab->alimentacion;
-                 $alim_tot = $dias*$alim;
-                 $vac= $trab->vacaciones;
-                 $prestamo+= $trab->prestamo;
-                 $horas_ext_tot +=$trab->hora_ext;
-                 $cuje_ext_tot +=$trab->cuje_ext;
-                 $act_ext=$trab['tot_act_ext'];
-                 $act_extra_tot+=$act_ext; //Suma de las ganancias de activi
-                 $extras=$trab['total_extras'];// Ganancia de las horas extras
-                 $extra_tot += $extras; // Suma de Ganancia de las horas extras
-                 $cant_horas_ext += $trab['hora_ext']; //Cantidad de horas extras
-                 $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext']; //Cantidad de extras, ya sea safa o ensarte
-                 $cant_act_ext += $act_ext_sum; //Cantidades totales de los extras
-                 $dinero_cuje+=$trab['tot_cuje_ext'];
-                 $dinero_safa+=$trab['tot_safa_ext'];
-                 $tot_cuje_peq+=$trab['tot_cuje_peq'];
-                  $tot_safa_peq+=$trab['tot_safa_peq'];
-                  $tot_cuje_gran+=$trab['tot_cuje_gran'];
-                 $lab_query=Labor::find($trab->id_labor);
-                 $labor=$lab_query->nombre;
-                 $labores[]=$labor;
-                 $subsidios += $trab['subsidios'];
-                 $fin_query= Finca::find($trab->id_finca);
-                 $finca=$fin_query->nombre;
-                 $fincas[]=$finca;
-                 $tot_basic=$tot_dev+$alim_tot;
-                 $total_dev3=$tot_basic + $tot_sept + $otros + $feriados;
-                 $total_dev2=round($total_dev3,2);
-                 $tot_sept=round($tot_sept,2);
-                 $tot_a_vacs=($tot_dev+$tot_sept+$feriados)*0.083333;
-                 $tot_a_vacs=round($tot_a_vacs,2);
-                 $total_acum=$total_dev2 + $extra_tot+ $tot_a_vacs + $tot_a_vacs+$act_extra_tot/*Total de las actividades extras*/;
-                 $tot_inss=$total_acum-round($tot_a_vacs,2)-$alim_tot;                                                                                          /*******************/
-                 $total_inss=($total_acum-$tot_a_vacs-$alim_tot);
-                 $inss=($total_inss*$inss_camp)/100;
-                 $inss_pat=($total_inss*$inss_patronal)/100;
-                 $tot_recib=$total_acum - $inss - $prestamo;
-                 $f=0;
-                 $c=0;
-             }
-             $feriado_nt=$feriado1*$valor_dia;
-             $feriado_t=$feriado2*($valor_dia*2);
-             $feriados=$feriado_t+$feriado_nt;
-               /**************SEPTIMO**************/
-               //dias trabs en una Finca
-               //saber las fincas unicas en las que trabajo
-               if($tot_sept>0){
-               $cant_fincas_todas = sizeof($fincas);
-               $fincas_sinRep=array();
-                foreach ($fincas as $fin) {
-                   $valor=in_array($fin, (array)$fincas_sinRep);//si ya existe la finca en el arreglo
-                  $converted_res = ($valor) ? 'true' : 'false';
-                   //si la nueva finca es = a cualquiera del arreglo marcado con bandera entonces no agregar
-                   if ($converted_res=='false'){
-                     $fincas_sinRep[]=$fin;
-                   }
-                 }
-                 foreach ($fincas_sinRep as $finca_nombre) {//recorro las fincas sin repeticion
-                   $finca_id_search=Finca::where('nombre',$finca_nombre)->first();//obtengo el id de esa finca
-                   $id_finca=$finca_id_search->id;//id
-                   $dias_finca=Preplanilla::where('id_trabajador',$id_trab) //buscar los dias q trabajo ese trabajador en esa finca en ese rango de fecha
-                   ->whereBetween('fecha', [$fecha_ini, $fecha_fin])
-                   ->where('id_finca', $id_finca)
-                   ->get();
-                   $cont_finc=$dias_finca->count();
-                   $dias_tot_fincas[$f]=$cont_finc;//agregarlo al arreglo
-                   $nomb_tot_fincas[$f]=$id_finca;
-                   $f+=1;
-                 }
-                 $mayor=0;
-                 foreach ($dias_tot_fincas as $dias_tot_finc) {
-                   if($dias_tot_finc>$mayor){
-                     $mayor=$dias_tot_finc;
-                     $id_mayor=$nomb_tot_fincas[$c];
-                   }
-                   $c+=1;
-                 }
-                 $fin_mayor_query= Finca::find($id_mayor);
-                 $finca_mayor=$fin_mayor_query->nombre;
-              }
-              else {
-                $finca_mayor='---';
-              }
-             $array = [
-               //'aa_var1'=>$test1,
-              //  'aa_var2'=>$test2,
-               "id_trab"=>$id_trab,
-               "dias"=>$dias,
-               "alim_tot"=>round($alim_tot,2),
-               "vac_tot"=>round($tot_a_vacs,2),
-               "agui_tot"=>round($tot_a_vacs,2),
-               "nombre"=>$nombre,
-               'n_inss'=>$trabajador->nss,
-               "labores"=>$labores,
-               "total_deven"=>round($tot_dev,2),
-               "total_basic"=>round($tot_basic,2),
-               "horas_ext_tot"=>round($extra_tot,2),
-               "cant_horas_ext"=>round($cant_horas_ext,2),
-               "cant_act_ext"=>round($cant_act_ext,2),
-               "cuje_ext_tot"=>round($cuje_ext_tot,2),
-               "act_extra_tot"=>round($act_extra_tot,2),
-               "total_acum"=>round($total_acum,2),
-               "inss"=>round($inss,2),
-               "salario_"=>round($tot_recib,2),
-               "fincas"=>$fincas,
-               "total_septimo"=>round($tot_sept,2),
-               "finca_septimo"=>$finca_mayor,
-               "inss_patronal"=>round($inss_pat,2),
-               "fecha_ini"=>$fecha_ini,
-               "fecha_fin"=>($fecha_fin),
-               "subsidio"=>round($subsidios,2),
-               "otros"=>round($otros,2),
-               "feriados"=>round($feriados,2),
-               "devengado2"=>round($total_dev2,2),
-               "sum_tot_recib"=>round($sum_tot_recib,2),
-               "prestamos"=>round($prestamo,2),
-               "fecha_ini"=>$fecha_ini,
-               "fecha_fin"=>$fecha_fin,
-               'dinero_cuje'=>round($dinero_cuje,2),
-               'dinero_safa'=>round($dinero_safa,2),
-               'tot_cuje_peq'=>$tot_cuje_peq,
-                'tot_safa_peq'=>$tot_safa_peq,
-                'tot_cuje_gran'=>$tot_cuje_gran,
-                'tot_safa_gran'=>$tot_safa_gran,
-             ];
-          $trabajadores[]=$array;
-          unset($labores);
-          unset($fincas);
-          unset($fincas_sinRep);
-          //}//Aqui finaliza el if de validacion_inss
-        }/*Fin Si no esta repetido*/
-      }//Fin For de recorrer toda la planilla
-
+        $trabajadores[]=$array;
+        unset($labores);
+        unset($fincas);
+        unset($fincas_sinRep);
+      }/*Fin Si no esta repetido*/
+    }//Fin For de recorrer toda la planilla
+    //return $inss_recibido;
+    if($inss_recibido==2){
       return $trabajadores;
+    }
+    elseif($inss_recibido==1){
+      return $con_inss;
+    }
+    elseif($inss_recibido==0){
+      return $sin_inss;
+    }
+    return $trabajadores;
 
   }//E
 
@@ -796,6 +793,53 @@ class PlanillasController extends Controller
     $catorcenal->delete();
     return 'Eliminada';
 
+  }
+
+public function estilos_planilla($data){
+    $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+    $fecha_ini=$data['0']['fecha_ini'];
+    $fecha_fin=$data['0']['fecha_fin'];
+    $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+    $dia_ini=date("d", strtotime($fecha_1));
+    $mes_ini=date("m", strtotime($fecha_1));
+    $ano="2017";//date("Y", strtotime($fecha_1));
+    $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
+    $dia_fin=date("d", strtotime($fecha_2));
+    $mes_fin=date("m", strtotime($fecha_2));
+    $i=0;
+    $encabezado='<!DOCTYPE html>
+    <html>
+      <head>
+          <style type="text/css">
+              /*(bootstrap source)*/
+          </style>
+          <style type="text/css">
+              .cabecera {
+                  text-align: center;
+                  /*margin-bottom: 20px;*/
+                  height: 70px;
+                  padding:0;
+                  margin-bottom: 0;
+                  opacity: 1;
+                  font-size:13px;
+              }
+              h4{
+                padding: 2px;
+                margin: 1px;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="cabecera">
+            <h4>TABACALERA FERNANDEZ DE NICARAGUA S. A.</h4>
+            <h4>PLANILLA GENERAL</h4>
+            <h4>Planilla de pago del '
+             .$dia_ini.' de '.$meses[$mes_ini-1].' al '.$dia_fin. ' de ' .$meses[$mes_fin-1]. ' del '.$ano.
+            '</h4>
+          </div>
+      </body>
+    </html>';
+    return $encabezado;
   }
 
 

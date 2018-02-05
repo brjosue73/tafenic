@@ -845,9 +845,10 @@
 	}]);
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
+		s.plillaSendData.inss = 2;
 		s.getPlanilla = function() {
 			$('#14nalpanepin').css("display", "inline-block");
-			//console.log(s.plillaSendData);
+			console.log(s.plillaSendData);
 			//plr.query();
 			h.post('/planilla',s.plillaSendData)
 			.success(function(data) {
