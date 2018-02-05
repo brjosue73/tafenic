@@ -58,6 +58,7 @@
         <th data-ng-click="ordeReal = 'created_at.date' ">N°</th>
         <th data-ng-click="ordeReal = 'nombre' ">Nombre del trabajador</th>
         <th>Ocupación</th>
+        <th> Lotes </th>
         <th>Días trabajados</th>
         <th>Tot. Devengado</th>
         <th>Alimentación</th>
@@ -87,6 +88,7 @@
         <td> <% $index + 1 %></td>
         <td> <% reporfincTota.nombre %> </td>
         <td> <li data-ng-repeat="labour in reporfincTota.labores track by $index"><% labour %> </li></td>
+        <td> <li data-ng-repeat="lote in reporfincTota.lotes track by $index"><% lote %> </li></td>
         <td> <% reporfincTota.dias %> </td>
         <td> <% reporfincTota.total_deven %> </td>
         <td> <% reporfincTota.alim_tot %> </td>
