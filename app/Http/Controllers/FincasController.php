@@ -336,6 +336,7 @@ class FincasController extends Controller
               $trabajadores[]=$array;
 
               unset($labores);
+              unset($lotes);
               unset($fincas);
               unset($fincas_sinRep);
             }/*Fin Si no esta repetido*/
