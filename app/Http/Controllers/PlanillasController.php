@@ -19,7 +19,6 @@ class PlanillasController extends Controller
     set_time_limit(600);
     $peticion=$request->all();
      $data =$this->calculo_planilla($peticion);
-     return $data;
      
      usort($data, function($a, $b) {
        return strcmp($a["nombre"], $b["nombre"]);
@@ -35,14 +34,14 @@ class PlanillasController extends Controller
   public function planilla_general3($request){
     
     $data=$this->planilla_general2($request);
-    return $data;
+    //return $data;
     $totales=$this->sum_totales($data); 
 
     $dev=$totales['sum_dev1'];
     $septimo=$totales['sum_septimos'];
     $feriados=$totales['sum_feriados'];
     $tot_dev2=$totales['sum_dev2'];
-    $prestamos=$totales['sum_prestam'];
+    $prestamos=$totales['sum_prestam']; 
     $alim=$totales['sum_alim'];
     $tot_hext=$totales['sum_tot_hext'];
     $dinero_cuje=$totales['sum_dinero_activ'];
@@ -50,6 +49,7 @@ class PlanillasController extends Controller
     $vacs=$a_vac*0.083333;
     $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
     $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+    $inss_lab=$totales['sum_inss_lab'];
     $tot_recib=$tot_acum-$inss_lab-$prestamos;
     $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
     $totales['sum_acum']=round($tot_acum,2);
@@ -86,6 +86,7 @@ class PlanillasController extends Controller
       $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
       // $tot_acum=$vacs+$vacs+$tot_dev2;
       $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+      $inss_lab=$totales['sum_inss_lab'];
       $tot_recib=$tot_acum-$inss_lab-$prestamos;
       $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
       $totales['sum_acum']=round($tot_acum,2);
@@ -94,8 +95,8 @@ class PlanillasController extends Controller
       $totales['sum_inss_lab']=round($inss_lab,2);
       $totales['sum_tot_recib']=round($tot_recib,2);
       $totales['sum_inss_pat']=round($inss_pat,2);
-      return $data;
       $encabezado=$this->estilos_planilla($data);
+      //return $totales;
       $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
       $pdf->setOption('header-html', $encabezado);
@@ -159,15 +160,12 @@ class PlanillasController extends Controller
       set_time_limit(600);
       ini_set('memory_limit', '2048M');
 
-      $data=$this->planilla_general2($request);
-      $totales=$this->sum_totales($data);
+      
 
       $peticion=$request->all();
 
       $planillas=$this->calculo_planilla($peticion);
-
       $totales=$this->sum_totales($planillas);
-
 
       $dev=$totales['sum_dev1'];
       $septimo=$totales['sum_septimos'];
@@ -183,6 +181,7 @@ class PlanillasController extends Controller
       $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
       // $tot_acum=$vacs+$vacs+$tot_dev2;
       $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+      $inss_lab=$totales['sum_inss_lab'];
       $tot_recib=$tot_acum-$inss_lab-$prestamos;
       $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
       $totales['sum_acum']=round($tot_acum,2);
@@ -191,11 +190,15 @@ class PlanillasController extends Controller
       $totales['sum_inss_lab']=round($inss_lab,2);
       $totales['sum_tot_recib']=round($tot_recib,2);
       $totales['sum_inss_pat']=round($inss_pat,2);
+      //return $totales;
+
       $pdf='';
       $data=$this->calcular_billetes($planillas, $totales);
+     // return $data;
       // $totales2=$this->sum_totales($planillas);
       // return $totales2;
       $nombres=$this->nombres_billetes($planillas);
+      return view ('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf = \PDF::loadView('billetes_catorcenal',array('data'=>$data,'nombres'=>$nombres));
       $pdf->setPaper('a4')->setOrientation('landscape');
       return $pdf->inline('Billetes_catorcenal.pdf');
@@ -276,6 +279,7 @@ class PlanillasController extends Controller
       $tot_acum=$vacs+$vacs+$tot_dev2+$tot_hext+$dinero_cuje;
       // $tot_acum=$vacs+$vacs+$tot_dev2;
       $inss_lab=(($tot_acum-$vacs-$alim)*4.25)/100;
+      $inss_lab=$totales['sum_inss_lab'];
       $tot_recib=$tot_acum-$inss_lab-$prestamos;
       $inss_pat=(($tot_acum-$vacs-$alim)*13)/100;
       $totales['sum_acum']=round($tot_acum,2);
@@ -307,10 +311,10 @@ class PlanillasController extends Controller
   }
   public function billetes(Request $request){
 
-    $peticion=$request->all();
-    $planillas=$this->calculo_planilla($peticion);
-    $data =$this->calcular_billetes($planillas);
-    return $data;
+    // $peticion=$request->all();
+    // $planillas=$this->calculo_planilla($peticion);
+    // $data =$this->calcular_billetes($planillas);
+    // return $data;
   }
   public function nombres_billetes($planillas){
     foreach ($planillas as $planilla) {
@@ -320,16 +324,18 @@ class PlanillasController extends Controller
   }
   public function calcular_billetes($planillas, $totales){
     $tot_dinero=$totales['sum_tot_recib'];
+    //return $tot_dinero;
+    $suma=0;
     foreach ($planillas as $planilla) {
       $nums[]=$planilla['salario_'];
+      $suma+=$planilla['salario_'];
     }
-
+    //return $suma.'   '. $tot_dinero;
     $i=0;
     foreach ($nums as $N) {
       //recibir el total de pagos en un array
       //recibe el nombre de la gente
       $billete=$N;
-
       $numero_de_billetes_1000 = floor($billete / 1000);
       $billete = $billete % 1000;
 
@@ -338,7 +344,6 @@ class PlanillasController extends Controller
 
       $numero_de_billetes_200 = floor($billete / 200);
       $billete = $billete % 200;
-
 
       $numero_de_billetes_100 =floor($billete / 100);
       $billete = $billete % 100;
@@ -373,7 +378,6 @@ class PlanillasController extends Controller
     }
     $tot_1000=0;$tot_500=0;$tot_200=0;$tot_100=0;$tot_50=0;$tot_20=0;$tot_10=0;$tot_5=0;$tot_1=0;$tot_billetes=0;
     foreach ($todos as $key) {
-
       $tot_1000=$key[1000]+$tot_1000;
       $tot_500=$key[500]+$tot_500;
       $tot_200=$key[200]+$tot_200;
@@ -667,8 +671,6 @@ class PlanillasController extends Controller
             }
             $inss_pat=($total_inss*$inss_patronal)/100;
             $tot_recib=$total_acum - $inss - $prestamo;
-            
-              $tot_recib=$total_acum-$prestamo;
             $f=0;
             $c=0;
           }
