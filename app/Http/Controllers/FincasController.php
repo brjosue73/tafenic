@@ -248,6 +248,10 @@ class FincasController extends Controller
                      $act_extra_tot+=$act_ext;
                      $act_ext_sum=$trab['safa_ext'] + $trab['cuje_ext'];
                      $cant_act_ext += $act_ext_sum;
+                     $lote_query=Lote::find($trab->id_lote); //vamos
+                     $lote=$lote_query->lote;
+                     $lotes[]=$lote;
+                     $test1=$lote;
                      $lab_query=Labor::find($trab->id_labor);
                      $labor=$lab_query->nombre;
                      $labores[]=$labor;
@@ -258,7 +262,7 @@ class FincasController extends Controller
                      $fin_query= Finca::find($trab->id_finca);
                      $finca=$fin_query->nombre;
                      $fincas[]=$finca;
-                     $test1='id_ac= '.$trab->id_actividad.' labor '.$trab->id_labor.' id cc: '.$trab->centro_costo;
+                     //$test1='id_ac= '.$trab->id_actividad.' labor '.$trab->id_labor.' id cc: '.$trab->centro_costo;
 
 
 
@@ -304,6 +308,7 @@ class FincasController extends Controller
                    "created_at"=>$created_at,
                    "id_trab"=>$id_trab,
                    "labores"=>$labores,
+                   "lotes"=>$lotes,
                    "total_deven"=>round($tot_dev,2),
                    "total_basic"=>round($tot_basic,2),
                    "horas_ext_tot"=>round($extra_tot,2),
@@ -331,6 +336,7 @@ class FincasController extends Controller
               $trabajadores[]=$array;
 
               unset($labores);
+              unset($lotes);
               unset($fincas);
               unset($fincas_sinRep);
             }/*Fin Si no esta repetido*/
@@ -743,6 +749,7 @@ class FincasController extends Controller
       $fincas->actividades = array();
       $generales=array();
       $labores=array();
+      //$lotes=array();
       $lab_tot=array();
       $activ_tot=array();
       $activ=array();
