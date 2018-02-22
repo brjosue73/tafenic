@@ -296,7 +296,7 @@ class PlanillasController extends Controller
       $fecha_1=date("d-m-Y", strtotime("$fecha_ini"));
       $dia_ini=date("d", strtotime($fecha_1));
       $mes_ini=date("m", strtotime($fecha_1));
-      $ano="2017";//date("Y", strtotime($fecha_1));
+      $ano="2018";//date("Y", strtotime($fecha_1));
 
       $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
       $dia_fin=date("d", strtotime($fecha_2));
@@ -804,7 +804,7 @@ public function estilos_planilla($data){
     $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
     $dia_ini=date("d", strtotime($fecha_1));
     $mes_ini=date("m", strtotime($fecha_1));
-    $ano="2017";//date("Y", strtotime($fecha_1));
+    $ano="2018";//date("Y", strtotime($fecha_1));
     $fecha_2=date("d-F-Y", strtotime("$fecha_fin"));
     $dia_fin=date("d", strtotime($fecha_2));
     $mes_fin=date("m", strtotime($fecha_2));
