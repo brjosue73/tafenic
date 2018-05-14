@@ -845,12 +845,22 @@
 	}]);
 	app.controller('planillaController',['$scope','$http','planillaResource', function(s,h,plr){
 		s.plillaSendData = {};
+		s.plillaSendDataObj = {};
 		s.plillaSendData.inss = 2;
 		s.getPlanilla = function() {
 			$('#14nalpanepin').css("display", "inline-block");
+
+			s.fecha_iniMirror = s.plillaSendData.fecha_ini;
+			s.plillaSendDataObj.inss = s.plillaSendData.inss;
+			
 			console.log(s.plillaSendData);
-			//plr.query();
-			h.post('/planilla',s.plillaSendData)
+
+			s.plillaSendDataObj.fecha_ini = new Date(s.fecha_iniMirror.setDate( s.fecha_iniMirror.getDate() - 1 ) );
+			s.plillaSendDataObj.fecha_fin = s.plillaSendData.fecha_fin;
+
+			console.log(s.plillaSendDataObj);
+
+			h.post('/planilla',s.plillaSendDataObj)
 			.success(function(data) {
 				s.reporfincTot = [];
 				for (var i = 0; i < data.length - 1; i++) {
