@@ -71,6 +71,7 @@ class PlanillasController extends Controller
 
     if ($funcion == 'Generar Imprimible'){
       $data=$this->planilla_general2($request);
+      //return $data;
       $totales=$this->sum_totales($data);
       $dev=$totales['sum_dev1'];
       $septimo=$totales['sum_septimos'];
@@ -100,7 +101,7 @@ class PlanillasController extends Controller
       $pdf = \PDF::loadView('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       $pdf->setPaper('legal')->setOrientation('landscape')->setOption('margin-top', 20)->setOption('margin-bottom', 3);
       $pdf->setOption('header-html', $encabezado);
-      //return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
+      return view('reporte_catorcenal', array('data'=>$data,'totales'=>$totales));
       return $pdf->inline('Planilla_catorcenal.pdf');
     }
     elseif ($funcion == 'Generar sobres'){
@@ -246,12 +247,15 @@ class PlanillasController extends Controller
 
         $fecha=explode('-',$data['fecha_ini']);
         $fecha_act=$fecha[0].'-'.$fecha[1];
+        //return $data;
+        $t_deven_vacs=$data['devengado2']+$data['vac_tot'];
+        
         $array=[
           "nss"=>$trabajador->nss,
           "pnombre"=>$nombre,
           "papellido"=>$apellido,
           "salario"=>$data['salario_'],
-          "t_devengado"=>$data['devengado2'],
+          "t_devengado"=>$t_deven_vacs,
 
           "fecha_ini"=>$fecha_act,
         ];
@@ -801,7 +805,7 @@ public function estilos_planilla($data){
     $meses = array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
     $fecha_ini=$data['0']['fecha_ini'];
     $fecha_fin=$data['0']['fecha_fin'];
-    $fecha_1=date("d-m-Y", strtotime("$fecha_ini + 1 days"));
+    $fecha_1=date("d-m-Y", strtotime("$fecha_ini"));
     $dia_ini=date("d", strtotime($fecha_1));
     $mes_ini=date("m", strtotime($fecha_1));
     $ano="2018";//date("Y", strtotime($fecha_1));
